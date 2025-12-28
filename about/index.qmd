@@ -12,12 +12,7 @@
 
 <img src="../image/portrait.jpg" width="130" style="border-radius: 12px; float:right; margin-left:1rem;"/>
 
-Shiro Tanaka is a biostatistician and a Professor of Clinical Biostatistics at the Graduate School of Medicine, Kyoto University. This site is his small way of giving back to the community that shaped his training—through books, open-source software, and resources shared generously across borders.
-
-
-He has served as a trial statistician in nationwide clinical trial groups in oncology (JCOG), pediatric oncology (JCCG), and osteoporosis (A-TOP). He is an advisory expert for the Pharmaceuticals and Medical Devices Agency (PMDA), serves on the council of the Japanese Society for Pharmacoepidemiology and the Biometric Society of Japan, and is on multiple editorial boards.
-
-He has been fortunate to work with researchers such as Marc A. Brookhart, Jason P. Fine, and Thomas H. Scheike.
+I’m a Professor of Clinical Biostatistics at Kyoto University Graduate School of Medicine. I have served as a trial statistician in nationwide clinical trial groups (JCOG, JCCG, and A-TOP) and as an advisory expert for the PMDA. I’ve been fortunate to collaborate with researchers such as Marc A. Brookhart, Jason P. Fine, and Thomas H. Scheike. This site is my small way of giving back to the community that shaped my training—through books, open-source software, and freely shared resources.
 
 ## Why "gestimation"?
 

@@ -219,7 +219,7 @@ This is a short essay on Japanese language and kanji characters.
             float: left;
             margin: 1rem 1.5rem 1rem 1rem;" />
 
-Alongside developing methods and tools, he is interested in how statistical ideas are understood, interpreted, and used in practice — especially where methods, assumptions, and human judgment meet. This site collects some of his research, teaching materials, and essays, shared freely for anyone who finds them useful.
+Alongside developing methods and tools, I am interested in how statistical ideas are understood, interpreted, and used in practice — especially where methods, assumptions, and human judgment meet. This site collects some of my research, teaching materials, and essays, shared freely for anyone who finds them useful.
 
 **[More information](./about/)**
 
