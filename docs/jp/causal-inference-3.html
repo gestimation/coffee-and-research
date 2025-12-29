@@ -381,10 +381,8 @@ Rパッケージを用いたDAGのコードはこちら
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">  E -&gt; D</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">}"</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Plot coordinates for graph not supplied! Generating coordinates, see ?coordinates for how to set your own.</code></pre>
-</div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(dag) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="at">A=</span><span class="dv">1</span>,<span class="at">B=</span><span class="dv">3</span>,<span class="at">C=</span><span class="dv">2</span>,<span class="at">D=</span><span class="dv">3</span>,<span class="at">E=</span><span class="dv">1</span>),<span class="at">y=</span><span class="fu">c</span>(<span class="at">A=</span><span class="dv">1</span>,<span class="at">B=</span><span class="dv">1</span>,<span class="at">C=</span><span class="dv">2</span>,<span class="at">D=</span><span class="dv">3</span>,<span class="at">E=</span><span class="dv">3</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -392,8 +390,8 @@ Rパッケージを用いたDAGのコードはこちら
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>confounders <span class="ot">&lt;-</span> <span class="fu">adjustmentSets</span>(dag, <span class="at">exposure =</span> <span class="st">"E"</span>, <span class="at">outcome =</span> <span class="st">"D"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(confounders)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>confounders <span class="ot">&lt;-</span> <span class="fu">adjustmentSets</span>(dag, <span class="at">exposure =</span> <span class="st">"E"</span>, <span class="at">outcome =</span> <span class="st">"D"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(confounders)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{ B, C }
 { A, C }</code></pre>
@@ -407,7 +405,7 @@ Rパッケージを用いたDAGのコードはこちら
 <p>私「ふむ。今回も呪文の意味はわからぬが、とりあえず、<code>dagitty()</code>の出力を<code>plot()</code>に入れるとDAGが描かれた。そして<code>adjustmentSets()</code>の出力を<code>print()</code>に入れると、交絡因子はBとC、AとCって表示された」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「その通り。ここからは、どうやってDAGから交絡因子として調整すべき変数たちを探すかっていうアルゴリズムの話をするねｄｄ。そのためには同時分布と条件付分布が要る。人によっては復習が必要かもしれない」</p>
+<p>お父さん「その通り。ここからは、どうやってDAGから交絡因子として調整すべき変数たちを探すかっていうアルゴリズムについの話すね。そのためには同時分布と条件付分布が要る。人によっては復習が必要かもしれない」</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="確率の復習">
@@ -660,7 +658,7 @@ Rパッケージを用いたDAGのコードはこちら
 <li><strong>正解は4です。</strong></li>
 </ul>
 <p>DAGをみると、Cは合流点でもあり、共通原因にもなっていますよね。したがって、Aだけ、Bだけ、AとBだけを調整すると、パスE←C→Dによる疑似相関が残ってしまいます。さらに、Cは合流点なので、調整するとパスE←A→C←B→Dによる相関が生じてしまいます。</p>
-<p>結論をいうと、パスE←A→C←B→Dをブロックするため、Cに加えて、AまたはBを調整する必要があります。この変数の組み合わせは<code>dagitty()</code>と<code>adjustmentSets()</code>の実行結果と同じですよね。</p>
+<p>結論をいうと、パスE←A→C←B→Dをブロックするためには、複数の変数を同時に調整する必要があります。すなわち、交絡因子の集合は、CとAまたはCとBです。この変数の組み合わせは<code>dagitty()</code>と<code>adjustmentSets()</code>の実行結果と同じですよね。</p>
 </div>
 </div>
 </div>
