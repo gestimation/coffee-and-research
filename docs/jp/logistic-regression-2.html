@@ -487,7 +487,7 @@ window.Quarto = {
 </div>
 <div class="dialogue">
 <div class="voice-father">
-<p>お父さん「ちょっとマニアックだけど、Rの内部では、<code>model.matrix()</code>っていう関数で、デザイン行列<span class="math inline">\(Z\)</span>を作っている。<span class="math inline">\(Z\)</span>の最初の列はすべて1になる。これは回帰直線でいう切片に対応している。次の列以降はx1とx2に対応する値が計算される。こうしておくと、たとえばx1が文字列でも数値に置き換えて計算できたり、回帰係数との掛け算が行列として計算できたり、なにかと都合がいい。ここまで覚えなくていいけど、仕組みを知っておくと理解が進むでしょ」</p>
+<p>お父さん「ちょっとマニアックだけど、Rの内部では、<code>model.matrix()</code>っていう関数で、デザイン行列<span class="math inline">\(Z\)</span>を作っている。<span class="math inline">\(Z\)</span>の最初の列はすべて1になる。これは回帰直線でいう切片に対応している。次の列以降はx1とx2に対応する値が計算される。こうしておくと、たとえばx1が文字列でも数値に置き換えて計算できたり、回帰係数との掛け算が行列として計算できたり、なにかと都合がいい。ここまで覚えなくていいけど、仕組みを知っておくと理解が進むでしょ。正確な理解は<a href="Causal Inference for Medical Research Ch 1-8 Design matrix.pdf">デザイン行列の数式</a>をみないと難しいからね」</p>
 </div>
 <div class="voice-daughter">
 <p>私「なるほどね、じゃあ<code>family</code>ってなに？データの型？」</p>

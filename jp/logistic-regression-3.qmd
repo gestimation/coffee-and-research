@@ -74,6 +74,9 @@ $\log(\frac{\pi_i}{1-\pi_i})=\beta_0+\beta_1X_{i,1}+...+\beta_{p-1}X_{i,p-1}$
 という関係が成り立つ確率分布をロジスティック回帰といいます。
 
 この式の係数$\beta_0,\beta_1,...,\beta_{p-1}$を回帰係数（regression coefficients）、特に$\beta_0$を切片項（intercept）といいます。正規分布は平均と分散というパラメータで形状が決まりますよね。それと同じように、ロジスティック回帰の確率分布は、回帰係数$\beta_0,\beta_1,...,\beta_{p-1}$で規定されます。$\pi_i$は、$\beta_0,\beta_1,...,\beta_{p-1}$が与えられれば計算できますが、直接推定するわけではありません。
+
+これ以上の詳細は、[参考資料](Causal Inference for Medical Research Ch 1-10 GLM.pdf)をご覧ください。
+
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
