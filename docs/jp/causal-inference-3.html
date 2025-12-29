@@ -332,14 +332,16 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rパッケージを用いたDAGのコードはこちら">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Rパッケージを用いたDAGのコードはこちら
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>ピロリ菌と胃がんの因果関係を表すDAGをもう一度示します。</p>
 <p><img src="causal-inference-3-7.png" class="img-fluid"></p>
@@ -377,23 +379,26 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 </div>
 </div>
+</div>
 <div class="dialogue">
 <div class="voice-father">
 <p>私「ふむ。今回も呪文の意味はわからぬが、とりあえず、<code>dagitty()</code>の出力を<code>plot()</code>に入れるとDAGが描けたね。そして<code>adjustmentSets()</code>の出力を<code>print()</code>に入れると、交絡因子はBとC、AとCって表示された」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「その通り。ここからは、DAGから交絡因子を探すアルゴリズムの話なんだけど、そのためには同時分布と条件付分布を知っておく必要がある」</p>
+<p>お父さん「その通り。ここからは、DAGから交絡因子を探すアルゴリズムの話なんだけど、そのためには同時分布と条件付分布が要る。人によっては復習が必要かもしれない」</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="確率の復習">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 確率の復習
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>同時確率と条件付確率</strong></p>
 <p>複数の事象を扱うとき、<strong>事象が同時に起こる確率（同時確率</strong>）と、<strong>順番に起こる確率（条件付確率）</strong>を区別することが大切です。たとえば2種類の事象AとBがあったとしましょう。「AまたはBが起きる」という事象は、和集合<span class="math inline">\(A\cup{B}\)</span>で表します。「AかつBが起きる」という事象は、積集合<span class="math inline">\(A\cap{B}\)</span>で表します。</p>
@@ -411,9 +416,10 @@ Rパッケージを用いたDAGのコードはこちら
 <p><span class="math inline">\(\mathrm{Pr}(A\cap{B}|C)=\mathrm{Pr}(A|C)\mathrm{Pr}(B|C)\)</span></p>
 </div>
 </div>
+</div>
 <div class="dialogue">
 <div class="voice-father">
-<p>お父さん「準備が整ったので、DAGと確率変数の関係について説明しよう」</p>
+<p>お父さん「復習はできた？じゃあDAGと確率変数の関係について説明しよう」</p>
 </div>
 <div class="voice-daughter">
 <p>私「ふむふむ」</p>
@@ -596,17 +602,17 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="このエピソードに関係するクイズです">
+<div class="callout callout-style-simple callout-note callout-titled" title="冒頭のDAGについてのクイズです">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-このエピソードに関係するクイズです
+冒頭のDAGについてのクイズです
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>ピロリ菌と胃がんの因果関係を表すDAGをもう一度示します。このDAGにおいて、交絡因子として調整すべき変数の集合として正しいのは、次のうちどれでしょうか。</p>
+<p>以下のDAGにおいて、交絡因子として調整すべき変数の集合として正しいのは、次のうちどれでしょうか。</p>
 <ol type="1">
 <li>B</li>
 <li>C</li>
@@ -631,8 +637,8 @@ Rパッケージを用いたDAGのコードはこちら
 <ul>
 <li><strong>正解は4です。</strong></li>
 </ul>
-<p>このDAGは、上のクイズで扱ったDAGにパスE→Dを加えたものなので、調整すべき交絡因子は同じです。そして、先ほど考えたように、Cは合流点でもあり、共通原因でもあります。したがって、Aだけ、Bだけ、AとBだけを調整すると、パスE←C→Dによる疑似相関が残ってしまいます。さらに、Cは合流点なので、調整するとパスE←A→C←B→Dによる相関が生じてしまいます。</p>
-<p>結論をいうと、パスE←A→C←B→Dをブロックするため、Cに加えて、AまたはBを調整する必要があります。</p>
+<p>DAGをみると、Cは合流点でもあり、共通原因にもなっていますよね。したがって、Aだけ、Bだけ、AとBだけを調整すると、パスE←C→Dによる疑似相関が残ってしまいます。さらに、Cは合流点なので、調整するとパスE←A→C←B→Dによる相関が生じてしまいます。</p>
+<p>結論をいうと、パスE←A→C←B→Dをブロックするため、Cに加えて、AまたはBを調整する必要があります。この変数の組み合わせは<code>dagitty()</code>と<code>adjustmentSets()</code>の実行結果と同じですよね。</p>
 </div>
 </div>
 </div>
