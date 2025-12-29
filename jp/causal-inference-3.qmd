@@ -32,13 +32,24 @@ Keywords: bias, causal model, confounding & collapsibility, probability model
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="Rパッケージを用いたDAGのコードはこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="ピロリ菌と胃がんの因果関係を表すDAG"}
 
 ピロリ菌と胃がんの因果関係を表すDAGをもう一度示します。
 
 ![](causal-inference-3-7)
 
-このDAGを使って何がわかるかをみるため、Rの**dagitty**パッケージを実行してみます。
+-   A: 性格（心配性）
+-   B: 年齢
+-   C: 体質（胃の炎症）
+-   D: 胃がん発生
+-   E: ピロリ菌除菌
+
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Rパッケージを用いたDAGのコードはこちら"}
+
+このDAGを使って何がわかるかをみるため、Rの**dagitty**パッケージを実行してみます。`dagitty()`は、変数の出口と入口を指定することで、ノードを矢印で結びます。`adjustmentSets()`は、DAGを与えて調整すべき変数の集合（交絡因子の集合）を調べるツールです。
+
 ```{r warning=FALSE}
 # install.packages("dagitty") #インストールが必要なら実行
 library(dagitty)
@@ -59,12 +70,12 @@ print(confounders)
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
-::: voice-father
-私「ふむ。今回も呪文の意味はわからぬが、とりあえず、`dagitty()`の出力を`plot()`に入れるとDAGが描けたね。そして`adjustmentSets()`の出力を`print()`に入れると、交絡因子はBとC、AとCって表示された」
+::: voice-daughter
+私「ふむ。今回も呪文の意味はわからぬが、とりあえず、`dagitty()`の出力を`plot()`に入れるとDAGが描かれた。そして`adjustmentSets()`の出力を`print()`に入れると、交絡因子はBとC、AとCって表示された」
 :::
 
 ::: voice-father
-お父さん「その通り。ここからは、DAGから交絡因子を探すアルゴリズムの話なんだけど、そのためには同時分布と条件付分布が要る。人によっては復習が必要かもしれない」
+お父さん「その通り。ここからは、どうやってDAGから交絡因子として調整すべき変数たちを探すかっていうアルゴリズムの話をするねｄｄ。そのためには同時分布と条件付分布が要る。人によっては復習が必要かもしれない」
 :::
 ::::::::::::::::::::::::::::::::: 
 
@@ -101,7 +112,7 @@ $\mathrm{Pr}(A\cap{B}|C)=\mathrm{Pr}(A|C)\mathrm{Pr}(B|C)$
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-father
-お父さん「復習はできた？じゃあDAGと確率変数の関係について説明しよう」
+お父さん「思い出した？じゃあDAGと確率変数の関係について説明しよう」
 :::
 
 ::: voice-daughter
@@ -193,7 +204,7 @@ $\mathrm{Pr}(E|A,B,C,D)=\mathrm{Pr}(E|A,C)$
 :::
 
 ::: voice-father
-お父さん「簡単にいうとそういうこと。**合流点があると、変数間の相関関係がトリッキーになる**んだ」
+お父さん「簡単にいうとそういうこと。**合流点があると、変数間の相関関係がトリッキーになる**んだ。簡単にいうと、**dagitty**パッケージは合流点に気をつけながら、バックドアパスをブロックする変数を見つけてくれるんだ」
 :::
 ::::::::::::::::::::::::::::::::: 
 

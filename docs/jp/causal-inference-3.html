@@ -331,8 +331,32 @@ window.Quarto = {
 <p>お父さん「まだ話は続くから、コーヒー淹れなおそうか。ここからの話題はDAGと確率変数の関係について。まず、以下のRコードの実行結果をみてよ」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="Rパッケージを用いたDAGのコードはこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="ピロリ菌と胃がんの因果関係を表すDAG">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+ピロリ菌と胃がんの因果関係を表すDAG
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>ピロリ菌と胃がんの因果関係を表すDAGをもう一度示します。</p>
+<p><img src="causal-inference-3-7.png" class="img-fluid"></p>
+<ul>
+<li>A: 性格（心配性）</li>
+<li>B: 年齢</li>
+<li>C: 体質（胃の炎症）</li>
+<li>D: 胃がん発生</li>
+<li>E: ピロリ菌除菌</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rパッケージを用いたDAGのコードはこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -341,11 +365,9 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>ピロリ菌と胃がんの因果関係を表すDAGをもう一度示します。</p>
-<p><img src="causal-inference-3-7.png" class="img-fluid"></p>
-<p>このDAGを使って何がわかるかをみるため、Rの<strong>dagitty</strong>パッケージを実行してみます。</p>
+<p>このDAGを使って何がわかるかをみるため、Rの<strong>dagitty</strong>パッケージを実行してみます。<code>dagitty()</code>は、変数の出口と入口を指定することで、ノードを矢印で結びます。<code>adjustmentSets()</code>は、DAGを与えて調整すべき変数の集合（交絡因子の集合）を調べるツールです。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dagitty") #インストールが必要なら実行</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
@@ -381,15 +403,15 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 </div>
 <div class="dialogue">
-<div class="voice-father">
-<p>私「ふむ。今回も呪文の意味はわからぬが、とりあえず、<code>dagitty()</code>の出力を<code>plot()</code>に入れるとDAGが描けたね。そして<code>adjustmentSets()</code>の出力を<code>print()</code>に入れると、交絡因子はBとC、AとCって表示された」</p>
+<div class="voice-daughter">
+<p>私「ふむ。今回も呪文の意味はわからぬが、とりあえず、<code>dagitty()</code>の出力を<code>plot()</code>に入れるとDAGが描かれた。そして<code>adjustmentSets()</code>の出力を<code>print()</code>に入れると、交絡因子はBとC、AとCって表示された」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「その通り。ここからは、DAGから交絡因子を探すアルゴリズムの話なんだけど、そのためには同時分布と条件付分布が要る。人によっては復習が必要かもしれない」</p>
+<p>お父さん「その通り。ここからは、どうやってDAGから交絡因子として調整すべき変数たちを探すかっていうアルゴリズムの話をするねｄｄ。そのためには同時分布と条件付分布が要る。人によっては復習が必要かもしれない」</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="確率の復習">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -398,7 +420,7 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>同時確率と条件付確率</strong></p>
 <p>複数の事象を扱うとき、<strong>事象が同時に起こる確率（同時確率</strong>）と、<strong>順番に起こる確率（条件付確率）</strong>を区別することが大切です。たとえば2種類の事象AとBがあったとしましょう。「AまたはBが起きる」という事象は、和集合<span class="math inline">\(A\cup{B}\)</span>で表します。「AかつBが起きる」という事象は、積集合<span class="math inline">\(A\cap{B}\)</span>で表します。</p>
@@ -419,7 +441,7 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 <div class="dialogue">
 <div class="voice-father">
-<p>お父さん「復習はできた？じゃあDAGと確率変数の関係について説明しよう」</p>
+<p>お父さん「思い出した？じゃあDAGと確率変数の関係について説明しよう」</p>
 </div>
 <div class="voice-daughter">
 <p>私「ふむふむ」</p>
@@ -485,7 +507,7 @@ Rパッケージを用いたDAGのコードはこちら
 <p>私「なんとなくゴールが見えてきた。この図みたいにCが合流点だったら、調整なんかせずにEとDの相関を調べればいいってことね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「簡単にいうとそういうこと。<strong>合流点があると、変数間の相関関係がトリッキーになる</strong>んだ」</p>
+<p>お父さん「簡単にいうとそういうこと。<strong>合流点があると、変数間の相関関係がトリッキーになる</strong>んだ。簡単にいうと、<strong>dagitty</strong>パッケージは合流点に気をつけながら、バックドアパスをブロックする変数を見つけてくれるんだ」</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="合流点の性質">
@@ -513,7 +535,7 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="合流点とブロックの関係">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -522,7 +544,7 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>この表は、原因から結果までのパスを、有向か無向か、合流点をいくつ含んでいるかに従って、4分類して、パスの性質を整理したものです。すでに述べたように、調整するかどうか検討の候補になるのは、原因から結果までの無向パスです。もし、無向パスが<strong>合流点を含まないなら、パス上のどこかの変数を調整しない限り、そのパスはブロックされません</strong>。言い換えると、パス上の変数を調整し、このパスをブロックすることで、バイアスを防ぐことができるかもしれません。無向パスが<strong>合流点を1つ含むとき、調整しなくてもこのパスは合流点でブロックされます</strong>が、<strong>合流点のみを調整すると、ブロックが解けてしまいます</strong>。ただし、非合流点を調整すると、合流点を調整したとしても、そのパスはブロックされます。合流点を1つ以上含む場合も、考え方は同じです。調整していない合流点があるか、非合流点を調整すると、このパスはブロックされます。しかし、すべての合流点のみを調整すると、ブロックが解けてしまいます。</p>
 <table class="caption-top table">
@@ -583,7 +605,7 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -592,7 +614,7 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は1です。</strong></li>
@@ -623,7 +645,7 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -632,7 +654,7 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は4です。</strong></li>
@@ -655,7 +677,7 @@ Rパッケージを用いたDAGのコードはこちら
 <li><a href="causal-inference-4.html">A Circle, an Equation, and a Cylinder</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -664,7 +686,7 @@ Rパッケージを用いたDAGのコードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>
