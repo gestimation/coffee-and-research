@@ -28,7 +28,43 @@ Keywords: bias, causal model, confounding & collapsibility, probability model
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-father
-お父さん「まだ話は続くから、コーヒー淹れなおそうか。ここからの話題はDAGと確率変数の関係について。まず、確率の基本について思い出してみよう」
+お父さん「まだ話は続くから、コーヒー淹れなおそうか。ここからの話題はDAGと確率変数の関係について。まず、以下のRコードの実行結果をみてよ」
+:::
+::::::::::::::::::::::::::::::::: 
+
+::: {.callout-note appearance="simple" title="Rパッケージを用いたDAGのコードはこちら"}
+
+ピロリ菌と胃がんの因果関係を表すDAGをもう一度示します。
+
+![](causal-inference-3-7)
+
+このDAGを使って何がわかるかをみるため、Rの**dagitty**パッケージを実行してみます。
+```{r warning=FALSE}
+# install.packages("dagitty") #インストールが必要なら実行
+library(dagitty)
+dag <- dagitty("dag {
+  A -> C
+  A -> E
+  B -> C
+  B -> D
+  C -> D
+  C -> E
+  E -> D
+}")
+
+plot(dag)
+confounders <- adjustmentSets(dag, exposure = "E", outcome = "D")
+print(confounders)
+```
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+私「ふむ。今回も呪文の意味はわからぬが、とりあえず、`dagitty()`の出力を`plot()`に入れるとDAGが描けたね。そして`adjustmentSets()`の出力を`print()`に入れると、交絡因子はBとC、AとCって表示された」
+:::
+
+::: voice-father
+お父さん「その通り。ここからは、DAGから交絡因子を探すアルゴリズムの話なんだけど、そのためには同時分布と条件付分布を知っておく必要がある」
 :::
 ::::::::::::::::::::::::::::::::: 
 
@@ -62,7 +98,6 @@ $\mathrm{Pr}(A\cap{B})=\mathrm{Pr}(A)\mathrm{Pr}(B)$
 
 $\mathrm{Pr}(A\cap{B}|C)=\mathrm{Pr}(A|C)\mathrm{Pr}(B|C)$
 :::
-
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-father

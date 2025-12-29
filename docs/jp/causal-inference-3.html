@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -293,7 +328,61 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="調整すべき因子かどうかってどうやって見分けるの">調整すべき因子かどうかってどうやって見分けるの？</h3>
 <div class="dialogue">
 <div class="voice-father">
-<p>お父さん「まだ話は続くから、コーヒー淹れなおそうか。ここからの話題はDAGと確率変数の関係について。まず、確率の基本について思い出してみよう」</p>
+<p>お父さん「まだ話は続くから、コーヒー淹れなおそうか。ここからの話題はDAGと確率変数の関係について。まず、以下のRコードの実行結果をみてよ」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rパッケージを用いたDAGのコードはこちら">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rパッケージを用いたDAGのコードはこちら
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>ピロリ菌と胃がんの因果関係を表すDAGをもう一度示します。</p>
+<p><img src="causal-inference-3-7.png" class="img-fluid"></p>
+<p>このDAGを使って何がわかるかをみるため、Rの<strong>dagitty</strong>パッケージを実行してみます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dagitty") #インストールが必要なら実行</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dag <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">"dag {</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">  A -&gt; C</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">  A -&gt; E</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">  B -&gt; C</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">  B -&gt; D</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">  C -&gt; D</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">  C -&gt; E</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">  E -&gt; D</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">}"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Plot coordinates for graph not supplied! Generating coordinates, see ?coordinates for how to set your own.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="causal-inference-3_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>confounders <span class="ot">&lt;-</span> <span class="fu">adjustmentSets</span>(dag, <span class="at">exposure =</span> <span class="st">"E"</span>, <span class="at">outcome =</span> <span class="st">"D"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(confounders)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{ B, C }
+{ A, C }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-father">
+<p>私「ふむ。今回も呪文の意味はわからぬが、とりあえず、<code>dagitty()</code>の出力を<code>plot()</code>に入れるとDAGが描けたね。そして<code>adjustmentSets()</code>の出力を<code>print()</code>に入れると、交絡因子はBとC、AとCって表示された」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「その通り。ここからは、DAGから交絡因子を探すアルゴリズムの話なんだけど、そのためには同時分布と条件付分布を知っておく必要がある」</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="確率の復習">
@@ -418,7 +507,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="合流点とブロックの関係">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -427,7 +516,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>この表は、原因から結果までのパスを、有向か無向か、合流点をいくつ含んでいるかに従って、4分類して、パスの性質を整理したものです。すでに述べたように、調整するかどうか検討の候補になるのは、原因から結果までの無向パスです。もし、無向パスが<strong>合流点を含まないなら、パス上のどこかの変数を調整しない限り、そのパスはブロックされません</strong>。言い換えると、パス上の変数を調整し、このパスをブロックすることで、バイアスを防ぐことができるかもしれません。無向パスが<strong>合流点を1つ含むとき、調整しなくてもこのパスは合流点でブロックされます</strong>が、<strong>合流点のみを調整すると、ブロックが解けてしまいます</strong>。ただし、非合流点を調整すると、合流点を調整したとしても、そのパスはブロックされます。合流点を1つ以上含む場合も、考え方は同じです。調整していない合流点があるか、非合流点を調整すると、このパスはブロックされます。しかし、すべての合流点のみを調整すると、ブロックが解けてしまいます。</p>
 <table class="caption-top table">
@@ -488,7 +577,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -497,7 +586,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は1です。</strong></li>
@@ -528,7 +617,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -537,7 +626,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は4です。</strong></li>
@@ -560,7 +649,7 @@ window.Quarto = {
 <li><a href="causal-inference-4.html">A Circle, an Equation, and a Cylinder</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -569,7 +658,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>
