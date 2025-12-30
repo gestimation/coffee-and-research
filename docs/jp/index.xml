@@ -1784,7 +1784,6 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>このシリーズのエピソード</strong></p>
 <ul>
 <li><a href="study-design-1.html">A Story of Coffee Chat and Research Hypothesis</a></li>
 <li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
@@ -1896,7 +1895,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 <p>私「知らんな。呪詛」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そうだね、人間が使う言葉とは思えないとはこっちも思うよ。でも、本題に入る前につまづいたらもったいない。もし、統計でわからない言葉が出てきたら、<a href="glossary.html"><strong>いつでも質問においで</strong></a>。まあ、とにかく、どのデータの型にどんな確率モデルを使うのか、パターンを知ることだね」</p>
+<p>お父さん「そうだね、人間が使う言葉とは思えないとはこっちも思うよ。でも、本題に入る前につまづいたらもったいない。もし、統計でわからない言葉が出てきたら、<a href="glossary.html"><strong>“参考資料”</strong></a>をみてよ。まあ、とにかく、どのデータの型にどんな確率モデルを使うのか、パターンを知ることだね」</p>
 </div>
 <div class="voice-daughter">
 <p>私「はあ。それとRが関係するわけ？」</p>
