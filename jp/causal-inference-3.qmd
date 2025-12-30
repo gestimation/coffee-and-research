@@ -32,7 +32,7 @@ Keywords: bias, causal model, confounding & collapsibility, probability model
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="ピロリ菌と胃がんの因果関係を表すDAG"}
+::: {.callout-note appearance="simple" collapse="true" title="分析するDAGはこちら"}
 
 ピロリ菌と胃がんの因果関係を表すDAGをもう一度示します。
 
@@ -46,7 +46,7 @@ Keywords: bias, causal model, confounding & collapsibility, probability model
 
 :::
 
-::: {.callout-note appearance="simple" collapse="true" title="Rパッケージを用いたDAGのコードはこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
 
 このDAGを使って何がわかるかをみるため、Rの**dagitty**パッケージを実行してみます。`dagitty()`は、変数の出口と入口を指定することで、ノードを矢印で結びます。`adjustmentSets()`は、DAGを与えて調整すべき変数の集合（交絡因子の集合）を調べるツールです。
 

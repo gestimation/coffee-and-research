@@ -149,18 +149,21 @@ Keywords: bias, language & writing, observational study, study design
 :::
 ::::::::::::::::::::::::::::::::: 
 
-### Up to this point, we have been talking about the essence of research — how we frame research questions and plan to obtain unbiased answers. The following episodes step away from study design and begin to reflect on observed effects and their uncertainty, how we reason about causes, and what ultimately becomes publishable.
+### 医学研究に関するふたりの会話はいかがでしたか？以降のエピソードでは、統計学・因果推論から論文公表までを描いていきます。
 
 - [Reading a Paper over a Cup of Coffee](frequentist-1.html)
-- [P-Value Explanations That Seem Plausible at First Glance](frequentist-2.html)
-- [Beyond 0.05: Interpreting P-Values in a Clinical Trial](frequentist-3.html)
 
-### 過去のエピソード
+::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}
+
+**過去のエピソード**
 
 - [A Story of Coffee Chat and Research Hypothesis](study-design-1.html)
 - [Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes](study-design-2.html)
 - [Outcomes: The Bridge from Data Collection to Analysis](study-design-3.html)
 - [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
 - [When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys](study-design-5.html)
+
+**用語集**
+
 - [Statistical Terms in Plain Language](glossary.html)
-- [study-design.R](../from-coffee-chat-to-r/study-design.R)
+:::

@@ -281,12 +281,21 @@ Kim and Prasad（2016）の総説論文によると、奏効率の結果に基�
 
 - Kim C and Prasad V. Strength of validation for surrogate end points used in the US Food and Drug Administration's approval of oncology drugs. Mayo Clin Proc 2016; S0025-6196(16)00125-7
 
-### エピソード、用語集、Rスクリプト
+### 次のエピソードとRスクリプト
+- [Outcomes: The Bridge from Data Collection to Analysis](study-design-3.html)
+- [study-design.R](../from-coffee-chat-to-r/study-design.R)
+
+::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}
+
+**このシリーズのエピソード**
 
 - [A Story of Coffee Chat and Research Hypothesis](study-design-1.html)
 - [Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes](study-design-2.html)
 - [Outcomes: The Bridge from Data Collection to Analysis](study-design-3.html)
 - [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
 - [When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys](study-design-5.html)
+
+**用語集**
+
 - [Statistical Terms in Plain Language](glossary.html)
-- [study-design.R](../from-coffee-chat-to-r/study-design.R)
+:::

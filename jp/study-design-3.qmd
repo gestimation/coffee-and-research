@@ -167,12 +167,21 @@ OS、DFS、RFSは、特に術後補助化学療法の有効性を評価すると
 
 - [薬生薬審発0331第1号. 抗悪性腫瘍薬の臨床評価方法に関するガイドライン [Internet]. 東京: 厚生労働省医薬・生活衛生局医薬品審査管理課長; 2021](https://www.pmda.go.jp/files/000243746.pdf)
 
-### エピソード、用語集、Rスクリプト
+### 次のエピソードとRスクリプト
+- [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
+- [study-design.R](../from-coffee-chat-to-r/study-design.R)
+
+::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}
+
+**このシリーズのエピソード**
 
 - [A Story of Coffee Chat and Research Hypothesis](study-design-1.html)
 - [Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes](study-design-2.html)
 - [Outcomes: The Bridge from Data Collection to Analysis](study-design-3.html)
 - [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
 - [When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys](study-design-5.html)
+
+**用語集**
+
 - [Statistical Terms in Plain Language](glossary.html)
-- [study-design.R](../from-coffee-chat-to-r/study-design.R)
+:::

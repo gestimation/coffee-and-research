@@ -1030,17 +1030,39 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 </div>
 </section>
-<section id="エピソード用語集rスクリプト" class="level3">
-<h3 class="anchored" data-anchor-id="エピソード用語集rスクリプト">エピソード、用語集、Rスクリプト</h3>
+<section id="次のエピソードとrスクリプト" class="level3">
+<h3 class="anchored" data-anchor-id="次のエピソードとrスクリプト">次のエピソードとRスクリプト</h3>
+<ul>
+<li><a href="study-design-5.html">When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys</a></li>
+<li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+他のエピソードはこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>このシリーズのエピソード</strong></p>
 <ul>
 <li><a href="study-design-1.html">A Story of Coffee Chat and Research Hypothesis</a></li>
 <li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
 <li><a href="study-design-3.html">Outcomes: The Bridge from Data Collection to Analysis</a></li>
 <li><a href="study-design-4.html">A First Step into Survival and Competing Risks Analysis with R</a></li>
 <li><a href="study-design-5.html">When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys</a></li>
-<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
-<li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 </ul>
+<p><strong>用語集</strong></p>
+<ul>
+<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
+</ul>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -1173,25 +1195,38 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </section>
 </div>
 </section>
-<section id="up-to-this-point-we-have-been-talking-about-the-essence-of-research-how-we-frame-research-questions-and-plan-to-obtain-unbiased-answers.-the-following-episodes-step-away-from-study-design-and-begin-to-reflect-on-observed-effects-and-their-uncertainty-how-we-reason-about-causes-and-what-ultimately-becomes-publishable." class="level3">
-<h3 class="anchored" data-anchor-id="up-to-this-point-we-have-been-talking-about-the-essence-of-research-how-we-frame-research-questions-and-plan-to-obtain-unbiased-answers.-the-following-episodes-step-away-from-study-design-and-begin-to-reflect-on-observed-effects-and-their-uncertainty-how-we-reason-about-causes-and-what-ultimately-becomes-publishable.">Up to this point, we have been talking about the essence of research — how we frame research questions and plan to obtain unbiased answers. The following episodes step away from study design and begin to reflect on observed effects and their uncertainty, how we reason about causes, and what ultimately becomes publishable.</h3>
+<section id="医学研究に関するふたりの会話はいかがでしたか以降のエピソードでは統計学因果推論から論文公表までを描いていきます" class="level3">
+<h3 class="anchored" data-anchor-id="医学研究に関するふたりの会話はいかがでしたか以降のエピソードでは統計学因果推論から論文公表までを描いていきます">医学研究に関するふたりの会話はいかがでしたか？以降のエピソードでは、統計学・因果推論から論文公表までを描いていきます。</h3>
 <ul>
 <li><a href="frequentist-1.html">Reading a Paper over a Cup of Coffee</a></li>
-<li><a href="frequentist-2.html">P-Value Explanations That Seem Plausible at First Glance</a></li>
-<li><a href="frequentist-3.html">Beyond 0.05: Interpreting P-Values in a Clinical Trial</a></li>
 </ul>
-</section>
-<section id="過去のエピソード" class="level3">
-<h3 class="anchored" data-anchor-id="過去のエピソード">過去のエピソード</h3>
+<div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+他のエピソードはこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>過去のエピソード</strong></p>
 <ul>
 <li><a href="study-design-1.html">A Story of Coffee Chat and Research Hypothesis</a></li>
 <li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
 <li><a href="study-design-3.html">Outcomes: The Bridge from Data Collection to Analysis</a></li>
 <li><a href="study-design-4.html">A First Step into Survival and Competing Risks Analysis with R</a></li>
 <li><a href="study-design-5.html">When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys</a></li>
-<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
-<li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 </ul>
+<p><strong>用語集</strong></p>
+<ul>
+<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
+</ul>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -1436,17 +1471,39 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <li><p><a href="https://www.pmda.go.jp/files/000243746.pdf">薬生薬審発0331第1号. 抗悪性腫瘍薬の臨床評価方法に関するガイドライン [Internet]. 東京: 厚生労働省医薬・生活衛生局医薬品審査管理課長; 2021</a></p></li>
 </ul>
 </section>
-<section id="エピソード用語集rスクリプト" class="level3">
-<h3 class="anchored" data-anchor-id="エピソード用語集rスクリプト">エピソード、用語集、Rスクリプト</h3>
+<section id="次のエピソードとrスクリプト" class="level3">
+<h3 class="anchored" data-anchor-id="次のエピソードとrスクリプト">次のエピソードとRスクリプト</h3>
+<ul>
+<li><a href="study-design-4.html">A First Step into Survival and Competing Risks Analysis with R</a></li>
+<li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+他のエピソードはこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>このシリーズのエピソード</strong></p>
 <ul>
 <li><a href="study-design-1.html">A Story of Coffee Chat and Research Hypothesis</a></li>
 <li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
 <li><a href="study-design-3.html">Outcomes: The Bridge from Data Collection to Analysis</a></li>
 <li><a href="study-design-4.html">A First Step into Survival and Competing Risks Analysis with R</a></li>
 <li><a href="study-design-5.html">When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys</a></li>
-<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
-<li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 </ul>
+<p><strong>用語集</strong></p>
+<ul>
+<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
+</ul>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -1710,16 +1767,34 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 </section>
-<section id="エピソードとrスクリプト" class="level3">
-<h3 class="anchored" data-anchor-id="エピソードとrスクリプト">エピソードとRスクリプト</h3>
+<section id="次のエピソード" class="level3">
+<h3 class="anchored" data-anchor-id="次のエピソード">次のエピソード</h3>
+<ul>
+<li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+他のエピソードはこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>このシリーズのエピソード</strong></p>
 <ul>
 <li><a href="study-design-1.html">A Story of Coffee Chat and Research Hypothesis</a></li>
 <li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
 <li><a href="study-design-3.html">Outcomes: The Bridge from Data Collection to Analysis</a></li>
 <li><a href="study-design-4.html">A First Step into Survival and Competing Risks Analysis with R</a></li>
 <li><a href="study-design-5.html">When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys</a></li>
-<li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 </ul>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -2311,17 +2386,39 @@ font-style: inherit;">"survival"</span></span>
 <li>Kim C and Prasad V. Strength of validation for surrogate end points used in the US Food and Drug Administration’s approval of oncology drugs. Mayo Clin Proc 2016; S0025-6196(16)00125-7</li>
 </ul>
 </section>
-<section id="エピソード用語集rスクリプト" class="level3">
-<h3 class="anchored" data-anchor-id="エピソード用語集rスクリプト">エピソード、用語集、Rスクリプト</h3>
+<section id="次のエピソードとrスクリプト" class="level3">
+<h3 class="anchored" data-anchor-id="次のエピソードとrスクリプト">次のエピソードとRスクリプト</h3>
+<ul>
+<li><a href="study-design-3.html">Outcomes: The Bridge from Data Collection to Analysis</a></li>
+<li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+他のエピソードはこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>このシリーズのエピソード</strong></p>
 <ul>
 <li><a href="study-design-1.html">A Story of Coffee Chat and Research Hypothesis</a></li>
 <li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
 <li><a href="study-design-3.html">Outcomes: The Bridge from Data Collection to Analysis</a></li>
 <li><a href="study-design-4.html">A First Step into Survival and Competing Risks Analysis with R</a></li>
 <li><a href="study-design-5.html">When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys</a></li>
-<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
-<li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 </ul>
+<p><strong>用語集</strong></p>
+<ul>
+<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
+</ul>
+</div>
+</div>
+</div>
 
 
 </section>
