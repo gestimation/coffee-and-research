@@ -137,7 +137,7 @@ dat <- diabetes.complications
 :::
 :::::::::::::::::::::::::::::::::
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" title="最初の集計"}
 ```{r}
 out1 <- aggregate(age ~ fruitq1, data = dat, FUN = mean)
 print(out1)
@@ -164,7 +164,7 @@ print(out1)
 - 欠測はどれくらいか
 
 ::: voice-father
-お父さん「これは手順の問題でRコードは難しくない」
+お父さん「これは手順の問題で、R自体は難しくない」
 :::
 :::::::::::::::::::::::::::::::::
 
@@ -220,7 +220,7 @@ ltpa -> fruitq1
 ltpa -> t
 fruitq1 -> t
 }")
-print(out2)
+plot(out2)
 out3 <- adjustmentSets(out2, exposure = "fruitq1", outcome = "t")
 print(out3)
 ```
@@ -276,10 +276,10 @@ print(out6)
 "`gtsummary()`を使って曝露群と非曝露群で層別した集計表を作って"
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-```{r}
+```{r, eval=FALSE}
 # install.packages("gtsummary") #インストールが必要なら実行
-# install.packages("dplyr") #インストールが必要なら実行
 library(gtsummary)
+# install.packages("dplyr") #インストールが必要なら実行
 library(dplyr)
 table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
     tbl_summary(
@@ -292,6 +292,8 @@ table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
 print(table1)
 ```
 :::
+
+![](ai-r-3.png)
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-father
@@ -306,7 +308,7 @@ print(table1)
 ”全体の集計結果を表す列を追加して。桁数も整えて。連続変数の指標と割合は小数点1桁まで、p値は小数点3桁まで表示。変数名じゃなくてラベルをつけて”
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-```{r}
+```{r, eval=FALSE}
 table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
     tbl_summary(
         by = exposure_var,
@@ -343,6 +345,8 @@ print(table1)
 私「できた！」
 :::
 
+![](ai-r-4.png)
+
 ::: voice-father
 お父さん「ちょっと待ちなよ。このp値はなんのp値？」
 :::
@@ -372,6 +376,8 @@ print(table1)
 ```{r}
 # install.packages("tableone") #インストールが必要なら実行
 library(tableone)
+# install.packages("dplyr") #インストールが必要なら実行
+library(dplyr)
 
 # Prepare data with same labeling
 dat_check <- diabetes.complications %>%
