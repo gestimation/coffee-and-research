@@ -15,7 +15,7 @@ date: 2025-12-13
 ![](../image/father-daughter.png){.hero-header-img}
 :::
 
-# AI and R I 
+# AI/R I 
 
 ::: {.serif-block .text-right}
 Keywords: a, b, c
@@ -114,7 +114,7 @@ Keywords: a, b, c
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
 ```{r}
-# devtools::install_github("gestimation/cifmodeling") #インストールが必要なら実行
+# install.packages("cifmodeling") #インストールが必要なら実行
 library(cifmodeling)
 data(diabetes.complications)
 dat <- diabetes.complications
@@ -138,8 +138,10 @@ dat <- diabetes.complications
 :::::::::::::::::::::::::::::::::
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
 out1 <- aggregate(age ~ fruitq1, data = dat, FUN = mean)
 print(out1)
+```
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -167,8 +169,10 @@ print(out1)
 :::::::::::::::::::::::::::::::::
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
 head(dat)
 sapply(dat, class)
+```
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -182,6 +186,8 @@ sapply(dat, class)
 :::::::::::::::::::::::::::::::::
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
+# install.packages("dagitty") #インストールが必要なら実行
 library(dagitty)
 out2 <- dagitty("dag {
 age -> fruitq1
@@ -217,6 +223,7 @@ fruitq1 -> t
 print(out2)
 out3 <- adjustmentSets(out2, exposure = "fruitq1", outcome = "t")
 print(out3)
+```
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -230,6 +237,7 @@ print(out3)
 ::::::::::::::::::::::::::::::::: 
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
 dat$fruit_group <- factor(
     dat$fruitq1,
     levels = c(0, 1),
@@ -252,6 +260,7 @@ out6 <- sapply(dat[, binary_var], function(x) sum(is.na(x)))
 print(out4)
 print(out5)
 print(out6)
+```
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -267,7 +276,11 @@ print(out6)
 "`gtsummary()`を使って曝露群と非曝露群で層別した集計表を作って"
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
+# install.packages("gtsummary") #インストールが必要なら実行
+# install.packages("dplyr") #インストールが必要なら実行
 library(gtsummary)
+library(dplyr)
 table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
     tbl_summary(
         by = exposure_var,
@@ -277,6 +290,7 @@ table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
         )
     )
 print(table1)
+```
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -292,9 +306,11 @@ print(table1)
 ”全体の集計結果を表す列を追加して。桁数も整えて。連続変数の指標と割合は小数点1桁まで、p値は小数点3桁まで表示。変数名じゃなくてラベルをつけて”
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
 table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
     tbl_summary(
         by = exposure_var,
+        statistic = list(all_continuous() ~ "{mean} ({sd})"),
         digits = list(
             all_continuous() ~ 1,
             all_categorical() ~ c(0, 1)
@@ -318,8 +334,8 @@ table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
     ) %>%
     add_p(pvalue_fun = ~ style_pvalue(.x, digits = 3)) %>%
     add_overall()
-
 print(table1)
+```
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -340,21 +356,11 @@ print(table1)
 :::
 
 ::: voice-daughter
-私「あ、たしかに。ちょっと待って調べる」
-:::
-::::::::::::::::::::::::::::::::: 
-
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-?add_p()
-:::
-
-::::::::::::::::::::::::::::::::: dialogue
-::: voice-daughter
-私「`add_p.tbl_cross`のヘルプによるとWilcoxon順位和検定と$\chi^2$検定みたい」
+私「あ、たしかに。ちょっと待って調べる。ヘルプは`?add_p()`で出すんだよね。...ふむ、ヘルプをたどるとWilcoxon順位和検定と$\chi^2$検定って書いてあった。期待人数が5より低いと、$\chi^2$検定じゃなくてFisher正確検定が選ばれる」
 :::
 
 ::: voice-father
-お父さん「そうそう。今回はそれであってる。期待人数が5より低いと、$\chi^2$検定じゃなくてFisher正確検定が選ばれるけどね。それともうひとつやることがある」
+お父さん「そうそう。それであってる。それともうひとつやることがある」
 :::
 ::::::::::::::::::::::::::::::::: 
 
@@ -363,27 +369,28 @@ print(table1)
 ”この結果が正しいかダブルプログラミングでチェックしたい。別の関数を使って表を作って”
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-# Double programming check using tableone
-install.packages("tableone")
+```{r}
+# install.packages("tableone") #インストールが必要なら実行
 library(tableone)
 
 # Prepare data with same labeling
-df_check <- diabetes.complications %>%
-    select(all_of(confounder_names), fruitq1) %>%
+dat_check <- diabetes.complications %>%
+    select(all_of(continuous_var), all_of(binary_var), fruitq1) %>%
     mutate(fruitq1 = factor(fruitq1, levels = c(0, 1), labels = c("High Intake", "Low Intake")))
 
 # Create summary table using tableone
-table2 <- CreateTableOne(vars = confounder_names, strata = "fruitq1", data = df_check, test = TRUE)
+table2 <- CreateTableOne(vars = c(continuous_var, binary_var), strata = "fruitq1", data = dat_check, test = TRUE)
 print(table2, showAllLevels = TRUE)
+```
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-daughter
-私「表の桁数は違うけど、数値はあってたみたい。これでいいってこと？」
+私「p値と桁数とは違うけど、要約指標はあってたみたい。これでいいってこと？」
 :::
 
 ::: voice-father
-お父さん「患者背景の集計まではね。いくつか注意点を振り返ってもいい？」
+お父さん「患者背景の集計まではね。`CreateTableOne()`でどの検定を使っているか後で確認するとして、いくつか注意点を振り返ってもいい？」
 :::
 
 ::: voice-daughter
@@ -407,12 +414,12 @@ print(table2, showAllLevels = TRUE)
 :::
 
 ::: voice-father
-お父さん「うんうん。ここまでをまとめると、どんな解析をするときも、この3つだけは予め考えておく」
+お父さん「うんうん。ここまでをまとめると、どんな解析をするときも最低限この3つは考えておく」
 :::
 
--変数の定義
--データの収集状況
--図表のひな型
+- 変数の定義
+- データの収集状況
+- 図表のひな型
 
 ::: voice-father
 お父さん「それから、これは途中で気付いたことだけど、AIに指示を出すとき、できればRの関数を指定した方がいいね。そうしないと、どの統計手法を使うかがぶれてしまう。また、AIにはダブルプログラミングをさせる。どちらも計画通りにプログラミングされているかコントロールするためだ」

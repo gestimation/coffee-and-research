@@ -278,7 +278,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ai-and-r-i" id="toc-ai-and-r-i" class="nav-link active" data-scroll-target="#ai-and-r-i">AI and R I</a>
+  <li><a href="#air-i" id="toc-air-i" class="nav-link active" data-scroll-target="#air-i">AI/R I</a>
   <ul class="collapse">
   <li><a href="#もちろんaiつかうよね" id="toc-もちろんaiつかうよね" class="nav-link" data-scroll-target="#もちろんaiつかうよね">もちろんAIつかうよね</a></li>
   <li><a href="#統計解析の品質管理" id="toc-統計解析の品質管理" class="nav-link" data-scroll-target="#統計解析の品質管理">統計解析の品質管理</a></li>
@@ -317,8 +317,8 @@ window.Quarto = {
 <div class="hero-header">
 <p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
 </div>
-<section id="ai-and-r-i" class="level1">
-<h1>AI and R I</h1>
+<section id="air-i" class="level1">
+<h1>AI/R I</h1>
 <div class="serif-block text-right">
 <p>Keywords: a, b, c</p>
 </div>
@@ -407,7 +407,7 @@ Rコードと結果はこちら
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github("gestimation/cifmodeling") #インストールが必要なら実行</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("cifmodeling") #インストールが必要なら実行</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cifmodeling)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(diabetes.complications)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> diabetes.complications</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -439,7 +439,15 @@ Rコードと結果はこちら
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>out1 &lt;- aggregate(age ~ fruitq1, data = dat, FUN = mean) print(out1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>out1 <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(age <span class="sc">~</span> fruitq1, <span class="at">data =</span> dat, <span class="at">FUN =</span> mean)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  fruitq1      age
+1       0 58.83194
+2       1 57.06202</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -474,7 +482,45 @@ Rコードと結果はこちら
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>head(dat) sapply(dat, class)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       t epsilon strata  fruit fruitq1 age sex  bmi  hba1c diabetes_duration
+1 8.6160       0      1  75.00       0  45   0 21.5 6.9736               4.2
+2 8.5120       0      4  26.80       1  68   0 18.3 8.0189               2.9
+3 7.7864       0      3  64.30       0  63   0 23.9 6.8865              14.3
+4 8.9144       0      1   5.35       1  49   0 22.9 7.2350               4.2
+5 8.9363       0      2 211.05       0  55   0 18.7 8.2803              16.3
+6 2.1958       1      3  48.20       1  61   0 23.4 7.2350               8.9
+  drug_oha drug_insulin sbp   ldl  hdl  tg current_smoker alcohol_drinker
+1        0            0 124 187.3 58.1 123              0               0
+2        0            1 128  87.6 57.2  71              1               0
+3        1            0 164  74.6 35.0 252              1               1
+4        1            0 126  95.7 34.7  83              1               0
+5        1            0 136  50.5 55.7 139              1               0
+6        1            0 146 156.1 36.7 181              0               0
+    ltpa fruitq
+1 52.500     Q2
+2 11.025     Q1
+3  4.375     Q2
+4  9.375     Q1
+5 12.375     Q4
+6 10.500     Q1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(dat, class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                t           epsilon            strata             fruit 
+        "numeric"         "integer"         "integer"         "numeric" 
+          fruitq1               age               sex               bmi 
+        "integer"         "integer"         "integer"         "numeric" 
+            hba1c diabetes_duration          drug_oha      drug_insulin 
+        "numeric"         "numeric"         "integer"         "integer" 
+              sbp               ldl               hdl                tg 
+        "integer"         "numeric"         "numeric"         "numeric" 
+   current_smoker   alcohol_drinker              ltpa            fruitq 
+        "integer"         "integer"         "numeric"          "factor" </code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -498,7 +544,100 @@ Rコードと結果はこちら
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>library(dagitty) out2 &lt;- dagitty(“dag { age -&gt; fruitq1 age -&gt; t sex -&gt; fruitq1 sex -&gt; t bmi -&gt; fruitq1 bmi -&gt; t hba1c -&gt; fruitq1 hba1c -&gt; t diabetes_duration -&gt; fruitq1 diabetes_duration -&gt; t drug_oha -&gt; fruitq1 drug_oha -&gt; t drug_insulin -&gt; fruitq1 drug_insulin -&gt; t sbp -&gt; fruitq1 sbp -&gt; t ldl -&gt; fruitq1 ldl -&gt; t hdl -&gt; fruitq1 hdl -&gt; t tg -&gt; fruitq1 tg -&gt; t current_smoker -&gt; fruitq1 current_smoker -&gt; t alcohol_drinker -&gt; fruitq1 alcohol_drinker -&gt; t ltpa -&gt; fruitq1 ltpa -&gt; t fruitq1 -&gt; t }”) print(out2) out3 &lt;- adjustmentSets(out2, exposure = “fruitq1”, outcome = “t”) print(out3)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dagitty") #インストールが必要なら実行</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dagitty' was built under R version 4.4.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>out2 <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">"dag {</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">age -&gt; fruitq1</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">age -&gt; t</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">sex -&gt; fruitq1</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">sex -&gt; t</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">bmi -&gt; fruitq1</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">bmi -&gt; t</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">hba1c -&gt; fruitq1</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">hba1c -&gt; t</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="st">diabetes_duration -&gt; fruitq1</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st">diabetes_duration -&gt; t</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="st">drug_oha -&gt; fruitq1</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="st">drug_oha -&gt; t</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="st">drug_insulin -&gt; fruitq1</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="st">drug_insulin -&gt; t</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="st">sbp -&gt; fruitq1</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="st">sbp -&gt; t</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="st">ldl -&gt; fruitq1</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="st">ldl -&gt; t</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="st">hdl -&gt; fruitq1</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="st">hdl -&gt; t</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="st">tg -&gt; fruitq1</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="st">tg -&gt; t</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="st">current_smoker -&gt; fruitq1</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="st">current_smoker -&gt; t</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="st">alcohol_drinker -&gt; fruitq1</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="st">alcohol_drinker -&gt; t</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="st">ltpa -&gt; fruitq1</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="st">ltpa -&gt; t</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="st">fruitq1 -&gt; t</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="st">}"</span>)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dag {
+age
+alcohol_drinker
+bmi
+current_smoker
+diabetes_duration
+drug_insulin
+drug_oha
+fruitq1
+hba1c
+hdl
+ldl
+ltpa
+sbp
+sex
+t
+tg
+age -&gt; fruitq1
+age -&gt; t
+alcohol_drinker -&gt; fruitq1
+alcohol_drinker -&gt; t
+bmi -&gt; fruitq1
+bmi -&gt; t
+current_smoker -&gt; fruitq1
+current_smoker -&gt; t
+diabetes_duration -&gt; fruitq1
+diabetes_duration -&gt; t
+drug_insulin -&gt; fruitq1
+drug_insulin -&gt; t
+drug_oha -&gt; fruitq1
+drug_oha -&gt; t
+fruitq1 -&gt; t
+hba1c -&gt; fruitq1
+hba1c -&gt; t
+hdl -&gt; fruitq1
+hdl -&gt; t
+ldl -&gt; fruitq1
+ldl -&gt; t
+ltpa -&gt; fruitq1
+ltpa -&gt; t
+sbp -&gt; fruitq1
+sbp -&gt; t
+sex -&gt; fruitq1
+sex -&gt; t
+tg -&gt; fruitq1
+tg -&gt; t
+}</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">adjustmentSets</span>(out2, <span class="at">exposure =</span> <span class="st">"fruitq1"</span>, <span class="at">outcome =</span> <span class="st">"t"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{ age, alcohol_drinker, bmi, current_smoker, diabetes_duration,
+  drug_insulin, drug_oha, hba1c, hdl, ldl, ltpa, sbp, sex, tg }</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -522,9 +661,46 @@ Rコードと結果はこちら
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>dat<span class="math inline">\(fruit_group &lt;- factor(
-    dat\)</span>fruitq1, levels = c(0, 1), labels = c(“High Intake”, “Low Intake”) ) exposure_var &lt;- “fruit_group” outcome_var &lt;- c(“t”, “epsilon”) continuous_var &lt;- c( “age”,“bmi”,“hba1c”,“diabetes_duration”, “sbp”,“ldl”,“hdl”,“tg”,“ltpa” ) binary_var &lt;- c( “sex”,“drug_oha”,“drug_insulin”, “current_smoker”,“alcohol_drinker” )</p>
-<p>out4 &lt;- sapply(dat[, c(exposure_var, outcome_var)], function(x) sum(is.na(x))) out5 &lt;- sapply(dat[, continuous_var], function(x) sum(is.na(x))) out6 &lt;- sapply(dat[, binary_var], function(x) sum(is.na(x))) print(out4) print(out5) print(out6)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>fruit_group <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    dat<span class="sc">$</span>fruitq1,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"High Intake"</span>, <span class="st">"Low Intake"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>exposure_var <span class="ot">&lt;-</span> <span class="st">"fruit_group"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>outcome_var <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"t"</span>, <span class="st">"epsilon"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>continuous_var <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"age"</span>,<span class="st">"bmi"</span>,<span class="st">"hba1c"</span>,<span class="st">"diabetes_duration"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sbp"</span>,<span class="st">"ldl"</span>,<span class="st">"hdl"</span>,<span class="st">"tg"</span>,<span class="st">"ltpa"</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>binary_var <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sex"</span>,<span class="st">"drug_oha"</span>,<span class="st">"drug_insulin"</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"current_smoker"</span>,<span class="st">"alcohol_drinker"</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(dat[, <span class="fu">c</span>(exposure_var, outcome_var)], <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>out5 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(dat[, continuous_var], <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>out6 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(dat[, binary_var], <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>fruit_group           t     epsilon 
+          0           0           0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              age               bmi             hba1c diabetes_duration 
+                0                 0                 0                 0 
+              sbp               ldl               hdl                tg 
+                0                 0                 0                 0 
+             ltpa 
+                0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            sex        drug_oha    drug_insulin  current_smoker alcohol_drinker 
+              0               0               0               0               0 </code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -549,7 +725,562 @@ Rコードと結果はこちら
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>library(gtsummary) table1 &lt;- dat[, c(exposure_var, continuous_var, binary_var)] %&gt;% tbl_summary( by = exposure_var, digits = list( all_continuous() ~ 1, all_categorical() ~ c(0, 1) ) ) print(table1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gtsummary") #インストールが必要なら実行</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dplyr") #インストールが必要なら実行</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'gtsummary' was built under R version 4.4.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> dat[, <span class="fu">c</span>(exposure_var, continuous_var, binary_var)] <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tbl_summary</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">by =</span> exposure_var,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">digits =</span> <span class="fu">list</span>(</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %&gt;% select(exposure_var)
+
+  # Now:
+  data %&gt;% select(all_of(exposure_var))
+
+See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;div id="evavsqhkgh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;"&gt;
+  &lt;style&gt;#evavsqhkgh table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#evavsqhkgh thead, #evavsqhkgh tbody, #evavsqhkgh tfoot, #evavsqhkgh tr, #evavsqhkgh td, #evavsqhkgh th {
+  border-style: none;
+}
+
+#evavsqhkgh p {
+  margin: 0;
+  padding: 0;
+}
+
+#evavsqhkgh .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#evavsqhkgh .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#evavsqhkgh .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#evavsqhkgh .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#evavsqhkgh .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#evavsqhkgh .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#evavsqhkgh .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#evavsqhkgh .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#evavsqhkgh .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#evavsqhkgh .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#evavsqhkgh .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#evavsqhkgh .gt_from_md &gt; :first-child {
+  margin-top: 0;
+}
+
+#evavsqhkgh .gt_from_md &gt; :last-child {
+  margin-bottom: 0;
+}
+
+#evavsqhkgh .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#evavsqhkgh .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#evavsqhkgh .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#evavsqhkgh .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#evavsqhkgh .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#evavsqhkgh .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#evavsqhkgh .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#evavsqhkgh .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#evavsqhkgh .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#evavsqhkgh .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#evavsqhkgh .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#evavsqhkgh .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#evavsqhkgh .gt_left {
+  text-align: left;
+}
+
+#evavsqhkgh .gt_center {
+  text-align: center;
+}
+
+#evavsqhkgh .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#evavsqhkgh .gt_font_normal {
+  font-weight: normal;
+}
+
+#evavsqhkgh .gt_font_bold {
+  font-weight: bold;
+}
+
+#evavsqhkgh .gt_font_italic {
+  font-style: italic;
+}
+
+#evavsqhkgh .gt_super {
+  font-size: 65%;
+}
+
+#evavsqhkgh .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#evavsqhkgh .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#evavsqhkgh .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#evavsqhkgh .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#evavsqhkgh .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#evavsqhkgh .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#evavsqhkgh .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#evavsqhkgh .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#evavsqhkgh div.Reactable &gt; div.rt-table &gt; div.rt-thead &gt; div.rt-tr.rt-tr-group-header &gt; div.rt-th-group:after {
+  height: 0px !important;
+}
+&lt;/style&gt;
+  &lt;table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false"&gt;
+  &lt;thead&gt;
+    &lt;tr class="gt_col_headings"&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"&gt;&lt;span data-qmd-base64="PHN0cm9uZz5DaGFyYWN0ZXJpc3RpYzwvc3Ryb25nPg=="&gt;&lt;span class='gt_from_md'&gt;&lt;strong&gt;Characteristic&lt;/strong&gt;&lt;/span&gt;&lt;/span&gt;&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_1"&gt;&lt;span data-qmd-base64="PHN0cm9uZz5IaWdoIEludGFrZTwvc3Ryb25nPjxiciAvPgpOID0gNzIw"&gt;&lt;span class='gt_from_md'&gt;&lt;strong&gt;High Intake&lt;/strong&gt;&lt;br /&gt;
+N = 720&lt;/span&gt;&lt;/span&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_2"&gt;&lt;span data-qmd-base64="PHN0cm9uZz5Mb3cgSW50YWtlPC9zdHJvbmc+PGJyIC8+Ck4gPSAyNTg="&gt;&lt;span class='gt_from_md'&gt;&lt;strong&gt;Low Intake&lt;/strong&gt;&lt;br /&gt;
+N = 258&lt;/span&gt;&lt;/span&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class="gt_table_body"&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;age&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;60.0 (54.0, 64.0)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;57.0 (51.0, 63.0)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;bmi&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;22.8 (21.0, 24.9)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;23.1 (21.1, 25.2)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;hba1c&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;8.0 (7.3, 8.8)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;7.9 (7.3, 8.6)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;diabetes_duration&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;8.7 (5.2, 13.3)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;8.4 (4.7, 12.8)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;sbp&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;130.0 (120.0, 140.0)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;130.0 (120.0, 142.0)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;ldl&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;123.1 (102.6, 145.0)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;122.9 (103.0, 143.0)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;hdl&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;52.0 (43.0, 63.0)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;51.0 (42.0, 61.0)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;tg&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;102.0 (73.0, 145.0)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;103.5 (74.0, 146.0)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;ltpa&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;12.8 (3.8, 23.6)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;9.2 (1.9, 18.9)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;sex&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;377 (52.4%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;84 (32.6%)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;drug_oha&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;454 (63.1%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;168 (65.1%)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;drug_insulin&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;110 (15.3%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;34 (13.2%)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;current_smoker&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;169 (23.5%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;117 (45.3%)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;alcohol_drinker&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;37 (5.1%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;32 (12.4%)&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  
+  &lt;tfoot class="gt_footnotes"&gt;
+    &lt;tr&gt;
+      &lt;td class="gt_footnote" colspan="3"&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt; &lt;span data-qmd-base64="TWVkaWFuIChRMSwgUTMpOyBuICglKQ=="&gt;&lt;span class='gt_from_md'&gt;Median (Q1, Q3); n (%)&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -574,8 +1305,583 @@ Rコードと結果はこちら
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>table1 &lt;- dat[, c(exposure_var, continuous_var, binary_var)] %&gt;% tbl_summary( by = exposure_var, digits = list( all_continuous() ~ 1, all_categorical() ~ c(0, 1) ), label = list( age ~ “Age”, sex ~ “Sex”, bmi ~ “BMI”, hba1c ~ “HbA1c”, diabetes_duration ~ “Diabetes Duration”, drug_oha ~ “Oral Hypoglycemic Agents”, drug_insulin ~ “Insulin Use”, sbp ~ “Systolic Blood Pressure”, ldl ~ “LDL Cholesterol”, hdl ~ “HDL Cholesterol”, tg ~ “Triglycerides”, current_smoker ~ “Current Smoker”, alcohol_drinker ~ “Alcohol Drinker”, ltpa ~ “Leisure-time Physical Activity” ) ) %&gt;% add_p(pvalue_fun = ~ style_pvalue(.x, digits = 3)) %&gt;% add_overall()</p>
-<p>print(table1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> dat[, <span class="fu">c</span>(exposure_var, continuous_var, binary_var)] <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tbl_summary</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">by =</span> exposure_var,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>),</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">digits =</span> <span class="fu">list</span>(</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>            age <span class="sc">~</span> <span class="st">"Age"</span>,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>            sex <span class="sc">~</span> <span class="st">"Sex"</span>,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>            bmi <span class="sc">~</span> <span class="st">"BMI"</span>,</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>            hba1c <span class="sc">~</span> <span class="st">"HbA1c"</span>,</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>            diabetes_duration <span class="sc">~</span> <span class="st">"Diabetes Duration"</span>,</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>            drug_oha <span class="sc">~</span> <span class="st">"Oral Hypoglycemic Agents"</span>,</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>            drug_insulin <span class="sc">~</span> <span class="st">"Insulin Use"</span>,</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>            sbp <span class="sc">~</span> <span class="st">"Systolic Blood Pressure"</span>,</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>            ldl <span class="sc">~</span> <span class="st">"LDL Cholesterol"</span>,</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>            hdl <span class="sc">~</span> <span class="st">"HDL Cholesterol"</span>,</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>            tg <span class="sc">~</span> <span class="st">"Triglycerides"</span>,</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>            current_smoker <span class="sc">~</span> <span class="st">"Current Smoker"</span>,</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>            alcohol_drinker <span class="sc">~</span> <span class="st">"Alcohol Drinker"</span>,</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>            ltpa <span class="sc">~</span> <span class="st">"Leisure-time Physical Activity"</span></span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_p</span>(<span class="at">pvalue_fun =</span> <span class="sc">~</span> <span class="fu">style_pvalue</span>(.x, <span class="at">digits =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_overall</span>()</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;div id="qjpswudtjz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;"&gt;
+  &lt;style&gt;#qjpswudtjz table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#qjpswudtjz thead, #qjpswudtjz tbody, #qjpswudtjz tfoot, #qjpswudtjz tr, #qjpswudtjz td, #qjpswudtjz th {
+  border-style: none;
+}
+
+#qjpswudtjz p {
+  margin: 0;
+  padding: 0;
+}
+
+#qjpswudtjz .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qjpswudtjz .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qjpswudtjz .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qjpswudtjz .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#qjpswudtjz .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#qjpswudtjz .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#qjpswudtjz .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#qjpswudtjz .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#qjpswudtjz .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#qjpswudtjz .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#qjpswudtjz .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#qjpswudtjz .gt_from_md &gt; :first-child {
+  margin-top: 0;
+}
+
+#qjpswudtjz .gt_from_md &gt; :last-child {
+  margin-bottom: 0;
+}
+
+#qjpswudtjz .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#qjpswudtjz .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qjpswudtjz .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#qjpswudtjz .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#qjpswudtjz .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#qjpswudtjz .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qjpswudtjz .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#qjpswudtjz .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qjpswudtjz .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#qjpswudtjz .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qjpswudtjz .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qjpswudtjz .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qjpswudtjz .gt_left {
+  text-align: left;
+}
+
+#qjpswudtjz .gt_center {
+  text-align: center;
+}
+
+#qjpswudtjz .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qjpswudtjz .gt_font_normal {
+  font-weight: normal;
+}
+
+#qjpswudtjz .gt_font_bold {
+  font-weight: bold;
+}
+
+#qjpswudtjz .gt_font_italic {
+  font-style: italic;
+}
+
+#qjpswudtjz .gt_super {
+  font-size: 65%;
+}
+
+#qjpswudtjz .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#qjpswudtjz .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#qjpswudtjz .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#qjpswudtjz .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#qjpswudtjz .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#qjpswudtjz .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#qjpswudtjz .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#qjpswudtjz .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#qjpswudtjz div.Reactable &gt; div.rt-table &gt; div.rt-thead &gt; div.rt-tr.rt-tr-group-header &gt; div.rt-th-group:after {
+  height: 0px !important;
+}
+&lt;/style&gt;
+  &lt;table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false"&gt;
+  &lt;thead&gt;
+    &lt;tr class="gt_col_headings"&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label"&gt;&lt;span data-qmd-base64="PHN0cm9uZz5DaGFyYWN0ZXJpc3RpYzwvc3Ryb25nPg=="&gt;&lt;span class='gt_from_md'&gt;&lt;strong&gt;Characteristic&lt;/strong&gt;&lt;/span&gt;&lt;/span&gt;&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_0"&gt;&lt;span data-qmd-base64="PHN0cm9uZz5PdmVyYWxsPC9zdHJvbmc+PGJyIC8+Ck4gPSA5Nzg="&gt;&lt;span class='gt_from_md'&gt;&lt;strong&gt;Overall&lt;/strong&gt;&lt;br /&gt;
+N = 978&lt;/span&gt;&lt;/span&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_1"&gt;&lt;span data-qmd-base64="PHN0cm9uZz5IaWdoIEludGFrZTwvc3Ryb25nPjxiciAvPgpOID0gNzIw"&gt;&lt;span class='gt_from_md'&gt;&lt;strong&gt;High Intake&lt;/strong&gt;&lt;br /&gt;
+N = 720&lt;/span&gt;&lt;/span&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_2"&gt;&lt;span data-qmd-base64="PHN0cm9uZz5Mb3cgSW50YWtlPC9zdHJvbmc+PGJyIC8+Ck4gPSAyNTg="&gt;&lt;span class='gt_from_md'&gt;&lt;strong&gt;Low Intake&lt;/strong&gt;&lt;br /&gt;
+N = 258&lt;/span&gt;&lt;/span&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;&lt;/th&gt;
+      &lt;th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value"&gt;&lt;span data-qmd-base64="PHN0cm9uZz5wLXZhbHVlPC9zdHJvbmc+"&gt;&lt;span class='gt_from_md'&gt;&lt;strong&gt;p-value&lt;/strong&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/span&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class="gt_table_body"&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Age&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;58.4 (6.9)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;58.8 (6.6)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;57.1 (7.3)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;&lt;0.001&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;BMI&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;23.0 (3.0)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;22.9 (3.0)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;23.2 (3.0)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.292&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;HbA1c&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;8.2 (1.4)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;8.2 (1.4)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;8.2 (1.3)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.447&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Diabetes Duration&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;9.9 (6.9)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;10.1 (7.0)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;9.4 (6.5)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.226&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Systolic Blood Pressure&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;130.8 (15.8)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;130.3 (15.6)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;132.1 (16.4)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.221&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;LDL Cholesterol&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;123.4 (32.0)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;123.5 (31.8)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;122.9 (32.6)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.730&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;HDL Cholesterol&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;54.2 (16.7)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;54.3 (16.3)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;53.7 (17.9)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.429&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Triglycerides&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;122.2 (79.1)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;123.0 (83.1)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;119.8 (66.5)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.730&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Leisure-time Physical Activity&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;16.6 (19.4)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;17.2 (19.2)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;15.2 (19.9)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.005&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Sex&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;461 (47.1%)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;377 (52.4%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;84 (32.6%)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;&lt;0.001&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Oral Hypoglycemic Agents&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;622 (63.6%)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;454 (63.1%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;168 (65.1%)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.555&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Insulin Use&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;144 (14.7%)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;110 (15.3%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;34 (13.2%)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;0.414&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Current Smoker&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;286 (29.2%)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;169 (23.5%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;117 (45.3%)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;&lt;0.001&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;Alcohol Drinker&lt;/td&gt;
+&lt;td headers="stat_0" class="gt_row gt_center"&gt;69 (7.1%)&lt;/td&gt;
+&lt;td headers="stat_1" class="gt_row gt_center"&gt;37 (5.1%)&lt;/td&gt;
+&lt;td headers="stat_2" class="gt_row gt_center"&gt;32 (12.4%)&lt;/td&gt;
+&lt;td headers="p.value" class="gt_row gt_center"&gt;&lt;0.001&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  
+  &lt;tfoot class="gt_footnotes"&gt;
+    &lt;tr&gt;
+      &lt;td class="gt_footnote" colspan="5"&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt; &lt;span data-qmd-base64="TWVhbiAoU0QpOyBuICglKQ=="&gt;&lt;span class='gt_from_md'&gt;Mean (SD); n (%)&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class="gt_footnote" colspan="5"&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/span&gt; &lt;span data-qmd-base64="V2lsY294b24gcmFuayBzdW0gdGVzdDsgUGVhcnNvbuKAmXMgQ2hpLXNxdWFyZWQgdGVzdA=="&gt;&lt;span class='gt_from_md'&gt;Wilcoxon rank sum test; Pearson’s Chi-squared test&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -593,9 +1899,16 @@ Rコードと結果はこちら
 <p>お父さん「そうじゃなくてさ、なに検定を使ってるの？」</p>
 </div>
 <div class="voice-daughter">
-<p>私「あ、たしかに。ちょっと待って調べる」</p>
+<p>私「あ、たしかに。ちょっと待って調べる。ヘルプは<code>?add_p()</code>で出すんだよね。…ふむ、ヘルプをたどるとWilcoxon順位和検定と<span class="math inline">\(\chi^2\)</span>検定って書いてあった。期待人数が5より低いと、<span class="math inline">\(\chi^2\)</span>検定じゃなくてFisher正確検定が選ばれる」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そうそう。それであってる。それともうひとつやることがある」</p>
 </div>
 </div>
+</section>
+<section id="統計解析の品質管理" class="level3">
+<h3 class="anchored" data-anchor-id="統計解析の品質管理">統計解析の品質管理</h3>
+<p>”この結果が正しいかダブルプログラミングでチェックしたい。別の関数を使って表を作って”</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -608,55 +1921,49 @@ Rコードと結果はこちら
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>?add_p()</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tableone") #インストールが必要なら実行</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tableone)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tableone' was built under R version 4.4.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data with same labeling</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>dat_check <span class="ot">&lt;-</span> diabetes.complications <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(continuous_var), <span class="fu">all_of</span>(binary_var), fruitq1) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">fruitq1 =</span> <span class="fu">factor</span>(fruitq1, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"High Intake"</span>, <span class="st">"Low Intake"</span>)))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary table using tableone</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>table2 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(<span class="at">vars =</span> <span class="fu">c</span>(continuous_var, binary_var), <span class="at">strata =</span> <span class="st">"fruitq1"</span>, <span class="at">data =</span> dat_check, <span class="at">test =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table2, <span class="at">showAllLevels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                               Stratified by fruitq1
+                                level High Intake    Low Intake     p      test
+  n                                      720            258                    
+  age (mean (SD))                      58.83 (6.63)   57.06 (7.29)  &lt;0.001     
+  bmi (mean (SD))                      22.95 (3.01)   23.19 (2.97)   0.273     
+  hba1c (mean (SD))                     8.23 (1.39)    8.16 (1.27)   0.476     
+  diabetes_duration (mean (SD))        10.14 (6.99)    9.39 (6.45)   0.133     
+  sbp (mean (SD))                     130.29 (15.60) 132.06 (16.42)  0.123     
+  ldl (mean (SD))                     123.51 (31.80) 122.91 (32.56)  0.796     
+  hdl (mean (SD))                      54.35 (16.30)  53.66 (17.93)  0.573     
+  tg (mean (SD))                      122.99 (83.14) 119.85 (66.52)  0.584     
+  ltpa (mean (SD))                     17.16 (19.21)  15.20 (19.93)  0.164     
+  sex (mean (SD))                       0.52 (0.50)    0.33 (0.47)  &lt;0.001     
+  drug_oha (mean (SD))                  0.63 (0.48)    0.65 (0.48)   0.555     
+  drug_insulin (mean (SD))              0.15 (0.36)    0.13 (0.34)   0.415     
+  current_smoker (mean (SD))            0.23 (0.42)    0.45 (0.50)  &lt;0.001     
+  alcohol_drinker (mean (SD))           0.05 (0.22)    0.12 (0.33)  &lt;0.001     </code></pre>
 </div>
 </div>
-</div>
-<div class="dialogue">
-<div class="voice-daughter">
-<p>私「<code>add_p.tbl_cross</code>のヘルプによるとWilcoxon順位和検定と<span class="math inline">\(\chi^2\)</span>検定みたい」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「そうそう。今回はそれであってる。期待人数が5より低いと、<span class="math inline">\(\chi^2\)</span>検定じゃなくてFisher正確検定が選ばれるけどね。それともうひとつやることがある」</p>
-</div>
-</div>
-</section>
-<section id="統計解析の品質管理" class="level3">
-<h3 class="anchored" data-anchor-id="統計解析の品質管理">統計解析の品質管理</h3>
-<p>”この結果が正しいかダブルプログラミングでチェックしたい。別の関数を使って表を作って”</p>
-<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Rコードと結果はこちら
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<section id="double-programming-check-using-tableone" class="level1">
-<h1>Double programming check using tableone</h1>
-<p>install.packages(“tableone”) library(tableone)</p>
-</section>
-<section id="prepare-data-with-same-labeling" class="level1">
-<h1>Prepare data with same labeling</h1>
-<p>df_check &lt;- diabetes.complications %&gt;% select(all_of(confounder_names), fruitq1) %&gt;% mutate(fruitq1 = factor(fruitq1, levels = c(0, 1), labels = c(“High Intake”, “Low Intake”)))</p>
-</section>
-<section id="create-summary-table-using-tableone" class="level1">
-<h1>Create summary table using tableone</h1>
-<p>table2 &lt;- CreateTableOne(vars = confounder_names, strata = “fruitq1”, data = df_check, test = TRUE) print(table2, showAllLevels = TRUE)</p>
-</section>
 </div>
 </div>
 </div>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>私「表の桁数は違うけど、数値はあってたみたい。これでいいってこと？」</p>
+<p>私「p値と桁数とは違うけど、要約指標はあってたみたい。これでいいってこと？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「患者背景の集計まではね。いくつか注意点を振り返ってもいい？」</p>
+<p>お父さん「患者背景の集計まではね。<code>CreateTableOne()</code>でどの検定を使っているか後で確認するとして、いくつか注意点を振り返ってもいい？」</p>
 </div>
 <div class="voice-daughter">
 <p>私「どうぞ」</p>
@@ -674,9 +1981,13 @@ Rコードと結果はこちら
 <p>私「まあね。次からはp値がいるかどうか先に考えておく」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「うんうん。ここまでをまとめると、どんな解析をするときも、この3つだけは予め考えておく」</p>
+<p>お父さん「うんうん。ここまでをまとめると、どんな解析をするときも最低限この3つは考えておく」</p>
 </div>
-<p>-変数の定義 -データの収集状況 -図表のひな型</p>
+<ul>
+<li>変数の定義</li>
+<li>データの収集状況</li>
+<li>図表のひな型</li>
+</ul>
 <div class="voice-father">
 <p>お父さん「それから、これは途中で気付いたことだけど、AIに指示を出すとき、できればRの関数を指定した方がいいね。そうしないと、どの統計手法を使うかがぶれてしまう。また、AIにはダブルプログラミングをさせる。どちらも計画通りにプログラミングされているかコントロールするためだ」</p>
 </div>
@@ -688,7 +1999,7 @@ Rコードと結果はこちら
 <li><a href="frequentist-1.html">Reading a Paper over a Cup of Coffee</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -697,7 +2008,7 @@ Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>過去のエピソード</strong></p>
 <ul>
