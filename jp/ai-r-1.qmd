@@ -168,9 +168,14 @@ print(out1)
 :::
 :::::::::::::::::::::::::::::::::
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="データセットの一部を表示した結果はこちら"}
 ```{r}
 head(dat)
+```
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="変数名とデータの型を表示した結果はこちら"}
+```{r}
 sapply(dat, class)
 ```
 :::
@@ -275,7 +280,7 @@ print(out6)
 
 "`gtsummary()`を使って曝露群と非曝露群で層別した集計表を作って"
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="Rコードはこちら"}
 ```{r, eval=FALSE}
 # install.packages("gtsummary") #インストールが必要なら実行
 library(gtsummary)
@@ -307,7 +312,7 @@ print(table1)
 
 ”全体の集計結果を表す列を追加して。桁数も整えて。連続変数の指標と割合は小数点1桁まで、p値は小数点3桁まで表示。変数名じゃなくてラベルをつけて”
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="Rコードはこちら"}
 ```{r, eval=FALSE}
 table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
     tbl_summary(
