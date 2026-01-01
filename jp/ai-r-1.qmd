@@ -1,0 +1,440 @@
+---
+title: ""
+description: ""
+tags:
+  - a
+  - b
+  - c
+format:
+  html:
+    toc: true
+date: 2025-12-13
+---
+
+::: {.hero-header}
+![](../image/father-daughter.png){.hero-header-img}
+:::
+
+# AI and R I 
+
+::: {.serif-block .text-right}
+Keywords: a, b, c
+:::
+------------------------------------------------------------------------
+
+### もちろんAIつかうよね
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「お父さん、ちょっと聞きたいことがあるんだけど。統計解析するときどのアプリを使ってる？」
+:::
+
+::: voice-father
+お父さん「アプリ？...統計ソフトのことだね？」
+:::
+
+::: voice-daughter
+私「そうよ。ソフトなんていわないでよ」
+:::
+
+::: voice-father
+お父さん「ソフトでしょ」
+:::
+
+::: voice-daughter
+私「アプリよ。世の中をソフトとハードで分けるよりずっと丁寧な呼び方じゃない？」
+:::
+
+::: voice-father
+お父さん「よく分かんないけどどっちでもいいよ。よく使うのはSASとSTATAとR。臨床試験ではSAS、メタアナリシスはSTATA、論文によってるような新しい方法はR、って感じ」
+:::
+
+::: voice-daughter
+私「ふんふん。じゃあやっぱりRにしよう、昔授業で触ったし。いや、解析しないといけないデータがあってさ。時間があるなら教えてくれない？」
+:::
+
+::: voice-father
+お父さん「いいけど、パソコンにRStudio入ってたよね？」
+:::
+
+::: voice-daughter
+私「Antigravityでできるらしいよ。Rも動くって」
+:::
+
+::: voice-father
+お父さん「RなのにRStudioを使わないの？なんでAntigravityがいいの？」
+:::
+
+::: voice-daughter
+私「Googleが出してるからよ。パソコンはGoogleアプリ、タブレットはiOSアプリ」
+:::
+
+::: voice-father
+お父さん「へえ、まあ、エディターは好みがあるから口出ししないよ。でも使ったことないから設定は教えられないよ」
+:::
+
+::: voice-daughter
+私「だいじょうぶ。えっとAntigravityを開く。Rはデフォルトで入ってないから、拡張機能を追加する。左サイドバーの左サイドバーでRを検索する。あれ、いっぱいヒットした、そりゃそうか。PublisherがREditorSupportのやつをインストールする」
+:::
+
+![](ai-r-1.png)
+
+::: voice-father
+お父さん「Antigravityが起動した。インストールできたね」
+:::
+
+![](ai-r-2.png)
+
+::: voice-daughter
+私「調査結果を全部まとめたフォルダがあるから、それを開こう」
+:::
+
+::: voice-father
+お父さん「ん？調査結果ってさ、整理する前だと外部に見せられない情報が入ってたりするじゃない。最低限のデータ以外は、直接AIにみせるのはやめようよ。そうだね、最初に約束を3つ決めよう」
+:::
+
+::: voice-daughter
+私「約束？」
+:::
+
+- 整理前のフォルダはAIに見せない。個人が特定できない解析用データセットを用意する。
+- 作業記録を残す。できれば"Clone Repository"を選んでレポジトリで管理する。
+- エージェントが書いたコードは、自主的に品質管理する。たとえば目視チェック、ダブルプログラミング、読み合わせを行う。
+
+::: voice-daughter
+私「わかった、どれも納得。準備ができてないから今日は練習でいいよね？」
+:::
+
+### Table 1の作成
+
+::: voice-father
+お父さん「じゃあ解析を始めよう。AIを使ったことないから`cifmodeling`パッケージに入ってる`diabetes.complications`データでいろいろ試してみたい。このデータは果物摂取量と糖尿病合併症リスクの関係を調べたコホート研究の模擬データだ」
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
+# devtools::install_github("gestimation/cifmodeling") #インストールが必要なら実行
+library(cifmodeling)
+data(diabetes.complications)
+dat <- diabetes.complications
+```
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「読み込めたね。よし」
+:::
+
+"果物摂取量のカテゴリごとに平均年齢を出して"
+
+::: voice-father
+お父さん「なにしてるの」
+:::
+
+::: voice-daughter
+私「でたでた」
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+out1 <- aggregate(age ~ fruitq1, data = dat, FUN = mean)
+print(out1)
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+お父さん「平均年齢がでた」
+:::
+
+::: voice-daughter
+私「だいたい58歳くらいね、よし。次はどうすればいい？」
+:::
+
+::: voice-father
+お父さん「次はどうすればいいって、ちゃんと解析の計画を立ててから動こうよ。そのためにやることはデータセットの確認」
+:::
+
+- 変数は何か（変数名）
+
+- 型は何か（数値かカテゴリか）
+
+- 欠測はどれくらいか
+
+::: voice-father
+お父さん「これは手順の問題でRコードは難しくない」
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+head(dat)
+sapply(dat, class)
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「ありがとう、曝露変数は果物摂取量を表すfruitq1で2値データ、アウトカムはtとepsilonで生存時間データってことね」
+:::
+
+::: voice-father
+お父さん「次はどうするかな。そうだな、`dagitty()`で因果関係を表すグラフ（DAG）を描いておこう。これに従って解析する。調整しなけばならない交絡因子も`adjustmentSets()`で出せる」
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+library(dagitty)
+out2 <- dagitty("dag {
+age -> fruitq1
+age -> t
+sex -> fruitq1
+sex -> t
+bmi -> fruitq1
+bmi -> t
+hba1c -> fruitq1
+hba1c -> t
+diabetes_duration -> fruitq1
+diabetes_duration -> t
+drug_oha -> fruitq1
+drug_oha -> t
+drug_insulin -> fruitq1
+drug_insulin -> t
+sbp -> fruitq1
+sbp -> t
+ldl -> fruitq1
+ldl -> t
+hdl -> fruitq1
+hdl -> t
+tg -> fruitq1
+tg -> t
+current_smoker -> fruitq1
+current_smoker -> t
+alcohol_drinker -> fruitq1
+alcohol_drinker -> t
+ltpa -> fruitq1
+ltpa -> t
+fruitq1 -> t
+}")
+print(out2)
+out3 <- adjustmentSets(out2, exposure = "fruitq1", outcome = "t")
+print(out3)
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+お父さん「次に欠測の数を確かめておこう。fruitq1には、扱いやすいように0は”High Intake”、1は”Low Intake”というラベルをつける」
+:::
+
+::: voice-daughter
+私「いいね、まかせた」
+:::
+::::::::::::::::::::::::::::::::: 
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+dat$fruit_group <- factor(
+    dat$fruitq1,
+    levels = c(0, 1),
+    labels = c("High Intake", "Low Intake")
+)
+exposure_var <- "fruit_group"
+outcome_var <- c("t", "epsilon")
+continuous_var <- c(
+  "age","bmi","hba1c","diabetes_duration",
+  "sbp","ldl","hdl","tg","ltpa"
+)
+binary_var <- c(
+  "sex","drug_oha","drug_insulin",
+  "current_smoker","alcohol_drinker"
+)
+
+out4 <- sapply(dat[, c(exposure_var, outcome_var)], function(x) sum(is.na(x)))
+out5 <- sapply(dat[, continuous_var], function(x) sum(is.na(x)))
+out6 <- sapply(dat[, binary_var], function(x) sum(is.na(x)))
+print(out4)
+print(out5)
+print(out6)
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+お父さん「じゃあ今日の成果物を決めよう。論文でよく使う図表のうち、まずは患者背景を記述するための表はどう？使う関数は`gtsummary()`がいいと思う」
+:::
+
+::: voice-daughter
+私「Table 1ね。作りたい。じゃあAIに指示出すね」
+:::
+::::::::::::::::::::::::::::::::: 
+
+"`gtsummary()`を使って曝露群と非曝露群で層別した集計表を作って"
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+library(gtsummary)
+table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
+    tbl_summary(
+        by = exposure_var,
+        digits = list(
+            all_continuous() ~ 1,
+            all_categorical() ~ c(0, 1)
+        )
+    )
+print(table1)
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+お父さん「いいんじゃない？」
+:::
+
+::: voice-daughter
+私「表を見たらもう少しこだわりたくなってきた。全体の人数も欲しいし、p値も加えたい」
+:::
+::::::::::::::::::::::::::::::::: 
+
+”全体の集計結果を表す列を追加して。桁数も整えて。連続変数の指標と割合は小数点1桁まで、p値は小数点3桁まで表示。変数名じゃなくてラベルをつけて”
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
+    tbl_summary(
+        by = exposure_var,
+        digits = list(
+            all_continuous() ~ 1,
+            all_categorical() ~ c(0, 1)
+        ),
+        label = list(
+            age ~ "Age",
+            sex ~ "Sex",
+            bmi ~ "BMI",
+            hba1c ~ "HbA1c",
+            diabetes_duration ~ "Diabetes Duration",
+            drug_oha ~ "Oral Hypoglycemic Agents",
+            drug_insulin ~ "Insulin Use",
+            sbp ~ "Systolic Blood Pressure",
+            ldl ~ "LDL Cholesterol",
+            hdl ~ "HDL Cholesterol",
+            tg ~ "Triglycerides",
+            current_smoker ~ "Current Smoker",
+            alcohol_drinker ~ "Alcohol Drinker",
+            ltpa ~ "Leisure-time Physical Activity"
+        )
+    ) %>%
+    add_p(pvalue_fun = ~ style_pvalue(.x, digits = 3)) %>%
+    add_overall()
+
+print(table1)
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「できた！」
+:::
+
+::: voice-father
+お父さん「ちょっと待ちなよ。このp値はなんのp値？」
+:::
+
+::: voice-daughter
+私「なにって、曝露と非曝露を比較するp値だよ」
+:::
+
+::: voice-father
+お父さん「そうじゃなくてさ、なに検定を使ってるの？」
+:::
+
+::: voice-daughter
+私「あ、たしかに。ちょっと待って調べる」
+:::
+::::::::::::::::::::::::::::::::: 
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+?add_p()
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「`add_p.tbl_cross`のヘルプによるとWilcoxon順位和検定と$\chi^2$検定みたい」
+:::
+
+::: voice-father
+お父さん「そうそう。今回はそれであってる。期待人数が5より低いと、$\chi^2$検定じゃなくてFisher正確検定が選ばれるけどね。それともうひとつやることがある」
+:::
+::::::::::::::::::::::::::::::::: 
+
+### 統計解析の品質管理
+
+”この結果が正しいかダブルプログラミングでチェックしたい。別の関数を使って表を作って”
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+# Double programming check using tableone
+install.packages("tableone")
+library(tableone)
+
+# Prepare data with same labeling
+df_check <- diabetes.complications %>%
+    select(all_of(confounder_names), fruitq1) %>%
+    mutate(fruitq1 = factor(fruitq1, levels = c(0, 1), labels = c("High Intake", "Low Intake")))
+
+# Create summary table using tableone
+table2 <- CreateTableOne(vars = confounder_names, strata = "fruitq1", data = df_check, test = TRUE)
+print(table2, showAllLevels = TRUE)
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「表の桁数は違うけど、数値はあってたみたい。これでいいってこと？」
+:::
+
+::: voice-father
+お父さん「患者背景の集計まではね。いくつか注意点を振り返ってもいい？」
+:::
+
+::: voice-daughter
+私「どうぞ」
+:::
+
+::: voice-father
+お父さん「解析はデータからスタートしちゃだめ。必ずプランを立ててから始めること。そしてそうするためには、変数の名前、クラス、データの収集状況を把握する必要がある。これはいいよね」
+:::
+
+::: voice-daughter
+私「わかってる」
+:::
+
+::: voice-father
+お父さん「そして、解析結果は最終的に図表にまとめることが多いから、図表のひな型までプランに入れておく。今回は後から全体集計とp値を追加したけど、あんまりスマートじゃなかったよね」
+:::
+
+::: voice-daughter
+私「まあね。次からはp値がいるかどうか先に考えておく」
+:::
+
+::: voice-father
+お父さん「うんうん。ここまでをまとめると、どんな解析をするときも、この3つだけは予め考えておく」
+:::
+
+-変数の定義
+-データの収集状況
+-図表のひな型
+
+::: voice-father
+お父さん「それから、これは途中で気付いたことだけど、AIに指示を出すとき、できればRの関数を指定した方がいいね。そうしないと、どの統計手法を使うかがぶれてしまう。また、AIにはダブルプログラミングをさせる。どちらも計画通りにプログラミングされているかコントロールするためだ」
+:::
+::::::::::::::::::::::::::::::::: 
+
+
+### 医学研究に関するふたりの会話はいかがでしたか？以降のエピソードでは、統計学・因果推論から論文公表までを描いていきます。
+
+- [Reading a Paper over a Cup of Coffee](frequentist-1.html)
+
+::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}
+
+**過去のエピソード**
+
+- [A Story of Coffee Chat and Research Hypothesis](study-design-1.html)
+- [Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes](study-design-2.html)
+- [Outcomes: The Bridge from Data Collection to Analysis](study-design-3.html)
+- [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
+- [When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys](study-design-5.html)
+
+**用語集**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::
