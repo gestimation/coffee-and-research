@@ -77,8 +77,8 @@ R packages: cobalt, cifmodeling, dagitty, WeightIt
 
 :::::::::::::::::::::::::::::::::
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-```{r}
+::: {.callout-note appearance="simple" collapse="true" title="DAGを描くためのRコードと結果はこちら"}
+```{r warning=FALSE}
 # install.packages("dagitty") #インストールが必要なら実行
 library(dagitty)
 out1 <- dagitty("dag {
@@ -146,11 +146,11 @@ print(out2)
 **cifmodeling**に含まれている`diabetes.complications`っていうデータセットを読み込んで。`t`と`epsilon`について集計して"
 ```
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="データを確認するためのRコードと結果はこちら"}
 
 競合リスク解析では、**関心イベント（ここでは糖尿病網膜症）**と、**それを観測できなくする競合リスク（ここでは大血管合併症）**があるはずですが、競合リスクがほとんど起きていないこともあり得ます。また、エラーが混入を防ぐためには、生存時間変数（特に最小値の符号と最大値のオーダー）を確認することが有効です。
 
-```{r}
+```{r warning=FALSE}
 # install.packages("cifmodeling") # if needed
 library(cifmodeling)
 data(diabetes.complications)
@@ -213,9 +213,9 @@ tapply(dat$t, dat$epsilon, summary)
 ```
 
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="CBPSの重みを計算するためのRコードと結果はこちら"}
 
-```{r}
+```{r warning=FALSE}
 continuous_var <- c("age","bmi","hba1c","diabetes_duration","sbp","ldl","hdl","tg","ltpa")
 binary_var <- c("sex","drug_oha","drug_insulin","current_smoker","alcohol_drinker")
 exposure.model <- as.formula(paste("fruitq1 ~", paste(continuous_var, collapse = " + "), "+", paste(binary_var, collapse = " + ")))
@@ -240,11 +240,11 @@ quantile(dat$ip.weight, probs = c(0, .01, .05, .5, .95, .99, 1))
 
 - 重みを付けた後で共変量バランスがとれているかどうか
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="オーバーラップを確認するためのRコードと結果はこちら"}
 
 プロペンシティスコアを用いた交絡調整では、**オーバーラップ**と**未測定の交絡因子はない**という仮定が満たされる必要があります。以下のRコードでは、**cobalt**パッケージの`bal.plot()`を用いて、果物摂取ごと（0は"High intake"、1は"Low intake"）のプロペンシティスコアのグラフを描いています。
 
-```{r}
+```{r warning=FALSE}
 # install.packages("cobalt") # if needed
 library(cobalt)
 
@@ -253,11 +253,11 @@ bal.plot(out2, var.name = "ps", which = "both")  # unadjusted vs adjusted
 ```
 :::
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="共変量バランスを確認するためのRコードと結果はこちら"}
 
 オーバーラップとは違い、未測定の交絡因子が残っているかどうかは、データから確認することはできません。そこで、DAGで宣言した因果構造が正しいという前提にして、測定された患者背景因子のバランスがとれているかを確認します。プロペンシティスコアを用いた論文の多くで、調整前後の共変量の集計表（`bal.tab()`）と標準平均差のプロット（`love.plot()`）が報告されています。
 
-```{r}
+```{r warning=FALSE}
 out3 <- bal.tab(
   exposure.model,
   data    = dat,
@@ -309,8 +309,8 @@ love.plot(
 `cifplot()`を使って、累積発生曲線を描いて。`epsilon=1`がイベント、`epsilon=2`が競合リスク。`fruitq1`で層別して"
 ```
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-```{r}
+::: {.callout-note appearance="simple" collapse="true" title="累積発生曲線（デフォルト）のRコードと結果はこちら"}
+```{r warning=FALSE}
 cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk")
 ```
 :::
@@ -333,8 +333,8 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk")
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-```{r}
+::: {.callout-note appearance="simple" collapse="true" title="競合リスクをマーキングしたRコードと結果はこちら"}
+```{r warning=FALSE}
 cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", 
         add.risktable=TRUE, add.censor.mark=FALSE, add.competing.risk.mark=TRUE,
         label.y="CIF of diabetic retinopathy", label.x="Years from registration",
@@ -376,8 +376,8 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk",
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-```{r}
+::: {.callout-note appearance="simple" collapse="true" title="調整累積発生曲線のRコードと結果はこちら"}
+```{r warning=FALSE}
 cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", 
         weights = "ip.weight", add.censor.mark=FALSE,
         label.y="CIF of diabetic retinopathy", label.x="Years from registration",

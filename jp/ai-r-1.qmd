@@ -210,7 +210,7 @@ sapply(dat, class)
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="欠測状況を調べるRコードと結果はこちら"}
 ```{r warning=FALSE}
 dat$fruit_group <- factor(
     dat$fruitq1,
@@ -246,10 +246,10 @@ colSums(is.na(dat[, binary_var]))
 ::::::::::::::::::::::::::::::::: 
 
 ```{r eval=FALSE}
-`gtsummary::tbl_summary()`を使って曝露変数`exposure_var`で層別した集計表を作って
+`tbl_summary()`を使って曝露変数`exposure_var`で層別した集計表を作って
 ```
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードはこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="Table 1のためのRコードはこちら"}
 ```{r, eval=FALSE}
 # install.packages("gtsummary") #インストールが必要なら実行
 library(gtsummary)
@@ -283,7 +283,7 @@ print(table1)
 平均とSDに変更して。全体集計とp値を表す列を追加して。変数名じゃなくてラベルをつけて。桁数も整えて。
 ```
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードはこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="Table 1を改良したRコードはこちら"}
 ```{r, eval=FALSE}
 table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
     tbl_summary(
@@ -355,7 +355,7 @@ print(table1)
 この結果が正しいかダブルプログラミングでチェックしたい。別の関数を使って表を作って
 ```
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="Table 1を検証するためのRコードと結果はこちら"}
 ```{r warning=FALSE}
 # install.packages("tableone") #インストールが必要なら実行
 library(tableone)
