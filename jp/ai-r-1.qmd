@@ -420,11 +420,16 @@ print(table2, showAllLevels = TRUE)
 ::::::::::::::::::::::::::::::::: 
 
 
-### 臨床研究におけるAIとRの利用に関するふたりの会話はいかがでしたか？以降のエピソードでは、競合リスク解析・交絡調整から頻度論シミュレーション実験までを、Rで体験いただける構成になっています。
+### 次のエピソードとRスクリプト
+
+臨床研究におけるAIとRの利用に関するふたりの会話はいかがでしたか？以降のエピソードでは、競合リスク解析・交絡調整から頻度論シミュレーション実験までを、Rで体験いただける構成になっています。
 
 - [An R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
+- [ai-r.R](../from-coffee-chat-to-r/ai-r.R)
 
-### もしロジスティック回帰の表作成について詳しく知りたい方は、"A Conversation on Causality at Our Table"のこのエピソードもご覧ください。
+### 表の作成スキルに興味がある方へ
+
+"A Conversation on Causality at Our Table"のこのエピソードもご覧ください。
 
 - [Where My Logistic Regression Went Wrong](logistic-regression-4.html)
 

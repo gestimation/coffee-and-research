@@ -250,7 +250,9 @@ Kaplan-Meier法では、生存時間が正規分布したり、比例ハザー�
 - [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
 - [ai-r.R](../from-coffee-chat-to-r/ai-r.R)
 
-### もしオンコロジー領域のアウトカムについて詳しく知りたい方は、"A Conversation on Causality at Our Table"のこのエピソードもご覧ください。
+### アウトカムについて詳しく知りたい方へ
+
+"A Conversation on Causality at Our Table"のこのエピソードもご覧ください。
 
 - [Outcomes: The Bridge from Data Collection to Analysis](study-design-3.html)
 

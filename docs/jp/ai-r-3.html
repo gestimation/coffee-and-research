@@ -322,7 +322,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <h3 class="anchored" data-anchor-id="解析計画は推定目標と仮定からはじまる">解析計画は推定目標と仮定からはじまる</h3>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>私「シミュレーションはわかったから、実際の累積発生曲線の描き方を教えてよ」</p>
+<p>私「シミュレーションはわかったから、実際の累積発生曲線（CIF）の描き方を教えてよ」</p>
 </div>
 <div class="voice-father">
 <p>お父さん「いいよ、いいけどさ。やるからには、きちんと段取りを踏もうよ。この前<code>diabetes.complications</code>データを使ってRとAIの説明をしたとき、この表を作ったことを覚えてる？」</p>
@@ -347,7 +347,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <p>私「ああ、やったね、これ」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「同じデータを使って累積発生曲線を描く。ただし、単なるデータの記述じゃなくて、果物摂取と糖尿病網膜症リスクの関連を調べるための図だ。表を見てよ。果物摂取量でグループを作ったとき（High intake vs Low intake）、年齢、性別、喫煙、アルコール摂取のバランスが崩れているでしょ。この偏りを調整して、果物摂取の因果効果を表すような累積発生曲線が、今日の成果物。いいかな？」</p>
+<p>お父さん「同じデータを使ってCIFを描く。ただし、単なるデータの記述じゃなくて、果物摂取と糖尿病網膜症リスクの関連を調べるための図だ。表を見てよ。果物摂取量でグループを作ったとき（High intake vs Low intake）、年齢、性別、喫煙、アルコール摂取のバランスが崩れているでしょ。この偏りを調整して、果物摂取の因果効果を表すようなCIFのグラフが、今日の成果物。いいかな？」</p>
 </div>
 <div class="voice-daughter">
 <p>私「い、いいとも！」</p>
@@ -506,13 +506,13 @@ $`2`
 </div>
 </section>
 <section id="プロペンシティスコアに基づく重みの計算" class="level3">
-<h3 class="anchored" data-anchor-id="プロペンシティスコアに基づく重みの計算">プロペンシティスコアに基づく重みの計算</h3>
+<h3 class="anchored">プロペンシティスコアに基づく重みの計算</h3>
 <div class="dialogue">
 <div class="voice-daughter">
 <p>私「これでアウトカムが集計できたよね。網膜症発症281件、大血管症発症81件。患者背景の要約統計量もTable 1にまとめた。次は偏りを調整するんだっけ。結局なにをすればいいの？回帰？マッチング？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「交絡調整の方法はいろいろあるけど、直接、累積発生曲線を扱いやすいのは、<strong>重み付け</strong>と<strong>層別</strong>なんだ。今日は、covariate balancing propensity score（CBPS法）を使おう。共変量（covariate）っていうのは、この場合は患者背景因子のことだと思っていい。一般に、プロペンシティスコアを用いた交絡調整では、ふたつの仮定が置かれる。これを頭に置きながら聞いてね」</p>
+<p>お父さん「交絡調整の方法はいろいろあるけど、直接、生存曲線やCIFを扱いやすいのは、<strong>重み付け</strong>と<strong>層別</strong>なんだ。今日は、<strong>covariate balancing propensity score（CBPS法）</strong>を使おう。共変量（covariate）っていうのは、この場合は患者背景因子のことだと思っていい。一般に、プロペンシティスコアを用いた交絡調整では、ふたつの仮定が置かれる。これを頭に置きながら聞いてね」</p>
 </div>
 <ul>
 <li><p>プロペンシティスコアの値がグループ間で<strong>オーバーラップ</strong>していること</p></li>
@@ -525,7 +525,7 @@ $`2`
 <p>私「えっと、マッチングはしないのね？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そう、マッチングと重み付けは別。マッチングしたデータセットを作ってから、累積発生曲線を描くと、個人間の対応が無視されてしまう。これがはっきり悪いわけじゃないんだけどね。今回は、ひとりひとりに重みを付けたデータセットを作って、重み付きAalen-Johansen曲線を描く」</p>
+<p>お父さん「そう、マッチングと重み付けは別。マッチングしたデータセットを作ってから、CIFを描くと、個人間の対応が無視されてしまう。これがはっきり悪いわけじゃないんだけどね。今回は、ひとりひとりに重みを付けたデータセットを作って、重み付きCIFを描く」</p>
 </div>
 <div class="voice-daughter">
 <p>私「ふーん。CBPS法とプロペンシティスコアは別なの？」</p>
@@ -534,14 +534,14 @@ $`2`
 <p>お父さん「CBPS法はプロペンシティスコアを使った手法のひとつなんだけど、一番の特徴は、CBPSは一般化モーメント法で計算する。一番オーソドックスなプロペンシティスコアの計算では、ロジスティック回帰を仮定して最尤法で求めることが多い」</p>
 </div>
 <div class="voice-daughter">
-<p>私「説明長いな。要するにCBPS法で重みを計算してってAIに言えばいいの？」</p>
+<p>私「説明長いな。要するにCBPS法で重みを計算してってAIに言えばいいのか？」</p>
 </div>
 <div class="voice-father">
 <p>お父さん「それでいいんだけど、曝露変数や調整したい変数は指定しよう。また、使いたい関数があればそう伝えた方がぶれない。こんな感じで指示を出したらどうかな」</p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">WeightIt()</span><span class="st">`</span>を使ってCBPSの重みを計算して。変数はさっきの<span class="st">`</span><span class="at">dagitty()</span><span class="st">`</span>と同じものを使って</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">weightit()</span><span class="st">`</span>を使ってCBPSの重みを計算して。変数はさっきの<span class="st">`</span><span class="at">dagitty()</span><span class="st">`</span>と同じものを使って</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="CBPSの重みを計算するためのRコードと結果はこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
@@ -702,16 +702,16 @@ Adjusted    690.37  208.59</code></pre>
 <p>私「ラブプロットで赤い点（調整前）が散らばってたのに、青い点（調整後）が0に寄った。これで交絡調整できたってこと？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そう、点は共変量ごとのバランス度合いを表している。連続データでは<strong>標準化平均差（standardized mean difference）</strong>、2値データでは<strong>割合の差</strong>だね。もちろん”観測された共変量”以外は、バランスがとれたかどうかは確認できないけど、これはDAGが正しいかどうかっていう別の問題になる。共変量バランスが取れて、オーバーラップも極端に崩れていないなら、累積発生曲線を描く段階に進もう」</p>
+<p>お父さん「そう、点は共変量ごとのバランス度合いを表している。連続データでは<strong>標準化平均差（standardized mean difference）</strong>、2値データでは<strong>割合の差</strong>だね。もちろん”観測された共変量”以外は、バランスがとれたかどうかは確認できないけど、これはDAGが正しいかどうかっていう別の問題になる。共変量バランスが取れて、オーバーラップも極端に崩れていないなら、CIFを描く段階に進もう」</p>
 </div>
-<section id="糖尿病網膜症リスクの記述" class="level3">
-<h3 class="anchored" data-anchor-id="糖尿病網膜症リスクの記述">糖尿病網膜症リスクの記述</h3>
+<section id="累積発生曲線によるリスクの記述" class="level3">
+<h3 class="anchored" data-anchor-id="累積発生曲線によるリスクの記述">累積発生曲線によるリスクの記述</h3>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>私「まあ、模擬データだからCBPSがうまく行って当然だけどね。じゃあ次は普通に累積発生曲線を描けばいい？」</p>
+<p>私「まあ、模擬データだからCBPSがうまく行って当然だけどね。じゃあ次は普通にCIFを描けばいい？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「うん、最初は重みなしのただの累積発生曲線を確認した方がいい。これは因果効果じゃなくて、イベント、打ち切り、競合リスクの発生状況を把握するためのもの。年齢や喫煙による交絡が残っているからね」</p>
+<p>お父さん「うん、最初は重みなしのただのCIFを確認した方がいい。これは因果効果じゃなくて、イベント、打ち切り、競合リスクの発生状況を把握するためのもの。年齢や喫煙による交絡が残っているからね」</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="競合リスクデータの入力">
@@ -828,16 +828,16 @@ Adjusted    690.37  208.59</code></pre>
 <p>私「そうだね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「この2グループは、それぞれ”もともとの集団全体が、high intakeだったときの集団”と”もともとの集団全体がlow intakeだったときの集団”っていうふうに解釈する。もともとの集団ではなく、どちらも仮想的な集団だ。果物摂取量が高いときのアウトカムと、低いときのアウトカムの差が、因果効果なんだ。じゃあ調整累積発生曲線を見てみよう」</p>
+<p>お父さん「この2グループは、それぞれ”もともとの集団全体が、high intakeだったときの集団”と”もともとの集団全体がlow intakeだったときの集団”っていうふうに解釈する。もともとの集団ではなく、どちらも仮想的な集団だ。果物摂取量が高いときのアウトカムと、低いときのアウトカムの差が、因果効果なんだ。じゃあ調整CIFを見てみよう」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="調整累積発生曲線のRコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="調整CIFのRコードと結果はこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-調整累積発生曲線のRコードと結果はこちら
+調整CIFのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -861,7 +861,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>私「調整前より調整後の累積発生曲線ではわずかに差が広がったみたい。この曲線の差の分だけ、果物摂取の因果効果があるってことだよね」</p>
+<p>私「調整前より調整後の曲線ではわずかに差が広がったみたい。この曲線の差の分だけ、果物摂取の因果効果があるってことだよね」</p>
 </div>
 <div class="voice-father">
 <p>お父さん「そういうこと。次に、有効サンプルサイズを見て。調整前の図のアットリスク数より、有効サンプルサイズは小さいでしょ。重みを付けることで誤差が大きくなったったことを示している」</p>
@@ -872,10 +872,10 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </section>
 <section id="統計解析の品質管理" class="level3">
-<h3 class="anchored" data-anchor-id="統計解析の品質管理">統計解析の品質管理</h3>
+<h3 class="anchored">統計解析の品質管理</h3>
 <div class="dialogue">
 <div class="voice-father">
-<p>お父さん「これで最後の作業だ。累積発生曲線のバリデーションをしよう。この場合は、<code>survfit()</code>でも累積発生曲線の推定値と標準誤差が計算できる。<code>survfit()</code>の推定値は<code>$pstate</code>っていうオブジェクトに入っている。<code>cifplot()</code>の推定値が欲しければ、計算ルーチンの<code>cifcurve()</code>を実行して、<code>1-$surv</code>を求めればいい。まったく同じ値になるはずだ。標準誤差は<code>$std.err</code>っていうオブジェクトなんだけど、別の計算方法を使っているから近い値になるかを見る。まずは調整なしの結果を比較しよう」</p>
+<p>お父さん「これで最後の作業だ。CIFのバリデーションをしよう。この場合は、<code>survfit()</code>でもCIFの推定値と標準誤差が計算できる。<code>survfit()</code>の推定値は<code>$pstate</code>っていうオブジェクトに入っている。<code>cifplot()</code>の推定値が欲しければ、計算ルーチンの<code>cifcurve()</code>を実行して、<code>1-$surv</code>を求めればいい。まったく同じ値になるはずだ。標準誤差は<code>$std.err</code>っていうオブジェクトなんだけど、別の計算方法を使っているから近い値になるかを見る。まずは調整なしの結果を比較しよう」</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="cifcurve()とsurvfit()を比較するためのRコードと結果はこちら">
@@ -936,13 +936,13 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <p>お父さん「やってみよう」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="調整累積発生曲線を比較するためのRコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="調整CIFを比較するためのRコードと結果はこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-調整累積発生曲線を比較するためのRコードと結果はこちら
+調整CIFを比較するためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -983,7 +983,136 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <p>私「こっちもだいじょうぶみたいだね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「よかった」</p>
+<p>お父さん「うん。じゃあ振り返りをかねて調整CIFを推定するときの典型的な失敗例を4つ挙げよう。ひとつでも踏むと、図がそれっぽく出ても計算は間違っている。あらかじめ知っておいた方がいい」</p>
+</div>
+<ul>
+<li><p>イベント変数が競合リスクを含んでいるはずが無視される（変数の型やNAに注意）</p></li>
+<li><p>イベント変数のコーディングエラー（<code>survfit()</code>の<code>$pstate</code>は、両方のイベントの結果を含むのでコーディング要確認）</p></li>
+<li><p>重み変数の指定エラー（調整変数集合が複数あるとき間違えやすい）</p></li>
+<li><p>重み変数がゼロや極端に大きい値を含んでいる</p></li>
+</ul>
+</div>
+<div class="callout callout-style-simple callout-tip callout-titled" title="調整CIFを作るときの実務チェックリスト">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+調整CIFを作るときの実務チェックリスト
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>このシリーズでは、Table 1と調整CIFを作成するためのワークフローを見てきましたが、実務ではその結果が正しいことを自主点検できることが重要です。AIを使っても責任は解析者が担います。実務チェックリストを用意しましたのでご利用ください。</p>
+<hr>
+<section id="推定目標estimand" class="level2">
+<h2 class="anchored" data-anchor-id="推定目標estimand">□推定目標（estimand）</h2>
+<ul>
+<li>何を比較する？
+<ul>
+<li>例: 果物摂取（High intake vs Low intake）</li>
+</ul></li>
+<li>どの集団で？（解析対象集団の定義、追跡開始時点、欠測等による除外）</li>
+<li>何年時点の差を見る？（例：8年CIF差、曲線全体の比較など）</li>
+<li>競合リスクは何か？（例: 大血管合併症）</li>
+</ul>
+<hr>
+</section>
+<section id="仮定の宣言" class="level2">
+<h2 class="anchored" data-anchor-id="仮定の宣言">□仮定の宣言</h2>
+<ul>
+<li>DAG（因果構造の表現）
+<ul>
+<li><code>dagitty::dagitty()</code></li>
+</ul></li>
+<li>調整すべき交絡因子の集合
+<ul>
+<li><code>dagitty::adjustmentSets()</code></li>
+</ul></li>
+<li>未測定交絡に関する考察</li>
+</ul>
+<hr>
+</section>
+<section id="データ定義" class="level2">
+<h2 class="anchored" data-anchor-id="データ定義">□データ定義</h2>
+<ul>
+<li>イベント変数・曝露変数のコーディング</li>
+<li>コーディングの臨床的意味の確認</li>
+<li>イベント変数と時間変数の集計
+<ul>
+<li><code>table(epsilon)</code> / <code>summary(t)</code> / <code>tapply(t, epsilon, summary)</code></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="統計手法の選択" class="level2">
+<h2 class="anchored" data-anchor-id="統計手法の選択">□統計手法の選択</h2>
+<ul>
+<li>プロペンシティスコアのモデル
+<ul>
+<li>共変量選択の根拠: DAGや臨床知識</li>
+</ul></li>
+<li>重みの計算方法
+<ul>
+<li><code>WeightIt::weightit(..., method="cbps")</code></li>
+</ul></li>
+<li>論文等で報告すべき情報
+<ul>
+<li>モデル、重みの計算方法、欠測データの扱い</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="診断" class="level2">
+<h2 class="anchored" data-anchor-id="診断">□診断</h2>
+<ul>
+<li>オーバーラップ（positivity）
+<ul>
+<li>群間でプロペンシティスコアや重みが偏っていないか</li>
+<li>重みが極端でないか</li>
+</ul></li>
+<li>共変量バランス
+<ul>
+<li><code>cobalt::bal.tab(...)</code></li>
+<li><code>cobalt::love.plot(...)</code></li>
+<li>標準化平均差（|SMD|&lt;0.1がよく使われる目安）</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="推定" class="level2">
+<h2 class="anchored" data-anchor-id="推定">□推定</h2>
+<ul>
+<li>未調整CIF（記述）
+<ul>
+<li><code>cifmodeling::cifplot(..., weights = NULL)</code></li>
+</ul></li>
+<li>調整CIF（因果効果）
+<ul>
+<li><code>cifmodeling::cifplot(..., weights="ip.weight")</code></li>
+</ul></li>
+<li>標準誤差・信頼区間・アットリスク数は、重み付きに対応しているか
+<ul>
+<li><code>cifmodeling::cifplot(..., n.risk.type = "ess")</code></li>
+<li><code>cifmodeling::cifplot(..., error = "if")</code></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="品質管理" class="level2">
+<h2 class="anchored" data-anchor-id="品質管理">□品質管理</h2>
+<ul>
+<li>別実装での再現
+<ul>
+<li><code>gtsummary::tbl_summary()</code> / <code>tableone::CreateTableOne()</code></li>
+<li><code>cifmodeling::cifplot()</code> / <code>survival::survfit()</code></li>
+</ul></li>
+<li>目視チェック
+<ul>
+<li><strong>競合リスクとして扱われているか</strong>を出力で確認</li>
+<li>イベント数・打ち切り数と曲線の比較</li>
+</ul></li>
+</ul>
+</section>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="このエピソードに関係するクイズです">
@@ -1006,7 +1135,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1015,7 +1144,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は3です</strong></li>
@@ -1044,7 +1173,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </ul>
 <p>どのエピソードも独立しているので、興味の向くレイヤーを選んでも構いません。</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="関連エピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1053,7 +1182,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>
