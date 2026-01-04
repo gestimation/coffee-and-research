@@ -28,19 +28,19 @@ R packages: cifmodeling, dplyr, gtsummary, tableone
 このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを習得できるように構成しています。
 
 - AIを用いたRコーディングと品質管理（このエピソード）
-- Table 1をつくるためのワークフロー（このエピソード）: `gtsummary`
-- Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: `cifmodeling`
-- 交絡調整の仮定宣言・診断: `dagitty`と`cobalt`
-- 交絡調整の実行: `WeightIt`
+- Table 1をつくるためのワークフロー（このエピソード）: **gtsummary**
+- Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: **cifmodeling**
+- 交絡調整の仮定宣言・診断: **dagitty**と**cobalt**
+- 交絡調整の実行: **WeightIt**
 
-広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は"A Conversation on Causality at Our Table"もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。
+広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp)もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。
 :::
 
 ### もちろんAIつかうよね
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-daughter
-私「おはよう、今朝は冷えるね。ご飯食べてるところ悪いんだけど、ちょっと聞きたいことがあるんだけど。統計解析するときどのアプリを使ってる？あ、コーヒーもらっていい？」
+私「おはよう、ご飯食べてるところ悪いんだけど、ちょっと聞きたいことがあって。統計解析するときどのアプリを使ってる？あ、コーヒーもらっていい？」
 :::
 
 ::: voice-father
@@ -94,13 +94,13 @@ R packages: cifmodeling, dplyr, gtsummary, tableone
 ![](ai-r-1.png)
 
 ::: voice-father
-お父さん「Antigravityが起動した。インストールできたね」
+お父さん「Antigravityが起動した。インストールできたみたい。なにか操作を求めてるよ」
 :::
 
 ![](ai-r-2.png)
 
 ::: voice-daughter
-私「調査結果を全部まとめたフォルダがあるから、それを開こう」
+私「"Open Folder"だな。調査結果を全部まとめたフォルダがあるから、それを開こう」
 :::
 
 ::: voice-father
@@ -126,7 +126,7 @@ R packages: cifmodeling, dplyr, gtsummary, tableone
 :::
 :::::::::::::::::::::::::::::::::
 
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+::: {.callout-note appearance="simple" title="データの読み込み"}
 ```{r}
 # install.packages("cifmodeling") #インストールが必要なら実行
 library(cifmodeling)
@@ -182,13 +182,13 @@ print(out1)
 :::
 :::::::::::::::::::::::::::::::::
 
-::: {.callout-note appearance="simple" collapse="true" title="データセットの一部を表示した結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="データセットの一部の出力結果はこちら"}
 ```{r}
 head(dat)
 ```
 :::
 
-::: {.callout-note appearance="simple" collapse="true" title="変数名とデータの型を表示した結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="変数名とデータの型の出力結果はこちら"}
 ```{r}
 sapply(dat, class)
 ```
@@ -196,11 +196,11 @@ sapply(dat, class)
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-daughter
-私「ありがとう、曝露変数は果物摂取量を表すfruitq1で2値データ、アウトカムはtとepsilonで生存時間データってことね」
+私「ありがとう、曝露変数は果物摂取量を表す`fruitq1`で2値データ、アウトカムは`t`と`epsilon`で生存時間データってことね」
 :::
 
 ::: voice-father
-お父さん「次はどうするかな。そうだな、欠測の数を確かめておこう。fruitq1には、扱いやすいように0は”High intake”、1は”Low intake”というラベルをつける」
+お父さん「次はどうするかな。そうだな、欠測の数を確かめておこう。`fruitq1`には、扱いやすいように0は”High intake”、1は”Low intake”というラベルをつける」
 :::
 
 ::: voice-daughter
@@ -209,7 +209,7 @@ sapply(dat, class)
 ::::::::::::::::::::::::::::::::: 
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-```{r}
+```{r warning=FALSE}
 dat$fruit_group <- factor(
     dat$fruitq1,
     levels = c(0, 1),
@@ -243,7 +243,9 @@ colSums(is.na(dat[, binary_var]))
 :::
 ::::::::::::::::::::::::::::::::: 
 
-"`gtsummary::tbl_summary()`を使って曝露群と非曝露群で層別した集計表を作って"
+```{r}
+"`gtsummary::tbl_summary()`を使って曝露変数`exposure_var`で層別した集計表を作って"
+```
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードはこちら"}
 ```{r, eval=FALSE}
@@ -343,7 +345,7 @@ print(table1)
 ”この結果が正しいかダブルプログラミングでチェックしたい。別の関数を使って表を作って”
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-```{r}
+```{r warning=FALSE}
 # install.packages("tableone") #インストールが必要なら実行
 library(tableone)
 # install.packages("dplyr") #インストールが必要なら実行

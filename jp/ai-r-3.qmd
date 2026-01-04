@@ -47,8 +47,9 @@ R packages: cobalt, cifmodeling, dagitty, WeightIt
 お父さん「いいよ、いいけどさ。やるからには、きちんと段取りを踏もうよ。この前`diabetes.complications`データを使ってRとAIの説明をしたとき、この表を作ったことを覚えてる？」
 :::
 
+::: {.callout-note appearance="simple" collapse="true" title="2型糖尿病患者978人の背景因子の表"}
 ![](ai-r-4.png)
-
+:::
 
 ::: voice-daughter
 私「ああ、やったね、これ」
