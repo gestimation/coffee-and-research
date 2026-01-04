@@ -25,15 +25,14 @@ R packages: cobalt, cifmodeling, dagitty, WeightIt
 
 ::: {.callout-note appearance="simple" collapse="true" title="シリーズの位置付け"}
 
-このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを身に着けられるように構成しています。
+このシリーズは、AIを使ってRコードを素早く組み立てつつ、因果推論の実務で求められる品質管理まで含めて完走する、会話形式の短いチュートリアルです。AIは便利ですが、図表が出たとしてもそれが正しいとは限りません。だからこそ、因果推論の実務フローに沿って手順を踏み、検証まで行うことが重要になります。
 
-- AIを用いたRコーディングと品質管理（このエピソード）
-- Table 1をつくるためのワークフロー: **gtsummary**
-- Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: **cifmodeling**
-- 交絡調整の仮定宣言・診断（このエピソード）: **dagitty**と**cobalt**
-- 交絡調整の実行（このエピソード）: **WeightIt**
+3つのエピソードで、次のワークフローを一度まわします。
 
-広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp)もあわせてお楽しみください。また、Rパッケージの詳細については、それぞれのVignettes等をご参照ください。
+- データ確認 → Table 1作成 → 仮定の宣言 → 診断 → 推定 → 別実装で検証
+- Rパッケージ: gtsummary, cifmodeling, dagitty, WeightIt, cobalt
+
+因果・統計の理屈は本編["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp) に譲り、このシリーズではAIとRによる実装と点検に焦点を当てます。
 :::
 
 ### 解析計画は推定目標と仮定からはじまる
@@ -223,7 +222,7 @@ exposure.model <- as.formula(paste("fruitq1 ~", paste(continuous_var, collapse =
 # install.packages("WeightIt") # if needed
 library(WeightIt)
 
-out2 <- weightit(exposure.model, data = dat, method = "cbps")
+out2 <- weightit(exposure.model, data = dat, method = "cbps", estimand="ATE")
 dat$ip.weight <- out2$weights
 dat$one <- 1
 quantile(dat$ip.weight, probs = c(0, .01, .05, .5, .95, .99, 1))
@@ -310,7 +309,7 @@ love.plot(
 
 ::: {.callout-note appearance="simple" collapse="true" title="累積発生曲線（デフォルト）のRコードと結果はこちら"}
 ```{r warning=FALSE}
-cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk")
+cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", code.event1 = 1, code.event2 = 2)
 ```
 :::
 
@@ -320,7 +319,7 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk")
 :::
 
 ::: voice-father
-お父さん「いいよ。時点ごとの追跡状況は、曲線の下にある**アットリスク数（number at risk）**に示されている。打ち切りが起きたタイミングは**ひげ**で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」
+お父さん「大丈夫。この場合は`code.event1 = 1`と`code.event2 = 2`は省略してもいい。時点ごとの追跡状況は、曲線の下にある**アットリスク数（number at risk）**に示されている。打ち切りが起きたタイミングは**ひげ**で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」
 :::
 
 -   アットリスク数は時点ごとの人数を表す
@@ -392,7 +391,7 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk",
 :::
 
 ::: voice-father
-お父さん「そういうこと。次に、有効サンプルサイズを見て。調整前の図のアットリスク数より、有効サンプルサイズは小さいでしょ。重みを付けることで誤差が大きくなったったことを示している」
+お父さん「そういうこと。次に、有効サンプルサイズを見て。調整前の図のアットリスク数より、有効サンプルサイズは小さいでしょ。重みを付けることで誤差が大きくなったことを示している」
 :::
 
 ::: voice-daughter
@@ -441,30 +440,17 @@ print(compare_weighted)
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-daughter
-私「こっちもだいじょうぶみたいだね」
+私「こっちもだいじょうぶみたい」
 :::
 
 ::: voice-father
-お父さん「うん。じゃあ振り返りをかねて調整CIFを推定するときの典型的な失敗例を4つ挙げよう。ひとつでも踏むと、図がそれっぽく出ても計算は間違っている。あらかじめ知っておいた方がいい」
+お父さん「うん、これで図表の完成だね。確かにAIは便利だけど、図表を作った責任は人間にある。作業工程を整理するため、あるいは自主点検のために、チェックリストを作ってみた。簡単なものだけど、作業の説明責任や品質責任のために最低限のポイントは押さえてるんじゃないかな。"品質管理"では、典型的な失敗例を4つ挙げておいた。ひとつでも踏むと、図がそれっぽく出ても計算は間違っている。あらかじめ知っておいた方がいい」
 :::
-
-- イベント変数が競合リスクを含んでいるはずが無視される（変数の型やNAに注意）
-
-- イベント変数のコーディングエラー（`survfit()`の`$pstate`は、両方のイベントの結果を含むのでコーディング要確認）
-
-- 重み変数の指定エラー（調整変数集合が複数あるとき間違えやすい）
-
-- 重み変数がゼロや極端に大きい値を含んでいる
-
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-tip appearance="simple" title="調整CIFを作るときの実務チェックリスト"}
+::: {.callout-tip appearance="simple" title="調整CIFのための実務チェックリスト"}
 
-このシリーズでは、Table 1と調整CIFを作成するためのワークフローを見てきましたが、実務ではその結果が正しいことを自主点検できることが重要です。AIを使っても責任は解析者が担います。実務チェックリストを用意しましたのでご利用ください。
-
----
-
-## □推定目標（estimand）
+### □推定目標（estimand）
 - 何を比較する？  
   - 例: 果物摂取（High intake vs Low intake）
 - どの集団で？（解析対象集団の定義、追跡開始時点、欠測等による除外）
@@ -473,7 +459,7 @@ print(compare_weighted)
 
 ---
 
-## □仮定の宣言
+### □仮定の宣言
 - DAG（因果構造の表現）  
   - `dagitty::dagitty()`
 - 調整すべき交絡因子の集合
@@ -482,7 +468,7 @@ print(compare_weighted)
 
 ---
 
-## □データ定義
+### □データ定義
 - イベント変数・曝露変数のコーディング
 - コーディングの臨床的意味の確認
 - イベント変数と時間変数の集計
@@ -490,7 +476,7 @@ print(compare_weighted)
 
 ---
 
-## □統計手法の選択
+### □統計手法の選択
 - プロペンシティスコアのモデル  
   - 共変量選択の根拠: DAGや臨床知識
 - 重みの計算方法
@@ -500,7 +486,7 @@ print(compare_weighted)
 
 ---
 
-## □診断
+### □診断
 - オーバーラップ（positivity）
   - 群間でプロペンシティスコアや重みが偏っていないか
   - 重みが極端でないか
@@ -511,7 +497,7 @@ print(compare_weighted)
 
 ---
 
-## □推定
+### □推定
 - 未調整CIF（記述）
   - `cifmodeling::cifplot(..., weights = NULL)`
 - 調整CIF（因果効果） 
@@ -522,13 +508,19 @@ print(compare_weighted)
 
 ---
 
-## □品質管理
+### □品質管理
 - 別実装での再現
   - `gtsummary::tbl_summary()` / `tableone::CreateTableOne()`
   - `cifmodeling::cifplot()` / `survival::survfit()`
 - 目視チェック
   - **競合リスクとして扱われているか**を出力で確認
-  - イベント数・打ち切り数と曲線の比較
+  - イベント変数・時間変数の集計結果と曲線の比較
+- 典型的な失敗例
+  - イベント変数が競合リスクを含んでいるはずが無視される（変数の型やNAに注意）
+  - イベント変数のコーディングエラー（`survfit()`の`$pstate`は、両方のイベントの結果を含むのでコーディング要確認）
+  - 重み変数の指定エラー（調整変数集合が複数あるとき間違えやすい）
+  - 重み変数がゼロや極端に大きい値を含んでいる
+
 :::
 
 ::: {.callout-note appearance="simple" title="このエピソードに関係するクイズです"}

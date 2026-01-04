@@ -306,15 +306,13 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>このシリーズは、因果推論の実務フローを見て頂くために、“A Conversation on Causality at Our Table”の付録として用意したものです。全3エピソードの中で、5つのスキルを身に着けられるように構成しています。</p>
+<p>このシリーズは、AIを使ってRコードを素早く組み立てつつ、因果推論の実務で求められる品質管理まで含めて完走する、会話形式の短いチュートリアルです。AIは便利ですが、図表が出たとしてもそれが正しいとは限りません。だからこそ、因果推論の実務フローに沿って手順を踏み、検証まで行うことが重要になります。</p>
+<p>3つのエピソードで、次のワークフローを一度まわします。</p>
 <ul>
-<li>AIを用いたRコーディングと品質管理（このエピソード）</li>
-<li>Table 1をつくるためのワークフロー: <strong>gtsummary</strong></li>
-<li>Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: <strong>cifmodeling</strong></li>
-<li>交絡調整の仮定宣言・診断（このエピソード）: <strong>dagitty</strong>と<strong>cobalt</strong></li>
-<li>交絡調整の実行（このエピソード）: <strong>WeightIt</strong></li>
+<li>データ確認 → Table 1作成 → 仮定の宣言 → 診断 → 推定 → 別実装で検証</li>
+<li>Rパッケージ: gtsummary, cifmodeling, dagitty, WeightIt, cobalt</li>
 </ul>
-<p>広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は<a href="https://gestimation.github.io/coffee-and-research/jp">“A Conversation on Causality at Our Table”</a>もあわせてお楽しみください。また、Rパッケージの詳細については、それぞれのVignettes等をご参照ください。</p>
+<p>因果・統計の理屈は本編<a href="https://gestimation.github.io/coffee-and-research/jp">“A Conversation on Causality at Our Table”</a> に譲り、このシリーズではAIとRによる実装と点検に焦点を当てます。</p>
 </div>
 </div>
 </div>
@@ -506,7 +504,7 @@ $`2`
 </div>
 </section>
 <section id="プロペンシティスコアに基づく重みの計算" class="level3">
-<h3 class="anchored">プロペンシティスコアに基づく重みの計算</h3>
+<h3 class="anchored" data-anchor-id="プロペンシティスコアに基づく重みの計算">プロペンシティスコアに基づく重みの計算</h3>
 <div class="dialogue">
 <div class="voice-daughter">
 <p>私「これでアウトカムが集計できたよね。網膜症発症281件、大血管症発症81件。患者背景の要約統計量もTable 1にまとめた。次は偏りを調整するんだっけ。結局なにをすればいいの？回帰？マッチング？」</p>
@@ -563,7 +561,7 @@ CBPSの重みを計算するためのRコードと結果はこちら
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("WeightIt") # if needed</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeightIt)</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>out2 <span class="ot">&lt;-</span> <span class="fu">weightit</span>(exposure.model, <span class="at">data =</span> dat, <span class="at">method =</span> <span class="st">"cbps"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>out2 <span class="ot">&lt;-</span> <span class="fu">weightit</span>(exposure.model, <span class="at">data =</span> dat, <span class="at">method =</span> <span class="st">"cbps"</span>, <span class="at">estimand=</span><span class="st">"ATE"</span>)</span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>ip.weight <span class="ot">&lt;-</span> out2<span class="sc">$</span>weights</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>one <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(dat<span class="sc">$</span>ip.weight, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">01</span>, .<span class="dv">05</span>, .<span class="dv">5</span>, .<span class="dv">95</span>, .<span class="dv">99</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -746,7 +744,7 @@ Adjusted    690.37  208.59</code></pre>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, <span class="at">code.event1 =</span> <span class="dv">1</span>, <span class="at">code.event2 =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -763,7 +761,7 @@ Adjusted    690.37  208.59</code></pre>
 <p>私「これでいいよね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「いいよ。時点ごとの追跡状況は、曲線の下にある<strong>アットリスク数（number at risk）</strong>に示されている。打ち切りが起きたタイミングは<strong>ひげ</strong>で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」</p>
+<p>お父さん「大丈夫。この場合は<code>code.event1 = 1</code>と<code>code.event2 = 2</code>は省略してもいい。時点ごとの追跡状況は、曲線の下にある<strong>アットリスク数（number at risk）</strong>に示されている。打ち切りが起きたタイミングは<strong>ひげ</strong>で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」</p>
 </div>
 <ul>
 <li>アットリスク数は時点ごとの人数を表す</li>
@@ -864,7 +862,7 @@ Adjusted    690.37  208.59</code></pre>
 <p>私「調整前より調整後の曲線ではわずかに差が広がったみたい。この曲線の差の分だけ、果物摂取の因果効果があるってことだよね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そういうこと。次に、有効サンプルサイズを見て。調整前の図のアットリスク数より、有効サンプルサイズは小さいでしょ。重みを付けることで誤差が大きくなったったことを示している」</p>
+<p>お父さん「そういうこと。次に、有効サンプルサイズを見て。調整前の図のアットリスク数より、有効サンプルサイズは小さいでしょ。重みを付けることで誤差が大きくなったことを示している」</p>
 </div>
 <div class="voice-daughter">
 <p>私「ふーん。まあ競合リスク解析の流れは理解できたよ、ありがとう」</p>
@@ -872,7 +870,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </section>
 <section id="統計解析の品質管理" class="level3">
-<h3 class="anchored">統計解析の品質管理</h3>
+<h3 class="anchored" data-anchor-id="統計解析の品質管理">統計解析の品質管理</h3>
 <div class="dialogue">
 <div class="voice-father">
 <p>お父さん「これで最後の作業だ。CIFのバリデーションをしよう。この場合は、<code>survfit()</code>でもCIFの推定値と標準誤差が計算できる。<code>survfit()</code>の推定値は<code>$pstate</code>っていうオブジェクトに入っている。<code>cifplot()</code>の推定値が欲しければ、計算ルーチンの<code>cifcurve()</code>を実行して、<code>1-$surv</code>を求めればいい。まったく同じ値になるはずだ。標準誤差は<code>$std.err</code>っていうオブジェクトなんだけど、別の計算方法を使っているから近い値になるかを見る。まずは調整なしの結果を比較しよう」</p>
@@ -980,32 +978,24 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>私「こっちもだいじょうぶみたいだね」</p>
+<p>私「こっちもだいじょうぶみたい」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「うん。じゃあ振り返りをかねて調整CIFを推定するときの典型的な失敗例を4つ挙げよう。ひとつでも踏むと、図がそれっぽく出ても計算は間違っている。あらかじめ知っておいた方がいい」</p>
+<p>お父さん「うん、これで図表の完成だね。確かにAIは便利だけど、図表を作った責任は人間にある。作業工程を整理するため、あるいは自主点検のために、チェックリストを作ってみた。簡単なものだけど、作業の説明責任や品質責任のために最低限のポイントは押さえてるんじゃないかな。“品質管理”では、典型的な失敗例を4つ挙げておいた。ひとつでも踏むと、図がそれっぽく出ても計算は間違っている。あらかじめ知っておいた方がいい」</p>
 </div>
-<ul>
-<li><p>イベント変数が競合リスクを含んでいるはずが無視される（変数の型やNAに注意）</p></li>
-<li><p>イベント変数のコーディングエラー（<code>survfit()</code>の<code>$pstate</code>は、両方のイベントの結果を含むのでコーディング要確認）</p></li>
-<li><p>重み変数の指定エラー（調整変数集合が複数あるとき間違えやすい）</p></li>
-<li><p>重み変数がゼロや極端に大きい値を含んでいる</p></li>
-</ul>
 </div>
-<div class="callout callout-style-simple callout-tip callout-titled" title="調整CIFを作るときの実務チェックリスト">
+<div class="callout callout-style-simple callout-tip callout-titled" title="調整CIFのための実務チェックリスト">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-調整CIFを作るときの実務チェックリスト
+調整CIFのための実務チェックリスト
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>このシリーズでは、Table 1と調整CIFを作成するためのワークフローを見てきましたが、実務ではその結果が正しいことを自主点検できることが重要です。AIを使っても責任は解析者が担います。実務チェックリストを用意しましたのでご利用ください。</p>
-<hr>
-<section id="推定目標estimand" class="level2">
-<h2 class="anchored" data-anchor-id="推定目標estimand">□推定目標（estimand）</h2>
+<section id="推定目標estimand" class="level3">
+<h3 class="anchored" data-anchor-id="推定目標estimand">□推定目標（estimand）</h3>
 <ul>
 <li>何を比較する？
 <ul>
@@ -1017,8 +1007,8 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </ul>
 <hr>
 </section>
-<section id="仮定の宣言" class="level2">
-<h2 class="anchored" data-anchor-id="仮定の宣言">□仮定の宣言</h2>
+<section id="仮定の宣言" class="level3">
+<h3 class="anchored" data-anchor-id="仮定の宣言">□仮定の宣言</h3>
 <ul>
 <li>DAG（因果構造の表現）
 <ul>
@@ -1032,8 +1022,8 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </ul>
 <hr>
 </section>
-<section id="データ定義" class="level2">
-<h2 class="anchored" data-anchor-id="データ定義">□データ定義</h2>
+<section id="データ定義" class="level3">
+<h3 class="anchored" data-anchor-id="データ定義">□データ定義</h3>
 <ul>
 <li>イベント変数・曝露変数のコーディング</li>
 <li>コーディングの臨床的意味の確認</li>
@@ -1044,8 +1034,8 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </ul>
 <hr>
 </section>
-<section id="統計手法の選択" class="level2">
-<h2 class="anchored" data-anchor-id="統計手法の選択">□統計手法の選択</h2>
+<section id="統計手法の選択" class="level3">
+<h3 class="anchored" data-anchor-id="統計手法の選択">□統計手法の選択</h3>
 <ul>
 <li>プロペンシティスコアのモデル
 <ul>
@@ -1062,8 +1052,8 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </ul>
 <hr>
 </section>
-<section id="診断" class="level2">
-<h2 class="anchored" data-anchor-id="診断">□診断</h2>
+<section id="診断" class="level3">
+<h3 class="anchored" data-anchor-id="診断">□診断</h3>
 <ul>
 <li>オーバーラップ（positivity）
 <ul>
@@ -1079,8 +1069,8 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </ul>
 <hr>
 </section>
-<section id="推定" class="level2">
-<h2 class="anchored" data-anchor-id="推定">□推定</h2>
+<section id="推定" class="level3">
+<h3 class="anchored" data-anchor-id="推定">□推定</h3>
 <ul>
 <li>未調整CIF（記述）
 <ul>
@@ -1098,8 +1088,8 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </ul>
 <hr>
 </section>
-<section id="品質管理" class="level2">
-<h2 class="anchored" data-anchor-id="品質管理">□品質管理</h2>
+<section id="品質管理" class="level3">
+<h3 class="anchored" data-anchor-id="品質管理">□品質管理</h3>
 <ul>
 <li>別実装での再現
 <ul>
@@ -1109,7 +1099,14 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <li>目視チェック
 <ul>
 <li><strong>競合リスクとして扱われているか</strong>を出力で確認</li>
-<li>イベント数・打ち切り数と曲線の比較</li>
+<li>イベント変数・時間変数の集計結果と曲線の比較</li>
+</ul></li>
+<li>典型的な失敗例
+<ul>
+<li>イベント変数が競合リスクを含んでいるはずが無視される（変数の型やNAに注意）</li>
+<li>イベント変数のコーディングエラー（<code>survfit()</code>の<code>$pstate</code>は、両方のイベントの結果を含むのでコーディング要確認）</li>
+<li>重み変数の指定エラー（調整変数集合が複数あるとき間違えやすい）</li>
+<li>重み変数がゼロや極端に大きい値を含んでいる</li>
 </ul></li>
 </ul>
 </section>

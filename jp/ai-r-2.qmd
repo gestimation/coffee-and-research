@@ -23,15 +23,14 @@ R packages: cifmodeling
 
 ::: {.callout-note appearance="simple" collapse="true" title="シリーズの位置付け"}
 
-このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを身に着けられるように構成しています。
+このシリーズは、AIを使ってRコードを素早く組み立てつつ、因果推論の実務で求められる品質管理まで含めて完走する、会話形式の短いチュートリアルです。AIは便利ですが、図表が出たとしてもそれが正しいとは限りません。だからこそ、因果推論の実務フローに沿って手順を踏み、検証まで行うことが重要になります。
 
-- AIを用いたRコーディングと品質管理
-- Table 1をつくるためのワークフロー: **gtsummary**
-- Kaplan-Meier曲線とAalen-Johansen曲線の使い分け（このエピソード）: **cifmodeling**
-- 交絡調整の仮定宣言・診断: **dagitty**と**cobalt**
-- 交絡調整の実行: **WeightIt**
+3つのエピソードで、次のワークフローを一度まわします。
 
-広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp)もあわせてお楽しみください。また、Rパッケージの詳細については、それぞれのVignettes等をご参照ください。
+- データ確認 → Table 1作成 → 仮定の宣言 → 診断 → 推定 → 別実装で検証
+- Rパッケージ: gtsummary, cifmodeling, dagitty, WeightIt, cobalt
+
+因果・統計の理屈は本編["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp) に譲り、このシリーズではAIとRによる実装と点検に焦点を当てます。
 :::
 
 ### 競合リスクデータに潜むバイアス

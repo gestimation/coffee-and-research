@@ -341,15 +341,13 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>このシリーズは、因果推論の実務フローを見て頂くために、“A Conversation on Causality at Our Table”の付録として用意したものです。全3エピソードの中で、5つのスキルを身に着けられるように構成しています。</p>
+<p>このシリーズは、AIを使ってRコードを素早く組み立てつつ、因果推論の実務で求められる品質管理まで含めて完走する、会話形式の短いチュートリアルです。AIは便利ですが、図表が出たとしてもそれが正しいとは限りません。だからこそ、因果推論の実務フローに沿って手順を踏み、検証まで行うことが重要になります。</p>
+<p>3つのエピソードで、次のワークフローを一度まわします。</p>
 <ul>
-<li>AIを用いたRコーディングと品質管理（このエピソード）</li>
-<li>Table 1をつくるためのワークフロー（このエピソード）: <strong>gtsummary</strong></li>
-<li>Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: <strong>cifmodeling</strong></li>
-<li>交絡調整の仮定宣言・診断: <strong>dagitty</strong>と<strong>cobalt</strong></li>
-<li>交絡調整の実行: <strong>WeightIt</strong></li>
+<li>データ確認 → Table 1作成 → 仮定の宣言 → 診断 → 推定 → 別実装で検証</li>
+<li>Rパッケージ: gtsummary, cifmodeling, dagitty, WeightIt, cobalt</li>
 </ul>
-<p>広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は<a href="https://gestimation.github.io/coffee-and-research/jp">“A Conversation on Causality at Our Table”</a>もあわせてお楽しみください。また、Rパッケージの詳細については、それぞれのVignettes等をご参照ください。</p>
+<p>因果・統計の理屈は本編<a href="https://gestimation.github.io/coffee-and-research/jp">“A Conversation on Causality at Our Table”</a> に譲り、このシリーズではAIとRによる実装と点検に焦点を当てます。</p>
 </div>
 </div>
 </div>
