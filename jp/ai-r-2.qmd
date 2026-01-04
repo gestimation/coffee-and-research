@@ -1,0 +1,283 @@
+---
+title: "R Demonstration of Bias in Kaplan-Meier Under Competing Risks"
+description: "理論で語られるバイアスは、Rのシミュレーションで確かめられます。Kaplan-Meierの挙動を確認するcoffee-chat guide。Rに不慣れな方も、スクリプトを流すだけですので結果を再現してみてください。"
+tags:
+  - cifmodeling
+  - R simulation
+format:
+  html:
+    toc: true
+---
+
+::: {.hero-header}
+![](../image/father-daughter.png){.hero-header-img}
+:::
+
+# AI & R Workflows II − R Demonstration of Bias in Kaplan-Meier Under Competing Risks
+
+::: {.serif-block .text-right}
+R packages: cifmodeling
+:::
+
+------------------------------------------------------------------------
+
+::: {.callout-note appearance="simple" collapse="true" title="シリーズの位置付け"}
+
+このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを習得できるように構成しています。
+
+- AIを用いたRコーディングと品質管理
+- Table 1をつくるためのワークフロー: `gtsummary`
+- Kaplan-Meier曲線とAalen-Johansen曲線の使い分け（このエピソード）: `cifmodeling`
+- 交絡調整の仮定宣言・診断: `dagitty`と`cobalt`
+- 交絡調整の実行: `WeightIt`
+
+広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は"A Conversation on Causality at Our Table"もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。
+:::
+
+### 競合リスクデータに潜むバイアス
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+お父さん「おはよう。もし時間があるなら、この前やったRの話の続きをしてもいいかな。以前、臨床研究ではランダム誤差とバイアスに気をつけろって言ったの、覚えてる？」
+:::
+
+::: voice-daughter
+私「覚えてるよ。でもバイアスって疫学で習うものだよね。統計とかRの本を読んでもバイアスなんて見たことがない。統計解析とどういう関係があるの？」
+:::
+
+::: voice-father
+お父さん「ああ、そういうことね。確かに、疫学で出てくる研究実施上のバイアスそのものは、統計学の教科書にあまり登場しないね。でも、推定した結果が真値からずれるっていう意味では同じもの。少し時間ある？カバンの中のパソコン出せる？」
+:::
+
+::: voice-daughter
+私「え？朝からなにするの？」
+:::
+
+::: voice-father
+お父さん「統計学ではよく、シミュレーションっていってデータを乱数で発生させて実験するんだ。**Kaplan-Meier曲線を**描こうとすると、**競合リスク**の扱いによってはバイアスが生じるってことをみせてあげるよ、バイアスがどれくらい困ったことなのか実感ないでしょ？データが集まらないと。Rスクリプトをいじるだけですぐ終わるから」
+:::
+
+::: voice-daughter
+私「仕方ないな」
+:::
+
+### モデルを立ててバイアスを確かめる
+
+::: voice-father
+お父さん「パソコンを立ち上げる間に何をするか話そう。まずね、いまから見せるのは"研究の不備"のバイアスじゃなくて、"目標としている値と違う値を統計的に推定してしまう"という現象だよ。競合リスクを含むデータは、こういう仕組みで生まれる」
+:::
+
+- 再発までの時間を発生させる
+- 死亡までの時間を発生させる（競合リスク）
+- 打ち切りまでの時間を発生させる
+
+::: voice-father
+お父さん「実際に観測されるのは、もちろんそのうち一番先に起きたイベント、つまりこの3つの値の最小値をとる」
+:::
+
+::: voice-daughter
+私「なるほど、それなら再発より先に死亡したら、再発は観測されないわけだ。当たり前だけど、シミュレーションはこうやるのね」
+:::
+
+::: voice-father
+お父さん「ここで問題になるのが統計手法の選び方なんだ。よく死亡を打ち切りにした解析を見るでしょ。あのKaplan-Meier曲線は、現実世界で再発が生じる確率を過大評価してしまう。これじゃなくて**Aalen-Johansen曲線**を推定すると、正しく再発確率が求められる。ではRでデータを発生させてみよう」
+:::
+
+::: voice-daughter
+私「あ、糖尿病合併症じゃなくて、がんの再発データにしてよ。そっちのが実感がわくんだ」
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="シミュレーションデータ（再発あり）におけるKaplan-Meier曲線のバイアス"}
+以前生成したシミュレーションデータにおける累積再発率（CIR）の解析では、再発の前に死亡した患者（競合リスク）を発生させたことを覚えていますか？競合リスク存在下でKaplan-Meier曲線を用いるとバイアスが生じることは、簡単な実験で確かめることができます。
+:::
+
+::: {.callout-note appearance="simple"  collapse="true" title="generate_data()のコードはこちら（データ生成に使用）"}
+```{r warning=FALSE}
+generate_data <- function(n = 200, hr1, hr2, hr3) {
+  stoma <- rbinom(n, size = 1, prob = 0.4)
+  sex <- rbinom(n, size = 1, prob = 0.5)
+  age <- rnorm(n, mean = 65 + 3 * stoma, sd = 8)
+  hazard_relapse   <- 0.10*exp(stoma*log(hr1)+age*log(hr2))
+ # 再発のハザード（大きいほど早く起こる）
+  hazard_death     <- ifelse(stoma == 1, hr3 * 0.10, 0.10) # 死亡のハザード（大きいほど早く起こる）
+  hazard_censoring <- 0.05                               # 打ち切りハザード（群に依存しない）
+
+  t_relapse   <- rexp(n, rate = hazard_relapse)   # 再発までの潜在時間
+  t_death     <- rexp(n, rate = hazard_death)     # 死亡までの潜在時間
+  t_censoring <- rexp(n, rate = hazard_censoring) # 打ち切りまでの潜在時間
+  
+  ## --- 全生存期間（OS） ----------------------------------------
+  time_os   <- pmin(t_death, t_censoring)
+  status_os <- as.integer(t_death <= t_censoring)  # 1 = 死亡, 0 = 打ち切り
+  
+  ## --- 無再発生存期間（RFS） -----------------------------------
+  time_rfs <- pmin(t_relapse, t_death, t_censoring)
+  
+  status_rfs <- integer(n)
+  status_rfs[time_rfs == t_relapse & time_rfs < t_censoring] <- 1 # 再発
+  status_rfs[time_rfs == t_death & time_rfs < t_censoring] <- 1   # 死亡
+  
+  ## --- 累積再発率（CIR） + 競合リスク --------------------------
+  time_cir <- pmin(t_relapse, t_death, t_censoring)
+  
+  status_cir <- integer(n)
+  status_cir[time_cir == t_relapse & time_cir < t_censoring] <- 1 # イベント1: 再発
+  status_cir[time_cir == t_death & time_cir < t_censoring] <- 2   # イベント2: 競合リスクとしての死亡
+  
+  ## --- データフレームにまとめる --------------------------------
+  dat <- data.frame(
+    id         = 1:n,
+    sex        = factor(sex, levels = c(0, 1), labels = c("WOMAN", "MAN")),
+    age        = age,
+    stoma      = factor(stoma, levels = c(0, 1),
+                        labels = c("WITHOUT STOMA", "WITH STOMA")),
+    time_os    = time_os,
+    status_os  = status_os,
+    time_rfs   = time_rfs,
+    status_rfs = status_rfs,
+    time_cir   = time_cir,
+    status_cir = status_cir
+  )
+}
+```
+:::
+
+::: {.callout-note appearance="simple"  title="累積再発率（CIR）のAalen-Johansen曲線"}
+Kaplan-Meier曲線とAalen-Johansen曲線は、どちらも`cifmodeling`パッケージの`cifplot()`を使って生成できますが、イベントのコーディングを入力する`code.event1`、`code.event2`とデータの型を表す`outcome.type`を、指定する必要があります。`generate_data()`で生成したシミュレーションデータでは、CIRのイベントは以下のようにコーディングされていました。
+
+- `status_cir=1` : 再発
+- `status_cir=2` : 再発を経験しない死亡
+- `status_cir=0` : 打ち切り
+
+以下のRスクリプトでは、最初の`cifplot()`により、再発（`code.event1=1`）に関するAalen-Johansen曲線（`aj_event1`）を出力しています。縦軸は累積発生確率ではなく、1-累積発生確率を選んでいる点にも注意してください（`type.y="surv"`）。そして次の`cifplot()`ではイベントを入れ替えて、再発を経験しない死亡（`code.event1=2`）に関するAalen-Johansen曲線（`aj_event2`）を出力し、`cifpanel()`に用いて2つの図を左右に配置したひとつの図を表示しています。左右の累積発生確率の和に注目してください。この図からは、再発の累積発生確率と（再発を経験しない）死亡の累積発生確率の和は、時間が経つにつれ1に近づくが、1を超えることはないことがわかります。仮に打ち切りがなかったとしたら、再発と（再発を経験しない）死亡のどちらか一方しか生じないため、Aalen-Johansen曲線の和が1を超えないのは自然なことです。
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
+# devtools::install_github("gestimation/cifmodeling") #インストールが必要なら実行 
+library(cifmodeling)
+set.seed(46)
+dat <- generate_data(hr1=2, hr2=1, hr3=1.5) #再発ハザード比2, 死亡ハザード比1.5のデータ生成
+
+aj_event1 <- cifplot(Event(time_cir, status_cir) ~ stoma,
+  data         = dat,
+  outcome.type = "competing-risk", 
+  type.y       = "surv",
+  label.y      = "1-Aalen-Johansen",
+  code.event1  = 1, 
+  code.event2  = 2
+)
+aj_event2 <- cifplot(Event(time_cir, status_cir) ~ stoma,
+  data         = dat,
+  outcome.type = "competing-risk", 
+  type.y       = "risk",
+  label.y      = "Aalen-Johansen",
+  code.event1  = 2, 
+  code.event2  = 1
+)
+aj_list <- list(aj_event1$plot, aj_event2$plot)
+aj_panel <- cifpanel(rows.columns.panel = c(1,2), plots=aj_list)
+print(aj_panel)
+```
+:::
+
+::: {.callout-note appearance="simple"  title="累積再発率（CIR）のKaplan-Meier曲線"}
+実際の研究では、死亡を打ち切りとして扱った生存時間解析の結果をしばしば目にします。この解析に対応するKaplan-Meier曲線は、以下のようにイベントのコーディングを変更し、`outcome.type="survival"`を指定することで出力できます。
+
+- `status_cir1=1` : 再発
+- `status_cir1=0` : 再発を経験しない死亡/打ち切り
+- `status_cir2=1` : 再発を経験しない死亡
+- `status_cir2=0` : 再発/打ち切り
+
+新しく作ったイベント変数`status_cir1`と`status_cir2`を用いると、再発のKaplan-Meier曲線と（再発を経験しない）死亡のKaplan-Meier曲線を描くことができます。これらのKaplan-Meier曲線を左右に配置した図を、先ほどのAalen-Johansen曲線の図と比べてみてください。先ほどのAalen-Johansen曲線の和とは違い、Kaplan-Meier曲線の和が1を超えてしまって計算が合わないことが読み取れたでしょうか。
+:::
+
+::: {.callout-note appearance="simple"  collapse="true" title="Rコードと結果はこちら"}
+```{r}
+dat$status_cir1 <- as.numeric(dat$status_cir==1)
+km_event1 <- cifplot(Event(time_cir, status_cir1) ~ stoma,
+  data         = dat,
+  outcome.type = "survival", 
+  type.y       = "surv",
+  label.y      = "Kaplan-Meier"
+)
+dat$status_cir2 <- as.numeric(dat$status_cir==2)
+km_event2 <- cifplot(Event(time_cir, status_cir2) ~ stoma,
+  data         = dat,
+  outcome.type = "survival", 
+  type.y       = "risk",
+  label.y      = "1-Kaplan-Meier"
+)
+km_list <- list(km_event1$plot, km_event2$plot)
+km_panel <- cifpanel(rows.columns.panel = c(1,2), plots=km_list)
+print(km_panel)
+```
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+お父さん「わかった？打ち切りがランダムっていうのがKaplan-Meier曲線の前提条件なんだ。でも"競合イベントを打ち切り扱いにしていいか"は、ランダム打ち切りとは別問題なんだ」
+:::
+
+::: voice-daughter
+私「なるほどね。再発確率と死亡確率を足して1を超えることはあり得ない、Kaplan-Meier曲線にバイアスが生じていることの証拠だっていいたいのね。確かに、百聞は一見に如かず」
+:::
+
+::: voice-father
+お父さん「そう。このシミュレーションとまったく同じことを、統計学の数式は意味している。つまり、データ発生のアルゴリズムは**確率モデル**っていって、教科書では研究でなにが起きるかを抽象化した数式で書かれているんだ。そして、どんな推定でも使用条件みたいなものがあって、前提にしている確率モデルからずれると、推定値もまた真値からずれる。これは統計手法の誤用でも研究不備でも同じことだけど」
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="このエピソードに関係するクイズです"}
+
+Kaplan-Meier法による生存曲線の推定が妥当な状況として正しいのは、次のうちどれでしょうか。
+
+1.  生存時間が正規分布するとき
+2.  打ち切りの理由が疾患の悪化によらないとき
+3.  2群の打ち切り確率に統計学的な有意差がなかったとき
+4.  試験治療群とコントロール群の間で比例ハザード性が成り立つとき
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="答えはこちら"}
+- **正解は2です**
+
+Kaplan-Meier法では、生存時間が正規分布したり、比例ハザードが成り立ったりする必要はありません（これはそれぞれ*t*検定とCox回帰の前提条件ですね）。疾患の悪化に伴って、試験の途中で患者が追跡できなくなると、推定された生存曲線にバイアスが生じてしまいます。2群の生存曲線を比べるとき、それぞれの群の打ち切り確率を比較することがあります。有意差があればバイアスがあるといえますが、たとえばサンプルサイズが小さいときは有意差が出ませんから、Kaplan-Meier法が妥当という証拠にはなりません。逆にいうと、打ち切りがランダムに起きていることが、Kaplan-Meier法の基本的な前提条件です。なお、競合イベントを打ち切りとして扱うかどうかは、ランダム打ち切りの条件とは独立に検討すべき問題ですよね。
+:::
+
+### 次のエピソードとRスクリプト
+
+- [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
+- [ai-r.R](../from-coffee-chat-to-r/ai-r.R)
+
+### もしオンコロジー領域のアウトカムについて詳しく知りたい方は、"A Conversation on Causality at Our Table"のこのエピソードもご覧ください。
+
+- [Outcomes: The Bridge from Data Collection to Analysis](study-design-3.html)
+
+::: {.callout-note appearance="simple" collapse="true" title="関連エピソードはこちら"}
+
+**このシリーズのエピソード**
+
+- [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses](ai-r-1.html)
+
+- [An R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
+
+- [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
+
+**生存時間解析・競合リスク解析入門**
+
+- [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
+
+**Rシミュレーション**
+
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-5.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-6.html)
+
+**DAG入門**
+
+- [DAGs and Conditional Distributions: Two Languages for the Same Structure](causal-inference-3.html)
+
+**用語集**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::

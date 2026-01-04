@@ -97,7 +97,7 @@ Me: "There you go again with the technical terms. But fine—I do get the point.
 :::
 
 ::: voice-father
-Dad: "There are statistical methods and R packages to improve comparability too, like `glm()` for regression adjustment, or `CBPS()` for propensity score weighting. But on the other hand, a broader study population increases **generalizability**. If you want to estimate the return-to-work proportion among cancer survivors, you don’t necessarily need to limit the cancer type. Ideally, you’d collect data from multiple institutions.”
+Dad: "There are statistical methods and R packages to improve comparability too, like `glm()` for regression adjustment, or `WeightIt()` for propensity score weighting. But on the other hand, a broader study population increases **generalizability**. If you want to estimate the return-to-work proportion among cancer survivors, you don’t necessarily need to limit the cancer type. Ideally, you’d collect data from multiple institutions.”
 :::
 
 ::: voice-daughter

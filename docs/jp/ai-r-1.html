@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-12-13">
+<meta name="dcterms.date" content="2026-01-01">
+<meta name="description" content="はじめて臨床研究を始める医師が、AIを使ってTable 1を作り、別パッケージで独立検証するところまでを、父娘の会話で体験します。">
 
-<title>ai-r-1 – Coffee and Research</title>
+<title>Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses – Coffee and Research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -278,11 +279,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#air-i" id="toc-air-i" class="nav-link active" data-scroll-target="#air-i">AI/R I</a>
+  <li><a href="#ai-r-workflow-i-getting-started-ai-assisted-independently-validated-clinical-research-analyses" id="toc-ai-r-workflow-i-getting-started-ai-assisted-independently-validated-clinical-research-analyses" class="nav-link active" data-scroll-target="#ai-r-workflow-i-getting-started-ai-assisted-independently-validated-clinical-research-analyses">AI &amp; R workflow I − Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses</a>
   <ul class="collapse">
   <li><a href="#もちろんaiつかうよね" id="toc-もちろんaiつかうよね" class="nav-link" data-scroll-target="#もちろんaiつかうよね">もちろんAIつかうよね</a></li>
   <li><a href="#統計解析の品質管理" id="toc-統計解析の品質管理" class="nav-link" data-scroll-target="#統計解析の品質管理">統計解析の品質管理</a></li>
-  <li><a href="#医学研究に関するふたりの会話はいかがでしたか以降のエピソードでは統計学因果推論から論文公表までを描いていきます" id="toc-医学研究に関するふたりの会話はいかがでしたか以降のエピソードでは統計学因果推論から論文公表までを描いていきます" class="nav-link" data-scroll-target="#医学研究に関するふたりの会話はいかがでしたか以降のエピソードでは統計学因果推論から論文公表までを描いていきます">医学研究に関するふたりの会話はいかがでしたか？以降のエピソードでは、統計学・因果推論から論文公表までを描いていきます。</a></li>
+  <li><a href="#臨床研究におけるaiとrの利用に関するふたりの会話はいかがでしたか以降のエピソードでは競合リスク解析交絡調整から頻度論シミュレーション実験までをrで体験いただける構成になっています" id="toc-臨床研究におけるaiとrの利用に関するふたりの会話はいかがでしたか以降のエピソードでは競合リスク解析交絡調整から頻度論シミュレーション実験までをrで体験いただける構成になっています" class="nav-link" data-scroll-target="#臨床研究におけるaiとrの利用に関するふたりの会話はいかがでしたか以降のエピソードでは競合リスク解析交絡調整から頻度論シミュレーション実験までをrで体験いただける構成になっています">臨床研究におけるAIとRの利用に関するふたりの会話はいかがでしたか？以降のエピソードでは、競合リスク解析・交絡調整から頻度論シミュレーション実験までを、Rで体験いただける構成になっています。</a></li>
+  <li><a href="#もしロジスティック回帰の表作成について詳しく知りたい方はa-conversation-on-causality-at-our-tableのこのエピソードもご覧ください" id="toc-もしロジスティック回帰の表作成について詳しく知りたい方はa-conversation-on-causality-at-our-tableのこのエピソードもご覧ください" class="nav-link" data-scroll-target="#もしロジスティック回帰の表作成について詳しく知りたい方はa-conversation-on-causality-at-our-tableのこのエピソードもご覧ください">もしロジスティック回帰の表作成について詳しく知りたい方は、“A Conversation on Causality at Our Table”のこのエピソードもご覧ください。</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -292,8 +294,14 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
+<h1 class="title">Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses</h1>
 </div>
 
+<div>
+  <div class="description">
+    はじめて臨床研究を始める医師が、AIを使ってTable 1を作り、別パッケージで独立検証するところまでを、父娘の会話で体験します。
+  </div>
+</div>
 
 
 <div class="quarto-title-meta column-page-left">
@@ -302,7 +310,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 13, 2025</p>
+      <p class="date">January 1, 2026</p>
     </div>
   </div>
   
@@ -317,20 +325,44 @@ window.Quarto = {
 <div class="hero-header">
 <p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
 </div>
-<section id="air-i" class="level1">
-<h1>AI/R I</h1>
+<section id="ai-r-workflow-i-getting-started-ai-assisted-independently-validated-clinical-research-analyses" class="level1">
+<h1>AI &amp; R workflow I − Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses</h1>
 <div class="serif-block text-right">
-<p>Keywords: a, b, c</p>
+<p>R packages: cifmodeling, dplyr, gtsummary, tableone</p>
 </div>
 <hr>
+<div class="callout callout-style-simple callout-note callout-titled" title="シリーズの位置付け">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+シリーズの位置付け
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>このシリーズは、因果推論の実務フローを見て頂くために、“A Conversation on Causality at Our Table”の付録として用意したものです。全3エピソードの中で、5つのスキルを習得できるように構成しています。</p>
+<ul>
+<li>AIを用いたRコーディングと品質管理（このエピソード）</li>
+<li>Table 1をつくるためのワークフロー（このエピソード）: <code>gtsummary</code></li>
+<li>Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: <code>cifmodeling</code></li>
+<li>交絡調整の仮定宣言・診断: <code>dagitty</code>と<code>cobalt</code></li>
+<li>交絡調整の実行: <code>WeightIt</code></li>
+</ul>
+<p>広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は”A Conversation on Causality at Our Table”もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。</p>
+</div>
+</div>
+</div>
 <section id="もちろんaiつかうよね" class="level3">
 <h3 class="anchored" data-anchor-id="もちろんaiつかうよね">もちろんAIつかうよね</h3>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>私「お父さん、ちょっと聞きたいことがあるんだけど。統計解析するときどのアプリを使ってる？」</p>
+<p>私「おはよう、今朝は冷えるね。ご飯食べてるところ悪いんだけど、ちょっと聞きたいことがあるんだけど。統計解析するときどのアプリを使ってる？あ、コーヒーもらっていい？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「アプリ？…統計ソフトのことだね？」</p>
+<p>お父さん「アプリ？…統計ソフトのことだね？コーヒーもどうぞ、まだ冷めてないと思う」</p>
 </div>
 <div class="voice-daughter">
 <p>私「そうよ。ソフトなんていわないでよ」</p>
@@ -345,13 +377,13 @@ window.Quarto = {
 <p>お父さん「よく分かんないけどどっちでもいいよ。よく使うのはSASとSTATAとR。臨床試験ではSAS、メタアナリシスはSTATA、論文によってるような新しい方法はR、って感じ」</p>
 </div>
 <div class="voice-daughter">
-<p>私「ふんふん。じゃあやっぱりRにしよう、昔授業で触ったし。いや、解析しないといけないデータがあってさ。時間があるなら教えてくれない？」</p>
+<p>私「ふんふん。じゃあやっぱりRにしよう、昔授業で触ったし。いや、解析しないといけないデータがあってさ。食べ終わったらさ、教えてくれない？」</p>
 </div>
 <div class="voice-father">
 <p>お父さん「いいけど、パソコンにRStudio入ってたよね？」</p>
 </div>
 <div class="voice-daughter">
-<p>私「Antigravityでできるらしいよ。Rも動くって」</p>
+<p>私「Antigravityでできるらしいよ。Rも動くって。どっちもこのパソコンに入ってる」</p>
 </div>
 <div class="voice-father">
 <p>お父さん「RなのにRStudioを使わないの？なんでAntigravityがいいの？」</p>
@@ -363,7 +395,7 @@ window.Quarto = {
 <p>お父さん「へえ、まあ、エディターは好みがあるから口出ししないよ。でも使ったことないから設定は教えられないよ」</p>
 </div>
 <div class="voice-daughter">
-<p>私「だいじょうぶ。えっとAntigravityを開く。Rはデフォルトで入ってないから、拡張機能を追加する。左サイドバーの左サイドバーでRを検索する。あれ、いっぱいヒットした、そりゃそうか。PublisherがREditorSupportのやつをインストールする」</p>
+<p>私「だいじょうぶ。えっとAntigravityを開く。R拡張機能はデフォルトで入ってないから追加する。左サイドバーでRを検索する。あれ、いっぱいヒットした、そりゃそうか。PublisherがREditorSupportのやつをインストールする」</p>
 </div>
 <p><img src="ai-r-1.png" class="img-fluid"></p>
 <div class="voice-father">
@@ -374,7 +406,7 @@ window.Quarto = {
 <p>私「調査結果を全部まとめたフォルダがあるから、それを開こう」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「ん？調査結果ってさ、整理する前だと外部に見せられない情報が入ってたりするじゃない。最低限のデータ以外は、直接AIにみせるのはやめようよ。そうだね、最初に約束を3つ決めよう」</p>
+<p>お父さん「ん？調査結果ってさ、整理する前だと外部に見せられない情報が入ってたりするじゃない。最低限のデータ以外は、直接AIに見せるのはやめようよ。そうだね、最初に約束を3つ決めよう」</p>
 </div>
 <div class="voice-daughter">
 <p>私「約束？」</p>
@@ -382,20 +414,20 @@ window.Quarto = {
 <ul>
 <li>整理前のフォルダはAIに見せない。個人が特定できない解析用データセットを用意する。</li>
 <li>作業記録を残す。できれば”Clone Repository”を選んでレポジトリで管理する。</li>
-<li>エージェントが書いたコードは、自主的に品質管理する。たとえば目視チェック、ダブルプログラミング、読み合わせを行う。</li>
+<li>エージェントが書いたコードは、自主的に品質管理する。たとえば目視チェック、ダブルプログラミング、読み合わせを組み合わせる。</li>
 </ul>
 <div class="voice-daughter">
 <p>私「わかった、どれも納得。準備ができてないから今日は練習でいいよね？」</p>
 </div>
-<section id="table-1の作成" class="level3">
-<h3 class="anchored" data-anchor-id="table-1の作成">Table 1の作成</h3>
+<section id="table-1をつくるためのrワークフロー" class="level3">
+<h3 class="anchored" data-anchor-id="table-1をつくるためのrワークフロー">Table 1をつくるためのRワークフロー</h3>
 <div class="voice-father">
-<p>お父さん「じゃあ解析を始めよう。AIを使ったことないから<code>cifmodeling</code>パッケージに入ってる<code>diabetes.complications</code>データでいろいろ試してみたい。このデータは果物摂取量と糖尿病合併症リスクの関係を調べたコホート研究の模擬データだ」</p>
+<p>お父さん「じゃあ解析を始めよう。AIを使ったことないから<strong>cifmodeling</strong>パッケージに入ってる<code>diabetes.complications</code>データでいろいろ試してみたい。このデータは果物摂取量と糖尿病合併症リスクの関係を調べたコホート研究の模擬データだ」</p>
 </div>
 </section>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -404,7 +436,7 @@ Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("cifmodeling") #インストールが必要なら実行</span></span>
@@ -459,8 +491,8 @@ Rコードと結果はこちら
 <p>お父さん「次はどうすればいいって、ちゃんと解析の計画を立ててから動こうよ。そのためにやることはデータセットの確認」</p>
 </div>
 <ul>
-<li><p>変数は何か（変数名）</p></li>
-<li><p>型は何か（数値かカテゴリか）</p></li>
+<li><p>変数はなにか（変数名）</p></li>
+<li><p>型はなにか（数値かカテゴリか）</p></li>
 <li><p>欠測はどれくらいか</p></li>
 </ul>
 <div class="voice-father">
@@ -468,7 +500,7 @@ Rコードと結果はこちら
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="データセットの一部を表示した結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -477,7 +509,7 @@ Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -509,7 +541,7 @@ Rコードと結果はこちら
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="変数名とデータの型を表示した結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -518,7 +550,7 @@ Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(dat, class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -543,82 +575,7 @@ Rコードと結果はこちら
 <p>私「ありがとう、曝露変数は果物摂取量を表すfruitq1で2値データ、アウトカムはtとepsilonで生存時間データってことね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「次はどうするかな。そうだな、<code>dagitty()</code>で因果関係を表すグラフ（DAG）を描いておこう。これに従って解析する。調整しなけばならない交絡因子も<code>adjustmentSets()</code>で出せる」</p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Rコードと結果はこちら
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dagitty") #インストールが必要なら実行</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'dagitty' was built under R version 4.4.3</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>out2 <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">"dag {</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">age -&gt; fruitq1</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">age -&gt; t</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">sex -&gt; fruitq1</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">sex -&gt; t</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">bmi -&gt; fruitq1</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">bmi -&gt; t</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">hba1c -&gt; fruitq1</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">hba1c -&gt; t</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="st">diabetes_duration -&gt; fruitq1</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st">diabetes_duration -&gt; t</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="st">drug_oha -&gt; fruitq1</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="st">drug_oha -&gt; t</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="st">drug_insulin -&gt; fruitq1</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="st">drug_insulin -&gt; t</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="st">sbp -&gt; fruitq1</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="st">sbp -&gt; t</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="st">ldl -&gt; fruitq1</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="st">ldl -&gt; t</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="st">hdl -&gt; fruitq1</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="st">hdl -&gt; t</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="st">tg -&gt; fruitq1</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="st">tg -&gt; t</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="st">current_smoker -&gt; fruitq1</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="st">current_smoker -&gt; t</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="st">alcohol_drinker -&gt; fruitq1</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="st">alcohol_drinker -&gt; t</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="st">ltpa -&gt; fruitq1</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="st">ltpa -&gt; t</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="st">fruitq1 -&gt; t</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="st">}"</span>)</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(out2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Plot coordinates for graph not supplied! Generating coordinates, see ?coordinates for how to set your own.</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ai-r-1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">adjustmentSets</span>(out2, <span class="at">exposure =</span> <span class="st">"fruitq1"</span>, <span class="at">outcome =</span> <span class="st">"t"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>{ age, alcohol_drinker, bmi, current_smoker, diabetes_duration,
-  drug_insulin, drug_oha, hba1c, hdl, ldl, ltpa, sbp, sex, tg }</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="dialogue">
-<div class="voice-father">
-<p>お父さん「次に欠測の数を確かめておこう。fruitq1には、扱いやすいように0は”High Intake”、1は”Low Intake”というラベルをつける」</p>
+<p>お父さん「次はどうするかな。そうだな、欠測の数を確かめておこう。fruitq1には、扱いやすいように0は”High intake”、1は”Low intake”というラベルをつける」</p>
 </div>
 <div class="voice-daughter">
 <p>私「いいね、まかせた」</p>
@@ -637,31 +594,29 @@ Rコードと結果はこちら
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>fruit_group <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    dat<span class="sc">$</span>fruitq1,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"High Intake"</span>, <span class="st">"Low Intake"</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>exposure_var <span class="ot">&lt;-</span> <span class="st">"fruit_group"</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>outcome_var <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"t"</span>, <span class="st">"epsilon"</span>)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>continuous_var <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"age"</span>,<span class="st">"bmi"</span>,<span class="st">"hba1c"</span>,<span class="st">"diabetes_duration"</span>,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sbp"</span>,<span class="st">"ldl"</span>,<span class="st">"hdl"</span>,<span class="st">"tg"</span>,<span class="st">"ltpa"</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>binary_var <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sex"</span>,<span class="st">"drug_oha"</span>,<span class="st">"drug_insulin"</span>,</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"current_smoker"</span>,<span class="st">"alcohol_drinker"</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(dat[, <span class="fu">c</span>(exposure_var, outcome_var)], <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>out5 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(dat[, continuous_var], <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>out6 <span class="ot">&lt;-</span> <span class="fu">sapply</span>(dat[, binary_var], <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">is.na</span>(x)))</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>fruit_group <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    dat<span class="sc">$</span>fruitq1,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"High intake"</span>, <span class="st">"Low intake"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>exposure_var <span class="ot">&lt;-</span> <span class="st">"fruit_group"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>outcome_var <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"t"</span>, <span class="st">"epsilon"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>continuous_var <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"age"</span>,<span class="st">"bmi"</span>,<span class="st">"hba1c"</span>,<span class="st">"diabetes_duration"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sbp"</span>,<span class="st">"ldl"</span>,<span class="st">"hdl"</span>,<span class="st">"tg"</span>,<span class="st">"ltpa"</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>binary_var <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sex"</span>,<span class="st">"drug_oha"</span>,<span class="st">"drug_insulin"</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"current_smoker"</span>,<span class="st">"alcohol_drinker"</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>dat[binary_var] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(dat[binary_var], <span class="cf">function</span>(x) <span class="fu">factor</span>(x, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)))</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(dat[, <span class="fu">c</span>(exposure_var, outcome_var)]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>fruit_group           t     epsilon 
           0           0           0 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(dat[, continuous_var]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              age               bmi             hba1c diabetes_duration 
                 0                 0                 0                 0 
@@ -670,7 +625,7 @@ Rコードと結果はこちら
              ltpa 
                 0 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(dat[, binary_var]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            sex        drug_oha    drug_insulin  current_smoker alcohol_drinker 
               0               0               0               0               0 </code></pre>
@@ -681,13 +636,13 @@ Rコードと結果はこちら
 </div>
 <div class="dialogue">
 <div class="voice-father">
-<p>お父さん「じゃあ今日の成果物を決めよう。論文でよく使う図表のうち、まずは患者背景を記述するための表はどう？使う関数は<code>gtsummary()</code>がいいと思う」</p>
+<p>お父さん「じゃあ今日の成果物を決めよう。論文でよく使う図表のうち、まずは患者背景を記述するための表はどう？使うパッケージは<strong>gtsummary</strong>がいいと思う」</p>
 </div>
 <div class="voice-daughter">
-<p>私「Table 1ね。作りたい。じゃあAIに指示出すね」</p>
+<p>私「Table 1ね。作りたい。じゃあAIにいうね」</p>
 </div>
 </div>
-<p>“<code>gtsummary()</code>を使って曝露群と非曝露群で層別した集計表を作って”</p>
+<p>“<code>gtsummary::tbl_summary()</code>を使って曝露群と非曝露群で層別した集計表を作って”</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードはこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -701,19 +656,19 @@ Rコードはこちら
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gtsummary") #インストールが必要なら実行</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dplyr") #インストールが必要なら実行</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> dat[, <span class="fu">c</span>(exposure_var, continuous_var, binary_var)] <span class="sc">%&gt;%</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tbl_summary</span>(</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">by =</span> exposure_var,</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">digits =</span> <span class="fu">list</span>(</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gtsummary") #インストールが必要なら実行</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dplyr") #インストールが必要なら実行</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> dat[, <span class="fu">c</span>(exposure_var, continuous_var, binary_var)] <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tbl_summary</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">by =</span> exposure_var,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">digits =</span> <span class="fu">list</span>(</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -727,7 +682,7 @@ Rコードはこちら
 <p>私「表を見たらもう少しこだわりたくなってきた。全体の人数も欲しいし、p値も加えたい」</p>
 </div>
 </div>
-<p>”全体の集計結果を表す列を追加して。桁数も整えて。連続変数の指標と割合は小数点1桁まで、p値は小数点3桁まで表示。変数名じゃなくてラベルをつけて”</p>
+<p>”平均とSDに変更して。全体の集計結果とp値を表す列を追加して。桁数も整えて。連続変数の指標と割合は小数点1桁まで、p値は小数点3桁まで表示。変数名じゃなくてラベルをつけて”</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードはこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -741,34 +696,34 @@ Rコードはこちら
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> dat[, <span class="fu">c</span>(exposure_var, continuous_var, binary_var)] <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tbl_summary</span>(</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">by =</span> exposure_var,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>),</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">digits =</span> <span class="fu">list</span>(</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">list</span>(</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>            age <span class="sc">~</span> <span class="st">"Age"</span>,</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>            sex <span class="sc">~</span> <span class="st">"Sex"</span>,</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>            bmi <span class="sc">~</span> <span class="st">"BMI"</span>,</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>            hba1c <span class="sc">~</span> <span class="st">"HbA1c"</span>,</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>            diabetes_duration <span class="sc">~</span> <span class="st">"Diabetes Duration"</span>,</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>            drug_oha <span class="sc">~</span> <span class="st">"Oral Hypoglycemic Agents"</span>,</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>            drug_insulin <span class="sc">~</span> <span class="st">"Insulin Use"</span>,</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            sbp <span class="sc">~</span> <span class="st">"Systolic Blood Pressure"</span>,</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            ldl <span class="sc">~</span> <span class="st">"LDL Cholesterol"</span>,</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>            hdl <span class="sc">~</span> <span class="st">"HDL Cholesterol"</span>,</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>            tg <span class="sc">~</span> <span class="st">"Triglycerides"</span>,</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>            current_smoker <span class="sc">~</span> <span class="st">"Current Smoker"</span>,</span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>            alcohol_drinker <span class="sc">~</span> <span class="st">"Alcohol Drinker"</span>,</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>            ltpa <span class="sc">~</span> <span class="st">"Leisure-time Physical Activity"</span></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_p</span>(<span class="at">pvalue_fun =</span> <span class="sc">~</span> <span class="fu">style_pvalue</span>(.x, <span class="at">digits =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_overall</span>()</span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> dat[, <span class="fu">c</span>(exposure_var, continuous_var, binary_var)] <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tbl_summary</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">by =</span> exposure_var,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd})"</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">digits =</span> <span class="fu">list</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>            age <span class="sc">~</span> <span class="st">"Age"</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            sex <span class="sc">~</span> <span class="st">"Women"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>            bmi <span class="sc">~</span> <span class="st">"BMI"</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>            hba1c <span class="sc">~</span> <span class="st">"HbA1c"</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>            diabetes_duration <span class="sc">~</span> <span class="st">"Diabetes duration"</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>            drug_oha <span class="sc">~</span> <span class="st">"Oral Hypoglycemic agents"</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>            drug_insulin <span class="sc">~</span> <span class="st">"Insulin use"</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>            sbp <span class="sc">~</span> <span class="st">"Systolic blood pressure"</span>,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>            ldl <span class="sc">~</span> <span class="st">"LDL cholesterol"</span>,</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>            hdl <span class="sc">~</span> <span class="st">"HDL cholesterol"</span>,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>            tg <span class="sc">~</span> <span class="st">"Triglycerides"</span>,</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>            current_smoker <span class="sc">~</span> <span class="st">"Current smoker"</span>,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>            alcohol_drinker <span class="sc">~</span> <span class="st">"Alcohol drinker"</span>,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>            ltpa <span class="sc">~</span> <span class="st">"Leisure-time physical activity"</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_p</span>(<span class="at">pvalue_fun =</span> <span class="sc">~</span> <span class="fu">style_pvalue</span>(.x, <span class="at">digits =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_overall</span>()</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -791,7 +746,7 @@ Rコードはこちら
 <p>私「あ、たしかに。ちょっと待って調べる。ヘルプは<code>?add_p()</code>で出すんだよね。…ふむ、ヘルプをたどるとWilcoxon順位和検定と<span class="math inline">\(\chi^2\)</span>検定って書いてあった。期待人数が5より低いと、<span class="math inline">\(\chi^2\)</span>検定じゃなくてFisher正確検定が選ばれる」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そうそう。それであってる。それともうひとつやることがある」</p>
+<p>お父さん「そうそう。それであってる。ただし、患者背景のバランスをみるときは、p値より標準化差（SMD）を使うことが多いけどね。それともうひとつやることがある」</p>
 </div>
 </div>
 </section>
@@ -811,13 +766,13 @@ Rコードと結果はこちら
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tableone") #インストールが必要なら実行</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tableone)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tableone") #インストールが必要なら実行</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tableone)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'tableone' was built under R version 4.4.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dplyr") #インストールが必要なら実行</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dplyr") #インストールが必要なら実行</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'dplyr'</code></pre>
@@ -832,17 +787,17 @@ Attaching package: 'dplyr'</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data with same labeling</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>dat_check <span class="ot">&lt;-</span> diabetes.complications <span class="sc">%&gt;%</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(continuous_var), <span class="fu">all_of</span>(binary_var), fruitq1) <span class="sc">%&gt;%</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">fruitq1 =</span> <span class="fu">factor</span>(fruitq1, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"High Intake"</span>, <span class="st">"Low Intake"</span>)))</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary table using tableone</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>table2 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(<span class="at">vars =</span> <span class="fu">c</span>(continuous_var, binary_var), <span class="at">strata =</span> <span class="st">"fruitq1"</span>, <span class="at">data =</span> dat_check, <span class="at">test =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table2, <span class="at">showAllLevels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data with same labeling</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>dat_check <span class="ot">&lt;-</span> diabetes.complications <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(continuous_var), <span class="fu">all_of</span>(binary_var), fruitq1) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">fruitq1 =</span> <span class="fu">factor</span>(fruitq1, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"High intake"</span>, <span class="st">"Low intake"</span>)))</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary table using tableone</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>table2 <span class="ot">&lt;-</span> <span class="fu">CreateTableOne</span>(<span class="at">vars =</span> <span class="fu">c</span>(continuous_var, binary_var), <span class="at">strata =</span> <span class="st">"fruitq1"</span>, <span class="at">data =</span> dat_check, <span class="at">test =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table2, <span class="at">showAllLevels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                               Stratified by fruitq1
-                                level High Intake    Low Intake     p      test
+                                level High intake    Low intake     p      test
   n                                      720            258                    
   age (mean (SD))                      58.83 (6.63)   57.06 (7.29)  &lt;0.001     
   bmi (mean (SD))                      22.95 (3.01)   23.19 (2.97)   0.273     
@@ -886,42 +841,62 @@ Attaching package: 'dplyr'</code></pre>
 <p>私「まあね。次からはp値がいるかどうか先に考えておく」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「うんうん。ここまでをまとめると、どんな解析をするときも最低限この3つは考えておく」</p>
+<p>お父さん「うんうん。ここまでをまとめると、どんな解析をするときも最低限この3つは押さえておいた方がいい」</p>
 </div>
 <ul>
 <li>変数の定義</li>
 <li>データの収集状況</li>
 <li>図表のひな型</li>
 </ul>
+<div class="voice-daughter">
+<p>私「あとさ、お父さんって、AIにプロンプト出すとき関数まで指定するよね」</p>
+</div>
 <div class="voice-father">
-<p>お父さん「それから、これは途中で気付いたことだけど、AIに指示を出すとき、できればRの関数を指定した方がいいね。そうしないと、どの統計手法を使うかがぶれてしまう。また、AIにはダブルプログラミングをさせる。どちらも計画通りにプログラミングされているかコントロールするためだ」</p>
+<p>お父さん「うん、そうしないと、どの統計手法を使うかがぶれそうだなって、途中で気付いて。それとAIにはダブルプログラミングをさせるべき。こういった工夫は、大きな負担にならない割に、計画通りにプログラミングされているかコントロールしやすくなるよね」</p>
 </div>
 </div>
 </section>
-<section id="医学研究に関するふたりの会話はいかがでしたか以降のエピソードでは統計学因果推論から論文公表までを描いていきます" class="level3">
-<h3 class="anchored" data-anchor-id="医学研究に関するふたりの会話はいかがでしたか以降のエピソードでは統計学因果推論から論文公表までを描いていきます">医学研究に関するふたりの会話はいかがでしたか？以降のエピソードでは、統計学・因果推論から論文公表までを描いていきます。</h3>
+<section id="臨床研究におけるaiとrの利用に関するふたりの会話はいかがでしたか以降のエピソードでは競合リスク解析交絡調整から頻度論シミュレーション実験までをrで体験いただける構成になっています" class="level3">
+<h3 class="anchored" data-anchor-id="臨床研究におけるaiとrの利用に関するふたりの会話はいかがでしたか以降のエピソードでは競合リスク解析交絡調整から頻度論シミュレーション実験までをrで体験いただける構成になっています">臨床研究におけるAIとRの利用に関するふたりの会話はいかがでしたか？以降のエピソードでは、競合リスク解析・交絡調整から頻度論シミュレーション実験までを、Rで体験いただける構成になっています。</h3>
 <ul>
-<li><a href="frequentist-1.html">Reading a Paper over a Cup of Coffee</a></li>
+<li><a href="ai-r-2.html">An R Demonstration of Bias in Kaplan-Meier Under Competing Risks</a></li>
 </ul>
-<div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
+</section>
+<section id="もしロジスティック回帰の表作成について詳しく知りたい方はa-conversation-on-causality-at-our-tableのこのエピソードもご覧ください" class="level3">
+<h3 class="anchored" data-anchor-id="もしロジスティック回帰の表作成について詳しく知りたい方はa-conversation-on-causality-at-our-tableのこのエピソードもご覧ください">もしロジスティック回帰の表作成について詳しく知りたい方は、“A Conversation on Causality at Our Table”のこのエピソードもご覧ください。</h3>
+<ul>
+<li><a href="logistic-regression-4.html">Where My Logistic Regression Went Wrong</a></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="関連エピソードはこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-他のエピソードはこちら
+関連エピソードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>過去のエピソード</strong></p>
+<p><strong>このシリーズのエピソード</strong></p>
 <ul>
-<li><a href="study-design-1.html">A Story of Coffee Chat and Research Hypothesis</a></li>
-<li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
-<li><a href="study-design-3.html">Outcomes: The Bridge from Data Collection to Analysis</a></li>
+<li><p><a href="ai-r-1.html">Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses</a></p></li>
+<li><p><a href="ai-r-2.html">An R Demonstration of Bias in Kaplan-Meier Under Competing Risks</a></p></li>
+<li><p><a href="ai-r-3.html">Unadjusted vs Adjusted Cumulative Incidence Curves with AI &amp; R</a></p></li>
+</ul>
+<p><strong>生存時間解析・競合リスク解析入門</strong></p>
+<ul>
 <li><a href="study-design-4.html">A First Step into Survival and Competing Risks Analysis with R</a></li>
-<li><a href="study-design-5.html">When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys</a></li>
+</ul>
+<p><strong>Rシミュレーション</strong></p>
+<ul>
+<li><a href="frequentist-5.html">Understanding Confidence Intervals via Hypothetical Replications in R</a></li>
+<li><a href="frequentist-6.html">Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</a></li>
+</ul>
+<p><strong>DAG入門</strong></p>
+<ul>
+<li><a href="causal-inference-3.html">DAGs and Conditional Distributions: Two Languages for the Same Structure</a></li>
 </ul>
 <p><strong>用語集</strong></p>
 <ul>

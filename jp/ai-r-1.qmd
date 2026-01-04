@@ -1,36 +1,50 @@
 ---
-title: ""
-description: ""
+title: "Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses"
+description: "はじめて臨床研究を始める医師が、AIを使ってTable 1を作り、別パッケージで独立検証するところまでを、父娘の会話で体験します。"
 tags:
-  - a
-  - b
-  - c
+  - cifmodeling
+  - dplyr
+  - gtsummary
+  - tableone
 format:
   html:
     toc: true
-date: 2025-12-13
+date: 2026-01-01
 ---
 
 ::: {.hero-header}
 ![](../image/father-daughter.png){.hero-header-img}
 :::
 
-# AI/R I 
+# AI & R workflow I − Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses
 
 ::: {.serif-block .text-right}
-Keywords: a, b, c
+R packages: cifmodeling, dplyr, gtsummary, tableone
 :::
 ------------------------------------------------------------------------
+
+::: {.callout-note appearance="simple" collapse="true" title="シリーズの位置付け"}
+
+このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを習得できるように構成しています。
+
+- AIを用いたRコーディングと品質管理（このエピソード）
+- Table 1をつくるためのワークフロー（このエピソード）: `gtsummary`
+- Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: `cifmodeling`
+- 交絡調整の仮定宣言・診断: `dagitty`と`cobalt`
+- 交絡調整の実行: `WeightIt`
+
+広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は"A Conversation on Causality at Our Table"もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。
+:::
 
 ### もちろんAIつかうよね
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-daughter
-私「お父さん、ちょっと聞きたいことがあるんだけど。統計解析するときどのアプリを使ってる？」
+私「おはよう、今朝は冷えるね。ご飯食べてるところ悪いんだけど、ちょっと聞きたいことがあるんだけど。統計解析するときどのアプリを使ってる？あ、コーヒーもらっていい？」
 :::
 
 ::: voice-father
-お父さん「アプリ？...統計ソフトのことだね？」
+お父さん「アプリ？...統計ソフトのことだね？コーヒーもどうぞ、まだ冷めてないと思う」
 :::
 
 ::: voice-daughter
@@ -50,7 +64,7 @@ Keywords: a, b, c
 :::
 
 ::: voice-daughter
-私「ふんふん。じゃあやっぱりRにしよう、昔授業で触ったし。いや、解析しないといけないデータがあってさ。時間があるなら教えてくれない？」
+私「ふんふん。じゃあやっぱりRにしよう、昔授業で触ったし。いや、解析しないといけないデータがあってさ。食べ終わったらさ、教えてくれない？」
 :::
 
 ::: voice-father
@@ -58,7 +72,7 @@ Keywords: a, b, c
 :::
 
 ::: voice-daughter
-私「Antigravityでできるらしいよ。Rも動くって」
+私「Antigravityでできるらしいよ。Rも動くって。どっちもこのパソコンに入ってる」
 :::
 
 ::: voice-father
@@ -74,7 +88,7 @@ Keywords: a, b, c
 :::
 
 ::: voice-daughter
-私「だいじょうぶ。えっとAntigravityを開く。Rはデフォルトで入ってないから、拡張機能を追加する。左サイドバーの左サイドバーでRを検索する。あれ、いっぱいヒットした、そりゃそうか。PublisherがREditorSupportのやつをインストールする」
+私「だいじょうぶ。えっとAntigravityを開く。R拡張機能はデフォルトで入ってないから追加する。左サイドバーでRを検索する。あれ、いっぱいヒットした、そりゃそうか。PublisherがREditorSupportのやつをインストールする」
 :::
 
 ![](ai-r-1.png)
@@ -90,7 +104,7 @@ Keywords: a, b, c
 :::
 
 ::: voice-father
-お父さん「ん？調査結果ってさ、整理する前だと外部に見せられない情報が入ってたりするじゃない。最低限のデータ以外は、直接AIにみせるのはやめようよ。そうだね、最初に約束を3つ決めよう」
+お父さん「ん？調査結果ってさ、整理する前だと外部に見せられない情報が入ってたりするじゃない。最低限のデータ以外は、直接AIに見せるのはやめようよ。そうだね、最初に約束を3つ決めよう」
 :::
 
 ::: voice-daughter
@@ -99,16 +113,16 @@ Keywords: a, b, c
 
 - 整理前のフォルダはAIに見せない。個人が特定できない解析用データセットを用意する。
 - 作業記録を残す。できれば"Clone Repository"を選んでレポジトリで管理する。
-- エージェントが書いたコードは、自主的に品質管理する。たとえば目視チェック、ダブルプログラミング、読み合わせを行う。
+- エージェントが書いたコードは、自主的に品質管理する。たとえば目視チェック、ダブルプログラミング、読み合わせを組み合わせる。
 
 ::: voice-daughter
 私「わかった、どれも納得。準備ができてないから今日は練習でいいよね？」
 :::
 
-### Table 1の作成
+### Table 1をつくるためのRワークフロー
 
 ::: voice-father
-お父さん「じゃあ解析を始めよう。AIを使ったことないから`cifmodeling`パッケージに入ってる`diabetes.complications`データでいろいろ試してみたい。このデータは果物摂取量と糖尿病合併症リスクの関係を調べたコホート研究の模擬データだ」
+お父さん「じゃあ解析を始めよう。AIを使ったことないから**cifmodeling**パッケージに入ってる`diabetes.complications`データでいろいろ試してみたい。このデータは果物摂取量と糖尿病合併症リスクの関係を調べたコホート研究の模擬データだ」
 :::
 :::::::::::::::::::::::::::::::::
 
@@ -157,9 +171,9 @@ print(out1)
 お父さん「次はどうすればいいって、ちゃんと解析の計画を立ててから動こうよ。そのためにやることはデータセットの確認」
 :::
 
-- 変数は何か（変数名）
+- 変数はなにか（変数名）
 
-- 型は何か（数値かカテゴリか）
+- 型はなにか（数値かカテゴリか）
 
 - 欠測はどれくらいか
 
@@ -186,54 +200,7 @@ sapply(dat, class)
 :::
 
 ::: voice-father
-お父さん「次はどうするかな。そうだな、`dagitty()`で因果関係を表すグラフ（DAG）を描いておこう。これに従って解析する。調整しなけばならない交絡因子も`adjustmentSets()`で出せる」
-:::
-:::::::::::::::::::::::::::::::::
-
-::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
-```{r}
-# install.packages("dagitty") #インストールが必要なら実行
-library(dagitty)
-out2 <- dagitty("dag {
-age -> fruitq1
-age -> t
-sex -> fruitq1
-sex -> t
-bmi -> fruitq1
-bmi -> t
-hba1c -> fruitq1
-hba1c -> t
-diabetes_duration -> fruitq1
-diabetes_duration -> t
-drug_oha -> fruitq1
-drug_oha -> t
-drug_insulin -> fruitq1
-drug_insulin -> t
-sbp -> fruitq1
-sbp -> t
-ldl -> fruitq1
-ldl -> t
-hdl -> fruitq1
-hdl -> t
-tg -> fruitq1
-tg -> t
-current_smoker -> fruitq1
-current_smoker -> t
-alcohol_drinker -> fruitq1
-alcohol_drinker -> t
-ltpa -> fruitq1
-ltpa -> t
-fruitq1 -> t
-}")
-plot(out2)
-out3 <- adjustmentSets(out2, exposure = "fruitq1", outcome = "t")
-print(out3)
-```
-:::
-
-::::::::::::::::::::::::::::::::: dialogue
-::: voice-father
-お父さん「次に欠測の数を確かめておこう。fruitq1には、扱いやすいように0は”High Intake”、1は”Low Intake”というラベルをつける」
+お父さん「次はどうするかな。そうだな、欠測の数を確かめておこう。fruitq1には、扱いやすいように0は”High intake”、1は”Low intake”というラベルをつける」
 :::
 
 ::: voice-daughter
@@ -246,7 +213,7 @@ print(out3)
 dat$fruit_group <- factor(
     dat$fruitq1,
     levels = c(0, 1),
-    labels = c("High Intake", "Low Intake")
+    labels = c("High intake", "Low intake")
 )
 exposure_var <- "fruit_group"
 outcome_var <- c("t", "epsilon")
@@ -258,27 +225,25 @@ binary_var <- c(
   "sex","drug_oha","drug_insulin",
   "current_smoker","alcohol_drinker"
 )
+dat[binary_var] <- lapply(dat[binary_var], function(x) factor(x, levels = c(0,1)))
 
-out4 <- sapply(dat[, c(exposure_var, outcome_var)], function(x) sum(is.na(x)))
-out5 <- sapply(dat[, continuous_var], function(x) sum(is.na(x)))
-out6 <- sapply(dat[, binary_var], function(x) sum(is.na(x)))
-print(out4)
-print(out5)
-print(out6)
+colSums(is.na(dat[, c(exposure_var, outcome_var)]))
+colSums(is.na(dat[, continuous_var]))
+colSums(is.na(dat[, binary_var]))
 ```
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-father
-お父さん「じゃあ今日の成果物を決めよう。論文でよく使う図表のうち、まずは患者背景を記述するための表はどう？使う関数は`gtsummary()`がいいと思う」
+お父さん「じゃあ今日の成果物を決めよう。論文でよく使う図表のうち、まずは患者背景を記述するための表はどう？使うパッケージは**gtsummary**がいいと思う」
 :::
 
 ::: voice-daughter
-私「Table 1ね。作りたい。じゃあAIに指示出すね」
+私「Table 1ね。作りたい。じゃあAIにいうね」
 :::
 ::::::::::::::::::::::::::::::::: 
 
-"`gtsummary()`を使って曝露群と非曝露群で層別した集計表を作って"
+"`gtsummary::tbl_summary()`を使って曝露群と非曝露群で層別した集計表を作って"
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードはこちら"}
 ```{r, eval=FALSE}
@@ -310,7 +275,7 @@ print(table1)
 :::
 ::::::::::::::::::::::::::::::::: 
 
-”全体の集計結果を表す列を追加して。桁数も整えて。連続変数の指標と割合は小数点1桁まで、p値は小数点3桁まで表示。変数名じゃなくてラベルをつけて”
+”平均とSDに変更して。全体の集計結果とp値を表す列を追加して。桁数も整えて。連続変数の指標と割合は小数点1桁まで、p値は小数点3桁まで表示。変数名じゃなくてラベルをつけて”
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードはこちら"}
 ```{r, eval=FALSE}
@@ -324,19 +289,19 @@ table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
         ),
         label = list(
             age ~ "Age",
-            sex ~ "Sex",
+            sex ~ "Women",
             bmi ~ "BMI",
             hba1c ~ "HbA1c",
-            diabetes_duration ~ "Diabetes Duration",
-            drug_oha ~ "Oral Hypoglycemic Agents",
-            drug_insulin ~ "Insulin Use",
-            sbp ~ "Systolic Blood Pressure",
-            ldl ~ "LDL Cholesterol",
-            hdl ~ "HDL Cholesterol",
+            diabetes_duration ~ "Diabetes duration",
+            drug_oha ~ "Oral Hypoglycemic agents",
+            drug_insulin ~ "Insulin use",
+            sbp ~ "Systolic blood pressure",
+            ldl ~ "LDL cholesterol",
+            hdl ~ "HDL cholesterol",
             tg ~ "Triglycerides",
-            current_smoker ~ "Current Smoker",
-            alcohol_drinker ~ "Alcohol Drinker",
-            ltpa ~ "Leisure-time Physical Activity"
+            current_smoker ~ "Current smoker",
+            alcohol_drinker ~ "Alcohol drinker",
+            ltpa ~ "Leisure-time physical activity"
         )
     ) %>%
     add_p(pvalue_fun = ~ style_pvalue(.x, digits = 3)) %>%
@@ -369,7 +334,7 @@ print(table1)
 :::
 
 ::: voice-father
-お父さん「そうそう。それであってる。それともうひとつやることがある」
+お父さん「そうそう。それであってる。ただし、患者背景のバランスをみるときは、p値より標準化差（SMD）を使うことが多いけどね。それともうひとつやることがある」
 :::
 ::::::::::::::::::::::::::::::::: 
 
@@ -387,7 +352,7 @@ library(dplyr)
 # Prepare data with same labeling
 dat_check <- diabetes.complications %>%
     select(all_of(continuous_var), all_of(binary_var), fruitq1) %>%
-    mutate(fruitq1 = factor(fruitq1, levels = c(0, 1), labels = c("High Intake", "Low Intake")))
+    mutate(fruitq1 = factor(fruitq1, levels = c(0, 1), labels = c("High intake", "Low intake")))
 
 # Create summary table using tableone
 table2 <- CreateTableOne(vars = c(continuous_var, binary_var), strata = "fruitq1", data = dat_check, test = TRUE)
@@ -425,32 +390,53 @@ print(table2, showAllLevels = TRUE)
 :::
 
 ::: voice-father
-お父さん「うんうん。ここまでをまとめると、どんな解析をするときも最低限この3つは考えておく」
+お父さん「うんうん。ここまでをまとめると、どんな解析をするときも最低限この3つは押さえておいた方がいい」
 :::
 
 - 変数の定義
 - データの収集状況
 - 図表のひな型
 
+::: voice-daughter
+私「あとさ、お父さんって、AIにプロンプト出すとき関数まで指定するよね」
+:::
+
 ::: voice-father
-お父さん「それから、これは途中で気付いたことだけど、AIに指示を出すとき、できればRの関数を指定した方がいいね。そうしないと、どの統計手法を使うかがぶれてしまう。また、AIにはダブルプログラミングをさせる。どちらも計画通りにプログラミングされているかコントロールするためだ」
+お父さん「うん、そうしないと、どの統計手法を使うかがぶれそうだなって、途中で気付いて。それとAIにはダブルプログラミングをさせるべき。こういった工夫は、大きな負担にならない割に、計画通りにプログラミングされているかコントロールしやすくなるよね」
 :::
 ::::::::::::::::::::::::::::::::: 
 
 
-### 医学研究に関するふたりの会話はいかがでしたか？以降のエピソードでは、統計学・因果推論から論文公表までを描いていきます。
+### 臨床研究におけるAIとRの利用に関するふたりの会話はいかがでしたか？以降のエピソードでは、競合リスク解析・交絡調整から頻度論シミュレーション実験までを、Rで体験いただける構成になっています。
 
-- [Reading a Paper over a Cup of Coffee](frequentist-1.html)
+- [An R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
 
-::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}
+### もしロジスティック回帰の表作成について詳しく知りたい方は、"A Conversation on Causality at Our Table"のこのエピソードもご覧ください。
 
-**過去のエピソード**
+- [Where My Logistic Regression Went Wrong](logistic-regression-4.html)
 
-- [A Story of Coffee Chat and Research Hypothesis](study-design-1.html)
-- [Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes](study-design-2.html)
-- [Outcomes: The Bridge from Data Collection to Analysis](study-design-3.html)
+::: {.callout-note appearance="simple" collapse="true" title="関連エピソードはこちら"}
+
+**このシリーズのエピソード**
+
+- [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses](ai-r-1.html)
+
+- [An R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
+
+- [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
+
+**生存時間解析・競合リスク解析入門**
+
 - [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
-- [When Bias Creeps In: Selection, Information, and Confounding in Clinical Surveys](study-design-5.html)
+
+**Rシミュレーション**
+
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-5.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-6.html)
+
+**DAG入門**
+
+- [DAGs and Conditional Distributions: Two Languages for the Same Structure](causal-inference-3.html)
 
 **用語集**
 

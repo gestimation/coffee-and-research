@@ -2291,7 +2291,7 @@ Answer
 <p>Me: “There you go again with the technical terms. But fine—I do get the point. If patients’ backgrounds vary too much, it becomes hard to compare them. Keeping them similar makes things easier.”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “There are statistical methods and R packages to improve comparability too, like <code>glm()</code> for regression adjustment, or <code>CBPS()</code> for propensity score weighting. But on the other hand, a broader study population increases <strong>generalizability</strong>. If you want to estimate the return-to-work proportion among cancer survivors, you don’t necessarily need to limit the cancer type. Ideally, you’d collect data from multiple institutions.”</p>
+<p>Dad: “There are statistical methods and R packages to improve comparability too, like <code>glm()</code> for regression adjustment, or <code>WeightIt()</code> for propensity score weighting. But on the other hand, a broader study population increases <strong>generalizability</strong>. If you want to estimate the return-to-work proportion among cancer survivors, you don’t necessarily need to limit the cancer type. Ideally, you’d collect data from multiple institutions.”</p>
 </div>
 <div class="voice-daughter">
 <p>Me: “True…it feels strange to call it ‘a survey of cancer survivors’ if it’s only our hospital. Generalizability means the results should hold beyond our hospital, right?”</p>

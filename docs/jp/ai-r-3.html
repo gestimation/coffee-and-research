@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="未調整CIFとIPW調整CIFを並べて比較します。調整は「魔法」ではないので、仮定の宣言・バランスまでをひとつのワークフローとして体験します。">
+
+<title>Unadjusted vs Adjusted Cumulative Incidence Curves with AI &amp; R – Coffee and Research</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-FCK3LX51C6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
+</script>
+<!-- Site name signals (helps Google/OG pick the right site name) -->
+
+<meta property="og:site_name" content="Coffee and Research">
+
+<meta property="og:url" content="https://gestimation.github.io/coffee-and-research/">
+
+<meta property="og:type" content="website">
+
+<meta name="application-name" content="Coffee and Research">
+
+
+
+<!-- Optional: make Twitter/X previews less generic -->
+
+<meta name="twitter:card" content="summary">
+
+
+
+<!-- Structured data: WebSite -->
+
+<script type="application/ld+json">
+
+{
+
+  "@context": "https://schema.org",
+
+  "@type": "WebSite",
+
+  "name": "Coffee and Research",
+
+  "url": "https://gestimation.github.io/coffee-and-research/"
+
+}
+
+</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/jp/ai-r-3.html">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Coffee and Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://gestimation.github.io/cifmodeling/"> 
+<span class="menu-text">cifmodeling</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-a-conversation-(en" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">A Conversation (EN)</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-a-conversation-(en">    
+        <li>
+    <a class="dropdown-item" href="../en/index.html">
+ <span class="dropdown-text">Index</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/study-design-1.html">
+ <span class="dropdown-text">Study design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-1.html">
+ <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-a-conversation-(jp" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">A Conversation (JP)</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-a-conversation-(jp">    
+        <li>
+    <a class="dropdown-item" href="../jp/index.html">
+ <span class="dropdown-text">Index</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/study-design-1.html">
+ <span class="dropdown-text">Study Design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/frequentist-1.html">
+ <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../kanji_en/index.html"> 
+<span class="menu-text">8 Elements (EN)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../kanji_jp/index.html"> 
+<span class="menu-text">8 Elements (JP)</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#ai-r-workflows-iii-unadjusted-vs-adjusted-cumulative-incidence-curves-with-ai-r" id="toc-ai-r-workflows-iii-unadjusted-vs-adjusted-cumulative-incidence-curves-with-ai-r" class="nav-link active" data-scroll-target="#ai-r-workflows-iii-unadjusted-vs-adjusted-cumulative-incidence-curves-with-ai-r">AI &amp; R Workflows III − Unadjusted vs Adjusted Cumulative Incidence Curves with AI &amp; R</a>
+  <ul class="collapse">
+  <li><a href="#解析計画は推定目標と仮定からはじまる" id="toc-解析計画は推定目標と仮定からはじまる" class="nav-link" data-scroll-target="#解析計画は推定目標と仮定からはじまる">解析計画は推定目標と仮定からはじまる</a></li>
+  <li><a href="#イベントと時間の集計" id="toc-イベントと時間の集計" class="nav-link" data-scroll-target="#イベントと時間の集計">イベントと時間の集計</a></li>
+  <li><a href="#プロペンシティスコアに基づく重みの計算" id="toc-プロペンシティスコアに基づく重みの計算" class="nav-link" data-scroll-target="#プロペンシティスコアに基づく重みの計算">プロペンシティスコアに基づく重みの計算</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Unadjusted vs Adjusted Cumulative Incidence Curves with AI &amp; R</h1>
+</div>
+
+<div>
+  <div class="description">
+    未調整CIFとIPW調整CIFを並べて比較します。調整は「魔法」ではないので、仮定の宣言・バランスまでをひとつのワークフローとして体験します。
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-header">
+<p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
+</div>
+<section id="ai-r-workflows-iii-unadjusted-vs-adjusted-cumulative-incidence-curves-with-ai-r" class="level1">
+<h1>AI &amp; R Workflows III − Unadjusted vs Adjusted Cumulative Incidence Curves with AI &amp; R</h1>
+<div class="serif-block text-right">
+<p>R packages: cobalt, cifmodeling, dagitty, WeightIt</p>
+</div>
+<hr>
+<div class="callout callout-style-simple callout-note callout-titled" title="シリーズの位置付け">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+シリーズの位置付け
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>このシリーズは、因果推論の実務フローを見て頂くために、“A Conversation on Causality at Our Table”の付録として用意したものです。全3エピソードの中で、5つのスキルを習得できるように構成しています。</p>
+<ul>
+<li>AIを用いたRコーディングと品質管理</li>
+<li>Table 1をつくるためのワークフロー: <code>gtsummary</code></li>
+<li>Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: <code>cifmodeling</code></li>
+<li>交絡調整の仮定宣言・診断（このエピソード）: <code>dagitty</code>と<code>cobalt</code></li>
+<li>交絡調整の実行（このエピソード）: <code>WeightIt</code></li>
+</ul>
+<p>広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は”A Conversation on Causality at Our Table”もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。</p>
+</div>
+</div>
+</div>
+<section id="解析計画は推定目標と仮定からはじまる" class="level3">
+<h3 class="anchored" data-anchor-id="解析計画は推定目標と仮定からはじまる">解析計画は推定目標と仮定からはじまる</h3>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「シミュレーションはわかったから、実際の累積発生曲線の描き方を教えてよ」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「いいよ、いいけどさ。やるからには、きちんと段取りを踏もうよ。この前<code>diabetes.complications</code>データを使ってRとAIの説明をしたとき、この表を作ったことを覚えてる？」</p>
+</div>
+<p><img src="ai-r-4.png" class="img-fluid"></p>
+<div class="voice-daughter">
+<p>私「ああ、やったね、これ」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「同じデータを使って累積発生曲線を描く。ただし、単なるデータの記述じゃなくて、果物摂取と糖尿病網膜症リスクの関連を調べるための図だ。表を見てよ。果物摂取量でグループを作ったとき（High intake vs Low intake）、年齢、性別、喫煙、アルコール摂取のバランスが崩れているでしょ。この偏りを調整して、果物摂取の因果効果を表すような累積発生曲線が、今日の成果物。いいかな？」</p>
+</div>
+<div class="voice-daughter">
+<p>私「い、いいとも！」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「うんうん。ではまず、<code>dagitty()</code>で因果関係を表すグラフ（DAG）を描いておこう。練習だから、このDAGが正しいと仮定して、これに従って解析しよう。調整しなければならない交絡因子も<code>adjustmentSets()</code>で出せる」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("dagitty") #インストールが必要なら実行</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dagitty' was built under R version 4.4.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>out1 <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">"dag {</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">age -&gt; fruitq1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">age -&gt; t</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">sex -&gt; fruitq1</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">sex -&gt; t</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">bmi -&gt; fruitq1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">bmi -&gt; t</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">hba1c -&gt; fruitq1</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">hba1c -&gt; t</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">diabetes_duration -&gt; fruitq1</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">diabetes_duration -&gt; t</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">drug_oha -&gt; fruitq1</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">drug_oha -&gt; t</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">drug_insulin -&gt; fruitq1</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">drug_insulin -&gt; t</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="st">sbp -&gt; fruitq1</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">sbp -&gt; t</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="st">ldl -&gt; fruitq1</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="st">ldl -&gt; t</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="st">hdl -&gt; fruitq1</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="st">hdl -&gt; t</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="st">tg -&gt; fruitq1</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="st">tg -&gt; t</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="st">current_smoker -&gt; fruitq1</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="st">current_smoker -&gt; t</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="st">alcohol_drinker -&gt; fruitq1</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="st">alcohol_drinker -&gt; t</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="st">ltpa -&gt; fruitq1</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="st">ltpa -&gt; t</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="st">fruitq1 -&gt; t</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="st">}"</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(out1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Plot coordinates for graph not supplied! Generating coordinates, see ?coordinates for how to set your own.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ai-r-3_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>out2 <span class="ot">&lt;-</span> <span class="fu">adjustmentSets</span>(out1, <span class="at">exposure =</span> <span class="st">"fruitq1"</span>, <span class="at">outcome =</span> <span class="st">"t"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(out2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{ age, alcohol_drinker, bmi, current_smoker, diabetes_duration,
+  drug_insulin, drug_oha, hba1c, hdl, ldl, ltpa, sbp, sex, tg }</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="イベントと時間の集計" class="level3">
+<h3 class="anchored" data-anchor-id="イベントと時間の集計">イベントと時間の集計</h3>
+<div class="dialogue">
+<div class="voice-father">
+<p>お父さん「DAGを描いたら、次はイベントの定義を確認しよう。生存時間解析は、ここを間違えると終わりだからね」</p>
+</div>
+<div class="voice-daughter">
+<p>私「イベント定義って、<code>epsilon</code>のことでいいの？」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そう。<code>t</code>が観測された時間、<code>epsilon</code>がイベント種別。<code>epsilon=2</code>の大血管合併症を競合リスクとして扱う」</p>
+</div>
+<ul>
+<li>打ち切り: <code>epsilon=0</code></li>
+<li>糖尿病網膜症: <code>epsilon=1</code></li>
+<li>大血管合併症: <code>epsilon=2</code></li>
+</ul>
+<div class="voice-daughter">
+<p>私「つまりは糖尿病網膜症と大血管合併症の件数と、いつどれくらい起きてるかを確認すればいいんだね」</p>
+</div>
+</div>
+<p>“cifmodelingに含まれているdiabetes.complicationsっていうデータセットを読み込んで。tとepsilonについて集計して”</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>競合リスク解析では、<strong>関心イベント（ここでは糖尿病網膜症）</strong>と、<strong>それを観測できなくする競合リスク（ここでは大血管合併症）</strong>があるはずですが、競合リスクがほとんど起きていないこともあり得ます。また、エラーが混入を防ぐためには、生存時間変数（特に最小値の符号と最大値のオーダー）を確認することが有効です。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("cifmodeling") # if needed</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cifmodeling)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(diabetes.complications)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> diabetes.complications</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">is.data.frame</span>(dat))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(<span class="fu">c</span>(<span class="st">"t"</span>,<span class="st">"epsilon"</span>,<span class="st">"fruitq1"</span>) <span class="sc">%in%</span> <span class="fu">names</span>(dat)))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dat<span class="sc">$</span>epsilon, <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  0   1   2 
+616 281  81 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dat<span class="sc">$</span>t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0493  4.4189  7.9973  6.5582  8.6153 11.0034 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(dat<span class="sc">$</span>t, dat<span class="sc">$</span>epsilon, summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$`0`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.974   7.997   8.185   8.376   8.879   9.547 
+
+$`1`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0493  1.3634  2.6940  3.2228  4.6762 11.0034 
+
+$`2`
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0986  2.4449  4.5558  4.3050  5.9713  8.9144 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="プロペンシティスコアに基づく重みの計算" class="level3">
+<h3 class="anchored" data-anchor-id="プロペンシティスコアに基づく重みの計算">プロペンシティスコアに基づく重みの計算</h3>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「これでアウトカムが集計できたよね。網膜症発症281件、大血管症発症81件。患者背景の要約統計量もTable 1にまとめた。次は偏りを調整するんだっけ。結局なにをすればいいの？回帰？マッチング？」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「交絡調整の方法はいろいろあるけど、直接、累積発生曲線を扱いやすいのは、<strong>重み付け</strong>と<strong>層別</strong>なんだ。今日は、covariate balancing propensity score（CBPS法）を使おう。共変量（covariate）っていうのは、この場合は患者背景因子のことだと思っていい。一般に、プロペンシティスコアを用いた交絡調整では、ふたつの仮定が置かれる。これを頭に置きながら聞いてね」</p>
+</div>
+<ul>
+<li><p>プロペンシティスコアの値がグループ間で<strong>オーバーラップ</strong>していること</p></li>
+<li><p><strong>未測定の交絡因子がない</strong>こと</p></li>
+</ul>
+<div class="voice-father">
+<p>お父さん「CBPS法は、プロペンシティスコアに基づく重み付けの一種なんだけど、DAGが正しいっていう前提なら、やることは単純。果物摂取（<code>fruitq1</code>）の確率を説明できるようなモデルを立てて、そのモデルの下で、共変量のバランスがとれるような重みを求める。共変量のバランスは、比較するグループ間で共変量の平均の差がゼロに近いって言い換えてもいい」</p>
+</div>
+<div class="voice-daughter">
+<p>私「えっと、マッチングはしないのね？CBPS法とプロペンシティスコアは別なの？」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そう、マッチングと重み付けは別。マッチングしたデータセットを作ってから、累積発生曲線を描くと、個人間の対応が無視されてしまう。これがはっきり悪いわけじゃないんだけどね。今回は、ひとりひとりに重みを付けたデータセットを作って、重み付きAalen-Johansen曲線を描く。CBPS法はプロペンシティスコアを使った手法のひとつなんだけど、一番の特徴は、CBPSは一般化モーメント法で計算する。一番オーソドックスなプロペンシティスコアの計算では、ロジスティック回帰を仮定して最尤法で求めることが多い」</p>
+</div>
+<div class="voice-daughter">
+<p>私「説明長いな。要するにCBPS法で重みを計算してってAIに言えばいいの？」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「それでいいんだけど、曝露変数や調整したい変数は指定しよう。また、使いたい関数があればそう伝えた方がぶれない。こんな感じで指示を出したらどうかな」</p>
+</div>
+</div>
+<p>“WeightIt()を使ってCBPSの重みを計算して。変数はさっきのdagitty()と同じものを使って”</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>continuous_var <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"age"</span>,<span class="st">"bmi"</span>,<span class="st">"hba1c"</span>,<span class="st">"diabetes_duration"</span>,<span class="st">"sbp"</span>,<span class="st">"ldl"</span>,<span class="st">"hdl"</span>,<span class="st">"tg"</span>,<span class="st">"ltpa"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>binary_var <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"sex"</span>,<span class="st">"drug_oha"</span>,<span class="st">"drug_insulin"</span>,<span class="st">"current_smoker"</span>,<span class="st">"alcohol_drinker"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>exposure.model <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(<span class="st">"fruitq1 ~"</span>, <span class="fu">paste</span>(continuous_var, <span class="at">collapse =</span> <span class="st">" + "</span>), <span class="st">"+"</span>, <span class="fu">paste</span>(binary_var, <span class="at">collapse =</span> <span class="st">" + "</span>)))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("WeightIt") # if needed</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeightIt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'WeightIt' was built under R version 4.4.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>out2 <span class="ot">&lt;-</span> <span class="fu">weightit</span>(exposure.model, <span class="at">data =</span> dat, <span class="at">method =</span> <span class="st">"cbps"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>ip.weight <span class="ot">&lt;-</span> out2<span class="sc">$</span>weights</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>one <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(dat<span class="sc">$</span>ip.weight, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">01</span>, .<span class="dv">05</span>, .<span class="dv">5</span>, .<span class="dv">95</span>, .<span class="dv">99</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       0%        1%        5%       50%       95%       99%      100% 
+ 1.032747  1.086331  1.131854  1.358677  5.278868  7.887032 10.732232 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-father">
+<p>お父さん「重み付け解析の弱点のひとつは、重みが極端に大きい値をとると推定が不安定になること。だからAIは、<code>quantile()</code>で最大値を出したんだろうね。次に確認するのは、以下のふたつ」</p>
+</div>
+</div>
+<ul>
+<li><p>オーバーラップの仮定が満たされているかどうか</p></li>
+<li><p>重みを付けた後で共変量バランスがとれているかどうか</p></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>プロペンシティスコアを用いた交絡調整では、<strong>オーバーラップ</strong>と<strong>未測定の交絡因子はない</strong>という仮定が満たされる必要があります。以下のRコードでは、<strong>cobalt</strong>パッケージの<code>bal.plot()</code>を用いて、果物摂取ごと（0は”High intake”、1は”Low intake”）のプロペンシティスコアのグラフを描いています。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("cobalt") # if needed</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cobalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'cobalt' was built under R version 4.4.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code> cobalt (Version 4.6.1, Build Date: 2025-08-20)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>out2<span class="sc">$</span>covs<span class="sc">$</span>ps <span class="ot">&lt;-</span> out2<span class="sc">$</span>ps</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bal.plot</span>(out2, <span class="at">var.name =</span> <span class="st">"ps"</span>, <span class="at">which =</span> <span class="st">"both"</span>)  <span class="co"># unadjusted vs adjusted</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Ignoring unknown labels:
+• colour : "Treatment"</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ai-r-3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>オーバーラップとは違い、未測定の交絡因子が残っているかどうかは、データから確認することはできません。そこで、DAGで宣言した因果構造が正しいという前提にして、測定された患者背景因子のバランスがとれているかを確認します。プロペンシティスコアを用いた論文の多くで、調整前後の共変量の集計表（<code>bal.tab()</code>）と標準平均差のプロット（<code>love.plot()</code>）が報告されています。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">bal.tab</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  exposure.model,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> dat,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> dat<span class="sc">$</span>ip.weight,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method  =</span> <span class="st">"weighting"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">un      =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">m.threshold =</span> <span class="fl">0.1</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Note: `s.d.denom` not specified; assuming "pooled".</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>out3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Balance Measures
+                     Type Diff.Un Diff.Adj    M.Threshold
+age               Contin. -0.2540       -0 Balanced, &lt;0.1
+bmi               Contin.  0.0798        0 Balanced, &lt;0.1
+hba1c             Contin. -0.0528       -0 Balanced, &lt;0.1
+diabetes_duration Contin. -0.1110       -0 Balanced, &lt;0.1
+sbp               Contin.  0.1106        0 Balanced, &lt;0.1
+ldl               Contin. -0.0187        0 Balanced, &lt;0.1
+hdl               Contin. -0.0400       -0 Balanced, &lt;0.1
+tg                Contin. -0.0418       -0 Balanced, &lt;0.1
+ltpa              Contin. -0.1001       -0 Balanced, &lt;0.1
+sex                Binary -0.1980        0 Balanced, &lt;0.1
+drug_oha           Binary  0.0206        0 Balanced, &lt;0.1
+drug_insulin       Binary -0.0210       -0 Balanced, &lt;0.1
+current_smoker     Binary  0.2188       -0 Balanced, &lt;0.1
+alcohol_drinker    Binary  0.0726       -0 Balanced, &lt;0.1
+
+Balance tally for mean differences
+                   count
+Balanced, &lt;0.1        14
+Not Balanced, &gt;0.1     0
+
+Variable with the greatest mean difference
+ Variable Diff.Adj    M.Threshold
+       tg       -0 Balanced, &lt;0.1
+
+Effective sample sizes
+           Control Treated
+Unadjusted  720.    258.  
+Adjusted    690.37  208.59</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">love.plot</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  out3,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">stats      =</span> <span class="st">"mean.diffs"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars      =</span> <span class="st">"raw"</span>, </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">abs        =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">thresholds =</span> <span class="fu">c</span>(<span class="at">m =</span> <span class="fl">0.1</span>),</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.order  =</span> <span class="st">"unadjusted"</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ai-r-3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「ラブプロットで赤い点（調整前）が散らばってたのに、青い点（調整後）が0に寄った。これで交絡調整できたってこと？」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そう、点は共変量ごとのバランス度合いを表している。連続データでは標準化平均差、2値データでは割合の差だね。もちろん”観測された共変量”以外は、バランスがとれたかどうかは確認できないけど、これはDAGが正しいかどうかっていう別の問題になる。共変量バランスが取れて、オーバーラップも極端に崩れていないなら、次に累積発生曲線を描く段階に進める」</p>
+</div>
+<section id="重みなしaalen-johansen曲線" class="level3">
+<h3 class="anchored" data-anchor-id="重みなしaalen-johansen曲線">重みなしAalen-Johansen曲線</h3>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「まあ、模擬データだからCBPSがうまく行って当然だけどね。じゃあ次は普通に累積発生曲線を描けばいい？」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「うん、最初は重みなしの無調整の累積発生曲線を確認した方がいい。これは因果効果じゃなくて、イベント、打ち切り、競合リスクの発生状況を把握するためのもの。年齢や喫煙による交絡が残っているからね」</p>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="競合リスクデータの入力">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+競合リスクデータの入力
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。<strong>survival</strong>パッケージの<code>survfit()</code>や<code>coxph()</code>では、実は入力専用の関数<code>Surv()</code>を用意しています。入力の仕様はパッケージによってまちまちで、たとえば<strong>mets</strong>パッケージでは<code>Event()</code>を別に定義して用いています。<strong>cifmodeling</strong>パッケージの<code>cifplot()</code>は、<code>Surv()</code>と<code>Event()</code>の両方に対応しています。</p>
+</div>
+</div>
+</div>
+</div>
+<p>“cifplot()を使って、累積発生曲線を描いて。epsilon=1がイベント、epsilon=2が競合リスク。fruitq1で層別して”</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ai-r-3_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「これでいいよね」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「いいよ。時点ごとの追跡状況は、曲線の下にある<strong>アットリスク数（number at risk）</strong>に示されている。打ち切りが起きたタイミングは<strong>ひげ</strong>で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」</p>
+</div>
+<ul>
+<li>アットリスク数は時点ごとの人数を表す</li>
+<li>ひげは打ち切りを表す</li>
+<li>登録期間・追跡期間も要確認</li>
+</ul>
+<div class="voice-father">
+<p>お父さん「競合リスクの起きたタイミングは、打ち切りと同じように曲線にマーキングするといい。<code>add.competing.risk.mark=TRUE</code>を指定する。横軸と縦軸のラベルも変えておこう」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">add.risktable=</span><span class="cn">TRUE</span>, <span class="at">add.censor.mark=</span><span class="cn">FALSE</span>, <span class="at">add.competing.risk.mark=</span><span class="cn">TRUE</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.y=</span><span class="st">"CIF of diabetic retinopathy"</span>, <span class="at">label.x=</span><span class="st">"Years from registration"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.strata=</span><span class="fu">c</span>(<span class="st">"High intake"</span>,<span class="st">"Low intake"</span>), <span class="at">level.strata=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">order.strata=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ai-r-3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="重み付きaalen-johansen曲線" class="level3">
+<h3 class="anchored" data-anchor-id="重み付きaalen-johansen曲線">重み付きAalen-Johansen曲線</h3>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「次は重み付きで同じ図を出すんだよね。<code>weights="ip.weight"</code>って書けばいい？」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「それでいいけど、大切なのは図の解釈なんだ。重みを付けた後、アットリスク数はどうなると思う？」</p>
+</div>
+<div class="voice-daughter">
+<p>私「重み付きの人数？ん、重みの合計になるのか。そういうこと？」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そう、<code>cifplot()</code>のデフォルトでは重みの合計を表示する。言い換えると、重みを付けた結果、もともとの集団から、共変量のバランスがとれた集団に変化するんだ。この集団の意味について説明するね。まず、人数や重みの合計はあまり意味を持たない。だから、<strong>有効サンプルサイズ（effective sample size）</strong>を示す方がいい。これは曲線を推定するために利用できる実質的な情報量を表している。<code>n.risk.type="ess"</code>を指定すると、リスクテーブルの数値が有効サンプルサイズになる」</p>
+</div>
+<div class="voice-daughter">
+<p>私「分かった」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「もうひとつ、この集団の意味について付け加えたい。重み付け後の集団は、“High intake”と”Low intake”の2グループが含まれるよね。この2グループは、それぞれ”もともとの集団全体が、high intakeだったときの集団”と”もともとの集団全体がlow intakeだったときの集団”っていうふうに解釈する。もともとの集団ではなく、どちらも仮想的な集団だ」</p>
+</div>
+<div class="voice-daughter">
+<p>私「ふーん。集団の解釈が変わること自体は理解できるよ」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">weights =</span> <span class="st">"ip.weight"</span>, <span class="at">add.censor.mark=</span><span class="cn">FALSE</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.y=</span><span class="st">"CIF of diabetic retinopathy"</span>, <span class="at">label.x=</span><span class="st">"Years from registration"</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.strata=</span><span class="fu">c</span>(<span class="st">"High intake"</span>,<span class="st">"Low intake"</span>), <span class="at">level.strata=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">order.strata=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">n.risk.type =</span> <span class="st">"ess"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ai-r-3_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="統計解析の品質管理" class="level3">
+<h3 class="anchored" data-anchor-id="統計解析の品質管理">統計解析の品質管理</h3>
+<p>バリデーションのため、survfitでも重み付きAalen-Johansen曲線を求める。それぞれの survfitオブジェクトの$survの値を比較する。</p>
+<p>#- Validating cumulative incidence curves using survfit() – # install.packages(“survival”) # if needed library(survival)</p>
+<p>compare &lt;- function(data, weights, limit.x) { out1 &lt;- cifcurve(Event(t, epsilon)~fruitq1, data=data, weights=weights, outcome.type=“c”, error=“if”) out2 &lt;- survfit(Surv(t, factor(epsilon))~fruitq1, data=data, weights=data[[weights]]) return1 &lt;- cbind((1-out1<span class="math inline">\(surv[1:limit.x]),out1\)</span>time[1:limit.x],out1<span class="math inline">\(std.err[1:limit.x])
+  return2 &lt;- cbind(out2\)</span>pstate[1:limit.x,2],out2<span class="math inline">\(time[1:limit.x],out2\)</span>std.err[1:limit.x]) cbind(return1, return2) } compare_unweighted &lt;- compare(data=dat, weights=“one”, limit.x=20) print(compare_unweighted) compare_weighted &lt;- compare(data=dat, weights=“ip.weight”, limit.x=20) print(compare_weighted)</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="このエピソードに関係するクイズです">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+このエピソードに関係するクイズです
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>同じ生存時間データでも、パッケージの仕様・コーディングによってイベントの扱いが変わるため、正しく競合リスクが指定できているか気をつける必要があります。<code>cifplot()</code>では、<code>outcome.type="survival"</code>または<code>outcome.type="competing-risk"</code>で区別します。それでは、<code>survfit()</code>でAalen-Johansen曲線を選ぶための指定として正しいのは、次のうちどれでしょうか。もちろん、イベント変数には3水準以上が含まれることが前提です。</p>
+<ol type="1">
+<li>イベント変数の水準が0, 1, 2になっていること</li>
+<li>イベント変数の値に2が含まれていること</li>
+<li>イベント変数がfactor型であること</li>
+<li><code>type="mstate"</code>というオプションを指定すること</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+答えはこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>正解は3です</strong></li>
+</ul>
+<p><code>survfit()</code>の挙動は、イベント変数がnumeric型かfactor型かで異なります。イベント・打ち切りのコーディングによっても結果は変わりますが、numeric型のイベント変数を用いると、“Surv(t, epsilon) で: Invalid status value, converted to NA”という警告メッセージが出て競合リスクは無視されます。</p>
+<p>また、<code>type="mstate"</code>というオプションは、<strong>survival</strong>パッケージversion 3.8-3では使用されていません。</p>
+<p>競合リスクを無視した場合、<code>survfit()</code>の出力には生存確率（<code>surv</code>）が含まれます 。一方で、競合リスクを含む複数イベントを扱う場合は、生存確率の代わりに推移確率（<code>pstate</code>）が出力されます。以下のRスクリプトを実行して、factor型とnumeric型の出力の違いを確認してみてください。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, <span class="fu">factor</span>(epsilon))<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out3)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="因果統計研究に興味がわいた方に" class="level3">
+<h3 class="anchored" data-anchor-id="因果統計研究に興味がわいた方に">因果・統計・研究に興味がわいた方に</h3>
+<p>ぜひ、“A Conversation on Causality at Our Table”もあわせてお楽しみください。この物語は、研究仮説→統計→因果→言語という順で、ある臨床研究を描いています。迷った方へのおすすめエピソードはこちら。</p>
+<ul>
+<li><a href="study-design-1.html"><strong>会話のはじまりと研究仮説（Study Design I）</strong></a></li>
+<li><a href="effects-1.html"><strong>95%の誤解を一刀両断（Effects and Time I）</strong></a></li>
+<li><a href="logistic-regression-1.html"><strong>交絡・因果推論の入り口（Adjusting for Bias I）</strong></a></li>
+<li><a href="publish-a-paper-2.html"><strong>よりよい論文を書くための3箇条（Publish a Paper II）</strong></a></li>
+</ul>
+<p>どのエピソードも独立しているので、興味の向くレイヤーを選んでも構いません。</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="関連エピソードはこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+関連エピソードはこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>このシリーズのエピソード</strong></p>
+<ul>
+<li><p><a href="ai-r-1.html">Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses</a></p></li>
+<li><p><a href="ai-r-2.html">An R Demonstration of Bias in Kaplan-Meier Under Competing Risks</a></p></li>
+<li><p><a href="ai-r-3.html">Unadjusted vs Adjusted Cumulative Incidence Curves with AI &amp; R</a></p></li>
+</ul>
+<p><strong>生存時間解析・競合リスク解析入門</strong></p>
+<ul>
+<li><a href="study-design-4.html">A First Step into Survival and Competing Risks Analysis with R</a></li>
+</ul>
+<p><strong>Rシミュレーション</strong></p>
+<ul>
+<li><a href="frequentist-5.html">Understanding Confidence Intervals via Hypothetical Replications in R</a></li>
+<li><a href="frequentist-6.html">Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</a></li>
+</ul>
+<p><strong>DAG入門</strong></p>
+<ul>
+<li><a href="causal-inference-3.html">DAGs and Conditional Distributions: Two Languages for the Same Structure</a></li>
+</ul>
+<p><strong>用語集</strong></p>
+<ul>
+<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+</section>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/gestimation\.github\.io\/coffee-and-research\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

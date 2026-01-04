@@ -1,0 +1,451 @@
+---
+title: "Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R"
+description: "未調整CIFとIPW調整CIFを並べて比較します。調整は「魔法」ではないので、仮定の宣言・バランスまでをひとつのワークフローとして体験します。"
+tags:
+  - cobalt
+  - cifmodeling
+  - dagitty
+  - WeightIt
+format:
+  html:
+    toc: true
+---
+
+::: {.hero-header}
+![](../image/father-daughter.png){.hero-header-img}
+:::
+
+# AI & R Workflows III − Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R
+
+::: {.serif-block .text-right}
+R packages: cobalt, cifmodeling, dagitty, WeightIt
+:::
+
+------------------------------------------------------------------------
+
+::: {.callout-note appearance="simple" collapse="true" title="シリーズの位置付け"}
+
+このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを習得できるように構成しています。
+
+- AIを用いたRコーディングと品質管理
+- Table 1をつくるためのワークフロー: `gtsummary`
+- Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: `cifmodeling`
+- 交絡調整の仮定宣言・診断（このエピソード）: `dagitty`と`cobalt`
+- 交絡調整の実行（このエピソード）: `WeightIt`
+
+広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は"A Conversation on Causality at Our Table"もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。
+:::
+
+### 解析計画は推定目標と仮定からはじまる
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「シミュレーションはわかったから、実際の累積発生曲線の描き方を教えてよ」
+:::
+
+::: voice-father
+お父さん「いいよ、いいけどさ。やるからには、きちんと段取りを踏もうよ。この前`diabetes.complications`データを使ってRとAIの説明をしたとき、この表を作ったことを覚えてる？」
+:::
+
+![](ai-r-4.png)
+
+
+::: voice-daughter
+私「ああ、やったね、これ」
+:::
+
+::: voice-father
+お父さん「同じデータを使って累積発生曲線を描く。ただし、単なるデータの記述じゃなくて、果物摂取と糖尿病網膜症リスクの関連を調べるための図だ。表を見てよ。果物摂取量でグループを作ったとき（High intake vs Low intake）、年齢、性別、喫煙、アルコール摂取のバランスが崩れているでしょ。この偏りを調整して、果物摂取の因果効果を表すような累積発生曲線が、今日の成果物。いいかな？」
+:::
+
+::: voice-daughter
+私「い、いいとも！」
+:::
+
+::: voice-father
+お父さん「うんうん。ではまず、`dagitty()`で因果関係を表すグラフ（DAG）を描いておこう。練習だから、このDAGが正しいと仮定して、これに従って解析しよう。調整しなければならない交絡因子も`adjustmentSets()`で出せる」
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
+# install.packages("dagitty") #インストールが必要なら実行
+library(dagitty)
+out1 <- dagitty("dag {
+age -> fruitq1
+age -> t
+sex -> fruitq1
+sex -> t
+bmi -> fruitq1
+bmi -> t
+hba1c -> fruitq1
+hba1c -> t
+diabetes_duration -> fruitq1
+diabetes_duration -> t
+drug_oha -> fruitq1
+drug_oha -> t
+drug_insulin -> fruitq1
+drug_insulin -> t
+sbp -> fruitq1
+sbp -> t
+ldl -> fruitq1
+ldl -> t
+hdl -> fruitq1
+hdl -> t
+tg -> fruitq1
+tg -> t
+current_smoker -> fruitq1
+current_smoker -> t
+alcohol_drinker -> fruitq1
+alcohol_drinker -> t
+ltpa -> fruitq1
+ltpa -> t
+fruitq1 -> t
+}")
+plot(out1)
+out2 <- adjustmentSets(out1, exposure = "fruitq1", outcome = "t")
+print(out2)
+```
+:::
+
+### イベントと時間の集計
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+お父さん「DAGを描いたら、次はイベントの定義を確認しよう。生存時間解析は、ここを間違えると終わりだからね」
+:::
+
+::: voice-daughter
+私「イベント定義って、`epsilon`のことでいいの？」
+:::
+
+::: voice-father
+お父さん「そう。`t`が観測された時間、`epsilon`がイベント種別。`epsilon=2`の大血管合併症を競合リスクとして扱う」
+:::
+
+- 打ち切り: `epsilon=0`
+- 糖尿病網膜症: `epsilon=1`
+- 大血管合併症: `epsilon=2`
+
+::: voice-daughter
+私「つまりは糖尿病網膜症と大血管合併症の件数と、いつどれくらい起きてるかを確認すればいいんだね」
+:::
+::::::::::::::::::::::::::::::::: 
+
+"cifmodelingに含まれているdiabetes.complicationsっていうデータセットを読み込んで。tとepsilonについて集計して"
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+
+競合リスク解析では、**関心イベント（ここでは糖尿病網膜症）**と、**それを観測できなくする競合リスク（ここでは大血管合併症）**があるはずですが、競合リスクがほとんど起きていないこともあり得ます。また、エラーが混入を防ぐためには、生存時間変数（特に最小値の符号と最大値のオーダー）を確認することが有効です。
+
+```{r}
+# install.packages("cifmodeling") # if needed
+library(cifmodeling)
+data(diabetes.complications)
+dat <- diabetes.complications
+stopifnot(is.data.frame(dat))
+stopifnot(all(c("t","epsilon","fruitq1") %in% names(dat)))
+
+table(dat$epsilon, useNA = "ifany")
+summary(dat$t)
+tapply(dat$t, dat$epsilon, summary)
+```
+:::
+
+### プロペンシティスコアに基づく重みの計算
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「これでアウトカムが集計できたよね。網膜症発症281件、大血管症発症81件。患者背景の要約統計量もTable 1にまとめた。次は偏りを調整するんだっけ。結局なにをすればいいの？回帰？マッチング？」
+:::
+
+::: voice-father
+お父さん「交絡調整の方法はいろいろあるけど、直接、累積発生曲線を扱いやすいのは、**重み付け**と**層別**なんだ。今日は、covariate balancing propensity score（CBPS法）を使おう。共変量（covariate）っていうのは、この場合は患者背景因子のことだと思っていい。一般に、プロペンシティスコアを用いた交絡調整では、ふたつの仮定が置かれる。これを頭に置きながら聞いてね」
+:::
+
+- プロペンシティスコアの値がグループ間で**オーバーラップ**していること
+
+- **未測定の交絡因子がない**こと
+
+::: voice-father
+お父さん「CBPS法は、プロペンシティスコアに基づく重み付けの一種なんだけど、DAGが正しいっていう前提なら、やることは単純。果物摂取（`fruitq1`）の確率を説明できるようなモデルを立てて、そのモデルの下で、共変量のバランスがとれるような重みを求める。共変量のバランスは、比較するグループ間で共変量の平均の差がゼロに近いって言い換えてもいい」
+:::
+
+::: voice-daughter
+私「えっと、マッチングはしないのね？CBPS法とプロペンシティスコアは別なの？」
+:::
+
+::: voice-father
+お父さん「そう、マッチングと重み付けは別。マッチングしたデータセットを作ってから、累積発生曲線を描くと、個人間の対応が無視されてしまう。これがはっきり悪いわけじゃないんだけどね。今回は、ひとりひとりに重みを付けたデータセットを作って、重み付きAalen-Johansen曲線を描く。CBPS法はプロペンシティスコアを使った手法のひとつなんだけど、一番の特徴は、CBPSは一般化モーメント法で計算する。一番オーソドックスなプロペンシティスコアの計算では、ロジスティック回帰を仮定して最尤法で求めることが多い」
+:::
+
+::: voice-daughter
+私「説明長いな。要するにCBPS法で重みを計算してってAIに言えばいいの？」
+:::
+
+::: voice-father
+お父さん「それでいいんだけど、曝露変数や調整したい変数は指定しよう。また、使いたい関数があればそう伝えた方がぶれない。こんな感じで指示を出したらどうかな」
+:::
+::::::::::::::::::::::::::::::::: 
+
+"WeightIt()を使ってCBPSの重みを計算して。変数はさっきのdagitty()と同じものを使って"
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+
+```{r}
+continuous_var <- c("age","bmi","hba1c","diabetes_duration","sbp","ldl","hdl","tg","ltpa")
+binary_var <- c("sex","drug_oha","drug_insulin","current_smoker","alcohol_drinker")
+exposure.model <- as.formula(paste("fruitq1 ~", paste(continuous_var, collapse = " + "), "+", paste(binary_var, collapse = " + ")))
+
+# install.packages("WeightIt") # if needed
+library(WeightIt)
+
+out2 <- weightit(exposure.model, data = dat, method = "cbps")
+dat$ip.weight <- out2$weights
+dat$one <- 1
+quantile(dat$ip.weight, probs = c(0, .01, .05, .5, .95, .99, 1))
+```
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+お父さん「重み付け解析の弱点のひとつは、重みが極端に大きい値をとると推定が不安定になること。だからAIは、`quantile()`で最大値を出したんだろうね。次に確認するのは、以下のふたつ」
+:::
+::::::::::::::::::::::::::::::::: 
+
+- オーバーラップの仮定が満たされているかどうか
+
+- 重みを付けた後で共変量バランスがとれているかどうか
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+
+プロペンシティスコアを用いた交絡調整では、**オーバーラップ**と**未測定の交絡因子はない**という仮定が満たされる必要があります。以下のRコードでは、**cobalt**パッケージの`bal.plot()`を用いて、果物摂取ごと（0は"High intake"、1は"Low intake"）のプロペンシティスコアのグラフを描いています。
+
+```{r}
+# install.packages("cobalt") # if needed
+library(cobalt)
+
+out2$covs$ps <- out2$ps
+bal.plot(out2, var.name = "ps", which = "both")  # unadjusted vs adjusted
+```
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+
+オーバーラップとは違い、未測定の交絡因子が残っているかどうかは、データから確認することはできません。そこで、DAGで宣言した因果構造が正しいという前提にして、測定された患者背景因子のバランスがとれているかを確認します。プロペンシティスコアを用いた論文の多くで、調整前後の共変量の集計表（`bal.tab()`）と標準平均差のプロット（`love.plot()`）が報告されています。
+
+```{r}
+out3 <- bal.tab(
+  exposure.model,
+  data    = dat,
+  weights = dat$ip.weight,
+  method  = "weighting",
+  un      = TRUE,
+  m.threshold = 0.1
+)
+out3
+love.plot(
+  out3,
+  stats      = "mean.diffs",
+  stars      = "raw", 
+  abs        = TRUE,
+  thresholds = c(m = 0.1),
+  var.order  = "unadjusted"
+)
+```
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「ラブプロットで赤い点（調整前）が散らばってたのに、青い点（調整後）が0に寄った。これで交絡調整できたってこと？」
+:::
+
+::: voice-father
+お父さん「そう、点は共変量ごとのバランス度合いを表している。連続データでは標準化平均差、2値データでは割合の差だね。もちろん"観測された共変量"以外は、バランスがとれたかどうかは確認できないけど、これはDAGが正しいかどうかっていう別の問題になる。共変量バランスが取れて、オーバーラップも極端に崩れていないなら、次に累積発生曲線を描く段階に進める」
+:::
+
+### 重みなしAalen-Johansen曲線
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「まあ、模擬データだからCBPSがうまく行って当然だけどね。じゃあ次は普通に累積発生曲線を描けばいい？」
+:::
+
+::: voice-father
+お父さん「うん、最初は重みなしの無調整の累積発生曲線を確認した方がいい。これは因果効果じゃなくて、イベント、打ち切り、競合リスクの発生状況を把握するためのもの。年齢や喫煙による交絡が残っているからね」
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="競合リスクデータの入力"}
+
+生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。**survival**パッケージの`survfit()`や`coxph()`では、実は入力専用の関数`Surv()`を用意しています。入力の仕様はパッケージによってまちまちで、たとえば**mets**パッケージでは`Event()`を別に定義して用いています。**cifmodeling**パッケージの`cifplot()`は、`Surv()`と`Event()`の両方に対応しています。
+:::
+
+::::::::::::::::::::::::::::::::: 
+
+"cifplot()を使って、累積発生曲線を描いて。epsilon=1がイベント、epsilon=2が競合リスク。fruitq1で層別して"
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
+cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk")
+```
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「これでいいよね」
+:::
+
+::: voice-father
+お父さん「いいよ。時点ごとの追跡状況は、曲線の下にある**アットリスク数（number at risk）**に示されている。打ち切りが起きたタイミングは**ひげ**で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」
+:::
+
+-   アットリスク数は時点ごとの人数を表す
+-   ひげは打ち切りを表す
+-   登録期間・追跡期間も要確認
+
+::: voice-father
+お父さん「競合リスクの起きたタイミングは、打ち切りと同じように曲線にマーキングするといい。`add.competing.risk.mark=TRUE`を指定する。横軸と縦軸のラベルも変えておこう」
+:::
+::::::::::::::::::::::::::::::::: 
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
+cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", 
+        add.risktable=TRUE, add.censor.mark=FALSE, add.competing.risk.mark=TRUE,
+        label.y="CIF of diabetic retinopathy", label.x="Years from registration",
+        label.strata=c("High intake","Low intake"), level.strata=c(0, 1), order.strata=c(1, 0))
+```
+:::
+
+
+### 重み付きAalen-Johansen曲線
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「次は重み付きで同じ図を出すんだよね。`weights="ip.weight"`って書けばいい？」
+:::
+
+::: voice-father
+お父さん「それでいいけど、大切なのは図の解釈なんだ。重みを付けた後、アットリスク数はどうなると思う？」
+:::
+
+::: voice-daughter
+私「重み付きの人数？ん、重みの合計になるのか。そういうこと？」
+:::
+
+::: voice-father
+お父さん「そう、`cifplot()`のデフォルトでは重みの合計を表示する。言い換えると、重みを付けた結果、もともとの集団から、共変量のバランスがとれた集団に変化するんだ。この集団の意味について説明するね。まず、人数や重みの合計はあまり意味を持たない。だから、**有効サンプルサイズ（effective sample size）**を示す方がいい。これは曲線を推定するために利用できる実質的な情報量を表している。`n.risk.type="ess"`を指定すると、リスクテーブルの数値が有効サンプルサイズになる」
+:::
+
+::: voice-daughter
+私「分かった」
+:::
+
+
+::: voice-father
+お父さん「もうひとつ、この集団の意味について付け加えたい。重み付け後の集団は、"High intake"と"Low intake"の2グループが含まれるよね。この2グループは、それぞれ"もともとの集団全体が、high intakeだったときの集団"と"もともとの集団全体がlow intakeだったときの集団"っていうふうに解釈する。もともとの集団ではなく、どちらも仮想的な集団だ」
+:::
+
+::: voice-daughter
+私「ふーん。集団の解釈が変わること自体は理解できるよ」
+:::
+::::::::::::::::::::::::::::::::: 
+
+::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
+```{r}
+cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", 
+        weights = "ip.weight", add.censor.mark=FALSE,
+        label.y="CIF of diabetic retinopathy", label.x="Years from registration",
+        label.strata=c("High intake","Low intake"), level.strata=c(1, 0), order.strata=c(0, 1), n.risk.type = "ess")
+```
+:::
+
+
+### 統計解析の品質管理
+
+バリデーションのため、survfitでも重み付きAalen-Johansen曲線を求める。それぞれの
+survfitオブジェクトの$survの値を比較する。
+
+#- Validating cumulative incidence curves using survfit() --
+# install.packages("survival") # if needed
+library(survival)
+
+compare <- function(data, weights, limit.x) {
+  out1 <- cifcurve(Event(t, epsilon)~fruitq1, data=data, weights=weights, outcome.type="c", error="if")
+  out2 <- survfit(Surv(t, factor(epsilon))~fruitq1, data=data, weights=data[[weights]])
+  return1 <- cbind((1-out1$surv[1:limit.x]),out1$time[1:limit.x],out1$std.err[1:limit.x])
+  return2 <- cbind(out2$pstate[1:limit.x,2],out2$time[1:limit.x],out2$std.err[1:limit.x])
+  cbind(return1, return2)
+}
+compare_unweighted <- compare(data=dat, weights="one", limit.x=20)
+print(compare_unweighted)
+compare_weighted <- compare(data=dat, weights="ip.weight", limit.x=20)
+print(compare_weighted)
+
+
+::: {.callout-note appearance="simple" title="このエピソードに関係するクイズです"}
+
+同じ生存時間データでも、パッケージの仕様・コーディングによってイベントの扱いが変わるため、正しく競合リスクが指定できているか気をつける必要があります。`cifplot()`では、`outcome.type="survival"`または`outcome.type="competing-risk"`で区別します。それでは、`survfit()`でAalen-Johansen曲線を選ぶための指定として正しいのは、次のうちどれでしょうか。もちろん、イベント変数には3水準以上が含まれることが前提です。
+
+1.  イベント変数の水準が0, 1, 2になっていること
+2.  イベント変数の値に2が含まれていること
+3.  イベント変数がfactor型であること
+4.  `type="mstate"`というオプションを指定すること
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="答えはこちら"}
+-   **正解は3です**
+
+`survfit()`の挙動は、イベント変数がnumeric型かfactor型かで異なります。イベント・打ち切りのコーディングによっても結果は変わりますが、numeric型のイベント変数を用いると、"Surv(t, epsilon) で: Invalid status value, converted to NA"という警告メッセージが出て競合リスクは無視されます。
+
+また、`type="mstate"`というオプションは、**survival**パッケージversion 3.8-3では使用されていません。
+
+競合リスクを無視した場合、`survfit()`の出力には生存確率（`surv`）が含まれます
+。一方で、競合リスクを含む複数イベントを扱う場合は、生存確率の代わりに推移確率（`pstate`）が出力されます。以下のRスクリプトを実行して、factor型とnumeric型の出力の違いを確認してみてください。
+
+```{r eval=FALSE}
+out3 <- survfit(Surv(t, factor(epsilon))~fruitq1, data=dat)
+names(out3)
+out4 <- survfit(Surv(t, epsilon)~fruitq1, data=dat)
+names(out4)
+```
+:::
+
+### 因果・統計・研究に興味がわいた方に
+
+ぜひ、"A Conversation on Causality at Our Table"もあわせてお楽しみください。この物語は、研究仮説→統計→因果→言語という順で、ある臨床研究を描いています。迷った方へのおすすめエピソードはこちら。
+
+- [**会話のはじまりと研究仮説（Study Design I）**](study-design-1.html)
+- [**95%の誤解を一刀両断（Effects and Time I）**](effects-1.html)
+- [**交絡・因果推論の入り口（Adjusting for Bias I）**](logistic-regression-1.html)
+- [**よりよい論文を書くための3箇条（Publish a Paper II）**](publish-a-paper-2.html)
+
+どのエピソードも独立しているので、興味の向くレイヤーを選んでも構いません。
+
+::: {.callout-note appearance="simple" collapse="true" title="関連エピソードはこちら"}
+
+**このシリーズのエピソード**
+
+- [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses](ai-r-1.html)
+
+- [An R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
+
+- [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
+
+**生存時間解析・競合リスク解析入門**
+
+- [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
+
+**Rシミュレーション**
+
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-5.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-6.html)
+
+**DAG入門**
+
+- [DAGs and Conditional Distributions: Two Languages for the Same Structure](causal-inference-3.html)
+
+**用語集**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::
