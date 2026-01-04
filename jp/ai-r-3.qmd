@@ -66,6 +66,15 @@ R packages: cobalt, cifmodeling, dagitty, WeightIt
 ::: voice-father
 お父さん「うんうん。ではまず、`dagitty()`で因果関係を表すグラフ（DAG）を描いておこう。練習だから、このDAGが正しいと仮定して、これに従って解析しよう。調整しなければならない交絡因子も`adjustmentSets()`で出せる」
 :::
+
+```{r eval=FALSE}
+`dagitty()`でDAGを描いて。曝露変数は`fruitq1`、アウトカムは`t`。
+```
+
+```{r eval=FALSE}
+共通原因として`age, sex, bmi, hba1c, diabetes_duration, drug_oha, drug_insulin, sbp, ldl, hdl, tg, current_smoker, alcohol_drinker, ltpa`を加えて。次に`adjustmentSets()`を実行して。
+```
+
 :::::::::::::::::::::::::::::::::
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
@@ -124,16 +133,18 @@ print(out2)
 お父さん「そう。`t`が観測された時間、`epsilon`がイベント種別。`epsilon=2`の大血管合併症を競合リスクとして扱う」
 :::
 
-- 打ち切り: `epsilon=0`
-- 糖尿病網膜症: `epsilon=1`
-- 大血管合併症: `epsilon=2`
+- `epsilon=0`: 打ち切り
+- `epsilon=1`: 糖尿病網膜症
+- `epsilon=2`: 大血管合併症
 
 ::: voice-daughter
 私「つまりは糖尿病網膜症と大血管合併症の件数と、いつどれくらい起きてるかを確認すればいいんだね」
 :::
 ::::::::::::::::::::::::::::::::: 
 
-"cifmodelingに含まれているdiabetes.complicationsっていうデータセットを読み込んで。tとepsilonについて集計して"
+```{r eval=FALSE}
+**cifmodeling**に含まれている`diabetes.complications`っていうデータセットを読み込んで。`t`と`epsilon`について集計して"
+```
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
 
@@ -173,11 +184,19 @@ tapply(dat$t, dat$epsilon, summary)
 :::
 
 ::: voice-daughter
-私「えっと、マッチングはしないのね？CBPS法とプロペンシティスコアは別なの？」
+私「えっと、マッチングはしないのね？」
 :::
 
 ::: voice-father
-お父さん「そう、マッチングと重み付けは別。マッチングしたデータセットを作ってから、累積発生曲線を描くと、個人間の対応が無視されてしまう。これがはっきり悪いわけじゃないんだけどね。今回は、ひとりひとりに重みを付けたデータセットを作って、重み付きAalen-Johansen曲線を描く。CBPS法はプロペンシティスコアを使った手法のひとつなんだけど、一番の特徴は、CBPSは一般化モーメント法で計算する。一番オーソドックスなプロペンシティスコアの計算では、ロジスティック回帰を仮定して最尤法で求めることが多い」
+お父さん「そう、マッチングと重み付けは別。マッチングしたデータセットを作ってから、累積発生曲線を描くと、個人間の対応が無視されてしまう。これがはっきり悪いわけじゃないんだけどね。今回は、ひとりひとりに重みを付けたデータセットを作って、重み付きAalen-Johansen曲線を描く」
+:::
+
+::: voice-daughter
+私「ふーん。CBPS法とプロペンシティスコアは別なの？」
+:::
+
+::: voice-father
+お父さん「CBPS法はプロペンシティスコアを使った手法のひとつなんだけど、一番の特徴は、CBPSは一般化モーメント法で計算する。一番オーソドックスなプロペンシティスコアの計算では、ロジスティック回帰を仮定して最尤法で求めることが多い」
 :::
 
 ::: voice-daughter
@@ -189,7 +208,10 @@ tapply(dat$t, dat$epsilon, summary)
 :::
 ::::::::::::::::::::::::::::::::: 
 
-"WeightIt()を使ってCBPSの重みを計算して。変数はさっきのdagitty()と同じものを使って"
+```{r eval=FALSE}
+`WeightIt()`を使ってCBPSの重みを計算して。変数はさっきの`dagitty()`と同じものを使って
+```
+
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
 
@@ -283,7 +305,9 @@ love.plot(
 
 ::::::::::::::::::::::::::::::::: 
 
-"cifplot()を使って、累積発生曲線を描いて。epsilon=1がイベント、epsilon=2が競合リスク。fruitq1で層別して"
+```{r eval=FALSE}
+`cifplot()`を使って、累積発生曲線を描いて。`epsilon=1`がイベント、`epsilon=2`が競合リスク。`fruitq1`で層別して"
+```
 
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
 ```{r}
