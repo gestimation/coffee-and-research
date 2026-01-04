@@ -149,35 +149,6 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </script>
 
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 <link rel="canonical" href="https://gestimation.github.io/coffee-and-research/jp/ai-r-3.html">
@@ -281,7 +252,7 @@ window.Quarto = {
   <li><a href="#ai-r-workflows-iii-unadjusted-vs-adjusted-cumulative-incidence-curves-with-ai-r" id="toc-ai-r-workflows-iii-unadjusted-vs-adjusted-cumulative-incidence-curves-with-ai-r" class="nav-link active" data-scroll-target="#ai-r-workflows-iii-unadjusted-vs-adjusted-cumulative-incidence-curves-with-ai-r">AI &amp; R Workflows III − Unadjusted vs Adjusted Cumulative Incidence Curves with AI &amp; R</a>
   <ul class="collapse">
   <li><a href="#解析計画は推定目標と仮定からはじまる" id="toc-解析計画は推定目標と仮定からはじまる" class="nav-link" data-scroll-target="#解析計画は推定目標と仮定からはじまる">解析計画は推定目標と仮定からはじまる</a></li>
-  <li><a href="#イベントと時間の集計" id="toc-イベントと時間の集計" class="nav-link" data-scroll-target="#イベントと時間の集計">イベントと時間の集計</a></li>
+  <li><a href="#イベント変数と時間変数の記述" id="toc-イベント変数と時間変数の記述" class="nav-link" data-scroll-target="#イベント変数と時間変数の記述">イベント変数と時間変数の記述</a></li>
   <li><a href="#プロペンシティスコアに基づく重みの計算" id="toc-プロペンシティスコアに基づく重みの計算" class="nav-link" data-scroll-target="#プロペンシティスコアに基づく重みの計算">プロペンシティスコアに基づく重みの計算</a></li>
   </ul></li>
   </ul>
@@ -335,15 +306,15 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>このシリーズは、因果推論の実務フローを見て頂くために、“A Conversation on Causality at Our Table”の付録として用意したものです。全3エピソードの中で、5つのスキルを習得できるように構成しています。</p>
+<p>このシリーズは、因果推論の実務フローを見て頂くために、“A Conversation on Causality at Our Table”の付録として用意したものです。全3エピソードの中で、5つのスキルを身に着けられるように構成しています。</p>
 <ul>
-<li>AIを用いたRコーディングと品質管理</li>
-<li>Table 1をつくるためのワークフロー: <code>gtsummary</code></li>
-<li>Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: <code>cifmodeling</code></li>
-<li>交絡調整の仮定宣言・診断（このエピソード）: <code>dagitty</code>と<code>cobalt</code></li>
-<li>交絡調整の実行（このエピソード）: <code>WeightIt</code></li>
+<li>AIを用いたRコーディングと品質管理（このエピソード）</li>
+<li>Table 1をつくるためのワークフロー: <strong>gtsummary</strong></li>
+<li>Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: <strong>cifmodeling</strong></li>
+<li>交絡調整の仮定宣言・診断（このエピソード）: <strong>dagitty</strong>と<strong>cobalt</strong></li>
+<li>交絡調整の実行（このエピソード）: <strong>WeightIt</strong></li>
 </ul>
-<p>広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は”A Conversation on Causality at Our Table”もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。</p>
+<p>広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は<a href="https://gestimation.github.io/coffee-and-research/jp">“A Conversation on Causality at Our Table”</a>もあわせてお楽しみください。また、Rパッケージの詳細については、それぞれのVignettes等をご参照ください。</p>
 </div>
 </div>
 </div>
@@ -459,8 +430,8 @@ DAGを描くためのRコードと結果はこちら
 </div>
 </div>
 </section>
-<section id="イベントと時間の集計" class="level3">
-<h3 class="anchored" data-anchor-id="イベントと時間の集計">イベントと時間の集計</h3>
+<section id="イベント変数と時間変数の記述" class="level3">
+<h3 class="anchored" data-anchor-id="イベント変数と時間変数の記述">イベント変数と時間変数の記述</h3>
 <div class="dialogue">
 <div class="voice-father">
 <p>お父さん「DAGを描いたら、次はイベントの定義を確認しよう。生存時間解析は、ここを間違えると終わりだからね」</p>
@@ -731,16 +702,17 @@ Adjusted    690.37  208.59</code></pre>
 <p>私「ラブプロットで赤い点（調整前）が散らばってたのに、青い点（調整後）が0に寄った。これで交絡調整できたってこと？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そう、点は共変量ごとのバランス度合いを表している。連続データでは標準化平均差、2値データでは割合の差だね。もちろん”観測された共変量”以外は、バランスがとれたかどうかは確認できないけど、これはDAGが正しいかどうかっていう別の問題になる。共変量バランスが取れて、オーバーラップも極端に崩れていないなら、次に累積発生曲線を描く段階に進める」</p>
+<p>お父さん「そう、点は共変量ごとのバランス度合いを表している。連続データでは<strong>標準化平均差（standardized mean difference）</strong>、2値データでは<strong>割合の差</strong>だね。もちろん”観測された共変量”以外は、バランスがとれたかどうかは確認できないけど、これはDAGが正しいかどうかっていう別の問題になる。共変量バランスが取れて、オーバーラップも極端に崩れていないなら、累積発生曲線を描く段階に進もう」</p>
 </div>
-<section id="重みなしaalen-johansen曲線" class="level3">
-<h3 class="anchored" data-anchor-id="重みなしaalen-johansen曲線">重みなしAalen-Johansen曲線</h3>
+<section id="糖尿病網膜症リスクの記述" class="level3">
+<h3 class="anchored" data-anchor-id="糖尿病網膜症リスクの記述">糖尿病網膜症リスクの記述</h3>
 <div class="dialogue">
 <div class="voice-daughter">
 <p>私「まあ、模擬データだからCBPSがうまく行って当然だけどね。じゃあ次は普通に累積発生曲線を描けばいい？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「うん、最初は重みなしの無調整の累積発生曲線を確認した方がいい。これは因果効果じゃなくて、イベント、打ち切り、競合リスクの発生状況を把握するためのもの。年齢や喫煙による交絡が残っているからね」</p>
+<p>お父さん「うん、最初は重みなしのただの累積発生曲線を確認した方がいい。これは因果効果じゃなくて、イベント、打ち切り、競合リスクの発生状況を把握するためのもの。年齢や喫煙による交絡が残っているからね」</p>
+</div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="競合リスクデータの入力">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
@@ -755,7 +727,6 @@ Adjusted    690.37  208.59</code></pre>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。<strong>survival</strong>パッケージの<code>survfit()</code>や<code>coxph()</code>では、実は入力専用の関数<code>Surv()</code>を用意しています。入力の仕様はパッケージによってまちまちで、たとえば<strong>mets</strong>パッケージでは<code>Event()</code>を別に定義して用いています。<strong>cifmodeling</strong>パッケージの<code>cifplot()</code>は、<code>Surv()</code>と<code>Event()</code>の両方に対応しています。</p>
-</div>
 </div>
 </div>
 </div>
@@ -832,8 +803,8 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 </section>
-<section id="重み付きaalen-johansen曲線" class="level3">
-<h3 class="anchored" data-anchor-id="重み付きaalen-johansen曲線">重み付きAalen-Johansen曲線</h3>
+<section id="因果効果の推定" class="level3">
+<h3 class="anchored" data-anchor-id="因果効果の推定">因果効果の推定</h3>
 <div class="dialogue">
 <div class="voice-daughter">
 <p>私「次は重み付きで同じ図を出すんだよね。<code>weights="ip.weight"</code>って書けばいい？」</p>
@@ -851,10 +822,13 @@ Adjusted    690.37  208.59</code></pre>
 <p>私「分かった」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「もうひとつ、この集団の意味について付け加えたい。重み付け後の集団は、“High intake”と”Low intake”の2グループが含まれるよね。この2グループは、それぞれ”もともとの集団全体が、high intakeだったときの集団”と”もともとの集団全体がlow intakeだったときの集団”っていうふうに解釈する。もともとの集団ではなく、どちらも仮想的な集団だ」</p>
+<p>お父さん「もうひとつ、この集団の意味について付け加えたい。重み付け後の集団は”High intake”と”Low intake”の2グループが含まれるよね」</p>
 </div>
 <div class="voice-daughter">
-<p>私「ふーん。集団の解釈が変わること自体は理解できるよ」</p>
+<p>私「そうだね」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「この2グループは、それぞれ”もともとの集団全体が、high intakeだったときの集団”と”もともとの集団全体がlow intakeだったときの集団”っていうふうに解釈する。もともとの集団ではなく、どちらも仮想的な集団だ。果物摂取量が高いときのアウトカムと、低いときのアウトカムの差が、因果効果なんだ。じゃあ調整累積発生曲線を見てみよう」</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="調整累積発生曲線のRコードと結果はこちら">
@@ -873,7 +847,7 @@ Adjusted    690.37  208.59</code></pre>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">weights =</span> <span class="st">"ip.weight"</span>, <span class="at">add.censor.mark=</span><span class="cn">FALSE</span>,</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.y=</span><span class="st">"CIF of diabetic retinopathy"</span>, <span class="at">label.x=</span><span class="st">"Years from registration"</span>,</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.strata=</span><span class="fu">c</span>(<span class="st">"High intake"</span>,<span class="st">"Low intake"</span>), <span class="at">level.strata=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">order.strata=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">n.risk.type =</span> <span class="st">"ess"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.strata=</span><span class="fu">c</span>(<span class="st">"High intake"</span>, <span class="st">"Low intake"</span>), <span class="at">level.strata=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">order.strata=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">n.risk.type =</span> <span class="st">"ess"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -885,13 +859,133 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 </div>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「調整前より調整後の累積発生曲線ではわずかに差が広がったみたい。この曲線の差の分だけ、果物摂取の因果効果があるってことだよね」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そういうこと。次に、有効サンプルサイズを見て。調整前の図のアットリスク数より、有効サンプルサイズは小さいでしょ。重みを付けることで誤差が大きくなったったことを示している」</p>
+</div>
+<div class="voice-daughter">
+<p>私「ふーん。まあ競合リスク解析の流れは理解できたよ、ありがとう」</p>
+</div>
+</div>
 </section>
 <section id="統計解析の品質管理" class="level3">
 <h3 class="anchored" data-anchor-id="統計解析の品質管理">統計解析の品質管理</h3>
-<p>バリデーションのため、survfitでも重み付きAalen-Johansen曲線を求める。それぞれの survfitオブジェクトの$survの値を比較する。</p>
-<p>#- Validating cumulative incidence curves using survfit() – # install.packages(“survival”) # if needed library(survival)</p>
-<p>compare &lt;- function(data, weights, limit.x) { out1 &lt;- cifcurve(Event(t, epsilon)~fruitq1, data=data, weights=weights, outcome.type=“c”, error=“if”) out2 &lt;- survfit(Surv(t, factor(epsilon))~fruitq1, data=data, weights=data[[weights]]) return1 &lt;- cbind((1-out1<span class="math inline">\(surv[1:limit.x]),out1\)</span>time[1:limit.x],out1<span class="math inline">\(std.err[1:limit.x])
-  return2 &lt;- cbind(out2\)</span>pstate[1:limit.x,2],out2<span class="math inline">\(time[1:limit.x],out2\)</span>std.err[1:limit.x]) cbind(return1, return2) } compare_unweighted &lt;- compare(data=dat, weights=“one”, limit.x=20) print(compare_unweighted) compare_weighted &lt;- compare(data=dat, weights=“ip.weight”, limit.x=20) print(compare_weighted)</p>
+<div class="dialogue">
+<div class="voice-father">
+<p>お父さん「これで最後の作業だ。累積発生曲線のバリデーションをしよう。この場合は、<code>survfit()</code>でも累積発生曲線の推定値と標準誤差が計算できる。<code>survfit()</code>の推定値は<code>$pstate</code>っていうオブジェクトに入っている。<code>cifplot()</code>の推定値が欲しければ、計算ルーチンの<code>cifcurve()</code>を実行して、<code>1-$surv</code>を求めればいい。まったく同じ値になるはずだ。標準誤差は<code>$std.err</code>っていうオブジェクトなんだけど、別の計算方法を使っているから近い値になるかを見る。まずは調整なしの結果を比較しよう」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="cifcurve()とsurvfit()を比較するためのRコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("survival") # if needed</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>compare <span class="ot">&lt;-</span> <span class="cf">function</span>(data, weights, limit.x) {</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  out1 <span class="ot">&lt;-</span> <span class="fu">cifcurve</span>(<span class="fu">Event</span>(t, epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>data, <span class="at">weights=</span>weights, <span class="at">outcome.type=</span><span class="st">"c"</span>, <span class="at">error=</span><span class="st">"if"</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  out2 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, <span class="fu">factor</span>(epsilon))<span class="sc">~</span>fruitq1, <span class="at">data=</span>data, <span class="at">weights=</span>data[[weights]])</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>((<span class="dv">1</span><span class="sc">-</span>out1<span class="sc">$</span>surv[<span class="dv">1</span><span class="sc">:</span>limit.x]),out2<span class="sc">$</span>pstate[<span class="dv">1</span><span class="sc">:</span>limit.x,<span class="dv">2</span>],out1<span class="sc">$</span>std.err[<span class="dv">1</span><span class="sc">:</span>limit.x],out2<span class="sc">$</span>std.err[<span class="dv">1</span><span class="sc">:</span>limit.x])</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>compare_unweighted <span class="ot">&lt;-</span> <span class="fu">compare</span>(<span class="at">data=</span>dat, <span class="at">weights=</span><span class="st">"one"</span>, <span class="at">limit.x=</span><span class="dv">20</span>)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(compare_unweighted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             [,1]        [,2]        [,3]        [,4]
+ [1,] 0.001388889 0.001388889 0.001387924 0.001387924
+ [2,] 0.001388889 0.001388889 0.001387924 0.001961456
+ [3,] 0.002777778 0.002777778 0.001961457 0.002400609
+ [4,] 0.002777778 0.002777778 0.001961457 0.002770051
+ [5,] 0.004166667 0.004166667 0.002400614 0.003094848
+ [6,] 0.005555556 0.005555556 0.002770059 0.003387864
+ [7,] 0.005555556 0.005555556 0.002770059 0.003656748
+ [8,] 0.006944444 0.006944444 0.003094860 0.003906486
+ [9,] 0.006944444 0.006944444 0.003094860 0.004140543
+[10,] 0.006944444 0.006944444 0.003094860 0.004361445
+[11,] 0.008333333 0.008333333 0.003387881 0.004571100
+[12,] 0.008333333 0.008333333 0.003387881 0.004770990
+[13,] 0.009722222 0.009722222 0.003656769 0.004962296
+[14,] 0.011111111 0.011111111 0.003906512 0.005145974
+[15,] 0.012500000 0.012500000 0.004140575 0.005322816
+[16,] 0.013888889 0.013888889 0.004361484 0.005493480
+[17,] 0.015277778 0.015277778 0.004571145 0.005658527
+[18,] 0.016666667 0.016666667 0.004771041 0.005818433
+[19,] 0.018055556 0.018055556 0.004962354 0.005973613
+[20,] 0.019444444 0.019444444 0.005146040 0.006124424</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「1列目と2列目が<code>cifcurve()</code>と<code>survfit()</code>の推定値ね。同じ値みたい。でも重要なのは重みを付けてどうなるかだよね」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「やってみよう」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="調整累積発生曲線を比較するためのRコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+調整累積発生曲線を比較するためのRコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>compare_weighted <span class="ot">&lt;-</span> <span class="fu">compare</span>(<span class="at">data=</span>dat, <span class="at">weights=</span><span class="st">"ip.weight"</span>, <span class="at">limit.x=</span><span class="dv">20</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(compare_weighted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             [,1]        [,2]        [,3]        [,4]
+ [1,] 0.001244355 0.001244355 0.001243708 0.001243708
+ [2,] 0.001244355 0.001244355 0.001243708 0.001770377
+ [3,] 0.002604439 0.002604439 0.001841298 0.002230195
+ [4,] 0.002604439 0.002604439 0.001841298 0.002628632
+ [5,] 0.003830307 0.003830307 0.002210141 0.002897724
+ [6,] 0.005524750 0.005524750 0.002780379 0.003350872
+ [7,] 0.005524750 0.005524750 0.002780379 0.003560957
+ [8,] 0.006829491 0.006829491 0.003068012 0.003788262
+ [9,] 0.006829491 0.006829491 0.003068012 0.004031245
+[10,] 0.006829491 0.006829491 0.003068012 0.004256241
+[11,] 0.008078630 0.008078630 0.003309256 0.004431160
+[12,] 0.008078630 0.008078630 0.003309256 0.004603570
+[13,] 0.009865716 0.009865716 0.003753519 0.004927830
+[14,] 0.011185112 0.011185112 0.003974105 0.005095401
+[15,] 0.012409242 0.012409242 0.004154227 0.005235060
+[16,] 0.013705181 0.013705181 0.004346820 0.005386929
+[17,] 0.014939788 0.014939788 0.004514152 0.005520867
+[18,] 0.016506915 0.016506915 0.004770646 0.005729363
+[19,] 0.017748000 0.017748000 0.004924321 0.005856062
+[20,] 0.019053295 0.019053295 0.005088524 0.005992756</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「こっちもだいじょうぶみたいだね」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「よかった」</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note callout-titled" title="このエピソードに関係するクイズです">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -912,7 +1006,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -921,7 +1015,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は3です</strong></li>
@@ -930,10 +1024,10 @@ Adjusted    690.37  208.59</code></pre>
 <p>また、<code>type="mstate"</code>というオプションは、<strong>survival</strong>パッケージversion 3.8-3では使用されていません。</p>
 <p>競合リスクを無視した場合、<code>survfit()</code>の出力には生存確率（<code>surv</code>）が含まれます 。一方で、競合リスクを含む複数イベントを扱う場合は、生存確率の代わりに推移確率（<code>pstate</code>）が出力されます。以下のRスクリプトを実行して、factor型とnumeric型の出力の違いを確認してみてください。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, <span class="fu">factor</span>(epsilon))<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out3)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, <span class="fu">factor</span>(epsilon))<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out3)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -950,7 +1044,7 @@ Adjusted    690.37  208.59</code></pre>
 </ul>
 <p>どのエピソードも独立しているので、興味の向くレイヤーを選んでも構いません。</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="関連エピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -959,7 +1053,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>

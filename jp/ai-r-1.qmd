@@ -25,7 +25,7 @@ R packages: cifmodeling, dplyr, gtsummary, tableone
 
 ::: {.callout-note appearance="simple" collapse="true" title="シリーズの位置付け"}
 
-このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを習得できるように構成しています。
+このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを身に着けられるように構成しています。
 
 - AIを用いたRコーディングと品質管理（このエピソード）
 - Table 1をつくるためのワークフロー（このエピソード）: **gtsummary**
@@ -33,7 +33,7 @@ R packages: cifmodeling, dplyr, gtsummary, tableone
 - 交絡調整の仮定宣言・診断: **dagitty**と**cobalt**
 - 交絡調整の実行: **WeightIt**
 
-広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp)もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。
+広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp)もあわせてお楽しみください。また、Rパッケージの詳細については、それぞれのVignettes等をご参照ください。
 :::
 
 ### もちろんAIつかうよね

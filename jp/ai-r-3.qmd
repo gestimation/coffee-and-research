@@ -25,15 +25,15 @@ R packages: cobalt, cifmodeling, dagitty, WeightIt
 
 ::: {.callout-note appearance="simple" collapse="true" title="シリーズの位置付け"}
 
-このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを習得できるように構成しています。
+このシリーズは、因果推論の実務フローを見て頂くために、"A Conversation on Causality at Our Table"の付録として用意したものです。全3エピソードの中で、5つのスキルを身に着けられるように構成しています。
 
-- AIを用いたRコーディングと品質管理
-- Table 1をつくるためのワークフロー: `gtsummary`
-- Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: `cifmodeling`
-- 交絡調整の仮定宣言・診断（このエピソード）: `dagitty`と`cobalt`
-- 交絡調整の実行（このエピソード）: `WeightIt`
+- AIを用いたRコーディングと品質管理（このエピソード）
+- Table 1をつくるためのワークフロー: **gtsummary**
+- Kaplan-Meier曲線とAalen-Johansen曲線の使い分け: **cifmodeling**
+- 交絡調整の仮定宣言・診断（このエピソード）: **dagitty**と**cobalt**
+- 交絡調整の実行（このエピソード）: **WeightIt**
 
-広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は"A Conversation on Causality at Our Table"もあわせてお楽しみください。また、技術的詳細については、各RパッケージのVignettesをご参照ください。
+広く使われているスキルほど、深堀していくとおもしろい概念が潜んでいます。交絡調整ってなにをしているの？因果とデータってどういう関係なの？興味がある方は["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp)もあわせてお楽しみください。また、Rパッケージの詳細については、それぞれのVignettes等をご参照ください。
 :::
 
 ### 解析計画は推定目標と仮定からはじまる
@@ -118,7 +118,7 @@ print(out2)
 ```
 :::
 
-### イベントと時間の集計
+### イベント変数と時間変数の記述
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-father
@@ -284,10 +284,10 @@ love.plot(
 :::
 
 ::: voice-father
-お父さん「そう、点は共変量ごとのバランス度合いを表している。連続データでは標準化平均差、2値データでは割合の差だね。もちろん"観測された共変量"以外は、バランスがとれたかどうかは確認できないけど、これはDAGが正しいかどうかっていう別の問題になる。共変量バランスが取れて、オーバーラップも極端に崩れていないなら、次に累積発生曲線を描く段階に進める」
+お父さん「そう、点は共変量ごとのバランス度合いを表している。連続データでは**標準化平均差（standardized mean difference）**、2値データでは**割合の差**だね。もちろん"観測された共変量"以外は、バランスがとれたかどうかは確認できないけど、これはDAGが正しいかどうかっていう別の問題になる。共変量バランスが取れて、オーバーラップも極端に崩れていないなら、累積発生曲線を描く段階に進もう」
 :::
 
-### 重みなしAalen-Johansen曲線
+### 糖尿病網膜症リスクの記述
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-daughter
@@ -295,15 +295,14 @@ love.plot(
 :::
 
 ::: voice-father
-お父さん「うん、最初は重みなしの無調整の累積発生曲線を確認した方がいい。これは因果効果じゃなくて、イベント、打ち切り、競合リスクの発生状況を把握するためのもの。年齢や喫煙による交絡が残っているからね」
+お父さん「うん、最初は重みなしのただの累積発生曲線を確認した方がいい。これは因果効果じゃなくて、イベント、打ち切り、競合リスクの発生状況を把握するためのもの。年齢や喫煙による交絡が残っているからね」
 :::
+::::::::::::::::::::::::::::::::: 
 
 ::: {.callout-note appearance="simple" collapse="true" title="競合リスクデータの入力"}
 
 生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。**survival**パッケージの`survfit()`や`coxph()`では、実は入力専用の関数`Surv()`を用意しています。入力の仕様はパッケージによってまちまちで、たとえば**mets**パッケージでは`Event()`を別に定義して用いています。**cifmodeling**パッケージの`cifplot()`は、`Surv()`と`Event()`の両方に対応しています。
 :::
-
-::::::::::::::::::::::::::::::::: 
 
 ```{r eval=FALSE}
 `cifplot()`を使って、累積発生曲線を描いて。`epsilon=1`がイベント、`epsilon=2`が競合リスク。`fruitq1`で層別して"
@@ -342,8 +341,7 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk",
 ```
 :::
 
-
-### 重み付きAalen-Johansen曲線
+### 因果効果の推定
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-daughter
@@ -366,13 +364,16 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk",
 私「分かった」
 :::
 
-
 ::: voice-father
-お父さん「もうひとつ、この集団の意味について付け加えたい。重み付け後の集団は、"High intake"と"Low intake"の2グループが含まれるよね。この2グループは、それぞれ"もともとの集団全体が、high intakeだったときの集団"と"もともとの集団全体がlow intakeだったときの集団"っていうふうに解釈する。もともとの集団ではなく、どちらも仮想的な集団だ」
+お父さん「もうひとつ、この集団の意味について付け加えたい。重み付け後の集団は"High intake"と"Low intake"の2グループが含まれるよね」
 :::
 
 ::: voice-daughter
-私「ふーん。集団の解釈が変わること自体は理解できるよ」
+私「そうだね」
+:::
+
+::: voice-father
+お父さん「この2グループは、それぞれ"もともとの集団全体が、high intakeだったときの集団"と"もともとの集団全体がlow intakeだったときの集団"っていうふうに解釈する。もともとの集団ではなく、どちらも仮想的な集団だ。果物摂取量が高いときのアウトカムと、低いときのアウトカムの差が、因果効果なんだ。じゃあ調整累積発生曲線を見てみよう」
 :::
 ::::::::::::::::::::::::::::::::: 
 
@@ -381,32 +382,72 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk",
 cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", 
         weights = "ip.weight", add.censor.mark=FALSE,
         label.y="CIF of diabetic retinopathy", label.x="Years from registration",
-        label.strata=c("High intake","Low intake"), level.strata=c(1, 0), order.strata=c(0, 1), n.risk.type = "ess")
+        label.strata=c("High intake", "Low intake"), level.strata=c(1, 0), order.strata=c(0, 1), n.risk.type = "ess")
 ```
 :::
 
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「調整前より調整後の累積発生曲線ではわずかに差が広がったみたい。この曲線の差の分だけ、果物摂取の因果効果があるってことだよね」
+:::
+
+::: voice-father
+お父さん「そういうこと。次に、有効サンプルサイズを見て。調整前の図のアットリスク数より、有効サンプルサイズは小さいでしょ。重みを付けることで誤差が大きくなったったことを示している」
+:::
+
+::: voice-daughter
+私「ふーん。まあ競合リスク解析の流れは理解できたよ、ありがとう」
+:::
+::::::::::::::::::::::::::::::::: 
 
 ### 統計解析の品質管理
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+お父さん「これで最後の作業だ。累積発生曲線のバリデーションをしよう。この場合は、`survfit()`でも累積発生曲線の推定値と標準誤差が計算できる。`survfit()`の推定値は`$pstate`っていうオブジェクトに入っている。`cifplot()`の推定値が欲しければ、計算ルーチンの`cifcurve()`を実行して、`1-$surv`を求めればいい。まったく同じ値になるはずだ。標準誤差は`$std.err`っていうオブジェクトなんだけど、別の計算方法を使っているから近い値になるかを見る。まずは調整なしの結果を比較しよう」
+:::
+::::::::::::::::::::::::::::::::: 
 
-バリデーションのため、survfitでも重み付きAalen-Johansen曲線を求める。それぞれの
-survfitオブジェクトの$survの値を比較する。
-
-#- Validating cumulative incidence curves using survfit() --
+::: {.callout-note appearance="simple" collapse="true" title="cifcurve()とsurvfit()を比較するためのRコードと結果はこちら"}
+```{r warning=FALSE}
 # install.packages("survival") # if needed
 library(survival)
 
 compare <- function(data, weights, limit.x) {
   out1 <- cifcurve(Event(t, epsilon)~fruitq1, data=data, weights=weights, outcome.type="c", error="if")
   out2 <- survfit(Surv(t, factor(epsilon))~fruitq1, data=data, weights=data[[weights]])
-  return1 <- cbind((1-out1$surv[1:limit.x]),out1$time[1:limit.x],out1$std.err[1:limit.x])
-  return2 <- cbind(out2$pstate[1:limit.x,2],out2$time[1:limit.x],out2$std.err[1:limit.x])
-  cbind(return1, return2)
+  cbind((1-out1$surv[1:limit.x]),out2$pstate[1:limit.x,2],out1$std.err[1:limit.x],out2$std.err[1:limit.x])
 }
 compare_unweighted <- compare(data=dat, weights="one", limit.x=20)
 print(compare_unweighted)
+```
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「1列目と2列目が`cifcurve()`と`survfit()`の推定値ね。同じ値みたい。でも重要なのは重みを付けてどうなるかだよね」
+:::
+
+::: voice-father
+お父さん「やってみよう」
+:::
+::::::::::::::::::::::::::::::::: 
+
+::: {.callout-note appearance="simple" collapse="true" title="調整累積発生曲線を比較するためのRコードと結果はこちら"}
+```{r warning=FALSE}
 compare_weighted <- compare(data=dat, weights="ip.weight", limit.x=20)
 print(compare_weighted)
+```
+:::
 
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「こっちもだいじょうぶみたいだね」
+:::
+
+::: voice-father
+お父さん「よかった」
+:::
+::::::::::::::::::::::::::::::::: 
 
 ::: {.callout-note appearance="simple" title="このエピソードに関係するクイズです"}
 
