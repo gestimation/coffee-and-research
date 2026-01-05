@@ -117,9 +117,11 @@ R packages: cifmodeling, dplyr, gtsummary, tableone
 ::: voice-daughter
 私「わかった、どれも納得。準備ができてないから今日は練習でいいよね？」
 :::
+:::::::::::::::::::::::::::::::::
 
 ### Table 1をつくるためのRワークフロー
 
+::::::::::::::::::::::::::::::::: dialogue
 ::: voice-father
 お父さん「じゃあ解析を始めよう。AIを使ったことないから**cifmodeling**パッケージに入ってる`diabetes.complications`データでいろいろ試してみたい。このデータは果物摂取量と糖尿病合併症リスクの関係を調べたコホート研究の模擬データだ」
 :::
@@ -138,11 +140,13 @@ dat <- diabetes.complications
 ::: voice-daughter
 私「読み込めたね。よし」
 :::
+:::::::::::::::::::::::::::::::::
 
 ```{r eval=FALSE}
 果物摂取量のカテゴリごとに平均年齢を出して
 ```
 
+::::::::::::::::::::::::::::::::: dialogue
 ::: voice-father
 お父さん「なにしてるの」
 :::

@@ -65,6 +65,7 @@ R packages: cifmodeling, cobalt, dagitty, WeightIt
 ::: voice-father
 お父さん「うんうん。ではまず、`dagitty()`で因果関係を表すグラフ（DAG）を描いておこう。練習だから、このDAGが正しいと仮定して、これに従って解析しよう。調整しなければならない交絡因子も`adjustmentSets()`で出せる」
 :::
+:::::::::::::::::::::::::::::::::
 
 ```{r eval=FALSE}
 `dagitty()`でDAGを描いて。曝露変数は`fruitq1`、アウトカムは`t`。
@@ -74,9 +75,12 @@ R packages: cifmodeling, cobalt, dagitty, WeightIt
 共通原因として`age, sex, bmi, hba1c, diabetes_duration, drug_oha, drug_insulin, sbp, ldl, hdl, tg, current_smoker, alcohol_drinker, ltpa`を加えて。次に`adjustmentSets()`を実行して。
 ```
 
-:::::::::::::::::::::::::::::::::
 
-::: {.callout-note appearance="simple" collapse="true" title="DAGを描くためのRコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="仮定した因果関係を表すDAG"}
+::: {.panel-tabset}
+
+## Rコードと結果
+
 ```{r warning=FALSE}
 # install.packages("dagitty") #インストールが必要なら実行
 library(dagitty)
@@ -111,10 +115,28 @@ ltpa -> fruitq1
 ltpa -> t
 fruitq1 -> t
 }")
+coordinates(out1) <- list(
+  x=c(fruitq1=1, t=7, age=1, sex=2, bmi=3, hba1c=4, diabetes_duration=5, drug_oha=6, 
+    drug_insulin=7, sbp=1, ldl=2, hdl=3, tg=4, current_smoker=5, alcohol_drinker=6, ltpa=7), 
+  y=c(fruitq1=2, t=2, age=1, sex=1, bmi=1, hba1c=1, diabetes_duration=1, drug_oha=1, 
+    drug_insulin=1, sbp=3, ldl=3, hdl=3, tg=3, current_smoker=3, alcohol_drinker=3, ltpa=3)
+  )
 plot(out1)
 out2 <- adjustmentSets(out1, exposure = "fruitq1", outcome = "t")
 print(out2)
 ```
+
+## dagitty::dagitty()
+
+曝露・アウトカム・共変量の因果関係をDAGとして宣言するための関数です。2変数間の関係を`->`で入力します。変数の位置は、dagittyオブジェクトと`coordinates()`に位置情報を与えることで指定できます。
+
+## dagitty::adjustmentSets()
+
+dagittyオブジェクトとして宣言したDAGが正しいと仮定して、バックドアパスを遮断するために必要な変数の集合を返します。
+
+- `exposure`: 曝露変数の変数名
+- `outcome`: アウトカムの変数名
+:::
 :::
 
 ### イベント変数と時間変数の記述
