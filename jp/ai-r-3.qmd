@@ -18,7 +18,7 @@ format:
 # AI & R Workflows III − Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R
 
 ::: {.serif-block .text-right}
-R packages: cobalt, cifmodeling, dagitty, WeightIt
+R packages: cifmodeling, cobalt, dagitty, WeightIt
 :::
 
 ------------------------------------------------------------------------
@@ -29,7 +29,7 @@ R packages: cobalt, cifmodeling, dagitty, WeightIt
 
 3つのエピソードで、次のワークフローを一度まわします。
 
-- データ確認 → Table 1作成 → 仮定の宣言 → 診断 → 推定 → 別実装で検証
+- データ定義 → データ確認 → 仮定の宣言 → 診断 → 推定 → 別実装で検証
 - Rパッケージ: gtsummary, cifmodeling, dagitty, WeightIt, cobalt
 
 因果・統計の理屈は本編["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp) に譲り、このシリーズではAIとRによる実装と点検に焦点を当てます。
@@ -43,7 +43,7 @@ R packages: cobalt, cifmodeling, dagitty, WeightIt
 :::
 
 ::: voice-father
-お父さん「いいよ、いいけどさ。やるからには、きちんと段取りを踏もうよ。この前`diabetes.complications`データを使ってRとAIの説明をしたとき、この表を作ったことを覚えてる？」
+お父さん「いいよ、いいけどさ。やるからには、きちんと段取りを踏もうよ。患者背景が偏ると、CIFの解釈が難しくなることを思い出してほしい。この前`diabetes.complications`でこの表を作ったの、覚えてる？」
 :::
 
 ::: {.callout-note appearance="simple" collapse="true" title="2型糖尿病患者978人の背景因子の表"}
@@ -448,9 +448,9 @@ print(compare_weighted)
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-tip appearance="simple" title="調整CIFのための実務チェックリスト"}
+::: {.callout-note appearance="simple" title="調整CIFのための実務チェックリスト"}
 
-### □推定目標（estimand）
+### 推定目標（estimand）
 - 何を比較する？  
   - 例: 果物摂取（High intake vs Low intake）
 - どの集団で？（解析対象集団の定義、追跡開始時点、欠測等による除外）
@@ -459,7 +459,7 @@ print(compare_weighted)
 
 ---
 
-### □仮定の宣言
+### 仮定の宣言
 - DAG（因果構造の表現）  
   - `dagitty::dagitty()`
 - 調整すべき交絡因子の集合
@@ -468,7 +468,7 @@ print(compare_weighted)
 
 ---
 
-### □データ定義
+### データ定義
 - イベント変数・曝露変数のコーディング
 - コーディングの臨床的意味の確認
 - イベント変数と時間変数の集計
@@ -476,7 +476,7 @@ print(compare_weighted)
 
 ---
 
-### □統計手法の選択
+### モデル・アルゴリズム
 - プロペンシティスコアのモデル  
   - 共変量選択の根拠: DAGや臨床知識
 - 重みの計算方法
@@ -486,7 +486,7 @@ print(compare_weighted)
 
 ---
 
-### □診断
+### 診断
 - オーバーラップ（positivity）
   - 群間でプロペンシティスコアや重みが偏っていないか
   - 重みが極端でないか
@@ -497,7 +497,7 @@ print(compare_weighted)
 
 ---
 
-### □推定
+### 推定
 - 未調整CIF（記述）
   - `cifmodeling::cifplot(..., weights = NULL)`
 - 調整CIF（因果効果） 
@@ -508,7 +508,7 @@ print(compare_weighted)
 
 ---
 
-### □品質管理
+### 品質管理
 - 別実装での再現
   - `gtsummary::tbl_summary()` / `tableone::CreateTableOne()`
   - `cifmodeling::cifplot()` / `survival::survfit()`
@@ -568,7 +568,7 @@ names(out4)
 
 - [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses](ai-r-1.html)
 
-- [An R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
+- [R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
 
 - [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
 

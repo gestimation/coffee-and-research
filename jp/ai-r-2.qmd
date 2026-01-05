@@ -27,7 +27,7 @@ R packages: cifmodeling
 
 3つのエピソードで、次のワークフローを一度まわします。
 
-- データ確認 → Table 1作成 → 仮定の宣言 → 診断 → 推定 → 別実装で検証
+- データ定義 → データ確認 → 仮定の宣言 → 診断 → 推定 → 別実装で検証
 - Rパッケージ: gtsummary, cifmodeling, dagitty, WeightIt, cobalt
 
 因果・統計の理屈は本編["A Conversation on Causality at Our Table"](https://gestimation.github.io/coffee-and-research/jp) に譲り、このシリーズではAIとRによる実装と点検に焦点を当てます。
@@ -261,7 +261,7 @@ Kaplan-Meier法では、生存時間が正規分布したり、比例ハザー�
 
 - [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses](ai-r-1.html)
 
-- [An R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
+- [R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
 
 - [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
 

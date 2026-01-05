@@ -291,7 +291,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <section id="ai-r-workflows-iii-unadjusted-vs-adjusted-cumulative-incidence-curves-with-ai-r" class="level1">
 <h1>AI &amp; R Workflows III − Unadjusted vs Adjusted Cumulative Incidence Curves with AI &amp; R</h1>
 <div class="serif-block text-right">
-<p>R packages: cobalt, cifmodeling, dagitty, WeightIt</p>
+<p>R packages: cifmodeling, cobalt, dagitty, WeightIt</p>
 </div>
 <hr>
 <div class="callout callout-style-simple callout-note callout-titled" title="シリーズの位置付け">
@@ -309,7 +309,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <p>このシリーズは、AIを使ってRコードを素早く組み立てつつ、因果推論の実務で求められる品質管理まで含めて完走する、会話形式の短いチュートリアルです。AIは便利ですが、図表が出たとしてもそれが正しいとは限りません。だからこそ、因果推論の実務フローに沿って手順を踏み、検証まで行うことが重要になります。</p>
 <p>3つのエピソードで、次のワークフローを一度まわします。</p>
 <ul>
-<li>データ確認 → Table 1作成 → 仮定の宣言 → 診断 → 推定 → 別実装で検証</li>
+<li>データ定義 → データ確認 → 仮定の宣言 → 診断 → 推定 → 別実装で検証</li>
 <li>Rパッケージ: gtsummary, cifmodeling, dagitty, WeightIt, cobalt</li>
 </ul>
 <p>因果・統計の理屈は本編<a href="https://gestimation.github.io/coffee-and-research/jp">“A Conversation on Causality at Our Table”</a> に譲り、このシリーズではAIとRによる実装と点検に焦点を当てます。</p>
@@ -323,7 +323,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <p>私「シミュレーションはわかったから、実際の累積発生曲線（CIF）の描き方を教えてよ」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「いいよ、いいけどさ。やるからには、きちんと段取りを踏もうよ。この前<code>diabetes.complications</code>データを使ってRとAIの説明をしたとき、この表を作ったことを覚えてる？」</p>
+<p>お父さん「いいよ、いいけどさ。やるからには、きちんと段取りを踏もうよ。患者背景が偏ると、CIFの解釈が難しくなることを思い出してほしい。この前<code>diabetes.complications</code>でこの表を作ったの、覚えてる？」</p>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="2型糖尿病患者978人の背景因子の表">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
@@ -984,7 +984,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <p>お父さん「うん、これで図表の完成だね。確かにAIは便利だけど、図表を作った責任は人間にある。作業工程を整理するため、あるいは自主点検のために、チェックリストを作ってみた。簡単なものだけど、作業の説明責任や品質責任のために最低限のポイントは押さえてるんじゃないかな。“品質管理”では、典型的な失敗例を4つ挙げておいた。ひとつでも踏むと、図がそれっぽく出ても計算は間違っている。あらかじめ知っておいた方がいい」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-tip callout-titled" title="調整CIFのための実務チェックリスト">
+<div class="callout callout-style-simple callout-note callout-titled" title="調整CIFのための実務チェックリスト">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -995,7 +995,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 <div class="callout-body-container callout-body">
 <section id="推定目標estimand" class="level3">
-<h3 class="anchored" data-anchor-id="推定目標estimand">□推定目標（estimand）</h3>
+<h3 class="anchored" data-anchor-id="推定目標estimand">推定目標（estimand）</h3>
 <ul>
 <li>何を比較する？
 <ul>
@@ -1008,7 +1008,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <hr>
 </section>
 <section id="仮定の宣言" class="level3">
-<h3 class="anchored" data-anchor-id="仮定の宣言">□仮定の宣言</h3>
+<h3 class="anchored" data-anchor-id="仮定の宣言">仮定の宣言</h3>
 <ul>
 <li>DAG（因果構造の表現）
 <ul>
@@ -1023,7 +1023,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <hr>
 </section>
 <section id="データ定義" class="level3">
-<h3 class="anchored" data-anchor-id="データ定義">□データ定義</h3>
+<h3 class="anchored" data-anchor-id="データ定義">データ定義</h3>
 <ul>
 <li>イベント変数・曝露変数のコーディング</li>
 <li>コーディングの臨床的意味の確認</li>
@@ -1034,8 +1034,8 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </ul>
 <hr>
 </section>
-<section id="統計手法の選択" class="level3">
-<h3 class="anchored" data-anchor-id="統計手法の選択">□統計手法の選択</h3>
+<section id="モデルアルゴリズム" class="level3">
+<h3 class="anchored" data-anchor-id="モデルアルゴリズム">モデル・アルゴリズム</h3>
 <ul>
 <li>プロペンシティスコアのモデル
 <ul>
@@ -1053,7 +1053,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <hr>
 </section>
 <section id="診断" class="level3">
-<h3 class="anchored" data-anchor-id="診断">□診断</h3>
+<h3 class="anchored" data-anchor-id="診断">診断</h3>
 <ul>
 <li>オーバーラップ（positivity）
 <ul>
@@ -1070,7 +1070,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <hr>
 </section>
 <section id="推定" class="level3">
-<h3 class="anchored" data-anchor-id="推定">□推定</h3>
+<h3 class="anchored" data-anchor-id="推定">推定</h3>
 <ul>
 <li>未調整CIF（記述）
 <ul>
@@ -1089,7 +1089,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <hr>
 </section>
 <section id="品質管理" class="level3">
-<h3 class="anchored" data-anchor-id="品質管理">□品質管理</h3>
+<h3 class="anchored" data-anchor-id="品質管理">品質管理</h3>
 <ul>
 <li>別実装での再現
 <ul>
@@ -1184,7 +1184,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>
 <li><p><a href="ai-r-1.html">Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses</a></p></li>
-<li><p><a href="ai-r-2.html">An R Demonstration of Bias in Kaplan-Meier Under Competing Risks</a></p></li>
+<li><p><a href="ai-r-2.html">R Demonstration of Bias in Kaplan-Meier Under Competing Risks</a></p></li>
 <li><p><a href="ai-r-3.html">Unadjusted vs Adjusted Cumulative Incidence Curves with AI &amp; R</a></p></li>
 </ul>
 <p><strong>生存時間解析・競合リスク解析入門</strong></p>
