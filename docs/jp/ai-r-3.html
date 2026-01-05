@@ -600,7 +600,7 @@ CBPSの重みの計算
 <ul>
 <li><p><code>formula</code>: 左辺に曝露変数、右辺に調整変数を含むモデル式</p></li>
 <li><p><code>method</code>: 重みを計算する方法を指定する。デフォルトの<code>glm</code>は一般化線型モデル・最尤法を用いる。<code>cbps</code>は一般化モーメント法を用いて共変量バランスを最適化する</p></li>
-<li><p><code>estimand</code>: 推定目標を指定する。デフォルトは<code>ATE</code>であり、<code>ATT</code>、<code>ATC</code>、<code>ATO</code>、<code>ATOS</code>が選択可能。</p></li>
+<li><p><code>estimand</code>: 推定目標を指定する。デフォルトは<code>ATE</code>であり、<code>ATT</code>、<code>ATC</code>、<code>ATO</code>、<code>ATOS</code>が選択可能</p></li>
 </ul>
 </div>
 </div>
@@ -794,20 +794,20 @@ Adjusted    690.37  208.59</code></pre>
 <p>お父さん「競合リスクの起きたタイミングは、打ち切りと同じように曲線にマーキングするといい。<code>add.competing.risk.mark=TRUE</code>を指定する。横軸と縦軸のラベルも変えておこう」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="累積発生曲線の生成">
+<div class="callout callout-style-simple callout-note callout-titled" title="調整前のCIFの生成">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-累積発生曲線の生成
+調整前のCIFの生成
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">デフォルト設定の累積発生曲線</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">競合リスクをマーキングした累積発生曲線</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">cifmodeing::cifplot()</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-4" role="tab" aria-controls="tabset-5-4" aria-selected="false">競合リスクデータの入力</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">デフォルト設定のCIF</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">競合リスクをマーキングしたCIF</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">cifmodeing::cifplot()</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-4" role="tab" aria-controls="tabset-5-4" aria-selected="false">競合リスクデータの入力</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell">
@@ -837,7 +837,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 <div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
-<p>内部で<code>ggsurvfit()</code>を用いることで生存曲線や累積発生曲線をプロットします。</p>
+<p>内部で<code>ggsurvfit()</code>を用いることで生存曲線やCIFをプロットします。</p>
 <ul>
 <li><code>formula</code>: 左辺に時間変数・イベント変数、右辺に共変量を含むモデル式。時間変数・イベント変数の入力には<code>Event()</code>または<code>Surv()</code>を用います</li>
 <li><code>outcome.type</code>: Kaplan-Meier法を用いる場合”survival”を指定し、Aalen-Johansen法を用いる場合”competing-risk”を指定します</li>
@@ -883,13 +883,13 @@ Adjusted    690.37  208.59</code></pre>
 <p>お父さん「この2グループは、それぞれ”もともとの集団全体が、high intakeだったときの集団”と”もともとの集団全体がlow intakeだったときの集団”っていうふうに解釈する。もともとの集団ではなく、どちらも仮想的な集団だ。果物摂取量が高いときのアウトカムと、低いときのアウトカムの差が、因果効果なんだ。じゃあ調整CIFを見てみよう」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="調整CIFのRコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="調整後のCIFの生成">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-調整CIFのRコードと結果はこちら
+調整後のCIFの生成
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -930,13 +930,13 @@ Adjusted    690.37  208.59</code></pre>
 <p>お父さん「これで最後の作業だ。CIFのバリデーションをしよう。この場合は、<code>survfit()</code>でもCIFの推定値と標準誤差が計算できる。<code>survfit()</code>の推定値は<code>$pstate</code>っていうオブジェクトに入っている。<code>cifplot()</code>の推定値が欲しければ、計算ルーチンの<code>cifcurve()</code>を実行して、<code>1-$surv</code>を求めればいい。まったく同じ値になるはずだ。標準誤差は<code>$std.err</code>っていうオブジェクトなんだけど、別の計算方法を使っているから近い値になるかを見る。まずは調整なしの結果を比較しよう」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="cifcurve()とsurvfit()を比較するためのRコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="別実装による検証（重みなし）">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
+別実装による検証（重みなし）
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -988,13 +988,13 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <p>お父さん「やってみよう」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="調整CIFを比較するためのRコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="別実装による検証（重みあり）">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-調整CIFを比較するためのRコードと結果はこちら
+別実装による検証（重みあり）
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1147,7 +1147,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 <section id="品質管理" class="level3">
 <h3 class="anchored" data-anchor-id="品質管理">品質管理</h3>
 <ul>
-<li>別実装での再現
+<li>別実装による検証
 <ul>
 <li><code>gtsummary::tbl_summary()</code> / <code>tableone::CreateTableOne()</code></li>
 <li><code>cifmodeling::cifplot()</code> / <code>survival::survfit()</code></li>

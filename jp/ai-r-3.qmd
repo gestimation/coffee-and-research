@@ -261,7 +261,7 @@ quantile(dat$ip.weight, probs = c(0, .01, .05, .5, .95, .99, 1))
 
 - `method`: 重みを計算する方法を指定する。デフォルトの`glm`は一般化線型モデル・最尤法を用いる。`cbps`は一般化モーメント法を用いて共変量バランスを最適化する
 
-- `estimand`: 推定目標を指定する。デフォルトは`ATE`であり、`ATT`、`ATC`、`ATO`、`ATOS`が選択可能。
+- `estimand`: 推定目標を指定する。デフォルトは`ATE`であり、`ATT`、`ATC`、`ATO`、`ATOS`が選択可能
 :::
 :::
 
@@ -383,16 +383,16 @@ love.plot(
 ::::::::::::::::::::::::::::::::: 
 
 
-::: {.callout-note appearance="simple" collapse="true" title="累積発生曲線の生成"}
+::: {.callout-note appearance="simple" collapse="true" title="調整前のCIFの生成"}
 ::: {.panel-tabset}
 
-## デフォルト設定の累積発生曲線
+## デフォルト設定のCIF
 
 ```{r warning=FALSE}
 cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", code.event1 = 1, code.event2 = 2)
 ```
 
-## 競合リスクをマーキングした累積発生曲線
+## 競合リスクをマーキングしたCIF
 
 ```{r warning=FALSE}
 cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", 
@@ -403,7 +403,7 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk",
 
 ## cifmodeing::cifplot()
 
-内部で`ggsurvfit()`を用いることで生存曲線や累積発生曲線をプロットします。
+内部で`ggsurvfit()`を用いることで生存曲線やCIFをプロットします。
 
 - `formula`: 左辺に時間変数・イベント変数、右辺に共変量を含むモデル式。時間変数・イベント変数の入力には`Event()`または`Surv()`を用います
 - `outcome.type`: Kaplan-Meier法を用いる場合"survival"を指定し、Aalen-Johansen法を用いる場合"competing-risk"を指定します
@@ -454,7 +454,7 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk",
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="調整CIFのRコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="調整後のCIFの生成"}
 ```{r warning=FALSE}
 cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", 
         weights = "ip.weight", add.censor.mark=FALSE,
@@ -484,7 +484,7 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk",
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="cifcurve()とsurvfit()を比較するためのRコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="別実装による検証（重みなし）"}
 ```{r warning=FALSE}
 # install.packages("survival") # if needed
 library(survival)
@@ -509,7 +509,7 @@ print(compare_unweighted)
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="調整CIFを比較するためのRコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="別実装による検証（重みあり）"}
 ```{r warning=FALSE}
 compare_weighted <- compare(data=dat, weights="ip.weight", limit.x=20)
 print(compare_weighted)
@@ -526,7 +526,7 @@ print(compare_weighted)
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="調整CIFのための実務チェックリスト"}
+::: {.callout-note appearance="simple" collapse="true" title="競合リスク解析の実務チェックリスト"}
 
 ### 推定目標（estimand）
 - 何を比較する？  
@@ -587,7 +587,7 @@ print(compare_weighted)
 ---
 
 ### 品質管理
-- 別実装での再現
+- 別実装による検証
   - `gtsummary::tbl_summary()` / `tableone::CreateTableOne()`
   - `cifmodeling::cifplot()` / `survival::survfit()`
 - 目視チェック
