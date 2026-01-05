@@ -252,7 +252,11 @@ colSums(is.na(dat[, binary_var]))
 `tbl_summary()`を使って曝露変数`exposure_var`で層別した集計表を作って
 ```
 
-::: {.callout-note appearance="simple" collapse="true" title="Table 1のためのRコードはこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="Table 1の作成"}
+::: {.panel-tabset}
+
+## Rコードと結果
+
 ```{r, eval=FALSE}
 # install.packages("gtsummary") #インストールが必要なら実行
 library(gtsummary)
@@ -268,6 +272,32 @@ table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
     )
 print(table1)
 ```
+
+## gtsummary::tbl_summary
+
+要約統計量を計算し表を作成するgtsummaryパッケージの関数です。表はワードファイル等で出力可能です。
+
+- `by`: 要約統計量を個別計算する変数名
+
+- `digit`: 要約統計量を丸める小数点以下の桁数を指定する数式のリスト
+
+- `statistic`: 表示する要約統計量を指定
+  - {n} 頻度
+  - {N} 分母
+  - {p} 割合（%）
+  - {median} 中央値
+  - {mean} 平均値
+  - {sd} 標準偏差
+  - {var} 分散
+  - {min} 最小値
+  - {max} 最大値
+  - {sum} 合計
+  - {p##} 任意のパーセンタイル
+  - {N_obs} 観測値の総数
+  - {N_miss} 欠測の観測値数
+  - {N_nonmiss} 非欠測の観測値数
+  - {p_miss} 欠測割合
+  - {p_nonmiss} 非欠測割合
 :::
 
 ![](ai-r-3.png)
@@ -286,7 +316,7 @@ print(table1)
 平均とSDに変更して。全体集計とp値を表す列を追加して。変数名じゃなくてラベルをつけて。桁数も整えて。
 ```
 
-::: {.callout-note appearance="simple" collapse="true" title="Table 1を改良したRコードはこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="Table 1を改良したRコード"}
 ```{r, eval=FALSE}
 table1 <- dat[, c(exposure_var, continuous_var, binary_var)] %>%
     tbl_summary(

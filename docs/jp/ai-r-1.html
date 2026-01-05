@@ -282,7 +282,7 @@ window.Quarto = {
   <li><a href="#ai-r-workflow-i-getting-started-ai-assisted-independently-validated-clinical-research-analyses" id="toc-ai-r-workflow-i-getting-started-ai-assisted-independently-validated-clinical-research-analyses" class="nav-link active" data-scroll-target="#ai-r-workflow-i-getting-started-ai-assisted-independently-validated-clinical-research-analyses">AI &amp; R workflow I − Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses</a>
   <ul class="collapse">
   <li><a href="#もちろんaiつかうよね" id="toc-もちろんaiつかうよね" class="nav-link" data-scroll-target="#もちろんaiつかうよね">もちろんAIつかうよね</a></li>
-  <li><a href="#統計解析の品質管理" id="toc-統計解析の品質管理" class="nav-link" data-scroll-target="#統計解析の品質管理">統計解析の品質管理</a></li>
+  <li><a href="#table-1をつくるためのrワークフロー" id="toc-table-1をつくるためのrワークフロー" class="nav-link" data-scroll-target="#table-1をつくるためのrワークフロー">Table 1をつくるためのRワークフロー</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -415,12 +415,14 @@ window.Quarto = {
 <div class="voice-daughter">
 <p>私「わかった、どれも納得。準備ができてないから今日は練習でいいよね？」</p>
 </div>
+</div>
+</section>
 <section id="table-1をつくるためのrワークフロー" class="level3">
 <h3 class="anchored" data-anchor-id="table-1をつくるためのrワークフロー">Table 1をつくるためのRワークフロー</h3>
+<div class="dialogue">
 <div class="voice-father">
 <p>お父さん「じゃあ解析を始めよう。AIを使ったことないから<strong>cifmodeling</strong>パッケージに入ってる<code>diabetes.complications</code>データでいろいろ試してみたい。このデータは果物摂取量と糖尿病合併症リスクの関係を調べたコホート研究の模擬データだ」</p>
 </div>
-</section>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="データの読み込み">
 <div class="callout-header d-flex align-content-center">
@@ -444,9 +446,11 @@ window.Quarto = {
 <div class="voice-daughter">
 <p>私「読み込めたね。よし」</p>
 </div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>果物摂取量のカテゴリごとに平均年齢を出して</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="dialogue">
 <div class="voice-father">
 <p>お父さん「なにしてるの」</p>
 </div>
@@ -640,18 +644,22 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">tbl_summary()</span><span class="st">`</span>を使って曝露変数<span class="st">`</span><span class="at">exposure_var</span><span class="st">`</span>で層別した集計表を作って</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="Table 1のためのRコードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-simple callout-note callout-titled" title="Table 1の作成">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Table 1のためのRコードはこちら
+Table 1の作成
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Rコードと結果</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">gtsummary::tbl_summary</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gtsummary") #インストールが必要なら実行</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
@@ -668,6 +676,32 @@ Table 1のためのRコードはこちら
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>要約統計量を計算し表を作成するgtsummaryパッケージの関数です。表はワードファイル等で出力可能です。</p>
+<ul>
+<li><p><code>by</code>: 要約統計量を個別計算する変数名</p></li>
+<li><p><code>digit</code>: 要約統計量を丸める小数点以下の桁数を指定する数式のリスト</p></li>
+<li><p><code>statistic</code>: 表示する要約統計量を指定</p>
+<ul>
+<li>{n} 頻度</li>
+<li>{N} 分母</li>
+<li>{p} 割合（%）</li>
+<li>{median} 中央値</li>
+<li>{mean} 平均値</li>
+<li>{sd} 標準偏差</li>
+<li>{var} 分散</li>
+<li>{min} 最小値</li>
+<li>{max} 最大値</li>
+<li>{sum} 合計</li>
+<li>{p##} 任意のパーセンタイル</li>
+<li>{N_obs} 観測値の総数</li>
+<li>{N_miss} 欠測の観測値数</li>
+<li>{N_nonmiss} 非欠測の観測値数</li>
+<li>{p_miss} 欠測割合</li>
+<li>{p_nonmiss} 非欠測割合</li>
+</ul></li>
+</ul>
+</div>
 </div>
 </div>
 <p><img src="ai-r-3.png" class="img-fluid"></p>
@@ -682,17 +716,17 @@ Table 1のためのRコードはこちら
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>平均とSDに変更して。全体集計とp値を表す列を追加して。変数名じゃなくてラベルをつけて。桁数も整えて。</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="Table 1を改良したRコードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-simple callout-note callout-titled" title="Table 1を改良したRコード">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Table 1を改良したRコードはこちら
+Table 1を改良したRコード
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> dat[, <span class="fu">c</span>(exposure_var, continuous_var, binary_var)] <span class="sc">%&gt;%</span></span>
@@ -748,7 +782,6 @@ Table 1を改良したRコードはこちら
 <p>お父さん「そうそう。それであってる。ただし、患者背景のバランスをみるときは、p値より標準化平均差（SMD）を使うことが多いけどね。それともうひとつやることがある」</p>
 </div>
 </div>
-</section>
 <section id="統計解析の品質管理" class="level3">
 <h3 class="anchored" data-anchor-id="統計解析の品質管理">統計解析の品質管理</h3>
 <div class="dialogue">
@@ -759,7 +792,7 @@ Table 1を改良したRコードはこちら
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>この結果が正しいかダブルプログラミングでチェックしたい。別の関数を使って表を作って</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Table 1を検証するためのRコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -768,7 +801,7 @@ Table 1を検証するためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tableone") #インストールが必要なら実行</span></span>
@@ -872,7 +905,7 @@ Attaching package: 'dplyr'</code></pre>
 <li><a href="logistic-regression-4.html">Where My Logistic Regression Went Wrong</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="関連エピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -881,7 +914,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>
@@ -912,6 +945,10 @@ Attaching package: 'dplyr'</code></pre>
 
 
 </section>
+</div>
+</section>
+</div>
+</div>
 </div>
 </section>
 </section>

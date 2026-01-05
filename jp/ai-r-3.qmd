@@ -63,7 +63,7 @@ R packages: cifmodeling, cobalt, dagitty, WeightIt
 :::
 
 ::: voice-father
-お父さん「うんうん。ではまず、`dagitty()`で因果関係を表すグラフ（DAG）を描いておこう。練習だから、このDAGが正しいと仮定して、これに従って解析しよう。調整しなければならない交絡因子も`adjustmentSets()`で出せる」
+お父さん「ではまず、`dagitty()`で因果関係を表すグラフ（DAG）を描いておこう。練習だから、このDAGが正しいと仮定して、これに従って解析しよう。調整しなければならない交絡因子も`adjustmentSets()`で出せる」
 :::
 :::::::::::::::::::::::::::::::::
 
@@ -167,7 +167,7 @@ dagittyオブジェクトとして宣言したDAGが正しいと仮定して、�
 **cifmodeling**に含まれている`diabetes.complications`っていうデータセットを読み込んで。`t`と`epsilon`について集計して"
 ```
 
-::: {.callout-note appearance="simple" collapse="true" title="データを確認するためのRコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="アウトカムデータの確認"}
 
 競合リスク解析では、**関心イベント（ここでは糖尿病網膜症）**と、**それを観測できなくする競合リスク（ここでは大血管合併症）**があるはずですが、競合リスクがほとんど起きていないこともあり得ます。また、エラーが混入を防ぐためには、生存時間変数（特に最小値の符号と最大値のオーダー）を確認することが有効です。
 
@@ -234,7 +234,10 @@ tapply(dat$t, dat$epsilon, summary)
 ```
 
 
-::: {.callout-note appearance="simple" collapse="true" title="CBPSの重みを計算するためのRコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="CBPSの重みの計算"}
+::: {.panel-tabset}
+
+## Rコードと結果
 
 ```{r warning=FALSE}
 continuous_var <- c("age","bmi","hba1c","diabetes_duration","sbp","ldl","hdl","tg","ltpa")
@@ -249,6 +252,17 @@ dat$ip.weight <- out2$weights
 dat$one <- 1
 quantile(dat$ip.weight, probs = c(0, .01, .05, .5, .95, .99, 1))
 ```
+
+## WeightIt::weightit()
+
+交絡調整のための重みを、2値、分類、連続曝露に対して、複数の方法で計算する関数。
+
+- `formula`: 左辺に曝露変数、右辺に調整変数を含むモデル式
+
+- `method`: 重みを計算する方法を指定する。デフォルトの`glm`は一般化線型モデル・最尤法を用いる。`cbps`は一般化モーメント法を用いて共変量バランスを最適化する
+
+- `estimand`: 推定目標を指定する。デフォルトは`ATE`であり、`ATT`、`ATC`、`ATO`、`ATOS`が選択可能。
+:::
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -261,7 +275,7 @@ quantile(dat$ip.weight, probs = c(0, .01, .05, .5, .95, .99, 1))
 
 - 重みを付けた後で共変量バランスがとれているかどうか
 
-::: {.callout-note appearance="simple" collapse="true" title="重みの診断のためのRコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="オーバーラップに基づく重みの診断"}
 ::: {.panel-tabset}
 
 ## オーバーラップ
@@ -273,8 +287,23 @@ quantile(dat$ip.weight, probs = c(0, .01, .05, .5, .95, .99, 1))
 library(cobalt)
 
 out2$covs$ps <- out2$ps
-bal.plot(out2, var.name = "ps", which = "both")  # unadjusted vs adjusted
+bal.plot(out2, var.name = "ps", which = "adjusted")
 ```
+
+## cobalt::bal.plot
+
+`ggplot2`を用いて、治療群と共変量間の分布バランスを表示する密度プロット、棒グラフ、または散布図を生成します。
+
+- `var.name`: 表示する変数名。距離変数が明示的に命名されていない限り、引数として`distance`を使用
+
+- `which`: 調整前の共変量バランスを表示するか（`unadjusted`）、調整後を表示するか（`adjusted`）、両方を同時に表示するか（`both`）を選択する。複数の重み付けがある場合、それらの名称も指定可能
+
+:::
+:::
+
+
+::: {.callout-note appearance="simple" collapse="true" title="共変量バランスに基づく重みの診断"}
+::: {.panel-tabset}
 
 ## 共変量バランス
 
@@ -285,9 +314,8 @@ out3 <- bal.tab(
   exposure.model,
   data    = dat,
   weights = dat$ip.weight,
-  method  = "weighting",
   un      = TRUE,
-  m.threshold = 0.1
+  threshold = 0.2
 )
 out3
 love.plot(
@@ -300,6 +328,13 @@ love.plot(
 )
 ```
 
+## cobalt::bal.tab()
+
+指定した曝露変数について共変量バランスの指標を求めます。これは汎用関数であり、引数のクラスに対応するメソッドが実行されます（たとえば`bal.tab.formula()`）。返り値を`love.plot()`に渡すことで、調整前後の共変量バランスをプロットできます。
+
+- `formula`: 左辺に曝露変数、右辺に調整変数を含むモデル式
+- `weights`: 調整に用いる重み
+- `un`: 調整前の共変量バランスの指標を表示
 
 :::
 :::
@@ -325,19 +360,9 @@ love.plot(
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="競合リスクデータの入力"}
-生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。**survival**パッケージの`survfit()`や`coxph()`では、実は入力専用の関数`Surv()`を用意しています。入力の仕様はパッケージによってまちまちで、たとえば**mets**パッケージでは`Event()`を別に定義して用いています。**cifmodeling**パッケージの`cifplot()`は、`Surv()`と`Event()`の両方に対応しています。
-:::
-
 ```{r eval=FALSE}
 `cifplot()`を使って、累積発生曲線を描いて。`epsilon=1`がイベント、`epsilon=2`が競合リスク。`fruitq1`で層別して"
 ```
-
-::: {.callout-note appearance="simple" collapse="true" title="累積発生曲線（デフォルト）のRコードと結果はこちら"}
-```{r warning=FALSE}
-cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", code.event1 = 1, code.event2 = 2)
-```
-:::
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-daughter
@@ -345,7 +370,7 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", code.
 :::
 
 ::: voice-father
-お父さん「大丈夫。この場合は`code.event1 = 1`と`code.event2 = 2`は省略してもいい。時点ごとの追跡状況は、曲線の下にある**アットリスク数（number at risk）**に示されている。打ち切りが起きたタイミングは**ひげ**で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」
+お父さん「いいよ、でも生成されたコードのうち、`code.event1 = 1`と`code.event2 = 2`はこの場合は省略してもいい。時点ごとの追跡状況は、曲線の下にある**アットリスク数（number at risk）**に示されている。打ち切りが起きたタイミングは**ひげ**で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」
 :::
 
 -   アットリスク数は時点ごとの人数を表す
@@ -357,13 +382,40 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", code.
 :::
 ::::::::::::::::::::::::::::::::: 
 
-::: {.callout-note appearance="simple" collapse="true" title="競合リスクをマーキングしたRコードと結果はこちら"}
+
+::: {.callout-note appearance="simple" collapse="true" title="累積発生曲線の生成"}
+::: {.panel-tabset}
+
+## デフォルト設定の累積発生曲線
+
+```{r warning=FALSE}
+cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", code.event1 = 1, code.event2 = 2)
+```
+
+## 競合リスクをマーキングした累積発生曲線
+
 ```{r warning=FALSE}
 cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk", 
         add.risktable=TRUE, add.censor.mark=FALSE, add.competing.risk.mark=TRUE,
         label.y="CIF of diabetic retinopathy", label.x="Years from registration",
         label.strata=c("High intake","Low intake"), level.strata=c(0, 1), order.strata=c(1, 0))
 ```
+
+## cifmodeing::cifplot()
+
+内部で`ggsurvfit()`を用いることで生存曲線や累積発生曲線をプロットします。
+
+- `formula`: 左辺に時間変数・イベント変数、右辺に共変量を含むモデル式。時間変数・イベント変数の入力には`Event()`または`Surv()`を用います
+- `outcome.type`: Kaplan-Meier法を用いる場合"survival"を指定し、Aalen-Johansen法を用いる場合"competing-risk"を指定します
+- `add.risktable`: アットリスク数を表示
+- `add.censor.mark`: 打ち切りのマーキングを表示
+- `add.competing.risk.mark`: 競合リスクのマーキングを表示
+
+## 競合リスクデータの入力
+
+生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。**survival**パッケージの`survfit()`や`coxph()`では、実は入力専用の関数`Surv()`を用意しています。入力の仕様はパッケージによってまちまちで、たとえば**mets**パッケージでは`Event()`を別に定義して用いています。**cifmodeling**パッケージの`cifplot()`は、`Surv()`と`Event()`の両方に対応しています。
+
+:::
 :::
 
 ### 因果効果の推定

@@ -351,7 +351,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <p>私「い、いいとも！」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「うんうん。ではまず、<code>dagitty()</code>で因果関係を表すグラフ（DAG）を描いておこう。練習だから、このDAGが正しいと仮定して、これに従って解析しよう。調整しなければならない交絡因子も<code>adjustmentSets()</code>で出せる」</p>
+<p>お父さん「ではまず、<code>dagitty()</code>で因果関係を表すグラフ（DAG）を描いておこう。練習だから、このDAGが正しいと仮定して、これに従って解析しよう。調整しなければならない交絡因子も<code>adjustmentSets()</code>で出せる」</p>
 </div>
 </div>
 <div class="cell">
@@ -472,13 +472,13 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">**</span>cifmodeling<span class="sc">**</span>に含まれている<span class="st">`</span><span class="at">diabetes.complications</span><span class="st">`</span>っていうデータセットを読み込んで。<span class="st">`</span><span class="at">t</span><span class="st">`</span>と<span class="st">`</span><span class="at">epsilon</span><span class="st">`</span>について集計して<span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="データを確認するためのRコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="アウトカムデータの確認">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-データを確認するためのRコードと結果はこちら
+アウトカムデータの確認
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -561,18 +561,22 @@ $`2`
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">weightit()</span><span class="st">`</span>を使ってCBPSの重みを計算して。変数はさっきの<span class="st">`</span><span class="at">dagitty()</span><span class="st">`</span>と同じものを使って</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="CBPSの重みを計算するためのRコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="CBPSの重みの計算">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-CBPSの重みを計算するためのRコードと結果はこちら
+CBPSの重みの計算
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Rコードと結果</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">WeightIt::weightit()</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>continuous_var <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"age"</span>,<span class="st">"bmi"</span>,<span class="st">"hba1c"</span>,<span class="st">"diabetes_duration"</span>,<span class="st">"sbp"</span>,<span class="st">"ldl"</span>,<span class="st">"hdl"</span>,<span class="st">"tg"</span>,<span class="st">"ltpa"</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>binary_var <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"sex"</span>,<span class="st">"drug_oha"</span>,<span class="st">"drug_insulin"</span>,<span class="st">"current_smoker"</span>,<span class="st">"alcohol_drinker"</span>)</span>
@@ -591,6 +595,17 @@ CBPSの重みを計算するためのRコードと結果はこちら
 </div>
 </div>
 </div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>交絡調整のための重みを、2値、分類、連続曝露に対して、複数の方法で計算する関数。</p>
+<ul>
+<li><p><code>formula</code>: 左辺に曝露変数、右辺に調整変数を含むモデル式</p></li>
+<li><p><code>method</code>: 重みを計算する方法を指定する。デフォルトの<code>glm</code>は一般化線型モデル・最尤法を用いる。<code>cbps</code>は一般化モーメント法を用いて共変量バランスを最適化する</p></li>
+<li><p><code>estimand</code>: 推定目標を指定する。デフォルトは<code>ATE</code>であり、<code>ATT</code>、<code>ATC</code>、<code>ATO</code>、<code>ATOS</code>が選択可能。</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="dialogue">
@@ -602,22 +617,22 @@ CBPSの重みを計算するためのRコードと結果はこちら
 <li><p>オーバーラップの仮定が満たされているかどうか</p></li>
 <li><p>重みを付けた後で共変量バランスがとれているかどうか</p></li>
 </ul>
-<div class="callout callout-style-simple callout-note callout-titled" title="重みの診断のためのRコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="オーバーラップに基づく重みの診断">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-重みの診断のためのRコードと結果はこちら
+オーバーラップに基づく重みの診断
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">オーバーラップ</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">共変量バランス</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">オーバーラップ</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">cobalt::bal.plot</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <p>プロペンシティスコアを用いた交絡調整では、<strong>オーバーラップ</strong>と<strong>未測定の交絡因子はない</strong>という仮定が満たされる必要があります。以下のRコードでは、<strong>cobalt</strong>パッケージの<code>bal.plot()</code>を用いて、果物摂取ごと（0は”High intake”、1は”Low intake”）のプロペンシティスコアのグラフを描いています。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("cobalt") # if needed</span></span>
@@ -626,7 +641,7 @@ CBPSの重みを計算するためのRコードと結果はこちら
 <pre><code> cobalt (Version 4.6.1, Build Date: 2025-08-20)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>out2<span class="sc">$</span>covs<span class="sc">$</span>ps <span class="ot">&lt;-</span> out2<span class="sc">$</span>ps</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bal.plot</span>(out2, <span class="at">var.name =</span> <span class="st">"ps"</span>, <span class="at">which =</span> <span class="st">"both"</span>)  <span class="co"># unadjusted vs adjusted</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bal.plot</span>(out2, <span class="at">var.name =</span> <span class="st">"ps"</span>, <span class="at">which =</span> <span class="st">"adjusted"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Ignoring unknown labels:
 • colour : "Treatment"</code></pre>
@@ -640,17 +655,43 @@ CBPSの重みを計算するためのRコードと結果はこちら
 </div>
 </div>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p><code>ggplot2</code>を用いて、治療群と共変量間の分布バランスを表示する密度プロット、棒グラフ、または散布図を生成します。</p>
+<ul>
+<li><p><code>var.name</code>: 表示する変数名。距離変数が明示的に命名されていない限り、引数として<code>distance</code>を使用</p></li>
+<li><p><code>which</code>: 調整前の共変量バランスを表示するか（<code>unadjusted</code>）、調整後を表示するか（<code>adjusted</code>）、両方を同時に表示するか（<code>both</code>）を選択する。複数の重み付けがある場合、それらの名称も指定可能</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="共変量バランスに基づく重みの診断">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+共変量バランスに基づく重みの診断
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">共変量バランス</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">cobalt::bal.tab()</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p>オーバーラップとは違い、未測定の交絡因子が残っているかどうかは、データから確認することはできません。そこで、DAGで宣言した因果構造が正しいという前提にして、測定された患者背景因子のバランスがとれているかを確認します。プロペンシティスコアを用いた論文の多くで、調整前後の共変量の集計表（<code>bal.tab()</code>）と標準平均差のプロット（<code>love.plot()</code>）が報告されています。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">bal.tab</span>(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  exposure.model,</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> dat,</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> dat<span class="sc">$</span>ip.weight,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method  =</span> <span class="st">"weighting"</span>,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">un      =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">m.threshold =</span> <span class="fl">0.1</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">un      =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">threshold =</span> <span class="fl">0.2</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Note: `s.d.denom` not specified; assuming "pooled".</code></pre>
 </div>
@@ -658,29 +699,29 @@ CBPSの重みを計算するためのRコードと結果はこちら
 <div class="cell-output cell-output-stdout">
 <pre><code>Balance Measures
                      Type Diff.Un Diff.Adj    M.Threshold
-age               Contin. -0.2540       -0 Balanced, &lt;0.1
-bmi               Contin.  0.0798        0 Balanced, &lt;0.1
-hba1c             Contin. -0.0528       -0 Balanced, &lt;0.1
-diabetes_duration Contin. -0.1110       -0 Balanced, &lt;0.1
-sbp               Contin.  0.1106        0 Balanced, &lt;0.1
-ldl               Contin. -0.0187        0 Balanced, &lt;0.1
-hdl               Contin. -0.0400       -0 Balanced, &lt;0.1
-tg                Contin. -0.0418       -0 Balanced, &lt;0.1
-ltpa              Contin. -0.1001       -0 Balanced, &lt;0.1
-sex                Binary -0.1980        0 Balanced, &lt;0.1
-drug_oha           Binary  0.0206        0 Balanced, &lt;0.1
-drug_insulin       Binary -0.0210       -0 Balanced, &lt;0.1
-current_smoker     Binary  0.2188       -0 Balanced, &lt;0.1
-alcohol_drinker    Binary  0.0726       -0 Balanced, &lt;0.1
+age               Contin. -0.2540       -0 Balanced, &lt;0.2
+bmi               Contin.  0.0798        0 Balanced, &lt;0.2
+hba1c             Contin. -0.0528       -0 Balanced, &lt;0.2
+diabetes_duration Contin. -0.1110       -0 Balanced, &lt;0.2
+sbp               Contin.  0.1106        0 Balanced, &lt;0.2
+ldl               Contin. -0.0187        0 Balanced, &lt;0.2
+hdl               Contin. -0.0400       -0 Balanced, &lt;0.2
+tg                Contin. -0.0418       -0 Balanced, &lt;0.2
+ltpa              Contin. -0.1001       -0 Balanced, &lt;0.2
+sex                Binary -0.1980        0 Balanced, &lt;0.2
+drug_oha           Binary  0.0206        0 Balanced, &lt;0.2
+drug_insulin       Binary -0.0210       -0 Balanced, &lt;0.2
+current_smoker     Binary  0.2188       -0 Balanced, &lt;0.2
+alcohol_drinker    Binary  0.0726       -0 Balanced, &lt;0.2
 
 Balance tally for mean differences
                    count
-Balanced, &lt;0.1        14
-Not Balanced, &gt;0.1     0
+Balanced, &lt;0.2        14
+Not Balanced, &gt;0.2     0
 
 Variable with the greatest mean difference
  Variable Diff.Adj    M.Threshold
-       tg       -0 Balanced, &lt;0.1
+       tg       -0 Balanced, &lt;0.2
 
 Effective sample sizes
            Control Treated
@@ -704,6 +745,14 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 </div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<p>指定した曝露変数について共変量バランスの指標を求めます。これは汎用関数であり、引数のクラスに対応するメソッドが実行されます（たとえば<code>bal.tab.formula()</code>）。返り値を<code>love.plot()</code>に渡すことで、調整前後の共変量バランスをプロットできます。</p>
+<ul>
+<li><code>formula</code>: 左辺に曝露変数、右辺に調整変数を含むモデル式</li>
+<li><code>weights</code>: 調整に用いる重み</li>
+<li><code>un</code>: 調整前の共変量バランスの指標を表示</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -726,37 +775,41 @@ Adjusted    690.37  208.59</code></pre>
 <p>お父さん「うん、最初は重みなしのただのCIFを確認した方がいい。これは因果効果じゃなくて、イベント、打ち切り、競合リスクの発生状況を把握するためのもの。年齢や喫煙による交絡が残っているからね」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="競合リスクデータの入力">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-競合リスクデータの入力
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。<strong>survival</strong>パッケージの<code>survfit()</code>や<code>coxph()</code>では、実は入力専用の関数<code>Surv()</code>を用意しています。入力の仕様はパッケージによってまちまちで、たとえば<strong>mets</strong>パッケージでは<code>Event()</code>を別に定義して用いています。<strong>cifmodeling</strong>パッケージの<code>cifplot()</code>は、<code>Surv()</code>と<code>Event()</code>の両方に対応しています。</p>
-</div>
-</div>
-</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">cifplot()</span><span class="st">`</span>を使って、累積発生曲線を描いて。<span class="st">`</span><span class="at">epsilon=1</span><span class="st">`</span>がイベント、<span class="st">`</span><span class="at">epsilon=2</span><span class="st">`</span>が競合リスク。<span class="st">`</span><span class="at">fruitq1</span><span class="st">`</span>で層別して<span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="累積発生曲線（デフォルト）のRコードと結果はこちら">
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「これでいいよね」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「いいよ、でも生成されたコードのうち、<code>code.event1 = 1</code>と<code>code.event2 = 2</code>はこの場合は省略してもいい。時点ごとの追跡状況は、曲線の下にある<strong>アットリスク数（number at risk）</strong>に示されている。打ち切りが起きたタイミングは<strong>ひげ</strong>で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」</p>
+</div>
+<ul>
+<li>アットリスク数は時点ごとの人数を表す</li>
+<li>ひげは打ち切りを表す</li>
+<li>登録期間・追跡期間も要確認</li>
+</ul>
+<div class="voice-father">
+<p>お父さん「競合リスクの起きたタイミングは、打ち切りと同じように曲線にマーキングするといい。<code>add.competing.risk.mark=TRUE</code>を指定する。横軸と縦軸のラベルも変えておこう」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="累積発生曲線の生成">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-累積発生曲線（デフォルト）のRコードと結果はこちら
+累積発生曲線の生成
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">デフォルト設定の累積発生曲線</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">競合リスクをマーキングした累積発生曲線</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">cifmodeing::cifplot()</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-4" role="tab" aria-controls="tabset-5-4" aria-selected="false">競合リスクデータの入力</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, <span class="at">code.event1 =</span> <span class="dv">1</span>, <span class="at">code.event2 =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -768,36 +821,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="dialogue">
-<div class="voice-daughter">
-<p>私「これでいいよね」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「大丈夫。この場合は<code>code.event1 = 1</code>と<code>code.event2 = 2</code>は省略してもいい。時点ごとの追跡状況は、曲線の下にある<strong>アットリスク数（number at risk）</strong>に示されている。打ち切りが起きたタイミングは<strong>ひげ</strong>で表される。別途確認した方がいいけど、登録期間・追跡期間も把握しておいた方がいい。なお、この研究の登録期間は1年間、予定追跡期間は8年間だった」</p>
-</div>
-<ul>
-<li>アットリスク数は時点ごとの人数を表す</li>
-<li>ひげは打ち切りを表す</li>
-<li>登録期間・追跡期間も要確認</li>
-</ul>
-<div class="voice-father">
-<p>お父さん「競合リスクの起きたタイミングは、打ち切りと同じように曲線にマーキングするといい。<code>add.competing.risk.mark=TRUE</code>を指定する。横軸と縦軸のラベルも変えておこう」</p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled" title="競合リスクをマーキングしたRコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-競合リスクをマーキングしたRコードと結果はこちら
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">add.risktable=</span><span class="cn">TRUE</span>, <span class="at">add.censor.mark=</span><span class="cn">FALSE</span>, <span class="at">add.competing.risk.mark=</span><span class="cn">TRUE</span>,</span>
@@ -808,6 +832,22 @@ Adjusted    690.37  208.59</code></pre>
 <figure class="figure">
 <p><img src="ai-r-3_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<p>内部で<code>ggsurvfit()</code>を用いることで生存曲線や累積発生曲線をプロットします。</p>
+<ul>
+<li><code>formula</code>: 左辺に時間変数・イベント変数、右辺に共変量を含むモデル式。時間変数・イベント変数の入力には<code>Event()</code>または<code>Surv()</code>を用います</li>
+<li><code>outcome.type</code>: Kaplan-Meier法を用いる場合”survival”を指定し、Aalen-Johansen法を用いる場合”competing-risk”を指定します</li>
+<li><code>add.risktable</code>: アットリスク数を表示</li>
+<li><code>add.censor.mark</code>: 打ち切りのマーキングを表示</li>
+<li><code>add.competing.risk.mark</code>: 競合リスクのマーキングを表示</li>
+</ul>
+</div>
+<div id="tabset-5-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-4-tab">
+<p>生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。<strong>survival</strong>パッケージの<code>survfit()</code>や<code>coxph()</code>では、実は入力専用の関数<code>Surv()</code>を用意しています。入力の仕様はパッケージによってまちまちで、たとえば<strong>mets</strong>パッケージでは<code>Event()</code>を別に定義して用いています。<strong>cifmodeling</strong>パッケージの<code>cifplot()</code>は、<code>Surv()</code>と<code>Event()</code>の両方に対応しています。</p>
 </div>
 </div>
 </div>
@@ -844,7 +884,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="調整CIFのRコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -853,7 +893,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, </span>
@@ -891,7 +931,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="cifcurve()とsurvfit()を比較するためのRコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -900,7 +940,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("survival") # if needed</span></span>
@@ -949,7 +989,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="調整CIFを比較するためのRコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -958,7 +998,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>compare_weighted <span class="ot">&lt;-</span> <span class="fu">compare</span>(<span class="at">data=</span>dat, <span class="at">weights=</span><span class="st">"ip.weight"</span>, <span class="at">limit.x=</span><span class="dv">20</span>)</span>
@@ -999,7 +1039,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="調整CIFのための実務チェックリスト">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1008,7 +1048,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <section id="推定目標estimand" class="level3">
 <h3 class="anchored" data-anchor-id="推定目標estimand">推定目標（estimand）</h3>
@@ -1149,7 +1189,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1158,7 +1198,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は3です</strong></li>
@@ -1190,7 +1230,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </ul>
 <p>どのエピソードも独立しているので、興味の向くレイヤーを選んでも構いません。</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="関連エピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1199,7 +1239,7 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>
