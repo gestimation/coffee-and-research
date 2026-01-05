@@ -582,18 +582,22 @@ CBPSの重みを計算するためのRコードと結果はこちら
 <li><p>オーバーラップの仮定が満たされているかどうか</p></li>
 <li><p>重みを付けた後で共変量バランスがとれているかどうか</p></li>
 </ul>
-<div class="callout callout-style-simple callout-note callout-titled" title="オーバーラップを確認するためのRコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="重みの診断のためのRコードと結果はこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-オーバーラップを確認するためのRコードと結果はこちら
+重みの診断のためのRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">オーバーラップ</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">共変量バランス</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>プロペンシティスコアを用いた交絡調整では、<strong>オーバーラップ</strong>と<strong>未測定の交絡因子はない</strong>という仮定が満たされる必要があります。以下のRコードでは、<strong>cobalt</strong>パッケージの<code>bal.plot()</code>を用いて、果物摂取ごと（0は”High intake”、1は”Low intake”）のプロペンシティスコアのグラフを描いています。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("cobalt") # if needed</span></span>
@@ -616,20 +620,7 @@ CBPSの重みを計算するためのRコードと結果はこちら
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled" title="共変量バランスを確認するためのRコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-共変量バランスを確認するためのRコードと結果はこちら
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>オーバーラップとは違い、未測定の交絡因子が残っているかどうかは、データから確認することはできません。そこで、DAGで宣言した因果構造が正しいという前提にして、測定された患者背景因子のバランスがとれているかを確認します。プロペンシティスコアを用いた論文の多くで、調整前後の共変量の集計表（<code>bal.tab()</code>）と標準平均差のプロット（<code>love.plot()</code>）が報告されています。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">bal.tab</span>(</span>
@@ -695,6 +686,9 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
 <div class="dialogue">
 <div class="voice-daughter">
 <p>私「ラブプロットで赤い点（調整前）が散らばってたのに、青い点（調整後）が0に寄った。これで交絡調整できたってこと？」</p>
@@ -713,7 +707,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="競合リスクデータの入力">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -722,16 +716,9 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">A</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">B</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。<strong>survival</strong>パッケージの<code>survfit()</code>や<code>coxph()</code>では、実は入力専用の関数<code>Surv()</code>を用意しています。入力の仕様はパッケージによってまちまちで、たとえば<strong>mets</strong>パッケージでは<code>Event()</code>を別に定義して用いています。<strong>cifmodeling</strong>パッケージの<code>cifplot()</code>は、<code>Surv()</code>と<code>Event()</code>の両方に対応しています。</p>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>LLL</p>
 </div>
 </div>
 </div>
@@ -807,6 +794,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 </div>
+</section>
 <section id="因果効果の推定" class="level3">
 <h3 class="anchored" data-anchor-id="因果効果の推定">因果効果の推定</h3>
 <div class="dialogue">
@@ -1221,10 +1209,6 @@ cifcurve()とsurvfit()を比較するためのRコードと結果はこちら
 </div>
 
 
-</section>
-</div>
-</div>
-</div>
 </section>
 </div>
 </section>

@@ -239,7 +239,10 @@ quantile(dat$ip.weight, probs = c(0, .01, .05, .5, .95, .99, 1))
 
 - 重みを付けた後で共変量バランスがとれているかどうか
 
-::: {.callout-note appearance="simple" collapse="true" title="オーバーラップを確認するためのRコードと結果はこちら"}
+::: {.callout-note appearance="simple" collapse="true" title="重みの診断のためのRコードと結果はこちら"}
+::: {.panel-tabset}
+
+## オーバーラップ
 
 プロペンシティスコアを用いた交絡調整では、**オーバーラップ**と**未測定の交絡因子はない**という仮定が満たされる必要があります。以下のRコードでは、**cobalt**パッケージの`bal.plot()`を用いて、果物摂取ごと（0は"High intake"、1は"Low intake"）のプロペンシティスコアのグラフを描いています。
 
@@ -250,9 +253,8 @@ library(cobalt)
 out2$covs$ps <- out2$ps
 bal.plot(out2, var.name = "ps", which = "both")  # unadjusted vs adjusted
 ```
-:::
 
-::: {.callout-note appearance="simple" collapse="true" title="共変量バランスを確認するためのRコードと結果はこちら"}
+## 共変量バランス
 
 オーバーラップとは違い、未測定の交絡因子が残っているかどうかは、データから確認することはできません。そこで、DAGで宣言した因果構造が正しいという前提にして、測定された患者背景因子のバランスがとれているかを確認します。プロペンシティスコアを用いた論文の多くで、調整前後の共変量の集計表（`bal.tab()`）と標準平均差のプロット（`love.plot()`）が報告されています。
 
@@ -275,6 +277,9 @@ love.plot(
   var.order  = "unadjusted"
 )
 ```
+
+
+:::
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -299,15 +304,7 @@ love.plot(
 ::::::::::::::::::::::::::::::::: 
 
 ::: {.callout-note appearance="simple" collapse="true" title="競合リスクデータの入力"}
-::: {.panel-tabset}
-
-## A
-
 生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。**survival**パッケージの`survfit()`や`coxph()`では、実は入力専用の関数`Surv()`を用意しています。入力の仕様はパッケージによってまちまちで、たとえば**mets**パッケージでは`Event()`を別に定義して用いています。**cifmodeling**パッケージの`cifplot()`は、`Surv()`と`Event()`の両方に対応しています。
-
-## B
-
-LLL
 :::
 
 ```{r eval=FALSE}
