@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="理論で語られるバイアスは、Rのシミュレーションで確かめられます。Kaplan-Meierの挙動を確認するcoffee-chat guide。Rに不慣れな方も、スクリプトを流すだけですので結果を再現してみてください。">
+<meta name="description" content="95%信頼区間の「95%」は、何を意味しているのでしょうか。仮想的反復をRで体験するcoffee-chat guide。娘が感じた信頼区間の感覚を再現してみてください。">
 
-<title>R Demonstration of Bias in Kaplan-Meier Under Competing Risks – Coffee and Research</title>
+<title>Understanding Confidence Intervals via Hypothetical Replications in R – Coffee and Research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -149,6 +149,35 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 <link rel="canonical" href="https://gestimation.github.io/coffee-and-research/jp/frequentist-4.html">
@@ -249,9 +278,11 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#frequentist-experiments-i-r-demonstration-of-bias-in-kaplan-meier-under-competing-risks" id="toc-frequentist-experiments-i-r-demonstration-of-bias-in-kaplan-meier-under-competing-risks" class="nav-link active" data-scroll-target="#frequentist-experiments-i-r-demonstration-of-bias-in-kaplan-meier-under-competing-risks">Frequentist Experiments I − R Demonstration of Bias in Kaplan-Meier Under Competing Risks</a>
+  <li><a href="#frequentist-experiments-i-understanding-confidence-intervals-via-hypothetical-replications-in-r" id="toc-frequentist-experiments-i-understanding-confidence-intervals-via-hypothetical-replications-in-r" class="nav-link active" data-scroll-target="#frequentist-experiments-i-understanding-confidence-intervals-via-hypothetical-replications-in-r">Frequentist Experiments I − Understanding Confidence Intervals via Hypothetical Replications in R</a>
   <ul class="collapse">
-  <li><a href="#モデルを立ててバイアスを確かめる" id="toc-モデルを立ててバイアスを確かめる" class="nav-link" data-scroll-target="#モデルを立ててバイアスを確かめる">モデルを立ててバイアスを確かめる</a></li>
+  <li><a href="#お父さんその95信頼区間って本当に95なの" id="toc-お父さんその95信頼区間って本当に95なの" class="nav-link" data-scroll-target="#お父さんその95信頼区間って本当に95なの">お父さん、その95%信頼区間って本当に95%なの？</a></li>
+  <li><a href="#信頼区間アプローチによるサンプルサイズ設計" id="toc-信頼区間アプローチによるサンプルサイズ設計" class="nav-link" data-scroll-target="#信頼区間アプローチによるサンプルサイズ設計">信頼区間アプローチによるサンプルサイズ設計</a></li>
+  <li><a href="#文献" id="toc-文献" class="nav-link" data-scroll-target="#文献">文献</a></li>
   <li><a href="#次のエピソードとrスクリプト" id="toc-次のエピソードとrスクリプト" class="nav-link" data-scroll-target="#次のエピソードとrスクリプト">次のエピソードとRスクリプト</a></li>
   </ul></li>
   </ul>
@@ -262,12 +293,12 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R Demonstration of Bias in Kaplan-Meier Under Competing Risks</h1>
+<h1 class="title">Understanding Confidence Intervals via Hypothetical Replications in R</h1>
 </div>
 
 <div>
   <div class="description">
-    理論で語られるバイアスは、Rのシミュレーションで確かめられます。Kaplan-Meierの挙動を確認するcoffee-chat guide。Rに不慣れな方も、スクリプトを流すだけですので結果を再現してみてください。
+    95%信頼区間の「95%」は、何を意味しているのでしょうか。仮想的反復をRで体験するcoffee-chat guide。娘が感じた信頼区間の感覚を再現してみてください。
   </div>
 </div>
 
@@ -287,71 +318,72 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <div class="hero-header">
 <p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
 </div>
-<section id="frequentist-experiments-i-r-demonstration-of-bias-in-kaplan-meier-under-competing-risks" class="level1">
-<h1>Frequentist Experiments I − R Demonstration of Bias in Kaplan-Meier Under Competing Risks</h1>
+<section id="frequentist-experiments-i-understanding-confidence-intervals-via-hypothetical-replications-in-r" class="level1">
+<h1>Frequentist Experiments I − Understanding Confidence Intervals via Hypothetical Replications in R</h1>
 <div class="serif-block text-right">
-<p>Keywords: bias, probability model, simulation, survival &amp; competing risks</p>
+<p>Keywords: probability model, simulation, study design, survival &amp; competing risks</p>
 </div>
 <hr>
-<section id="モデルを立ててバイアスを確かめる" class="level3">
-<h3 class="anchored" data-anchor-id="モデルを立ててバイアスを確かめる">モデルを立ててバイアスを確かめる</h3>
+<section id="お父さんその95信頼区間って本当に95なの" class="level3">
+<h3 class="anchored" data-anchor-id="お父さんその95信頼区間って本当に95なの">お父さん、その95%信頼区間って本当に95%なの？</h3>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>私「おはよう、今朝は冷えるね。ご飯食べてるところ悪いんだけど、ちょっと気になったことがあって。以前、統計学にはランダム誤差とバイアスがあるっていってたよね、覚えてる？あ、コーヒーもらっていい？」</p>
+<p>私「おはよう、今朝は冷えるね。お食事中、ちょっといいかな、ひとつ聞きたいと思っていたことがあって。<strong>95%信頼区間（confidence interval）</strong>ってあるじゃない？あ、コーヒーもらっていい？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「覚えてるよ。コーヒーもどうぞ、まだ冷めてないと思う」</p>
+<p>お父さん「どうぞ、まだ冷めてないと思う。信頼区間がどうしたの？」</p>
 </div>
 <div class="voice-daughter">
-<p>私「バイアスって疫学で習うものだよね。統計学の本を読んでもバイアスなんて出てこないよ」</p>
+<p>私「みんな当たり前のように95%っていうけど、ほんとに95%も当たってるの？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そうだね、不偏推定量（unbiased estimator）っていう概念があるんだけど、数理統計学の話だから目にしないと思う」</p>
+<p>お父さん「ん？そりゃ当たってるよ。仮定した確率モデルが正しければね」</p>
 </div>
 <div class="voice-daughter">
-<p>私「そうなんだ。でも聞いた感じ、疫学のバイアスとは別でしょ？データを解析した結果とどういう関係があるの？」</p>
+<p>私「ふーん。シミュレーションもできる？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「ああ、そういうことね。確かに、疫学で出てくる研究実施上のバイアスそのものは、統計学の教科書にあまり登場しないね。でも、推定した結果が真値からずれるっていう意味では同じもの。少し時間ある？カバンの中のパソコン出せる？」</p>
+<p>お父さん「ああ、そういうこと。じゃあハザード比の95%信頼区間の被覆確率（coverage）を出してみようか。Rでね」</p>
 </div>
 <div class="voice-daughter">
-<p>私「え？朝からなにするの？」</p>
+<p>私「coverageって、つまりは実際に100回に95回当たるかどうかってことよね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「統計学ではよく、シミュレーションっていってデータを乱数で発生させて実験するんだ。<strong>Kaplan-Meier曲線を</strong>描くとき、<strong>競合リスク</strong>の扱いによってはバイアスが生じるってことをみせてあげるよ、バイアスがどれくらい困ったことなのか実感ないみたいだから。前に使ったRスクリプトをいじるだけですぐ終わるから」</p>
+<p>お父さん「そう。信頼区間が真値を当てる頻度を、シミュレーションデータで数えるんだ。前提条件を整理しよう。2群比較の生存曲線を比べたいんだよね」</p>
 </div>
 <div class="voice-daughter">
-<p>私「仕方ないな」</p>
+<p>私「ストーマあり群とストーマなし群ね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「パソコンを立ち上げる間に何をするか話そう。まずね、いまから見せるのは”研究の不備”のバイアスじゃなくて、“目標としている値と違う値を統計的に推定してしまう”という現象だよ。競合リスクを含むデータは、こういう仕組みで生まれる」</p>
-</div>
-<ul>
-<li>再発までの時間を発生させる</li>
-<li>死亡までの時間を発生させる（競合リスク）</li>
-<li>打ち切りまでの時間を発生させる</li>
-</ul>
-<div class="voice-father">
-<p>お父さん「実際に観測されるのは、もちろんそのうち一番先に起きたイベント、つまりこの3つの値の最小値をとる」</p>
+<p>お父さん「そうだね、ストーマあり群とストーマなし群のOSを比べよう。真のハザード比は1.5、つまりストーマあり群の方が寿命が1.5倍短い。ハザード比の95%信頼区間は、1000回シミュレーションしたら、1.5を約950回は含んでいるはず」</p>
 </div>
 <div class="voice-daughter">
-<p>私「なるほど、それなら再発より先に死亡したら、再発は観測されないわけだ。当たり前だけど、シミュレーションはこうやるのね」</p>
+<p>私「ん？私、調査は1回しかしないつもりだけど」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「ここで問題になるのが統計手法の選び方なんだ。よく死亡を打ち切りにした解析を見るでしょ。あのKaplan-Meier曲線は、現実世界で再発が生じる確率を過大評価してしまう。これじゃなくて<strong>Aalen-Johansen曲線</strong>を推定すると、正しく再発確率が求められる。ではRでデータを発生させてみよう」</p>
+<p>お父さん「あのね、聞いて。統計家が話している<strong>確率モデル</strong>は、実際にこれから行われる研究そのものじゃないと思った方がいい。たとえるなら”こういう集団から、こういうルールでデータを発生させて”と別世界に指示を出す手紙なんだ。現実と別世界はデータとRとシミュレーションでつながっている。その手紙に書かれたルールに従って別世界の誰かが研究を1000回繰り返す」</p>
+</div>
+<div class="voice-daughter">
+<p>私「ふーん。そこで当たりがでた割合がcoverageね」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そう。以前JCOG9502の話をしたとき、“p値が0.05だったら100回に5回は正しい”っていってたよ。自分の経験だと違って見えるものだけど同じこと。それでね、生存曲線の形は指数分布で決める。途中で追跡できなかった患者は打ち切り扱いになるけど、それも指数分布で発生させる。この設定だと、Cox回帰の仮定はすべて正しい。だから理論的にcoverageは95%になるはず」</p>
+</div>
+<div class="voice-daughter">
+<p>私「じゃあ、その通りになるかどうか、Rで確かめればいいんだね」</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="シミュレーションデータ（再発あり）におけるKaplan-Meier曲線のバイアス">
+<div class="callout callout-style-simple callout-note callout-titled" title="coxph()を用いた95%信頼区間のシミュレーション">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-シミュレーションデータ（再発あり）におけるKaplan-Meier曲線のバイアス
+coxph()を用いた95%信頼区間のシミュレーション
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>以前生成したシミュレーションデータにおける累積再発率（CIR）の解析では、再発の前に死亡した患者（競合リスク）を発生させたことを覚えていますか？競合リスク存在下でKaplan-Meier曲線を用いるとバイアスが生じることは、簡単な実験で確かめることができます。</p>
+<p>ハザード比を推定する方法はいくつかありますが、もっともポピュラーなのは<strong>survival</strong>パッケージの<code>coxph()</code>です。以前のデモで、<code>generate_data(hr1, hr2)</code>を用いて、ストーマの有無やOSのデータを生成しました。今回は同じデータにCox回帰を当てはめ、ストーマあり群とストーマなし群のハザード比を計算してみます。この関数では、死亡ハザード比の真値はhr2という引数で指定できます。</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="generate_data()のコードはこちら（データ生成に使用）">
@@ -416,142 +448,427 @@ generate_data()のコードはこちら（データ生成に使用）
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="累積再発率（CIR）のAalen-Johansen曲線">
-<div class="callout-header d-flex align-content-center">
+<div class="callout callout-style-simple callout-note callout-titled" title="calculate_coverage()のコードはこちら（generate_data()とcoxph()を呼んでシミュレーションを実行）">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-累積再発率（CIR）のAalen-Johansen曲線
+calculate_coverage()のコードはこちら（generate_data()とcoxph()を呼んでシミュレーションを実行）
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Kaplan-Meier曲線とAalen-Johansen曲線は、どちらも<code>cifmodeling</code>パッケージの<code>cifplot()</code>を使って生成できますが、イベントのコーディングを入力する<code>code.event1</code>、<code>code.event2</code>とデータの型を表す<code>outcome.type</code>を、指定する必要があります。<code>generate_data()</code>で生成したシミュレーションデータでは、CIRのイベントは以下のようにコーディングされていました。</p>
-<ul>
-<li><code>status_cir=1</code> : 再発</li>
-<li><code>status_cir=2</code> : 再発を経験しない死亡</li>
-<li><code>status_cir=0</code> : 打ち切り</li>
-</ul>
-<p>以下のRスクリプトでは、最初の<code>cifplot()</code>により、再発（<code>code.event1=1</code>）に関するAalen-Johansen曲線（<code>aj_event1</code>）を出力しています。縦軸は累積発生確率ではなく、1-累積発生確率を選んでいる点にも注意してください（<code>type.y="surv"</code>）。そして次の<code>cifplot()</code>ではイベントを入れ替えて、再発を経験しない死亡（<code>code.event1=1</code>）に関するAalen-Johansen曲線（<code>aj_event2</code>）を出力し、<code>cifpanel()</code>に用いて2つの図を左右に配置したひとつの図を表示しています。左右の累積発生確率の和に注目してください。この図からは、再発の累積発生確率と（再発を経験しない）死亡の累積発生確率の和は、時間が経つにつれ1に近づくが、1を超えることはないことがわかります。仮に打ち切りがなかったとしたら、再発と（再発を経験しない）死亡のどちらか一方しか生じないため、Aalen-Johansen曲線の和が1を超えないのは自然なことです。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>calculate_coverage <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">model=</span><span class="fu">c</span>(<span class="st">"coxph"</span>,<span class="st">"finegray"</span>), n, hr1, hr2, hr_true) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  replications<span class="ot">=</span><span class="dv">1000</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  covered <span class="ot">&lt;-</span> <span class="fu">numeric</span>(replications)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (r <span class="cf">in</span> <span class="fu">seq_len</span>(replications)) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dat <span class="ot">&lt;-</span> <span class="fu">generate_data</span>(n, hr1, hr2)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">identical</span>(model, <span class="st">"coxph"</span>)) {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time_os, status_os) <span class="sc">~</span> stoma, <span class="at">data =</span> dat)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">identical</span>(model, <span class="st">"finegray"</span>)) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      dat<span class="sc">$</span>fstatus_cir <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat<span class="sc">$</span>status_cir,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"censor"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"relapse"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"death"</span>))</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      fgdat <span class="ot">&lt;-</span> <span class="fu">finegray</span>(<span class="fu">Surv</span>(time_cir, fstatus_cir) <span class="sc">~</span> ., <span class="at">data=</span>dat)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fgstart, fgstop, fgstatus) <span class="sc">~</span> stoma, <span class="at">weight=</span>fgwt, <span class="at">cluster=</span>id, <span class="at">data=</span>fgdat)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    confidence_interval <span class="ot">&lt;-</span> <span class="fu">confint</span>(fit)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    covered[r] <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(confidence_interval[<span class="dv">1</span>] <span class="sc">&lt;=</span> <span class="fu">log</span>(hr_true) <span class="sc">&amp;&amp;</span> <span class="fu">log</span>(hr_true) <span class="sc">&lt;=</span> confidence_interval[<span class="dv">2</span>])</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  coverage <span class="ot">&lt;-</span> <span class="fu">mean</span>(covered)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(coverage)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="calculate_coverage()を実行するRコードと結果はこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Rコードと結果はこちら
+calculate_coverage()を実行するRコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github("gestimation/cifmodeling") #インストールが必要なら実行 </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cifmodeling)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">generate_data</span>(<span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>) <span class="co">#再発ハザード比2, 死亡ハザード比1.5のデータ生成</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>aj_event1 <span class="ot">&lt;-</span> <span class="fu">cifplot</span>(<span class="fu">Event</span>(time_cir, status_cir) <span class="sc">~</span> stoma,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome.type =</span> <span class="st">"competing-risk"</span>, </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">type.y       =</span> <span class="st">"surv"</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.y      =</span> <span class="st">"1-Aalen-Johansen"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">code.event1  =</span> <span class="dv">1</span>, </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">code.event2  =</span> <span class="dv">2</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>aj_event2 <span class="ot">&lt;-</span> <span class="fu">cifplot</span>(<span class="fu">Event</span>(time_cir, status_cir) <span class="sc">~</span> stoma,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome.type =</span> <span class="st">"competing-risk"</span>, </span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">type.y       =</span> <span class="st">"risk"</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.y      =</span> <span class="st">"Aalen-Johansen"</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">code.event1  =</span> <span class="dv">2</span>, </span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">code.event2  =</span> <span class="dv">1</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>aj_list <span class="ot">&lt;-</span> <span class="fu">list</span>(aj_event1<span class="sc">$</span>plot, aj_event2<span class="sc">$</span>plot)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>aj_panel <span class="ot">&lt;-</span> <span class="fu">cifpanel</span>(<span class="at">rows.columns.panel =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">plots=</span>aj_list)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(aj_panel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="frequentist-4_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled" title="累積再発率（CIR）のKaplan-Meier曲線">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-累積再発率（CIR）のKaplan-Meier曲線
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>実際の研究では、死亡を打ち切りとして扱った生存時間解析の結果をしばしば目にします。この解析に対応するKaplan-Meier曲線は、以下のようにイベントのコーディングを変更し、<code>outcome.type="survival"</code>を指定することで出力できます。</p>
-<ul>
-<li><code>status_cir1=1</code> : 再発</li>
-<li><code>status_cir1=0</code> : 再発を経験しない死亡/打ち切り</li>
-<li><code>status_cir2=1</code> : 再発を経験しない死亡</li>
-<li><code>status_cir2=0</code> : 再発/打ち切り</li>
-</ul>
-<p>新しく作ったイベント変数<code>status_cir1</code>と<code>status_cir2</code>を用いると、再発のKaplan-Meier曲線と（再発を経験しない）死亡のKaplan-Meier曲線を描くことができます。これらのKaplan-Meier曲線を左右に配置した図を、先ほどのAalen-Johansen曲線の図と比べてみてください。先ほどのAalen-Johansen曲線の和とは違い、Kaplan-Meier曲線の和が1を超えてしまって計算が合わないことが読み取れたでしょうか。</p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Rコードと結果はこちら
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>status_cir1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dat<span class="sc">$</span>status_cir<span class="sc">==</span><span class="dv">1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>km_event1 <span class="ot">&lt;-</span> <span class="fu">cifplot</span>(<span class="fu">Event</span>(time_cir, status_cir1) <span class="sc">~</span> stoma,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome.type =</span> <span class="st">"survival"</span>, </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type.y       =</span> <span class="st">"surv"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.y      =</span> <span class="st">"Kaplan-Meier"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>status_cir2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dat<span class="sc">$</span>status_cir<span class="sc">==</span><span class="dv">2</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>km_event2 <span class="ot">&lt;-</span> <span class="fu">cifplot</span>(<span class="fu">Event</span>(time_cir, status_cir2) <span class="sc">~</span> stoma,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome.type =</span> <span class="st">"survival"</span>, </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">type.y       =</span> <span class="st">"risk"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.y      =</span> <span class="st">"1-Kaplan-Meier"</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>km_list <span class="ot">&lt;-</span> <span class="fu">list</span>(km_event1<span class="sc">$</span>plot, km_event2<span class="sc">$</span>plot)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>km_panel <span class="ot">&lt;-</span> <span class="fu">cifpanel</span>(<span class="at">rows.columns.panel =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">plots=</span>km_list)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(km_panel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="frequentist-4_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("survival") #インストールが必要なら実行</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>coverage_200 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">200</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_200)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.939</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="dialogue">
+<div class="voice-daughter">
+<p>私「だいたいcoverageが95%になるっていうのは確認した。でも結局、95%信頼区間ってどう理解すればいいの？」</p>
+</div>
 <div class="voice-father">
-<p>お父さん「わかった？打ち切りがランダムっていうのがKaplan-Meier曲線の前提条件なんだ。でも”競合イベントを打ち切り扱いにしていいか”は、ランダム打ち切りとは別問題なんだ」</p>
+<p>お父さん「教科書的にいうとね。同じようなデータを何度も集めて、毎回95%信頼区間を作ったとき、“真の値を含む区間”の割合が0.95になるように設計された指標なんだ。これを”in the long run”の性能って言ったりする。でも、概念的に理解するよりも、シミュレーションを行った方がわかりやすいと思って」</p>
 </div>
 <div class="voice-daughter">
-<p>私「なるほどね。再発確率と死亡確率を足して1を超えることはあり得ない、Kaplan-Meier曲線にバイアスが生じていることの証拠だっていいたいのね。確かに、百聞は一見に如かず」</p>
+<p>私「いやわかりにくいだろ。1回の研究で”この区間が当たっている確率が95%“って意味じゃないんだね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そう。このシミュレーションとまったく同じことを、統計学の数式は意味している。つまり、データ発生のアルゴリズムは<strong>確率モデル</strong>っていって、教科書では研究でなにが起きるかを抽象化した数式で書かれているんだ。そして、どんな推定でも使用条件みたいなものがあって、前提にしている確率モデルからずれると、推定値もまた真値からずれる。これは統計手法の誤用でも研究不備でも同じことだけど」</p>
+<p>お父さん「そうだね」</p>
+</div>
+<div class="voice-daughter">
+<p>私「じゃあ、人数が100人だったらどうなるの？人数が減ったら当たりにくくはならないの？」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「設計上は当たりにくくなったりはしないよ。95%信頼区間のcoverageはサンプルサイズによらず95%になるように作ってある。n=100、200、400、800のシミュレーション結果をみてみようか」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="calculate_coverage()を実行するRコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+calculate_coverage()を実行するRコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>coverage_100 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">100</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>coverage_400 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">400</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>coverage_800 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">800</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_100)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.954</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_200)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.939</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_400)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.956</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_800)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.946</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="信頼区間アプローチによるサンプルサイズ設計" class="level3">
+<h3 class="anchored" data-anchor-id="信頼区間アプローチによるサンプルサイズ設計">信頼区間アプローチによるサンプルサイズ設計</h3>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>私「ほんとだ、だいたい95%。じゃあ調査人数は何人でもいいってことだ」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「ん？どういう意味？」</p>
+</div>
+<div class="voice-daughter">
+<p>私「がんサバイバー何人に調査票を送るかってこと。だって信頼区間の性能は人数によらないんでしょ」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「あ、ごめん、誤解があったね。サンプルサイズが小さくなると、coverageは同じでも、信頼区間幅が広くなる。つまり、同じ95%でも、どれくらい曖昧な推定値で我慢しないといけないかが変わるんだ。今のところ、何人に調査するつもりだった？」</p>
+</div>
+<div class="voice-daughter">
+<p>私「100人から調査票戻ってきたら上出来かなって思ってるけど」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「やっぱり必要サンプルサイズは計算してなかったか。がんを手術した後の復職率を推定したいってことでいいの？それなら100人でギリギリだと思う」</p>
+</div>
+<div class="voice-daughter">
+<p>私「いや？前にお父さんにPECOを教えてもらったよね。あれから上司と相談して、ストーマを造設した患者の復職状況を造設しなかった患者と比べることにしたの」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そうなんだ。そうすると計算が違ってくる。100人だと足りないはず」</p>
+</div>
+<div class="voice-daughter">
+<p>私「へ？なんでそんなことわかるのよ。100人に協力してもらうのってたいへんなのよ」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「どれだけサンプルサイズが必要なのかについて、統計学的な根拠に基づいて見積もる方法があるんだよ。この表をみてみて。ある書籍から借りてきたものなんだけど（Machin, et al.&nbsp;2022）」</p>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">割合0.01～0.15</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">割合0.16～0.50</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>表1. 割合の推定において指定した 95%信頼区間幅のため必要なサンプルサイズ</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>割合 <span class="math inline">\(\pi\)</span></th>
+<th style="text-align: right;">0.05</th>
+<th style="text-align: right;">0.10</th>
+<th style="text-align: right;">0.15</th>
+<th style="text-align: right;">0.20</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.01</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td>0.02</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="odd">
+<td>0.03</td>
+<td style="text-align: right;">201</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td>0.04</td>
+<td style="text-align: right;">252</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="odd">
+<td>0.05</td>
+<td style="text-align: right;">304</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td>0.06</td>
+<td style="text-align: right;">356</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td>0.07</td>
+<td style="text-align: right;">407</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td>0.08</td>
+<td style="text-align: right;">458</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr class="odd">
+<td>0.09</td>
+<td style="text-align: right;">508</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="even">
+<td>0.10</td>
+<td style="text-align: right;">554</td>
+<td style="text-align: right;">139</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="odd">
+<td>0.11</td>
+<td style="text-align: right;">604</td>
+<td style="text-align: right;">153</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="even">
+<td>0.12</td>
+<td style="text-align: right;">651</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr class="odd">
+<td>0.13</td>
+<td style="text-align: right;">696</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">44</td>
+</tr>
+<tr class="even">
+<td>0.14</td>
+<td style="text-align: right;">741</td>
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">47</td>
+</tr>
+<tr class="odd">
+<td>0.15</td>
+<td style="text-align: right;">784</td>
+<td style="text-align: right;">196</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">49</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>表1. 割合の推定において指定した 95%信頼区間幅のため必要なサンプルサイズ</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>割合 <span class="math inline">\(\pi\)</span></th>
+<th style="text-align: right;">0.05</th>
+<th style="text-align: right;">0.10</th>
+<th style="text-align: right;">0.15</th>
+<th style="text-align: right;">0.20</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.16</td>
+<td style="text-align: right;">826</td>
+<td style="text-align: right;">206</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">51</td>
+</tr>
+<tr class="even">
+<td>0.17</td>
+<td style="text-align: right;">867</td>
+<td style="text-align: right;">216</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">54</td>
+</tr>
+<tr class="odd">
+<td>0.18</td>
+<td style="text-align: right;">907</td>
+<td style="text-align: right;">226</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">56</td>
+</tr>
+<tr class="even">
+<td>0.19</td>
+<td style="text-align: right;">945</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">58</td>
+</tr>
+<tr class="odd">
+<td>0.20</td>
+<td style="text-align: right;">982</td>
+<td style="text-align: right;">245</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="even">
+<td>0.25</td>
+<td style="text-align: right;">1150</td>
+<td style="text-align: right;">286</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">70</td>
+</tr>
+<tr class="odd">
+<td>0.30</td>
+<td style="text-align: right;">1288</td>
+<td style="text-align: right;">320</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">78</td>
+</tr>
+<tr class="even">
+<td>0.35</td>
+<td style="text-align: right;">1395</td>
+<td style="text-align: right;">347</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">84</td>
+</tr>
+<tr class="odd">
+<td>0.40</td>
+<td style="text-align: right;">1472</td>
+<td style="text-align: right;">366</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">89</td>
+</tr>
+<tr class="even">
+<td>0.45</td>
+<td style="text-align: right;">1518</td>
+<td style="text-align: right;">377</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">92</td>
+</tr>
+<tr class="odd">
+<td>0.50</td>
+<td style="text-align: right;">1533</td>
+<td style="text-align: right;">381</td>
+<td style="text-align: right;">167</td>
+<td style="text-align: right;">93</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="voice-father">
+<p>お父さん「たとえばなんだけどね。復職率を調べたいとするでしょ。そうすると復職率をどれくらい精確に推定できたかを表す指標が、95%信頼区間だよね。仮に復職率が50%だったとしてみよう。そうすると、50%±10%程度の推定精度がほしいよね。ここでいう±の後の数字が、95%信頼区間の幅になるんだ」</p>
+</div>
+<div class="voice-daughter">
+<p>私「ああ、”50%（95%CI 40～60%）”みたいな感じで論文に書くことになるわけだ。40〜60%の場合、95%信頼区間幅は20%ってことね」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そういうこと。表では復職率を<span class="math inline">\(\pi\)</span>という変数で表しているんだけど、”<span class="math inline">\(\pi=0.5\)</span>”と”信頼区間幅0.2”に対応する数字をみて。93って書いてあるでしょ。これが必要サンプルサイズ」</p>
+</div>
+<div class="voice-daughter">
+<p>私「どうだろう。復職率ってもっと高くない？手術したときの年齢にもよるけど、たとえば患者さんが50歳前後だったら、80%はいってほしいなあ」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そうなんだ。そうすると復職率80%は非復職率20%と同じことだから、”<span class="math inline">\(\pi=0.2\)</span>”と”信頼区間幅0.2”のところをみればいい。サンプルサイズは60人」</p>
+</div>
+<div class="voice-daughter">
+<p>私「100人で足りてるじゃん」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「いやいやいや、これは復職率の信頼区間からサンプルサイズを計算したからこうなったんだ。“信頼区間アプローチ”といって、主に探索的研究で使うものなんだよ。別の計算の仕方もある。ストーマ造設ありとなしの復職率を比べるような仮説検証を目指した研究なら、“仮説検定アプローチ”といって、仮説検定の考え方にそってサンプルサイズを計算しないといけない」</p>
+</div>
+<div class="voice-daughter">
+<p>私「そっか、だいたいわかった。私、午後から出かけるから。また今度教えてよ、じゃあね」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="サンプルサイズ設計の2つのアプローチ">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+サンプルサイズ設計の2つのアプローチ
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>研究計画を立てるときには、サンプルサイズを見積もる必要があります。サンプルサイズの計算は大まかにいえば2種類あって、信頼区間アプローチ（たとえば表1）と仮説検定アプローチ（次回）を用いることができます。</p>
+<p>信頼区間アプローチは、調査や探索的研究で用いられます。このアプローチによって割合を推定するために必要なサンプルサイズを求めるとき、次の数値を設定する必要があります。</p>
+<ul>
+<li>割合の真値（復職率など）</li>
+<li>信頼区間幅</li>
+</ul>
+<p>もうひとつの仮説検定アプローチは、臨床試験や仮説検証型の研究に適しています。このアプローチでは、以下の3つの要素が最低でも必要です。</p>
+<ul>
+<li>有意水準（通常5%）</li>
+<li>検出力（通常80～90%）</li>
+<li>検出したい効果サイズ（2群間の生存確率の差やハザード比など）</li>
+</ul>
+<p>サンプルサイズ設計は、βエラーを制御するという意味で、p値と対になる統計手法といえます。</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="このエピソードに関係するクイズです">
@@ -564,12 +881,12 @@ Rコードと結果はこちら
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Kaplan-Meier法による生存曲線の推定が妥当な状況として正しいのは、次のうちどれでしょうか。</p>
+<p>臨床検査の正常範囲の意味として正しいのはどれでしょうか。</p>
 <ol type="1">
-<li>生存時間が正規分布するとき</li>
-<li>打ち切りの理由が疾患の悪化によらないとき</li>
-<li>2群の打ち切り確率に統計学的な有意差がなかったとき</li>
-<li>試験治療群とコントロール群の間で比例ハザード性が成り立つとき</li>
+<li>ある集団からのランダムサンプルにおいて検査値の平均±1.96×標準偏差</li>
+<li>健常人集団における検査値の95%が含まれる範囲</li>
+<li>健常人集団における検査値の平均±1.96×標準誤差</li>
+<li>ある集団からのランダムサンプルにおいて検査値の95%が含まれる範囲</li>
 </ol>
 </div>
 </div>
@@ -588,15 +905,24 @@ Rコードと結果はこちら
 <ul>
 <li><strong>正解は2です</strong></li>
 </ul>
-<p>Kaplan-Meier法では、生存時間が正規分布したり、比例ハザードが成り立ったりする必要はありません（これはそれぞれ<em>t</em>検定とCox回帰の前提条件ですね）。疾患の悪化に伴って、試験の途中で患者が追跡できなくなると、推定された生存曲線にバイアスが生じてしまいます。2群の生存曲線を比べるとき、それぞれの群の打ち切り確率を比較することがあります。有意差があればバイアスがあるといえますが、たとえばサンプルサイズが小さいときは有意差が出ませんから、Kaplan-Meier法が妥当という証拠にはなりません。逆にいうと、打ち切りがランダムに起きていることが、Kaplan-Meier法の基本的な前提条件です。なお、競合イベントを打ち切りとして扱うかどうかは、ランダム打ち切りの条件とは独立に検討すべき問題ですよね。</p>
+<p>標準偏差（SD）と標準誤差（SE）の区別が重要です。前者は「検査値自体が個人間でどのくらいばらつくか」を、後者は「平均の推定がどのくらい精確か」を表しています。そして、「平均±1.96×標準偏差」は、正規分布における「95%が含まれる範囲」に相当しています。</p>
+<p>なお、似て非なる範囲に「平均±1.96×標準誤差」があります。これは「仮想的反復の下で真の平均を95%の割合で包む区間」、すなわち頻度論統計学でいう95%信頼区間に対応します。</p>
 </div>
 </div>
 </div>
 </section>
+<section id="文献" class="level3">
+<h3 class="anchored" data-anchor-id="文献">文献</h3>
+<ul>
+<li><p><a href="https://www.kyoto-up.or.jp/9784814003822.html">Machin D, Campbell MJ, Tan SB, Tan SH. 医学のためのサンプルサイズ設計（原著第4版）. 京都: 京都大学学術出版会; 2022</a></p></li>
+<li><p>Sasako M, Sano T, Yamamoto S, Sairenji M, Arai K, Kinoshita T, Nashimoto A, Hiratsuka M, Japan Clinical Oncology Group (JCOG9502). Left thoracoabdominal approach versus abdominal-transhiatal approach for gastric cancer of the cardia or subcardia: a randomised controlled trial. Lancet Oncol 2006;7(8):644-51</p></li>
+<li><p><a href="https://www.igaku-shoin.co.jp/book/detail/84805">Green J, Benedetti J, Smith A, Crowley J. 米国SWOGに学ぶがん臨床試験の実践 第2版（原書第3版）. 東京: 医学書院; 2013</a></p></li>
+</ul>
+</section>
 <section id="次のエピソードとrスクリプト" class="level3">
 <h3 class="anchored" data-anchor-id="次のエピソードとrスクリプト">次のエピソードとRスクリプト</h3>
 <ul>
-<li><a href="frequentist-5.html">Understanding Confidence Intervals via Hypothetical Replications in R</a></li>
+<li><a href="frequentist-6.html">Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</a></li>
 <li><a href="../from-coffee-chat-to-r/frequentist.R">frequentist.R</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">

@@ -1,10 +1,10 @@
 ---
-title: "R Demonstration of Bias in Kaplan-Meier Under Competing Risks"
-description: "理論で語られるバイアスは、Rのシミュレーションで確かめられます。Kaplan-Meierの挙動を確認するcoffee-chat guide。Rに不慣れな方も、スクリプトを流すだけですので結果を再現してみてください。"
+title: "Understanding Confidence Intervals via Hypothetical Replications in R"
+description: "95%信頼区間の「95%」は、何を意味しているのでしょうか。仮想的反復をRで体験するcoffee-chat guide。娘が感じた信頼区間の感覚を再現してみてください。"
 tags:
-  - Bias
   - Probability model
   - R simulation
+  - Study design
   - Survival & competing risks
 format:
   html:
@@ -15,76 +15,81 @@ format:
 ![](../image/father-daughter.png){.hero-header-img}
 :::
 
-# Frequentist Experiments I − R Demonstration of Bias in Kaplan-Meier Under Competing Risks
+# Frequentist Experiments I − Understanding Confidence Intervals via Hypothetical Replications in R
 
 ::: {.serif-block .text-right}
-Keywords: bias, probability model, simulation, survival & competing risks
+Keywords: probability model, simulation, study design, survival & competing risks
 :::
 
 ------------------------------------------------------------------------
 
-### モデルを立ててバイアスを確かめる
+### お父さん、その95%信頼区間って本当に95%なの？
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-daughter
-私「おはよう、今朝は冷えるね。ご飯食べてるところ悪いんだけど、ちょっと気になったことがあって。以前、統計学にはランダム誤差とバイアスがあるっていってたよね、覚えてる？あ、コーヒーもらっていい？」
+私「おはよう、今朝は冷えるね。お食事中、ちょっといいかな、ひとつ聞きたいと思っていたことがあって。**95%信頼区間（confidence interval）**ってあるじゃない？あ、コーヒーもらっていい？」
 :::
 
 ::: voice-father
-お父さん「覚えてるよ。コーヒーもどうぞ、まだ冷めてないと思う」
+お父さん「どうぞ、まだ冷めてないと思う。信頼区間がどうしたの？」
 :::
 
 ::: voice-daughter
-私「バイアスって疫学で習うものだよね。統計学の本を読んでもバイアスなんて出てこないよ」
+私「みんな当たり前のように95%っていうけど、ほんとに95%も当たってるの？」
 :::
 
 ::: voice-father
-お父さん「そうだね、不偏推定量（unbiased estimator）っていう概念があるんだけど、数理統計学の話だから目にしないと思う」
+お父さん「ん？そりゃ当たってるよ。仮定した確率モデルが正しければね」
 :::
 
 ::: voice-daughter
-私「そうなんだ。でも聞いた感じ、疫学のバイアスとは別でしょ？データを解析した結果とどういう関係があるの？」
+私「ふーん。シミュレーションもできる？」
 :::
 
 ::: voice-father
-お父さん「ああ、そういうことね。確かに、疫学で出てくる研究実施上のバイアスそのものは、統計学の教科書にあまり登場しないね。でも、推定した結果が真値からずれるっていう意味では同じもの。少し時間ある？カバンの中のパソコン出せる？」
+お父さん「ああ、そういうこと。じゃあハザード比の95%信頼区間の被覆確率（coverage）を出してみようか。Rでね」
 :::
 
 ::: voice-daughter
-私「え？朝からなにするの？」
+私「coverageって、つまりは実際に100回に95回当たるかどうかってことよね」
 :::
 
 ::: voice-father
-お父さん「統計学ではよく、シミュレーションっていってデータを乱数で発生させて実験するんだ。**Kaplan-Meier曲線を**描くとき、**競合リスク**の扱いによってはバイアスが生じるってことをみせてあげるよ、バイアスがどれくらい困ったことなのか実感ないみたいだから。前に使ったRスクリプトをいじるだけですぐ終わるから」
+お父さん「そう。信頼区間が真値を当てる頻度を、シミュレーションデータで数えるんだ。前提条件を整理しよう。2群比較の生存曲線を比べたいんだよね」
 :::
 
 ::: voice-daughter
-私「仕方ないな」
+私「ストーマあり群とストーマなし群ね」
 :::
 
 ::: voice-father
-お父さん「パソコンを立ち上げる間に何をするか話そう。まずね、いまから見せるのは"研究の不備"のバイアスじゃなくて、"目標としている値と違う値を統計的に推定してしまう"という現象だよ。競合リスクを含むデータは、こういう仕組みで生まれる」
-:::
-
-- 再発までの時間を発生させる
-- 死亡までの時間を発生させる（競合リスク）
-- 打ち切りまでの時間を発生させる
-
-::: voice-father
-お父さん「実際に観測されるのは、もちろんそのうち一番先に起きたイベント、つまりこの3つの値の最小値をとる」
+お父さん「そうだね、ストーマあり群とストーマなし群のOSを比べよう。真のハザード比は1.5、つまりストーマあり群の方が寿命が1.5倍短い。ハザード比の95%信頼区間は、1000回シミュレーションしたら、1.5を約950回は含んでいるはず」
 :::
 
 ::: voice-daughter
-私「なるほど、それなら再発より先に死亡したら、再発は観測されないわけだ。当たり前だけど、シミュレーションはこうやるのね」
+私「ん？私、調査は1回しかしないつもりだけど」
 :::
 
 ::: voice-father
-お父さん「ここで問題になるのが統計手法の選び方なんだ。よく死亡を打ち切りにした解析を見るでしょ。あのKaplan-Meier曲線は、現実世界で再発が生じる確率を過大評価してしまう。これじゃなくて**Aalen-Johansen曲線**を推定すると、正しく再発確率が求められる。ではRでデータを発生させてみよう」
+お父さん「あのね、聞いて。統計家が話している**確率モデル**は、実際にこれから行われる研究そのものじゃないと思った方がいい。たとえるなら"こういう集団から、こういうルールでデータを発生させて"と別世界に指示を出す手紙なんだ。現実と別世界はデータとRとシミュレーションでつながっている。その手紙に書かれたルールに従って別世界の誰かが研究を1000回繰り返す」
+:::
+
+::: voice-daughter
+私「ふーん。そこで当たりがでた割合がcoverageね」
+:::
+
+::: voice-father
+お父さん「そう。以前JCOG9502の話をしたとき、"p値が0.05だったら100回に5回は正しい"っていってたよ。自分の経験だと違って見えるものだけど同じこと。それでね、生存曲線の形は指数分布で決める。途中で追跡できなかった患者は打ち切り扱いになるけど、それも指数分布で発生させる。この設定だと、Cox回帰の仮定はすべて正しい。だから理論的にcoverageは95%になるはず」
+:::
+
+::: voice-daughter
+私「じゃあ、その通りになるかどうか、Rで確かめればいいんだね」
 :::
 :::::::::::::::::::::::::::::::::
 
-::: {.callout-note appearance="simple" title="シミュレーションデータ（再発あり）におけるKaplan-Meier曲線のバイアス"}
-以前生成したシミュレーションデータにおける累積再発率（CIR）の解析では、再発の前に死亡した患者（競合リスク）を発生させたことを覚えていますか？競合リスク存在下でKaplan-Meier曲線を用いるとバイアスが生じることは、簡単な実験で確かめることができます。
+
+::: {.callout-note appearance="simple"  title="coxph()を用いた95%信頼区間のシミュレーション"}
+ハザード比を推定する方法はいくつかありますが、もっともポピュラーなのは**survival**パッケージの`coxph()`です。以前のデモで、`generate_data(hr1, hr2)`を用いて、ストーマの有無やOSのデータを生成しました。今回は同じデータにCox回帰を当てはめ、ストーマあり群とストーマなし群のハザード比を計算してみます。この関数では、死亡ハザード比の真値はhr2という引数で指定できます。
 :::
 
 ::: {.callout-note appearance="simple"  collapse="true" title="generate_data()のコードはこちら（データ生成に使用）"}
@@ -137,110 +142,247 @@ generate_data <- function(n=200, hr1, hr2) {
 ```
 :::
 
-::: {.callout-note appearance="simple"  title="累積再発率（CIR）のAalen-Johansen曲線"}
-Kaplan-Meier曲線とAalen-Johansen曲線は、どちらも`cifmodeling`パッケージの`cifplot()`を使って生成できますが、イベントのコーディングを入力する`code.event1`、`code.event2`とデータの型を表す`outcome.type`を、指定する必要があります。`generate_data()`で生成したシミュレーションデータでは、CIRのイベントは以下のようにコーディングされていました。
+::: {.callout-note appearance="simple"  collapse="true" title="calculate_coverage()のコードはこちら（generate_data()とcoxph()を呼んでシミュレーションを実行）"}
+```{r warning=FALSE}
+calculate_coverage <- function(model=c("coxph","finegray"), n, hr1, hr2, hr_true) {
+  replications=1000
+  covered <- numeric(replications)
 
-- `status_cir=1` : 再発
-- `status_cir=2` : 再発を経験しない死亡
-- `status_cir=0` : 打ち切り
-
-以下のRスクリプトでは、最初の`cifplot()`により、再発（`code.event1=1`）に関するAalen-Johansen曲線（`aj_event1`）を出力しています。縦軸は累積発生確率ではなく、1-累積発生確率を選んでいる点にも注意してください（`type.y="surv"`）。そして次の`cifplot()`ではイベントを入れ替えて、再発を経験しない死亡（`code.event1=1`）に関するAalen-Johansen曲線（`aj_event2`）を出力し、`cifpanel()`に用いて2つの図を左右に配置したひとつの図を表示しています。左右の累積発生確率の和に注目してください。この図からは、再発の累積発生確率と（再発を経験しない）死亡の累積発生確率の和は、時間が経つにつれ1に近づくが、1を超えることはないことがわかります。仮に打ち切りがなかったとしたら、再発と（再発を経験しない）死亡のどちらか一方しか生じないため、Aalen-Johansen曲線の和が1を超えないのは自然なことです。
-:::
-
-::: {.callout-note appearance="simple"  collapse="true" title="Rコードと結果はこちら"}
-```{r}
-# devtools::install_github("gestimation/cifmodeling") #インストールが必要なら実行 
-library(cifmodeling)
-dat <- generate_data(hr1=2, hr2=1.5) #再発ハザード比2, 死亡ハザード比1.5のデータ生成
-
-aj_event1 <- cifplot(Event(time_cir, status_cir) ~ stoma,
-  data         = dat,
-  outcome.type = "competing-risk", 
-  type.y       = "surv",
-  label.y      = "1-Aalen-Johansen",
-  code.event1  = 1, 
-  code.event2  = 2
-)
-aj_event2 <- cifplot(Event(time_cir, status_cir) ~ stoma,
-  data         = dat,
-  outcome.type = "competing-risk", 
-  type.y       = "risk",
-  label.y      = "Aalen-Johansen",
-  code.event1  = 2, 
-  code.event2  = 1
-)
-aj_list <- list(aj_event1$plot, aj_event2$plot)
-aj_panel <- cifpanel(rows.columns.panel = c(1,2), plots=aj_list)
-print(aj_panel)
+  for (r in seq_len(replications)) {
+    dat <- generate_data(n, hr1, hr2)
+    if (identical(model, "coxph")) {
+      fit <- coxph(Surv(time_os, status_os) ~ stoma, data = dat)
+    } else if (identical(model, "finegray")) {
+      dat$fstatus_cir <- factor(dat$status_cir,
+                                levels = 0:2,
+                                labels = c("censor",
+                                           "relapse",
+                                           "death"))
+      fgdat <- finegray(Surv(time_cir, fstatus_cir) ~ ., data=dat)
+      fit <- coxph(Surv(fgstart, fgstop, fgstatus) ~ stoma, weight=fgwt, cluster=id, data=fgdat)
+    }
+    confidence_interval <- confint(fit)
+    covered[r] <- as.integer(confidence_interval[1] <= log(hr_true) && log(hr_true) <= confidence_interval[2])
+  }
+  coverage <- mean(covered)
+  return(coverage)
+}
 ```
 :::
 
-::: {.callout-note appearance="simple"  title="累積再発率（CIR）のKaplan-Meier曲線"}
-実際の研究では、死亡を打ち切りとして扱った生存時間解析の結果をしばしば目にします。この解析に対応するKaplan-Meier曲線は、以下のようにイベントのコーディングを変更し、`outcome.type="survival"`を指定することで出力できます。
-
-- `status_cir1=1` : 再発
-- `status_cir1=0` : 再発を経験しない死亡/打ち切り
-- `status_cir2=1` : 再発を経験しない死亡
-- `status_cir2=0` : 再発/打ち切り
-
-新しく作ったイベント変数`status_cir1`と`status_cir2`を用いると、再発のKaplan-Meier曲線と（再発を経験しない）死亡のKaplan-Meier曲線を描くことができます。これらのKaplan-Meier曲線を左右に配置した図を、先ほどのAalen-Johansen曲線の図と比べてみてください。先ほどのAalen-Johansen曲線の和とは違い、Kaplan-Meier曲線の和が1を超えてしまって計算が合わないことが読み取れたでしょうか。
-:::
-
-::: {.callout-note appearance="simple"  collapse="true" title="Rコードと結果はこちら"}
-```{r}
-dat$status_cir1 <- as.numeric(dat$status_cir==1)
-km_event1 <- cifplot(Event(time_cir, status_cir1) ~ stoma,
-  data         = dat,
-  outcome.type = "survival", 
-  type.y       = "surv",
-  label.y      = "Kaplan-Meier"
-)
-dat$status_cir2 <- as.numeric(dat$status_cir==2)
-km_event2 <- cifplot(Event(time_cir, status_cir2) ~ stoma,
-  data         = dat,
-  outcome.type = "survival", 
-  type.y       = "risk",
-  label.y      = "1-Kaplan-Meier"
-)
-km_list <- list(km_event1$plot, km_event2$plot)
-km_panel <- cifpanel(rows.columns.panel = c(1,2), plots=km_list)
-print(km_panel)
+::: {.callout-note appearance="simple"  collapse="true" title="calculate_coverage()を実行するRコードと結果はこちら"}
+```{r warning=FALSE}
+# install.packages("survival") #インストールが必要なら実行
+library(survival)
+coverage_200 <- calculate_coverage(model="coxph", n=200, hr1=2, hr2=1.5, hr_true=1.5)
+print(coverage_200)
 ```
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「だいたいcoverageが95%になるっていうのは確認した。でも結局、95%信頼区間ってどう理解すればいいの？」
+:::
+
 ::: voice-father
-お父さん「わかった？打ち切りがランダムっていうのがKaplan-Meier曲線の前提条件なんだ。でも"競合イベントを打ち切り扱いにしていいか"は、ランダム打ち切りとは別問題なんだ」
+お父さん「教科書的にいうとね。同じようなデータを何度も集めて、毎回95%信頼区間を作ったとき、“真の値を含む区間”の割合が0.95になるように設計された指標なんだ。これを"in the long run"の性能って言ったりする。でも、概念的に理解するよりも、シミュレーションを行った方がわかりやすいと思って」
 :::
 
 ::: voice-daughter
-私「なるほどね。再発確率と死亡確率を足して1を超えることはあり得ない、Kaplan-Meier曲線にバイアスが生じていることの証拠だっていいたいのね。確かに、百聞は一見に如かず」
+私「いやわかりにくいだろ。1回の研究で"この区間が当たっている確率が95%"って意味じゃないんだね」
 :::
 
 ::: voice-father
-お父さん「そう。このシミュレーションとまったく同じことを、統計学の数式は意味している。つまり、データ発生のアルゴリズムは**確率モデル**っていって、教科書では研究でなにが起きるかを抽象化した数式で書かれているんだ。そして、どんな推定でも使用条件みたいなものがあって、前提にしている確率モデルからずれると、推定値もまた真値からずれる。これは統計手法の誤用でも研究不備でも同じことだけど」
+お父さん「そうだね」
+:::
+
+::: voice-daughter
+私「じゃあ、人数が100人だったらどうなるの？人数が減ったら当たりにくくはならないの？」
+:::
+
+::: voice-father
+お父さん「設計上は当たりにくくなったりはしないよ。95%信頼区間のcoverageはサンプルサイズによらず95%になるように作ってある。n=100、200、400、800のシミュレーション結果をみてみようか」
 :::
 :::::::::::::::::::::::::::::::::
 
+::: {.callout-note appearance="simple"  collapse="true" title="calculate_coverage()を実行するRコードと結果はこちら"}
+```{r warning=FALSE}
+coverage_100 <- calculate_coverage(model="coxph", n=100, hr1=2, hr2=1.5, hr_true=1.5)
+coverage_400 <- calculate_coverage(model="coxph", n=400, hr1=2, hr2=1.5, hr_true=1.5)
+coverage_800 <- calculate_coverage(model="coxph", n=800, hr1=2, hr2=1.5, hr_true=1.5)
+print(coverage_100)
+print(coverage_200)
+print(coverage_400)
+print(coverage_800)
+```
+:::
+
+
+### 信頼区間アプローチによるサンプルサイズ設計
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+私「ほんとだ、だいたい95%。じゃあ調査人数は何人でもいいってことだ」
+:::
+
+::: voice-father
+お父さん「ん？どういう意味？」
+:::
+
+::: voice-daughter
+私「がんサバイバー何人に調査票を送るかってこと。だって信頼区間の性能は人数によらないんでしょ」
+:::
+
+::: voice-father
+お父さん「あ、ごめん、誤解があったね。サンプルサイズが小さくなると、coverageは同じでも、信頼区間幅が広くなる。つまり、同じ95%でも、どれくらい曖昧な推定値で我慢しないといけないかが変わるんだ。今のところ、何人に調査するつもりだった？」
+:::
+
+::: voice-daughter
+私「100人から調査票戻ってきたら上出来かなって思ってるけど」
+:::
+
+::: voice-father
+お父さん「やっぱり必要サンプルサイズは計算してなかったか。がんを手術した後の復職率を推定したいってことでいいの？それなら100人でギリギリだと思う」
+:::
+
+::: voice-daughter
+私「いや？前にお父さんにPECOを教えてもらったよね。あれから上司と相談して、ストーマを造設した患者の復職状況を造設しなかった患者と比べることにしたの」
+:::
+
+::: voice-father
+お父さん「そうなんだ。そうすると計算が違ってくる。100人だと足りないはず」
+:::
+
+::: voice-daughter
+私「へ？なんでそんなことわかるのよ。100人に協力してもらうのってたいへんなのよ」
+:::
+
+::: voice-father
+お父さん「どれだけサンプルサイズが必要なのかについて、統計学的な根拠に基づいて見積もる方法があるんだよ。この表をみてみて。ある書籍から借りてきたものなんだけど（Machin, et al. 2022）」
+:::
+
+::: panel-tabset
+### 割合0.01～0.15
+
+表1. 割合の推定において指定した 95%信頼区間幅のため必要なサンプルサイズ
+
+| 割合 $\pi$ | 0.05 | 0.10 | 0.15 | 0.20 |
+|--------|-----:|-----:|-----:|-----:|
+| 0.01   |  108 |   43 |   25 |   17 |
+| 0.02   |  152 |   52 |   29 |   19 |
+| 0.03   |  201 |   61 |   33 |   21 |
+| 0.04   |  252 |   72 |   37 |   23 |
+| 0.05   |  304 |   83 |   41 |   25 |
+| 0.06   |  356 |   95 |   46 |   28 |
+| 0.07   |  407 |  107 |   50 |   30 |
+| 0.08   |  458 |  118 |   55 |   32 |
+| 0.09   |  508 |  130 |   60 |   35 |
+| 0.10   |  554 |  139 |   62 |   35 |
+| 0.11   |  604 |  153 |   69 |   40 |
+| 0.12   |  651 |  164 |   74 |   42 |
+| 0.13   |  696 |  175 |   78 |   44 |
+| 0.14   |  741 |  186 |   83 |   47 |
+| 0.15   |  784 |  196 |   87 |   49 |
+
+### 割合0.16～0.50
+
+表1. 割合の推定において指定した 95%信頼区間幅のため必要なサンプルサイズ
+
+| 割合 $\pi$ | 0.05 | 0.10 | 0.15 | 0.20 |
+|--------|-----:|-----:|-----:|-----:|
+| 0.16   |  826 |  206 |   92 |   51 |
+| 0.17   |  867 |  216 |   96 |   54 |
+| 0.18   |  907 |  226 |  100 |   56 |
+| 0.19   |  945 |  236 |  104 |   58 |
+| 0.20   |  982 |  245 |  108 |   60 |
+| 0.25   | 1150 |  286 |  126 |   70 |
+| 0.30   | 1288 |  320 |  141 |   78 |
+| 0.35   | 1395 |  347 |  152 |   84 |
+| 0.40   | 1472 |  366 |  161 |   89 |
+| 0.45   | 1518 |  377 |  166 |   92 |
+| 0.50   | 1533 |  381 |  167 |   93 |
+:::
+
+::: voice-father
+お父さん「たとえばなんだけどね。復職率を調べたいとするでしょ。そうすると復職率をどれくらい精確に推定できたかを表す指標が、95%信頼区間だよね。仮に復職率が50%だったとしてみよう。そうすると、50%±10%程度の推定精度がほしいよね。ここでいう±の後の数字が、95%信頼区間の幅になるんだ」
+:::
+
+::: voice-daughter
+私「ああ、”50%（95%CI 40～60%）”みたいな感じで論文に書くことになるわけだ。40〜60%の場合、95%信頼区間幅は20%ってことね」
+:::
+
+::: voice-father
+お父さん「そういうこと。表では復職率を$\pi$という変数で表しているんだけど、”$\pi=0.5$”と”信頼区間幅0.2”に対応する数字をみて。93って書いてあるでしょ。これが必要サンプルサイズ」
+:::
+
+::: voice-daughter
+私「どうだろう。復職率ってもっと高くない？手術したときの年齢にもよるけど、たとえば患者さんが50歳前後だったら、80%はいってほしいなあ」
+:::
+
+::: voice-father
+お父さん「そうなんだ。そうすると復職率80%は非復職率20%と同じことだから、”$\pi=0.2$”と”信頼区間幅0.2”のところをみればいい。サンプルサイズは60人」
+:::
+
+::: voice-daughter
+私「100人で足りてるじゃん」
+:::
+
+::: voice-father
+お父さん「いやいやいや、これは復職率の信頼区間からサンプルサイズを計算したからこうなったんだ。"信頼区間アプローチ"といって、主に探索的研究で使うものなんだよ。別の計算の仕方もある。ストーマ造設ありとなしの復職率を比べるような仮説検証を目指した研究なら、"仮説検定アプローチ"といって、仮説検定の考え方にそってサンプルサイズを計算しないといけない」
+:::
+
+::: voice-daughter
+私「そっか、だいたいわかった。私、午後から出かけるから。また今度教えてよ、じゃあね」
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple"  title="サンプルサイズ設計の2つのアプローチ"}
+研究計画を立てるときには、サンプルサイズを見積もる必要があります。サンプルサイズの計算は大まかにいえば2種類あって、信頼区間アプローチ（たとえば表1）と仮説検定アプローチ（次回）を用いることができます。
+
+信頼区間アプローチは、調査や探索的研究で用いられます。このアプローチによって割合を推定するために必要なサンプルサイズを求めるとき、次の数値を設定する必要があります。
+
+-   割合の真値（復職率など）
+-   信頼区間幅
+
+もうひとつの仮説検定アプローチは、臨床試験や仮説検証型の研究に適しています。このアプローチでは、以下の3つの要素が最低でも必要です。
+
+-   有意水準（通常5%）
+-   検出力（通常80～90%）
+-   検出したい効果サイズ（2群間の生存確率の差やハザード比など）
+
+サンプルサイズ設計は、βエラーを制御するという意味で、p値と対になる統計手法といえます。
+:::
+
 ::: {.callout-note appearance="simple" title="このエピソードに関係するクイズです"}
 
-Kaplan-Meier法による生存曲線の推定が妥当な状況として正しいのは、次のうちどれでしょうか。
+臨床検査の正常範囲の意味として正しいのはどれでしょうか。
 
-1.  生存時間が正規分布するとき
-2.  打ち切りの理由が疾患の悪化によらないとき
-3.  2群の打ち切り確率に統計学的な有意差がなかったとき
-4.  試験治療群とコントロール群の間で比例ハザード性が成り立つとき
+1.  ある集団からのランダムサンプルにおいて検査値の平均±1.96×標準偏差
+2.  健常人集団における検査値の95%が含まれる範囲
+3.  健常人集団における検査値の平均±1.96×標準誤差
+4.  ある集団からのランダムサンプルにおいて検査値の95%が含まれる範囲
+
 :::
 
 ::: {.callout-note appearance="simple" collapse="true" title="答えはこちら"}
-- **正解は2です**
+-   **正解は2です**
 
-Kaplan-Meier法では、生存時間が正規分布したり、比例ハザードが成り立ったりする必要はありません（これはそれぞれ*t*検定とCox回帰の前提条件ですね）。疾患の悪化に伴って、試験の途中で患者が追跡できなくなると、推定された生存曲線にバイアスが生じてしまいます。2群の生存曲線を比べるとき、それぞれの群の打ち切り確率を比較することがあります。有意差があればバイアスがあるといえますが、たとえばサンプルサイズが小さいときは有意差が出ませんから、Kaplan-Meier法が妥当という証拠にはなりません。逆にいうと、打ち切りがランダムに起きていることが、Kaplan-Meier法の基本的な前提条件です。なお、競合イベントを打ち切りとして扱うかどうかは、ランダム打ち切りの条件とは独立に検討すべき問題ですよね。
+標準偏差（SD）と標準誤差（SE）の区別が重要です。前者は「検査値自体が個人間でどのくらいばらつくか」を、後者は「平均の推定がどのくらい精確か」を表しています。そして、「平均±1.96×標準偏差」は、正規分布における「95%が含まれる範囲」に相当しています。
+
+なお、似て非なる範囲に「平均±1.96×標準誤差」があります。これは「仮想的反復の下で真の平均を95%の割合で包む区間」、すなわち頻度論統計学でいう95%信頼区間に対応します。
 :::
+
+### 文献
+
+- [Machin D, Campbell MJ, Tan SB, Tan SH. 医学のためのサンプルサイズ設計（原著第4版）. 京都: 京都大学学術出版会; 2022](https://www.kyoto-up.or.jp/9784814003822.html)
+
+- Sasako M, Sano T, Yamamoto S, Sairenji M, Arai K, Kinoshita T, Nashimoto A, Hiratsuka M, Japan Clinical Oncology Group (JCOG9502). Left thoracoabdominal approach versus abdominal-transhiatal approach for gastric cancer of the cardia or subcardia: a randomised controlled trial. Lancet Oncol 2006;7(8):644-51
+
+- [Green J, Benedetti J, Smith A, Crowley J. 米国SWOGに学ぶがん臨床試験の実践 第2版（原書第3版）. 東京: 医学書院; 2013](https://www.igaku-shoin.co.jp/book/detail/84805)
 
 ### 次のエピソードとRスクリプト
 
-- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-5.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-6.html)
 - [frequentist.R](../from-coffee-chat-to-r/frequentist.R)
 
 ::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}
