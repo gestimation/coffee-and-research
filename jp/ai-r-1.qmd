@@ -92,6 +92,8 @@ R packages: cifmodeling, dplyr, gtsummary, tableone
 
 ![](ai-r-1.png)
 
+### AIに見せる情報と見せない情報
+
 ::: voice-father
 お父さん「Antigravityが起動した。インストールできたみたい。なにか操作を求めてるよ」
 :::
