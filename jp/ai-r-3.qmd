@@ -636,10 +636,10 @@ names(out4)
 
 ぜひ、"A Conversation on Causality at Our Table"もあわせてお楽しみください。この物語は、研究仮説→統計→因果→言語という順で、ある臨床研究を描いています。迷った方へのおすすめエピソードはこちら。
 
-- [**会話のはじまりと研究仮説（Study Design I）**](study-design-1.html)
-- [**95%の誤解を一刀両断（Effects and Time I）**](effects-1.html)
-- [**交絡・因果推論の入り口（Adjusting for Bias I）**](logistic-regression-1.html)
-- [**よりよい論文を書くための3箇条（Publish a Paper II）**](publish-a-paper-2.html)
+- [会話のはじまりと研究仮説（Study Design I）](study-design-1.html)
+- [95%の誤解を一刀両断（Effects and Time I）](effects-1.html)
+- [交絡・因果推論の入り口（Adjusting for Bias I）](logistic-regression-1.html)
+- [よりよい論文を書くための3箇条（Publish a Paper II）](publish-a-paper-2.html)
 
 どのエピソードも独立しているので、興味の向くレイヤーを選んでも構いません。
 
