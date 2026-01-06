@@ -382,7 +382,7 @@ print(coverage_800)
 
 ### 次のエピソードとRスクリプト
 
-- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-6.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
 - [frequentist.R](../from-coffee-chat-to-r/frequentist.R)
 
 ::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}

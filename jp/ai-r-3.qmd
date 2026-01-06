@@ -648,23 +648,21 @@ names(out4)
 **このシリーズのエピソード**
 
 - [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses](ai-r-1.html)
-
 - [R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
-
 - [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
 
-**生存時間解析・競合リスク解析入門**
+**生存時間解析・競合リスク解析入門（A Conversation on Causality at Our Table）**
 
 - [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
 
-**Rシミュレーション**
+**DAG入門（A Conversation on Causality at Our Table）**
+
+- [DAGs and Conditional Distributions: Two Languages for the Same Structure](causal-inference-3.html)
+
+**Rシミュレーション（A Conversation on Causality at Our Table）**
 
 - [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
 - [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
-
-**DAG入門**
-
-- [DAGs and Conditional Distributions: Two Languages for the Same Structure](causal-inference-3.html)
 
 **用語集**
 
