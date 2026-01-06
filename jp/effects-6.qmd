@@ -121,14 +121,15 @@ Keywords: bias, effect measure, R simulation, survival & competing risks
 
 ::: {.callout-note appearance="simple"  collapse="true" title="generate_data()のコードはこちら（データ生成に使用）"}
 ```{r warning=FALSE}
-generate_data <- function(n=200, hr1, hr2) {
+generate_data <- function(n = 200, hr1, hr2, hr3) {
   stoma <- rbinom(n, size = 1, prob = 0.4)
   sex <- rbinom(n, size = 1, prob = 0.5)
   age <- rnorm(n, mean = 65 + 3 * stoma, sd = 8)
-  hazard_relapse   <- ifelse(stoma == 1, hr1*0.10, 0.10) # 再発のハザード（大きいほど早く起こる）
-  hazard_death     <- ifelse(stoma == 1, hr2*0.10, 0.10) # 死亡のハザード（大きいほど早く起こる）
+  hazard_relapse   <- 0.10*exp(stoma*log(hr1)+age*log(hr2))
+ # 再発のハザード（大きいほど早く起こる）
+  hazard_death     <- ifelse(stoma == 1, hr3 * 0.10, 0.10) # 死亡のハザード（大きいほど早く起こる）
   hazard_censoring <- 0.05                               # 打ち切りハザード（群に依存しない）
-  
+
   t_relapse   <- rexp(n, rate = hazard_relapse)   # 再発までの潜在時間
   t_death     <- rexp(n, rate = hazard_death)     # 死亡までの潜在時間
   t_censoring <- rexp(n, rate = hazard_censoring) # 打ち切りまでの潜在時間
@@ -137,7 +138,7 @@ generate_data <- function(n=200, hr1, hr2) {
   time_os   <- pmin(t_death, t_censoring)
   status_os <- as.integer(t_death <= t_censoring)  # 1 = 死亡, 0 = 打ち切り
   
-  ## --- 無再発存期間（RFS） -------------------------------------
+  ## --- 無再発生存期間（RFS） -----------------------------------
   time_rfs <- pmin(t_relapse, t_death, t_censoring)
   
   status_rfs <- integer(n)
@@ -169,11 +170,12 @@ generate_data <- function(n=200, hr1, hr2) {
 ```
 :::
 
+
 ::: {.callout-note appearance="simple" collapse="true" title="Rコードと結果はこちら"}
 ```{r warning=FALSE}
 library(cifmodeling)
 set.seed(46)
-dat <- generate_data(hr1=2, hr2=1.5) #再発ハザード比2, 死亡ハザード比1.5のデータ生成
+dat <- generate_data(hr1=2, hr2=1, hr3=1.5) #再発ハザード比2, 死亡ハザード比1.5のデータ生成
 rr_at_5 <- polyreg(nuisance.model=Event(time_os,status_os)~1, exposure="stoma", data=dat, 
                     effect.measure1="RR", time.point=5, outcome.type="survival")
 summary(rr_at_5)

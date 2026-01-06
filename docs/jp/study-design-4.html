@@ -504,51 +504,51 @@ generate_data()のコードはこちら（データ生成に使用）
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>generate_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">200</span>, hr1, hr2) {</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>generate_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">200</span>, hr1, hr2, hr3) {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  stoma <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  sex <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  age <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> stoma, <span class="at">sd =</span> <span class="dv">8</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  hazard_relapse   <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(stoma <span class="sc">==</span> <span class="dv">1</span>, hr1<span class="sc">*</span><span class="fl">0.10</span>, <span class="fl">0.10</span>) <span class="co"># 再発のハザード（大きいほど早く起こる）</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  hazard_death     <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(stoma <span class="sc">==</span> <span class="dv">1</span>, hr2<span class="sc">*</span><span class="fl">0.10</span>, <span class="fl">0.10</span>) <span class="co"># 死亡のハザード（大きいほど早く起こる）</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  hazard_censoring <span class="ot">&lt;-</span> <span class="fl">0.05</span>                               <span class="co"># 打ち切りハザード（群に依存しない）</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  t_relapse   <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_relapse)   <span class="co"># 再発までの潜在時間</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  t_death     <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_death)     <span class="co"># 死亡までの潜在時間</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  t_censoring <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_censoring) <span class="co"># 打ち切りまでの潜在時間</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 全生存期間（OS） ----------------------------------------</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  time_os   <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_death, t_censoring)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  status_os <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(t_death <span class="sc">&lt;=</span> t_censoring)  <span class="co"># 1 = 死亡, 0 = 打ち切り</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 無再発生存期間（RFS） -----------------------------------</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  time_rfs <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  status_rfs <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># 再発</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span>   <span class="co"># 死亡</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 累積再発率（CIR） + 競合リスク --------------------------</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  time_cir <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  status_cir <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># イベント1: 再発</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">2</span>   <span class="co"># イベント2: 競合リスクとしての死亡</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- データフレームにまとめる --------------------------------</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">id         =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex        =</span> <span class="fu">factor</span>(sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WOMAN"</span>, <span class="st">"MAN"</span>)),</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">age        =</span> age,</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">stoma      =</span> <span class="fu">factor</span>(stoma, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WITHOUT STOMA"</span>, <span class="st">"WITH STOMA"</span>)),</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_os    =</span> time_os,</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_os  =</span> status_os,</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_rfs   =</span> time_rfs,</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_rfs =</span> status_rfs,</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_cir   =</span> time_cir,</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_cir =</span> status_cir</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(dat)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  hazard_relapse   <span class="ot">&lt;-</span> <span class="fl">0.10</span><span class="sc">*</span><span class="fu">exp</span>(stoma<span class="sc">*</span><span class="fu">log</span>(hr1)<span class="sc">+</span>age<span class="sc">*</span><span class="fu">log</span>(hr2))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a> <span class="co"># 再発のハザード（大きいほど早く起こる）</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  hazard_death     <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(stoma <span class="sc">==</span> <span class="dv">1</span>, hr3 <span class="sc">*</span> <span class="fl">0.10</span>, <span class="fl">0.10</span>) <span class="co"># 死亡のハザード（大きいほど早く起こる）</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  hazard_censoring <span class="ot">&lt;-</span> <span class="fl">0.05</span>                               <span class="co"># 打ち切りハザード（群に依存しない）</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  t_relapse   <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_relapse)   <span class="co"># 再発までの潜在時間</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  t_death     <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_death)     <span class="co"># 死亡までの潜在時間</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  t_censoring <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_censoring) <span class="co"># 打ち切りまでの潜在時間</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 全生存期間（OS） ----------------------------------------</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  time_os   <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_death, t_censoring)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  status_os <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(t_death <span class="sc">&lt;=</span> t_censoring)  <span class="co"># 1 = 死亡, 0 = 打ち切り</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 無再発生存期間（RFS） -----------------------------------</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  time_rfs <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  status_rfs <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># 再発</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span>   <span class="co"># 死亡</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 累積再発率（CIR） + 競合リスク --------------------------</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  time_cir <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  status_cir <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># イベント1: 再発</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">2</span>   <span class="co"># イベント2: 競合リスクとしての死亡</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- データフレームにまとめる --------------------------------</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">id         =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex        =</span> <span class="fu">factor</span>(sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WOMAN"</span>, <span class="st">"MAN"</span>)),</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">age        =</span> age,</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">stoma      =</span> <span class="fu">factor</span>(stoma, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WITHOUT STOMA"</span>, <span class="st">"WITH STOMA"</span>)),</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_os    =</span> time_os,</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_os  =</span> status_os,</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_rfs   =</span> time_rfs,</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_rfs =</span> status_rfs,</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_cir   =</span> time_cir,</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_cir =</span> status_cir</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -583,7 +583,7 @@ Rコードと結果はこちら
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github("gestimation/cifmodeling") #インストールが必要なら実行 </span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cifmodeling)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">46</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">generate_data</span>(<span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>) <span class="co">#再発ハザード比2, 死亡ハザード比1.5のデータ生成</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">generate_data</span>(<span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="dv">1</span>, <span class="at">hr3=</span><span class="fl">1.5</span>) <span class="co">#再発ハザード比2, 死亡ハザード比1.5のデータ生成</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(time_os, status_os) <span class="sc">~</span> stoma,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>

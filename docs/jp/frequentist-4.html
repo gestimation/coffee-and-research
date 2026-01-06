@@ -356,16 +356,16 @@ window.Quarto = {
 <p>お父さん「ん？そりゃ当たってるよ。仮定した確率モデルが正しければね」</p>
 </div>
 <div class="voice-daughter">
-<p>私「ふーん。シミュレーションもできる？」</p>
+<p>私「ふーん。シミュレーションってあるじゃない？あれで証明できる？」</p>
 </div>
 <div class="voice-father">
 <p>お父さん「ああ、そういうこと。じゃあハザード比の95%信頼区間の被覆確率（coverage）を出してみようか。Rでね」</p>
 </div>
 <div class="voice-daughter">
-<p>私「coverageって、つまりは実際に100回に95回当たるかどうかってことよね」</p>
+<p>私「つまりは実際に100回に95回当たるかどうかがcoverageってことよね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そう。信頼区間が真値を当てる頻度を、シミュレーションデータで数えるんだ。前提条件を整理しよう。2群比較の生存曲線を比べたいんだよね」</p>
+<p>お父さん「そう。信頼区間が真値を当てる頻度を、シミュレーションデータで数えるんだ。じゃあcoverageを出すとして、前提条件を整理しよう。2群比較の生存曲線を比べたいんだよね」</p>
 </div>
 <div class="voice-daughter">
 <p>私「ストーマあり群とストーマなし群ね」</p>
@@ -383,7 +383,7 @@ window.Quarto = {
 <p>私「ふーん。そこで当たりがでた割合がcoverageね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そう。以前JCOG9502の話をしたとき、“p値が0.05だったら100回に5回は正しい”っていってたよ。自分の経験だと違って見えるものだけど同じこと。それでね、生存曲線の形は指数分布で決める。途中で追跡できなかった患者は打ち切り扱いになるけど、それも指数分布で発生させる。この設定だと、Cox回帰の仮定はすべて正しい。だから理論的にcoverageは95%になるはず」</p>
+<p>お父さん「そう。以前JCOG9502の話をしたとき、“p値が0.05だったら100回に5回は正しい”って言ったのを思い出してよ。他人の研究と自分の経験は違って見えるものだけど第三者が見れば同じこと。それでね、生存曲線の形は指数分布で決める。途中で追跡できなかった患者は打ち切り扱いになるけど、それも指数分布で発生させる。この設定だと、Cox回帰の仮定はすべて正しい。だから理論的にcoverageは95%になるはず」</p>
 </div>
 <div class="voice-daughter">
 <p>私「じゃあ、その通りになるかどうか、Rで確かめればいいんだね」</p>
@@ -522,7 +522,7 @@ calculate_coverage()を実行するRコードと結果はこちら
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>coverage_200 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">200</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_200)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.947</code></pre>
+<pre><code>[1] 0.956</code></pre>
 </div>
 </div>
 </div>
@@ -533,7 +533,7 @@ calculate_coverage()を実行するRコードと結果はこちら
 <p>私「だいたいcoverageが95%になるっていうのは確認した。でも結局、95%信頼区間ってどう理解すればいいの？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「教科書的にいうとね。同じようなデータを何度も集めて、毎回95%信頼区間を作ったとき、“真の値を含む区間”の割合が0.95になるように設計された指標なんだ。これを”in the long run”の性能って言ったりする。でも、概念的に理解するよりも、シミュレーションを行った方がわかりやすいと思って」</p>
+<p>お父さん「教科書的にいうとね。同じようなデータを何度も集めて、毎回95%信頼区間を作ったとき、“真の値を含む区間”の割合が0.95になるように設計された指標なんだ。これを”in the long run”の性能って言ったりする。でも、概念的に理解するよりも、シミュレーションを行った方が分かりやすいと思って」</p>
 </div>
 <div class="voice-daughter">
 <p>私「いやわかりにくいだろ。1回の研究で”この区間が当たっている確率が95%“って意味じゃないんだね」</p>
@@ -566,19 +566,19 @@ calculate_coverage()を実行するRコードと結果はこちら
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>coverage_800 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">800</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_100)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.957</code></pre>
+<pre><code>[1] 0.956</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_200)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.947</code></pre>
+<pre><code>[1] 0.956</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_400)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.959</code></pre>
+<pre><code>[1] 0.955</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_800)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.955</code></pre>
+<pre><code>[1] 0.948</code></pre>
 </div>
 </div>
 </div>
@@ -850,7 +850,7 @@ calculate_coverage()を実行するRコードと結果はこちら
 <p>私「どうだろう。復職率ってもっと高くない？手術したときの年齢にもよるけど、たとえば患者さんが50歳前後だったら、80%はいってほしいなあ」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そうなんだ。そうすると復職率80%は非復職率20%と同じことだから、”<span class="math inline">\(\pi=0.2\)</span>”と”信頼区間幅0.2”のところをみればいい。サンプルサイズは60人」</p>
+<p>お父さん「そうなんだ。そうすると復職率80%は非復職率20%と同じことだから、“<span class="math inline">\(\pi=0.2\)</span>”と”信頼区間幅0.2”のところをみればいい。サンプルサイズは60人」</p>
 </div>
 <div class="voice-daughter">
 <p>私「100人で足りてるじゃん」</p>

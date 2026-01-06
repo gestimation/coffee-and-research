@@ -462,9 +462,9 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">function</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">n=</span><span class="dv" style="color: #AD0000;
+font-style: inherit;">n =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">200</span>, hr1, hr2) {</span>
+font-style: inherit;">200</span>, hr1, hr2, hr3) {</span>
 <span id="cb2-2">  stoma <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
@@ -512,22 +512,27 @@ background-color: null;
 font-style: inherit;">8</span>)</span>
 <span id="cb2-5">  hazard_relapse   <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">ifelse</span>(stoma <span class="sc" style="color: #5E5E5E;
+font-style: inherit;">0.10</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+font-style: inherit;">*</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">1</span>, hr1<span class="sc" style="color: #5E5E5E;
+font-style: inherit;">exp</span>(stoma<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">*</span><span class="fl" style="color: #AD0000;
+font-style: inherit;">*</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">0.10</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">log</span>(hr1)<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">0.10</span>) <span class="co" style="color: #5E5E5E;
+font-style: inherit;">+</span>age<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">log</span>(hr2))</span>
+<span id="cb2-6"> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 再発のハザード（大きいほど早く起こる）</span></span>
-<span id="cb2-6">  hazard_death     <span class="ot" style="color: #003B4F;
+<span id="cb2-7">  hazard_death     <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -535,24 +540,24 @@ font-style: inherit;">ifelse</span>(stoma <span class="sc" style="color: #5E5E5E
 background-color: null;
 font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>, hr2<span class="sc" style="color: #5E5E5E;
+font-style: inherit;">1</span>, hr3 <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">*</span><span class="fl" style="color: #AD0000;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.10</span>, <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.10</span>) <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 死亡のハザード（大きいほど早く起こる）</span></span>
-<span id="cb2-7">  hazard_censoring <span class="ot" style="color: #003B4F;
+<span id="cb2-8">  hazard_censoring <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.05</span>                               <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 打ち切りハザード（群に依存しない）</span></span>
-<span id="cb2-8">  </span>
-<span id="cb2-9">  t_relapse   <span class="ot" style="color: #003B4F;
+<span id="cb2-9"></span>
+<span id="cb2-10">  t_relapse   <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -561,7 +566,7 @@ background-color: null;
 font-style: inherit;">rate =</span> hazard_relapse)   <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 再発までの潜在時間</span></span>
-<span id="cb2-10">  t_death     <span class="ot" style="color: #003B4F;
+<span id="cb2-11">  t_death     <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -570,7 +575,7 @@ background-color: null;
 font-style: inherit;">rate =</span> hazard_death)     <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 死亡までの潜在時間</span></span>
-<span id="cb2-11">  t_censoring <span class="ot" style="color: #003B4F;
+<span id="cb2-12">  t_censoring <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -579,16 +584,16 @@ background-color: null;
 font-style: inherit;">rate =</span> hazard_censoring) <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 打ち切りまでの潜在時間</span></span>
-<span id="cb2-12">  </span>
-<span id="cb2-13">  <span class="do" style="color: #5E5E5E;
+<span id="cb2-13">  </span>
+<span id="cb2-14">  <span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## --- 全生存期間（OS） ----------------------------------------</span></span>
-<span id="cb2-14">  time_os   <span class="ot" style="color: #003B4F;
+<span id="cb2-15">  time_os   <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">pmin</span>(t_death, t_censoring)</span>
-<span id="cb2-15">  status_os <span class="ot" style="color: #003B4F;
+<span id="cb2-16">  status_os <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -597,22 +602,22 @@ background-color: null;
 font-style: inherit;">&lt;=</span> t_censoring)  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 1 = 死亡, 0 = 打ち切り</span></span>
-<span id="cb2-16">  </span>
-<span id="cb2-17">  <span class="do" style="color: #5E5E5E;
+<span id="cb2-17">  </span>
+<span id="cb2-18">  <span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## --- 無再発生存期間（RFS） -----------------------------------</span></span>
-<span id="cb2-18">  time_rfs <span class="ot" style="color: #003B4F;
+<span id="cb2-19">  time_rfs <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">pmin</span>(t_relapse, t_death, t_censoring)</span>
-<span id="cb2-19">  </span>
-<span id="cb2-20">  status_rfs <span class="ot" style="color: #003B4F;
+<span id="cb2-20">  </span>
+<span id="cb2-21">  status_rfs <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">integer</span>(n)</span>
-<span id="cb2-21">  status_rfs[time_rfs <span class="sc" style="color: #5E5E5E;
+<span id="cb2-22">  status_rfs[time_rfs <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> t_relapse <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -625,7 +630,7 @@ background-color: null;
 font-style: inherit;">1</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 再発</span></span>
-<span id="cb2-22">  status_rfs[time_rfs <span class="sc" style="color: #5E5E5E;
+<span id="cb2-23">  status_rfs[time_rfs <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> t_death <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -638,22 +643,22 @@ background-color: null;
 font-style: inherit;">1</span>   <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># 死亡</span></span>
-<span id="cb2-23">  </span>
-<span id="cb2-24">  <span class="do" style="color: #5E5E5E;
+<span id="cb2-24">  </span>
+<span id="cb2-25">  <span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## --- 累積再発率（CIR） + 競合リスク --------------------------</span></span>
-<span id="cb2-25">  time_cir <span class="ot" style="color: #003B4F;
+<span id="cb2-26">  time_cir <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">pmin</span>(t_relapse, t_death, t_censoring)</span>
-<span id="cb2-26">  </span>
-<span id="cb2-27">  status_cir <span class="ot" style="color: #003B4F;
+<span id="cb2-27">  </span>
+<span id="cb2-28">  status_cir <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">integer</span>(n)</span>
-<span id="cb2-28">  status_cir[time_cir <span class="sc" style="color: #5E5E5E;
+<span id="cb2-29">  status_cir[time_cir <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> t_relapse <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -666,7 +671,7 @@ background-color: null;
 font-style: inherit;">1</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># イベント1: 再発</span></span>
-<span id="cb2-29">  status_cir[time_cir <span class="sc" style="color: #5E5E5E;
+<span id="cb2-30">  status_cir[time_cir <span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">==</span> t_death <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -679,23 +684,23 @@ background-color: null;
 font-style: inherit;">2</span>   <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># イベント2: 競合リスクとしての死亡</span></span>
-<span id="cb2-30">  </span>
-<span id="cb2-31">  <span class="do" style="color: #5E5E5E;
+<span id="cb2-31">  </span>
+<span id="cb2-32">  <span class="do" style="color: #5E5E5E;
 background-color: null;
 font-style: italic;">## --- データフレームにまとめる --------------------------------</span></span>
-<span id="cb2-32">  dat <span class="ot" style="color: #003B4F;
+<span id="cb2-33">  dat <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">data.frame</span>(</span>
-<span id="cb2-33">    <span class="at" style="color: #657422;
+<span id="cb2-34">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">id         =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">:</span>n,</span>
-<span id="cb2-34">    <span class="at" style="color: #657422;
+<span id="cb2-35">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">sex        =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -716,10 +721,10 @@ background-color: null;
 font-style: inherit;">"WOMAN"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"MAN"</span>)),</span>
-<span id="cb2-35">    <span class="at" style="color: #657422;
+<span id="cb2-36">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">age        =</span> age,</span>
-<span id="cb2-36">    <span class="at" style="color: #657422;
+<span id="cb2-37">    <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">stoma      =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -732,7 +737,7 @@ background-color: null;
 font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>),</span>
-<span id="cb2-37">                        <span class="at" style="color: #657422;
+<span id="cb2-38">                        <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">labels =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -741,28 +746,25 @@ background-color: null;
 font-style: inherit;">"WITHOUT STOMA"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"WITH STOMA"</span>)),</span>
-<span id="cb2-38">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">time_os    =</span> time_os,</span>
 <span id="cb2-39">    <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">status_os  =</span> status_os,</span>
+font-style: inherit;">time_os    =</span> time_os,</span>
 <span id="cb2-40">    <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">time_rfs   =</span> time_rfs,</span>
+font-style: inherit;">status_os  =</span> status_os,</span>
 <span id="cb2-41">    <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">status_rfs =</span> status_rfs,</span>
+font-style: inherit;">time_rfs   =</span> time_rfs,</span>
 <span id="cb2-42">    <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">time_cir   =</span> time_cir,</span>
+font-style: inherit;">status_rfs =</span> status_rfs,</span>
 <span id="cb2-43">    <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">status_cir =</span> status_cir</span>
-<span id="cb2-44">  )</span>
-<span id="cb2-45">  <span class="fu" style="color: #4758AB;
+font-style: inherit;">time_cir   =</span> time_cir,</span>
+<span id="cb2-44">    <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">return</span>(dat)</span>
+font-style: inherit;">status_cir =</span> status_cir</span>
+<span id="cb2-45">  )</span>
 <span id="cb2-46">}</span></code></pre></div>
 </div>
 </div>
@@ -815,7 +817,11 @@ font-style: inherit;">hr1=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">hr2=</span><span class="fl" style="color: #AD0000;
+font-style: inherit;">hr2=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">hr3=</span><span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1.5</span>) <span class="co" style="color: #5E5E5E;
 background-color: null;
