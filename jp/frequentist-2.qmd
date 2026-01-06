@@ -105,7 +105,7 @@ Keywords: clinical trial, language & writing, p-value, survival & competing risk
 :::
 
 ::: voice-father
-お父さん「その通り。同じ試験を100回繰り返したらp値が100個出てくるでしょ。これがこの場合の確率の定義なんだ。頻度論的確率（frequentist probability）とかいうね。じゃあ確率の意味の次は、p値の解釈。p値が小さいことは、“科学的に重要な知見が得られたこと”を意味すると思う？」
+お父さん「その通り。同じ試験を100回繰り返したらp値が100個出てくるでしょ。これがこの場合の確率の定義なんだ。頻度論的確率（frequentist probability）とかいうね。じゃあ確率の意味の次は、p値の解釈。p値が小さいことは、"科学的に重要な知見が得られたこと"を意味すると思う？」
 :::
 
 ::: voice-daughter
