@@ -95,8 +95,8 @@ listing:
 
 ### 4. Frequentist Experiments — 頻度論の抽象をシミュレーションで具体化する
 
-- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-5.html)
-- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-6.html)
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
 
 ::: {.callout-note appearance="simple" collapse="true" title="このシリーズの内容 & Rスクリプト"}
 - **Understanding Confidence Intervals via Hypothetical Replications in R**
@@ -139,12 +139,12 @@ listing:
 
 ### 6. Adjusting for Bias — ロジスティック回帰に関する父からの手ほどき
 
-- [Understanding Collapsibility of Effect Measures: Marginal vs Stratified]
-- [From Risk to Logistic Regression]
-- [Logit: How a Transformation Shapes an Effect]
-- [Where My Logistic Regression Went Wrong]
-- [Why Logistic Regression Fails in Small Samples]
-- [Understanding Confounding in Effect Measures: Marginal vs Stratified]
+- [Understanding Collapsibility of Effect Measures: Marginal vs Stratified](logistic-regression-1.html)
+- [From Risk to Logistic Regression](logistic-regression-2.html)
+- [Logit: How a Transformation Shapes an Effect](logistic-regression-3.html)
+- [Where My Logistic Regression Went Wrong](logistic-regression-4.html)
+- [Why Logistic Regression Fails in Small Samples](logistic-regression-5.html)
+- [Understanding Confounding in Effect Measures: Marginal vs Stratified](logistic-regression-6.html)
 
 ::: {.callout-note appearance="simple" collapse="true" title="このシリーズの内容 & Rスクリプト"}
 - **Understanding Collapsibility of Effect Measures: Marginal vs Stratified**
@@ -167,14 +167,14 @@ listing:
 
 ### 7. Truth — 真実
 
-- [What Data Cannot Tell Us]
-- [What Could Have Happened]
-- [What Structures Structure]
-- [What Is It That You Want to Know?]
+- [What Data Cannot Tell Us](truth-1.html)
+- [What Could Have Happened](truth-2.html)
+- [What Structures Structure](truth-3.html)
+- [What Is It That You Want to Know?](truth-4.html)
 
 ### 8. Causal Inference — グラフと反事実と数式が映し出す因果の影
 
-- [Three-Variable DAGs: The Smallest Building Blocks of Causal Structure]
+- [Three-Variable DAGs: The Smallest Building Blocks of Causal Structure] (Scheduled for release in February)
 - [A Subtle Distinction between Common Causes and Confounders]
 - [DAGs and Conditional Distributions: Two Languages for the Same Structure]
 - [A Circle, an Equation, and a Cylinder]
