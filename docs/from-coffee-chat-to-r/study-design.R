@@ -68,7 +68,7 @@ cifplot(Event(time, status) ~ stoma,
 #--------------------------------------------------------------------------------------------------
 
 #- Definition of function ----------------------------------
-generate_data <- function(n = 200, hr1, hr2) {
+generate_data <- function(n = 200, hr1, hr2, hr3) {
   # Stoma: 1 = with stoma, 0 = without stoma
   stoma <- rbinom(n, size = 1, prob = 0.4)
   # Sex: 0 = WOMAN, 1 = MAN
@@ -77,10 +77,10 @@ generate_data <- function(n = 200, hr1, hr2) {
   age <- rnorm(n, mean = 65 + 3 * stoma, sd = 8)
   
   # Hazards for relapse and death (larger hazard implies earlier event)
-  hazard_relapse   <- ifelse(stoma == 1, hr1 * 0.10, 0.10)
-  hazard_death     <- ifelse(stoma == 1, hr2 * 0.10, 0.10)
+  hazard_relapse   <- 0.10*exp(stoma*log(hr1)+age*log(hr2))
+  hazard_death     <- ifelse(stoma == 1, hr3 * 0.10, 0.10)
   hazard_censoring <- 0.05
-  
+
   # Latent times to relapse, death, and censoring
   t_relapse   <- rexp(n, rate = hazard_relapse)
   t_death     <- rexp(n, rate = hazard_death)
@@ -127,7 +127,7 @@ generate_data <- function(n = 200, hr1, hr2) {
 
 #- Generation of data frame "dat" --------------------------
 set.seed(46)
-dat <- generate_data(hr1 = 2, hr2 = 1.5)
+dat <- generate_data(hr1 = 2, hr2 = 1, hr3 = 1.5)
 
 #- Analysis of OS using cifplot() --------------------------
 # install.packages("cifmodeling") # if needed

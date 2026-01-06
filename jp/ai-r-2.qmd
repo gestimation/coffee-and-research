@@ -260,9 +260,7 @@ Kaplan-Meier法では、生存時間が正規分布したり、比例ハザー�
 **このシリーズのエピソード**
 
 - [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses](ai-r-1.html)
-
 - [R Demonstration of Bias in Kaplan-Meier Under Competing Risks](ai-r-2.html)
-
 - [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
 
 **生存時間解析・競合リスク解析入門（A Conversation on Causality at Our Table）**
