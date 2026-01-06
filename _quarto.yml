@@ -6,6 +6,7 @@ project:
     - from-coffee-chat-to-r/frequentist.R
     - from-coffee-chat-to-r/effects.R
     - from-coffee-chat-to-r/logistic-regression.R
+    - from-coffee-chat-to-r/ai-r.R
     - google232e7b0b40f73b28.html
     
 website:

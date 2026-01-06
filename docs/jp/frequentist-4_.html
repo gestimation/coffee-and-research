@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="臨床試験で生まれるp値の真の意味は？仮想的な反復という頻度論の発想を、会話を通して確認するcoffee-chat guide。p値の直感を育てる一編です。">
+<meta name="description" content="理論で語られるバイアスは、Rのシミュレーションで確かめられます。Kaplan-Meierの挙動を確認するcoffee-chat guide。Rに不慣れな方も、スクリプトを流すだけですので結果を再現してみてください。">
 
-<title>P-Value Explanations That Seem Plausible at First Glance – Coffee and Research</title>
+<title>R Demonstration of Bias in Kaplan-Meier Under Competing Risks – Coffee and Research</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -151,7 +151,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../styles.css">
-<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/jp/frequentist-2.html">
+<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/jp/frequentist-4_.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -249,12 +249,9 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#frequentist-thinking-ii-p-value-explanations-that-seem-plausible-at-first-glance" id="toc-frequentist-thinking-ii-p-value-explanations-that-seem-plausible-at-first-glance" class="nav-link active" data-scroll-target="#frequentist-thinking-ii-p-value-explanations-that-seem-plausible-at-first-glance">Frequentist Thinking II − P-Value Explanations That Seem Plausible at First Glance</a>
+  <li><a href="#frequentist-experiments-i-r-demonstration-of-bias-in-kaplan-meier-under-competing-risks" id="toc-frequentist-experiments-i-r-demonstration-of-bias-in-kaplan-meier-under-competing-risks" class="nav-link active" data-scroll-target="#frequentist-experiments-i-r-demonstration-of-bias-in-kaplan-meier-under-competing-risks">Frequentist Experiments I − R Demonstration of Bias in Kaplan-Meier Under Competing Risks</a>
   <ul class="collapse">
-  <li><a href="#生存曲線とハザード比" id="toc-生存曲線とハザード比" class="nav-link" data-scroll-target="#生存曲線とハザード比">生存曲線とハザード比</a></li>
-  <li><a href="#p値に関する一見正しそうな説明" id="toc-p値に関する一見正しそうな説明" class="nav-link" data-scroll-target="#p値に関する一見正しそうな説明">p値に関する一見正しそうな説明</a></li>
-  <li><a href="#標準規格としてのp値" id="toc-標準規格としてのp値" class="nav-link" data-scroll-target="#標準規格としてのp値">標準規格としてのp値</a></li>
-  <li><a href="#文献" id="toc-文献" class="nav-link" data-scroll-target="#文献">文献</a></li>
+  <li><a href="#モデルを立ててバイアスを確かめる" id="toc-モデルを立ててバイアスを確かめる" class="nav-link" data-scroll-target="#モデルを立ててバイアスを確かめる">モデルを立ててバイアスを確かめる</a></li>
   <li><a href="#次のエピソードとrスクリプト" id="toc-次のエピソードとrスクリプト" class="nav-link" data-scroll-target="#次のエピソードとrスクリプト">次のエピソードとRスクリプト</a></li>
   </ul></li>
   </ul>
@@ -265,12 +262,12 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">P-Value Explanations That Seem Plausible at First Glance</h1>
+<h1 class="title">R Demonstration of Bias in Kaplan-Meier Under Competing Risks</h1>
 </div>
 
 <div>
   <div class="description">
-    臨床試験で生まれるp値の真の意味は？仮想的な反復という頻度論の発想を、会話を通して確認するcoffee-chat guide。p値の直感を育てる一編です。
+    理論で語られるバイアスは、Rのシミュレーションで確かめられます。Kaplan-Meierの挙動を確認するcoffee-chat guide。Rに不慣れな方も、スクリプトを流すだけですので結果を再現してみてください。
   </div>
 </div>
 
@@ -290,180 +287,75 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <div class="hero-header">
 <p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
 </div>
-<section id="frequentist-thinking-ii-p-value-explanations-that-seem-plausible-at-first-glance" class="level1">
-<h1>Frequentist Thinking II − P-Value Explanations That Seem Plausible at First Glance</h1>
+<section id="frequentist-experiments-i-r-demonstration-of-bias-in-kaplan-meier-under-competing-risks" class="level1">
+<h1>Frequentist Experiments I − R Demonstration of Bias in Kaplan-Meier Under Competing Risks</h1>
 <div class="serif-block text-right">
-<p>Keywords: clinical trial, language &amp; writing, p-value, survival &amp; competing risks</p>
+<p>Keywords: bias, probability model, simulation, survival &amp; competing risks</p>
 </div>
 <hr>
-<section id="生存曲線とハザード比" class="level3">
-<h3 class="anchored" data-anchor-id="生存曲線とハザード比">生存曲線とハザード比</h3>
+<section id="モデルを立ててバイアスを確かめる" class="level3">
+<h3 class="anchored" data-anchor-id="モデルを立ててバイアスを確かめる">モデルを立ててバイアスを確かめる</h3>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>私「お父さん、コーヒーもう一杯、淹れ直したよ。続けてJCOG9502のハザード比について教えてよ」</p>
+<p>私「おはよう、今朝は冷えるね。ご飯食べてるところ悪いんだけど、ちょっと気になったことがあって。以前、統計学にはランダム誤差とバイアスがあるっていってたよね、覚えてる？あ、コーヒーもらっていい？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「あつつ。それは図Aのhazard ratio of death 1.36、図Bのhazard ratio of recurrence or death 1.29についてだね。どちらもKaplan-Meier曲線の違いを要約していて、LTA群よりTH群の方が予後がよかったことを表している。ハザードが高いってことは、Kaplan-Meier曲線が下がりやすいっていう意味だからね。大事なのは、図Aの全生存期間（OS）、図Bの無病生存期間（DFS）のどちらも、ハザード比で要約しやすい形状をしていることかな」</p>
-</div>
-<p><img src="clinical-trial-1.png" class="img-fluid"></p>
-<div class="voice-daughter">
-<p>私「要約しやすい？」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「うん。どちらの図でもTH群のKaplan-Meier曲線が、きれいにLTA群の上にあるでしょ、右端の人数が4人しかいないところでは交差しているけど。ハザード比は、2本の生存曲線が、ハザードのスケールで比例関係にあることが前提なんだ。ハザード比の基準は書かれていないけど、TH群を比の分母にとっている。この関係を、<strong>Cox回帰（Cox regression）</strong>とか<strong>比例ハザードモデル（proportional hazards model）</strong>って呼ぶんだ」</p>
+<p>お父さん「覚えてるよ。コーヒーもどうぞ、まだ冷めてないと思う」</p>
 </div>
 <div class="voice-daughter">
-<p>私「比例関係だったら交差したらまずいよね」</p>
+<p>私「バイアスって疫学で習うものだよね。統計学の本を読んでもバイアスなんて出てこないよ」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そういうこと。それに、OSとDFSの結果が一貫している。これもすごく素直な結果だよね。解釈しやすい。後でRを用いたCox回帰をみせるよ」</p>
+<p>お父さん「そうだね、不偏推定量（unbiased estimator）っていう概念があるんだけど、数理統計学の話だから目にしないと思う」</p>
 </div>
 <div class="voice-daughter">
-<p>私「ありがとう、後でね。それよりさ。この図のハザード比は1.36と1.29だよね。ハザードが高いほどKaplan-Meier曲線が下がる、比の分母はTH群だっけ。ということは、ハザード比が1より大きいと、TH群よりLTA群の方がOSやDFSの成績が下がるんだよね？あと、p値は0.05より小さいと統計学的に有意なんでしょ。つまり、LTA群の方が、治療成績がわるかったけど、p値をみると2群に有意差はないんだよね」</p>
+<p>私「そうなんだ。でも聞いた感じ、疫学のバイアスとは別でしょ？データを解析した結果とどういう関係があるの？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「そういうことだね。ハザードは死亡や再発が起きるスピードを表していて、ハザード比はその2群間の“比”だから」</p>
-</div>
-</div>
-</section>
-<section id="p値に関する一見正しそうな説明" class="level3">
-<h3 class="anchored" data-anchor-id="p値に関する一見正しそうな説明">p値に関する一見正しそうな説明</h3>
-<div class="dialogue">
-<div class="voice-father">
-<p>お父さん「p値の正確な意味は誤解されてることが多いんだよ。論文を読むときの注意点としては、まず、試験によってはp値と比べる基準（有意水準）が5%でないかもしれないってこと。たとえば<strong>中間解析（interim analysis）</strong>とか。論文の抄録を読んでごらん。実はJCOG9502では最終解析の前に、中間解析をする計画になっていて、この論文はそのとき早期中止になった結果を報告しているみたいだよ。中間解析では、5%より低い有意水準で検定するのが一般的なんだ」</p>
+<p>お父さん「ああ、そういうことね。確かに、疫学で出てくる研究実施上のバイアスそのものは、統計学の教科書にあまり登場しないね。でも、推定した結果が真値からずれるっていう意味では同じもの。少し時間ある？カバンの中のパソコン出せる？」</p>
 </div>
 <div class="voice-daughter">
-<p>私「じゃあ有意差がついたから早期中止したってこと？」</p>
+<p>私「え？朝からなにするの？」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「いや、この試験が早期中止した理由は、有意差がついたからではなく、LTA群が有意に勝つ見込みがないと、効果安全性評価委員会が判断したためだね。他にも誤解はいくつもある。これをみてよ」</p>
-</div>
-<ol type="1">
-<li>p値は<strong>帰無仮説（null hypothesis）</strong>が正しい確率である</li>
-<li>p値が小さく、統計学的に有意であることは、科学的に重要な知見が得られたことを意味する</li>
-<li>統計学的に有意でない結果とは、帰無仮説が正しいので採択すべきという意味である</li>
-</ol>
-<div class="voice-father">
-<p>お父さん「JCOG9502の場合、帰無仮説は”LTA群の全生存曲線は、TH群の全生存曲線と等しい”ってことだよ。このp値に関する説明のうち、まず1について聞くね。JCOG9502のp値は、”LTA群とTH群の生存曲線に差がない確率”を意味すると思う？」</p>
+<p>お父さん「統計学ではよく、シミュレーションっていってデータを乱数で発生させて実験するんだ。<strong>Kaplan-Meier曲線を</strong>描くとき、<strong>競合リスク</strong>の扱いによってはバイアスが生じるってことをみせてあげるよ、バイアスがどれくらい困ったことなのか実感ないみたいだから。前に使ったRスクリプトをいじるだけですぐ終わるから」</p>
 </div>
 <div class="voice-daughter">
-<p>私「黒板くさくなってきた。統計の教科書って私がいったの、地雷だったか？まあ、1はそれでいいんじゃない？p値が0.05だったら100回に5回は正しい」</p>
+<p>私「仕方ないな」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「ここではね、言葉を正確に選んで考えてみてほしいんだ。“生存曲線に差がない”っていう命題や仮説は、確率変数かな？確率変数ではないよね。命題は、正しいかどうかのどちらかしかないもの。確率変数ではないのに、確率が定義されるのは学問的におかしい」</p>
+<p>お父さん「パソコンを立ち上げる間に何をするか話そう。まずね、いまから見せるのは”研究の不備”のバイアスじゃなくて、“目標としている値と違う値を統計的に推定してしまう”という現象だよ。競合リスクを含むデータは、こういう仕組みで生まれる」</p>
+</div>
+<ul>
+<li>再発までの時間を発生させる</li>
+<li>死亡までの時間を発生させる（競合リスク）</li>
+<li>打ち切りまでの時間を発生させる</li>
+</ul>
+<div class="voice-father">
+<p>お父さん「実際に観測されるのは、もちろんそのうち一番先に起きたイベント、つまりこの3つの値の最小値をとる」</p>
 </div>
 <div class="voice-daughter">
-<p>私「はーん。そういう理屈っぽいことがいいたかったわけね。じゃあそういう言い回しはやめます」</p>
+<p>私「なるほど、それなら再発より先に死亡したら、再発は観測されないわけだ。当たり前だけど、シミュレーションはこうやるのね」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「うんうん。じゃあ100回に5回ってどういう意味でいった？」</p>
-</div>
-<div class="voice-daughter">
-<p>私「へ。言葉通りだけど？JCOG9502を100回やったらどうなるかって意味」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「その通り。同じ試験を100回繰り返したらp値が100個出てくるでしょ。これがこの場合の確率の定義なんだ。頻度論的確率（frequentist probability）とかいうね。じゃあ確率の意味の次は、p値の解釈。p値が小さいことは、“科学的に重要な知見が得られたこと”を意味すると思う？」</p>
-</div>
-<div class="voice-daughter">
-<p>私「普通そう考えるんじゃない？」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「でもさっきの図のp値を見てよ。p=0.15からp=0.92まで4つのp値が示されているけど、どれも小さくはないでしょ」</p>
-</div>
-<div class="voice-daughter">
-<p>私「うん」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「じゃあ科学的に重要じゃないってこと？」</p>
-</div>
-<div class="voice-daughter">
-<p>私「そういう意味でいったわけじゃないけど」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「だよね。p値が小さい方が重要な研究結果だって考えがちだけど、それははっきりとした間違いだと考えてください。論文を読むとき、p値に注目すると見方が偏ってしまう」</p>
-</div>
-<div class="voice-daughter">
-<p>私「はいはい。お父さん、話長くない？」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「三つ目の説明“統計学的に有意でない結果とは、帰無仮説が正しいので採択すべきという意味である”まで考えようよ。これは正しい？」</p>
-</div>
-<div class="voice-daughter">
-<p>私「教科書かなにかで、p値は、仮説を棄却するためのもので、採択しちゃだめって読んだ気がする。この最後の説明も、やっぱり間違いなんでしょ、空気でわかる。でもさ、実際問題として、有意差がつかなかったらどうなるの？たとえば実薬AとBを比較する臨床試験だったとして、AとBの効果は同等と結論に書いていいの？」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「それはルール違反だよ。この問いは、そういう間違いをさせないために出したんだ。帰無仮説が正しいことは、AとBの効果は同等っていう意味になるけど、有意差がないからって、それを採択してはいけない。“同等”や“劣らない”という結論を出すには、<strong>同等性 （equivalence）試験</strong>や<strong>非劣性 （non-inferiority）試験</strong>を組む必要がある」</p>
-</div>
-<div class="voice-daughter">
-<p>私「やっぱりね。そう思ったけど、はっきりいってくれて納得だわ」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「この区別はルールに組み込まないとまずいことを歴史が証明している。これはもう30年ほど前の日本の話なんだけど。昔、薬事承認の根拠として非劣性試験を国が求めていた時代があってね。その時代の経験を踏まえると、研究仮説と統計的な判断基準の関係は、厳密に考えとかないとちょっとまずいと思うんだ」</p>
+<p>お父さん「ここで問題になるのが統計手法の選び方なんだ。よく死亡を打ち切りにした解析を見るでしょ。あのKaplan-Meier曲線は、現実世界で再発が生じる確率を過大評価してしまう。これじゃなくて<strong>Aalen-Johansen曲線</strong>を推定すると、正しく再発確率が求められる。ではRでデータを発生させてみよう」</p>
 </div>
 </div>
-</section>
-<section id="標準規格としてのp値" class="level3">
-<h3 class="anchored" data-anchor-id="標準規格としてのp値">標準規格としてのp値</h3>
-<div class="dialogue">
-<div class="voice-daughter">
-<p>私「教科書的な説明は、それはそれでいいんだけどさ。なんだか、現実とギャップを感じるよ、私は。2の”p値が小さいと科学的に重要”についてなんだけどね。そうはいっても基礎研究だと、有意差がつかない結果はいまいち扱いじゃない？それが現実だと思う。でもJCOG9502は違うのもわかる。LTAの有効性が示されたわけでも、術式が同等ってわかったわけでもない。でもどうしてLancet Oncologyに載るほど評価されたんだろう」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「ん？有意差がつかない臨床試験結果に価値がないとは思わないけど。臨床試験って、技術の性能評価が目的じゃない？手術や薬といった医療技術のね。有効性が示されるかどうかに関わらず、評価が定まったということに変わりはないよね」</p>
-</div>
-<div class="voice-daughter">
-<p>私「…ネガティブ試験でも価値が変わらないってことをいってるよね？」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「うん。たとえるならさ、臨床試験はペーパーテストと同じ”試験”ってことだよ。合格・不合格と試験成績という情報の価値は無関係でしょ。さっき話したp値に関する説明は、採点ルールや試験の”標準規格”みたいなもので避けて通れないんだ。まあ、点数がすべてじゃないけどね」</p>
-</div>
-<div class="voice-daughter">
-<p>私「臨床試験は技術を評価するのが目的ってこと？科学的発見じゃなくて？」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「うん。臨床試験が行われてきた文脈は、技術評価の制度の中だったといえると思うよ。p値の使い方や、有効性エンドポイントの定義の標準化も、“試験の規格”を一定に保つための工夫だった。古い話だけど、製薬企業が承認取得のために行う臨床試験って、90年代はまだ各国の共通ルールがなかった。90年代後半になって、米国、欧州、日本の規制当局が集まってICHガイドラインという臨床試験の標準規格を決めたんだ」</p>
-</div>
-<div class="voice-daughter">
-<p>私「それは医師主導臨床試験じゃなくて治験だよね。お父さんさ、やっぱり臨床試験はパラダイムシフトを起こしてない？殺細胞薬、抗PD-1、ADC。あれを”技術評価”って呼ぶのは、あんまり納得いかないな」</p>
-</div>
-<div class="voice-father">
-<p>お父さん「それは技術評価の結果が科学を刺激しただけじゃないかなあ」</p>
-</div>
-<div class="voice-daughter">
-<p>私「お父さんって、技術と科学を区別したがるね。まあ、企業治験は技術評価のくくりでも私はいいよ。でも、科学の営み全体をみたとき、臨床試験はその一部だと思う。結果が仮説を更新して、次の問いを生む。私はそれを科学って呼びたい」</p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled" title="ホパテの悲劇">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-ホパテの悲劇
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>脳循環改善薬という古い薬をご存知でしょうか？この薬はかつて脳血管障害の後遺症や認知症などに使われ、累計8,000億円ほどの売上げがあったようです。脳循環改善薬にはいくつかの類似薬がありましたが、そのほとんどが、最初に承認されたホパンテン酸カルシウム（販売名ホパテ）と比較した「非劣性試験」を根拠に承認されていました。しかし当時行われていたのは、正式な非劣性の解析ではなく、「ホパンテン酸カルシウムと比べて有意差がない」ことにもとづいて非劣性を判定していました。1989年にホパンテン酸カルシウムは副作用のため市場から撤退しました。同時期に、厚生省（当時）は製薬企業にプラセボ対照試験による再評価を求めました。その結果、脳循環改善薬は、すべてプラセボに勝てなかったのです（厚生省医薬安全局1998）。この悲劇は、有意差がつかなかったとき、同等や非劣性と結論するのは間違いであることをはっきり示しています。</p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled" title="coxph()を用いたハザード比の推定">
+<div class="callout callout-style-simple callout-note callout-titled" title="シミュレーションデータ（再発あり）におけるKaplan-Meier曲線のバイアス">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-coxph()を用いたハザード比の推定
+シミュレーションデータ（再発あり）におけるKaplan-Meier曲線のバイアス
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>ハザード比を推定する方法はいくつかありますが、もっともポピュラーなのは<strong>survival</strong>パッケージの<code>coxph()</code>です。以前のエピソードでは、関数<code>generate_data(hr1, hr2)</code>を用いて、ストーマの有無やOSのデータを生成しました。今回は同じデータにCox回帰を当てはめ、ストーマあり群とストーマなし群のハザード比を計算してみます。<code>generate_data(hr1, hr2)</code>では、死亡ハザード比の真値はhr2という引数で指定できます。</p>
+<p>以前生成したシミュレーションデータにおける累積再発率（CIR）の解析では、再発の前に死亡した患者（競合リスク）を発生させたことを覚えていますか？競合リスク存在下でKaplan-Meier曲線を用いるとバイアスが生じることは、簡単な実験で確かめることができます。</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="generate_data()のコードはこちら（データ生成に使用）">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -472,7 +364,7 @@ generate_data()のコードはこちら（データ生成に使用）
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>generate_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">200</span>, hr1, hr2) {</span>
@@ -491,7 +383,7 @@ generate_data()のコードはこちら（データ生成に使用）
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  time_os   <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_death, t_censoring)</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  status_os <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(t_death <span class="sc">&lt;=</span> t_censoring)  <span class="co"># 1 = 死亡, 0 = 打ち切り</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 無再発存期間（RFS） -------------------------------------</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 無再発生存期間（RFS） -----------------------------------</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  time_rfs <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  status_rfs <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
@@ -524,63 +416,191 @@ generate_data()のコードはこちら（データ生成に使用）
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="coxph()のコードと結果はこちら">
+<div class="callout callout-style-simple callout-note callout-titled" title="累積再発率（CIR）のAalen-Johansen曲線">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+累積再発率（CIR）のAalen-Johansen曲線
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Kaplan-Meier曲線とAalen-Johansen曲線は、どちらも<code>cifmodeling</code>パッケージの<code>cifplot()</code>を使って生成できますが、イベントのコーディングを入力する<code>code.event1</code>、<code>code.event2</code>とデータの型を表す<code>outcome.type</code>を、指定する必要があります。<code>generate_data()</code>で生成したシミュレーションデータでは、CIRのイベントは以下のようにコーディングされていました。</p>
+<ul>
+<li><code>status_cir=1</code> : 再発</li>
+<li><code>status_cir=2</code> : 再発を経験しない死亡</li>
+<li><code>status_cir=0</code> : 打ち切り</li>
+</ul>
+<p>以下のRスクリプトでは、最初の<code>cifplot()</code>により、再発（<code>code.event1=1</code>）に関するAalen-Johansen曲線（<code>aj_event1</code>）を出力しています。縦軸は累積発生確率ではなく、1-累積発生確率を選んでいる点にも注意してください（<code>type.y="surv"</code>）。そして次の<code>cifplot()</code>ではイベントを入れ替えて、再発を経験しない死亡（<code>code.event1=1</code>）に関するAalen-Johansen曲線（<code>aj_event2</code>）を出力し、<code>cifpanel()</code>に用いて2つの図を左右に配置したひとつの図を表示しています。左右の累積発生確率の和に注目してください。この図からは、再発の累積発生確率と（再発を経験しない）死亡の累積発生確率の和は、時間が経つにつれ1に近づくが、1を超えることはないことがわかります。仮に打ち切りがなかったとしたら、再発と（再発を経験しない）死亡のどちらか一方しか生じないため、Aalen-Johansen曲線の和が1を超えないのは自然なことです。</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-coxph()のコードと結果はこちら
+Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("survival") #インストールが必要なら実行</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github("gestimation/cifmodeling") #インストールが必要なら実行 </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cifmodeling)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">generate_data</span>(<span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>) <span class="co">#再発ハザード比2, 死亡ハザード比1.5のデータ生成</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time_os, status_os) <span class="sc">~</span> stoma, <span class="at">data =</span> dat)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Call:
-coxph(formula = Surv(time_os, status_os) ~ stoma, data = dat)
-
-  n= 200, number of events= 135 
-
-                  coef exp(coef) se(coef)     z Pr(&gt;|z|)   
-stomaWITH STOMA 0.4923    1.6361   0.1754 2.806  0.00501 **
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-                exp(coef) exp(-coef) lower .95 upper .95
-stomaWITH STOMA     1.636     0.6112      1.16     2.307
-
-Concordance= 0.573  (se = 0.024 )
-Likelihood ratio test= 7.62  on 1 df,   p=0.006
-Wald test            = 7.87  on 1 df,   p=0.005
-Score (logrank) test = 8.03  on 1 df,   p=0.005</code></pre>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>aj_event1 <span class="ot">&lt;-</span> <span class="fu">cifplot</span>(<span class="fu">Event</span>(time_cir, status_cir) <span class="sc">~</span> stoma,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome.type =</span> <span class="st">"competing-risk"</span>, </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">type.y       =</span> <span class="st">"surv"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.y      =</span> <span class="st">"1-Aalen-Johansen"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">code.event1  =</span> <span class="dv">1</span>, </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">code.event2  =</span> <span class="dv">2</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>aj_event2 <span class="ot">&lt;-</span> <span class="fu">cifplot</span>(<span class="fu">Event</span>(time_cir, status_cir) <span class="sc">~</span> stoma,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome.type =</span> <span class="st">"competing-risk"</span>, </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">type.y       =</span> <span class="st">"risk"</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.y      =</span> <span class="st">"Aalen-Johansen"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">code.event1  =</span> <span class="dv">2</span>, </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">code.event2  =</span> <span class="dv">1</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>aj_list <span class="ot">&lt;-</span> <span class="fu">list</span>(aj_event1<span class="sc">$</span>plot, aj_event2<span class="sc">$</span>plot)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>aj_panel <span class="ot">&lt;-</span> <span class="fu">cifpanel</span>(<span class="at">rows.columns.panel =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">plots=</span>aj_list)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(aj_panel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="frequentist-4__files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="文献" class="level3">
-<h3 class="anchored" data-anchor-id="文献">文献</h3>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="累積再発率（CIR）のKaplan-Meier曲線">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+累積再発率（CIR）のKaplan-Meier曲線
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>実際の研究では、死亡を打ち切りとして扱った生存時間解析の結果をしばしば目にします。この解析に対応するKaplan-Meier曲線は、以下のようにイベントのコーディングを変更し、<code>outcome.type="survival"</code>を指定することで出力できます。</p>
 <ul>
-<li><p>Sasako M, Sano T, Yamamoto S, Sairenji M, Arai K, Kinoshita T, Nashimoto A, Hiratsuka M, Japan Clinical Oncology Group (JCOG9502). Left thoracoabdominal approach versus abdominal-transhiatal approach for gastric cancer of the cardia or subcardia: a randomised controlled trial. Lancet Oncol 2006;7(8):644-51</p></li>
-<li><p><a href="https://www.mhlw.go.jp/www1/houdou/1006/h0616-3.html">脳循環代謝改善薬ニセルゴリンの再評価について [Internet]. 東京: 厚生省医薬安全局; 1998</a></p></li>
+<li><code>status_cir1=1</code> : 再発</li>
+<li><code>status_cir1=0</code> : 再発を経験しない死亡/打ち切り</li>
+<li><code>status_cir2=1</code> : 再発を経験しない死亡</li>
+<li><code>status_cir2=0</code> : 再発/打ち切り</li>
 </ul>
+<p>新しく作ったイベント変数<code>status_cir1</code>と<code>status_cir2</code>を用いると、再発のKaplan-Meier曲線と（再発を経験しない）死亡のKaplan-Meier曲線を描くことができます。これらのKaplan-Meier曲線を左右に配置した図を、先ほどのAalen-Johansen曲線の図と比べてみてください。先ほどのAalen-Johansen曲線の和とは違い、Kaplan-Meier曲線の和が1を超えてしまって計算が合わないことが読み取れたでしょうか。</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rコードと結果はこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>status_cir1 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dat<span class="sc">$</span>status_cir<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>km_event1 <span class="ot">&lt;-</span> <span class="fu">cifplot</span>(<span class="fu">Event</span>(time_cir, status_cir1) <span class="sc">~</span> stoma,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome.type =</span> <span class="st">"survival"</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type.y       =</span> <span class="st">"surv"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.y      =</span> <span class="st">"Kaplan-Meier"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>status_cir2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dat<span class="sc">$</span>status_cir<span class="sc">==</span><span class="dv">2</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>km_event2 <span class="ot">&lt;-</span> <span class="fu">cifplot</span>(<span class="fu">Event</span>(time_cir, status_cir2) <span class="sc">~</span> stoma,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome.type =</span> <span class="st">"survival"</span>, </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">type.y       =</span> <span class="st">"risk"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.y      =</span> <span class="st">"1-Kaplan-Meier"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>km_list <span class="ot">&lt;-</span> <span class="fu">list</span>(km_event1<span class="sc">$</span>plot, km_event2<span class="sc">$</span>plot)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>km_panel <span class="ot">&lt;-</span> <span class="fu">cifpanel</span>(<span class="at">rows.columns.panel =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">plots=</span>km_list)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(km_panel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="frequentist-4__files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-father">
+<p>お父さん「わかった？打ち切りがランダムっていうのがKaplan-Meier曲線の前提条件なんだ。でも”競合イベントを打ち切り扱いにしていいか”は、ランダム打ち切りとは別問題なんだ」</p>
+</div>
+<div class="voice-daughter">
+<p>私「なるほどね。再発確率と死亡確率を足して1を超えることはあり得ない、Kaplan-Meier曲線にバイアスが生じていることの証拠だっていいたいのね。確かに、百聞は一見に如かず」</p>
+</div>
+<div class="voice-father">
+<p>お父さん「そう。このシミュレーションとまったく同じことを、統計学の数式は意味している。つまり、データ発生のアルゴリズムは<strong>確率モデル</strong>っていって、教科書では研究でなにが起きるかを抽象化した数式で書かれているんだ。そして、どんな推定でも使用条件みたいなものがあって、前提にしている確率モデルからずれると、推定値もまた真値からずれる。これは統計手法の誤用でも研究不備でも同じことだけど」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="このエピソードに関係するクイズです">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+このエピソードに関係するクイズです
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Kaplan-Meier法による生存曲線の推定が妥当な状況として正しいのは、次のうちどれでしょうか。</p>
+<ol type="1">
+<li>生存時間が正規分布するとき</li>
+<li>打ち切りの理由が疾患の悪化によらないとき</li>
+<li>2群の打ち切り確率に統計学的な有意差がなかったとき</li>
+<li>試験治療群とコントロール群の間で比例ハザード性が成り立つとき</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+答えはこちら
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>正解は2です</strong></li>
+</ul>
+<p>Kaplan-Meier法では、生存時間が正規分布したり、比例ハザードが成り立ったりする必要はありません（これはそれぞれ<em>t</em>検定とCox回帰の前提条件ですね）。疾患の悪化に伴って、試験の途中で患者が追跡できなくなると、推定された生存曲線にバイアスが生じてしまいます。2群の生存曲線を比べるとき、それぞれの群の打ち切り確率を比較することがあります。有意差があればバイアスがあるといえますが、たとえばサンプルサイズが小さいときは有意差が出ませんから、Kaplan-Meier法が妥当という証拠にはなりません。逆にいうと、打ち切りがランダムに起きていることが、Kaplan-Meier法の基本的な前提条件です。なお、競合イベントを打ち切りとして扱うかどうかは、ランダム打ち切りの条件とは独立に検討すべき問題ですよね。</p>
+</div>
+</div>
+</div>
 </section>
 <section id="次のエピソードとrスクリプト" class="level3">
 <h3 class="anchored" data-anchor-id="次のエピソードとrスクリプト">次のエピソードとRスクリプト</h3>
 <ul>
-<li><a href="frequentist-3.html">Beyond 0.05: Interpreting P-Values in a Clinical Trial</a></li>
+<li><a href="frequentist-5.html">Understanding Confidence Intervals via Hypothetical Replications in R</a></li>
 <li><a href="../from-coffee-chat-to-r/frequentist.R">frequentist.R</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -589,17 +609,18 @@ Score (logrank) test = 8.03  on 1 df,   p=0.005</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>
-<li><a href="frequentist-1.html">Reading a Paper over a Cup of Coffee</a></li>
-<li><a href="frequentist-2.html">P-Value Explanations That Seem Plausible at First Glance</a></li>
-<li><a href="frequentist-3.html">Beyond 0.05: Interpreting P-Values in a Clinical Trial</a></li>
+<li><a href="frequentist-4.html">R Demonstration of Bias in Kaplan-Meier Under Competing Risks</a></li>
+<li><a href="frequentist-5.html">Understanding Confidence Intervals via Hypothetical Replications in R</a></li>
+<li><a href="frequentist-6.html">Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</a></li>
 </ul>
 <p><strong>過去のシリーズ</strong></p>
 <ul>
 <li><a href="study-design-1.html">Study Design I</a></li>
+<li><a href="frequentist-1.html">Frequentist Thinking I</a></li>
 </ul>
 <p><strong>用語集</strong></p>
 <ul>

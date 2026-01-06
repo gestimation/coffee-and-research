@@ -172,6 +172,20 @@ Through conversations between a father and daughter, the *way researchers think*
 
 <div class="project-card">
 
+## AI & R Workflows — *How I Learned R from My Father*
+
+A companion series to A Conversation on Causality at Our Table. Through conversations and hands-on R, practical workflows unfold naturally—from data checks and Table 1 to curves, uncertainty, and study planning. Shared freely, like notes you’d want nearby when the coffee has gone cold.
+
+- [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses (in Japanese)](./jp/ai-r-1.html)
+
+- [R Demonstration of Bias in Kaplan-Meier Under Competing Risks (in Japanese)](./jp/ai-r-2.html)
+
+- [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R (in Japanese)](./jp/ai-r-3.html)
+
+</div>
+
+<div class="project-card">
+
 ## Eight Elements of Causal Inference Preserved in Japanese
 
 This is a short essay on Japanese language and kanji characters.

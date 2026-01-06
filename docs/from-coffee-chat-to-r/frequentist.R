@@ -18,12 +18,11 @@ fit <- coxph(Surv(time_os, status_os) ~ stoma, data = dat)
 summary(fit)
 
 
-
 #---------------------------------------------------------------------------------------------------------
-#- Frequentist Experiments II. Understanding Confidence Intervals via Hypothetical Replications in R -----
+#- Frequentist Experiments I. Understanding Confidence Intervals via Hypothetical Replications in R ------
 # 
-#  Original article (En): https://gestimation.github.io/coffee-and-research/en/frequentist-5.html
-#  Original article (JP): https://gestimation.github.io/coffee-and-research/jp/frequentist-5.html
+#  Original article (En): https://gestimation.github.io/coffee-and-research/en/frequentist-4.html
+#  Original article (JP): https://gestimation.github.io/coffee-and-research/jp/frequentist-4.html
 #  Required packages: survival ---------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------
 
@@ -78,11 +77,12 @@ print(coverage_200)
 print(coverage_400)
 print(coverage_800)
 
+
 #---------------------------------------------------------------------------------------------------------
-#- Frequentist Experiments III. Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size -
+#- Frequentist Experiments II. Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size --
 # 
-#  Original article (En): https://gestimation.github.io/coffee-and-research/en/frequentist-6.html
-#  Original article (JP): https://gestimation.github.io/coffee-and-research/jp/frequentist-6.html
+#  Original article (En): https://gestimation.github.io/coffee-and-research/en/frequentist-5.html
+#  Original article (JP): https://gestimation.github.io/coffee-and-research/jp/frequentist-5.html
 #  Required packages: powerSurvEpi -----------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------
 

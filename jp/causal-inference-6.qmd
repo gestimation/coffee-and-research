@@ -111,7 +111,7 @@ Keywords: causal model, probability model, p-value, language & writing
 これまでのエピソードでは、研究仮説から始まり、統計学から因果推論までたくさんの用語が登場しました。その語感を確かめるためには、VUCAのように別の切り口で整理するのも一つの手です。
 
 - Volatility（途中で前提が動く）: [生存時間解析](effects-6.html)、中間解析、効果安全性評価委員会
-- Uncertainty（同じ方法で研究しても結果が揺れる）: [p値](frequentist-2.html)、[信頼区間](frequentist-5.html)、[サンプルサイズ設計](frequentist-6.html)、確率モデル
+- Uncertainty（同じ方法で研究しても結果が揺れる）: [p値](frequentist-2.html)、[信頼区間](frequentist-4.html)、[サンプルサイズ設計](frequentist-5.html)、確率モデル
 - Complexity（変数が多くて方法が理解しにくい）: ランダム化、シミュレーション、変数選択、[DAG](causal-inference-1.html)
 - Ambiguity（問いとその答えがぶれる）: [PICO/PECO](study-design-1.html)、[定義](study-design-3.html)、研究計画書、仮定の明示、[因果モデル](truth-1.html)
 

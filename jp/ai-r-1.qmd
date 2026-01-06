@@ -484,8 +484,8 @@ print(table2, showAllLevels = TRUE)
 
 **Rシミュレーション**
 
-- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-5.html)
-- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-6.html)
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
 
 **DAG入門**
 

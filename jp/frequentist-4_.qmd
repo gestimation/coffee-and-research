@@ -247,8 +247,9 @@ Kaplan-Meier法では、生存時間が正規分布したり、比例ハザー�
 
 **このシリーズのエピソード**
 
-- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
-- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
+- [R Demonstration of Bias in Kaplan-Meier Under Competing Risks](frequentist-4.html)
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-5.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-6.html)
 
 **過去のシリーズ**
 

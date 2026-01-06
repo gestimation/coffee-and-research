@@ -249,11 +249,11 @@ Kaplan-Meier法では、生存時間が正規分布したり、比例ハザー�
 - [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R](ai-r-3.html)
 - [ai-r.R](../from-coffee-chat-to-r/ai-r.R)
 
-### アウトカムについて詳しく知りたい方へ
+### 生存時間解析・競合リスク解析について詳しく知りたい方へ
 
 "A Conversation on Causality at Our Table"のこのエピソードもご覧ください。
 
-- [Outcomes: The Bridge from Data Collection to Analysis](study-design-3.html)
+- [A First Step into Survival and Competing Risks Analysis with R](study-design-4.html)
 
 ::: {.callout-note appearance="simple" collapse="true" title="関連エピソードはこちら"}
 
@@ -271,8 +271,8 @@ Kaplan-Meier法では、生存時間が正規分布したり、比例ハザー�
 
 **Rシミュレーション**
 
-- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-5.html)
-- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-6.html)
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
 
 **DAG入門**
 
