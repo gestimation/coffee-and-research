@@ -194,8 +194,27 @@ p値とは、帰無仮説が正しい、つまり生存曲線に差がない、�
 
 - 吉村功. 検証的臨床試験における有意水準と試験の数－「臨床試験のための統計的原則」との関連で－. 計量生物学 2003; 24: S3-9
 
-### This concludes the Frequentist Thinking series. If you’d like to keep reading over your next cup of coffee, the following episodes are waiting:
+### 頻度論の確率の捉え方についてのふたりの会話はいかがでしたか？次のシリーズでは、シミュレーションを通じて信頼区間・p値・サンプルサイズが臨床研究でどんな意味を持っているか体験します。
 
 - [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
-- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
-- [frequentist.R](../from-coffee-chat-to-r/frequentist.R)
+
+### シミュレーションはスキップして、その先のエピソードを読みたいという方はこちら。
+
+- [Silent Confusions Hidden in Percentages](effects-1.html)
+
+::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}
+
+**このシリーズのエピソード**
+
+- [Reading a Paper over a Cup of Coffee](frequentist-1.html)
+- [P-Value Explanations That Seem Plausible at First Glance](frequentist-2.html)
+- [Beyond 0.05: Interpreting P-Values in a Clinical Trial](frequentist-3.html)
+
+**過去のシリーズ**
+
+- [Study Design I](study-design-1.html)
+
+**用語集**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::

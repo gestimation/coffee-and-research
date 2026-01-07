@@ -16,7 +16,7 @@ date: 2025-12-08
 ![](../image/father-daughter.png){.hero-header-img}
 :::
 
-# Adjusting for Bias V − Understanding Confounding in Effect Measures: Marginal vs Stratified
+# Adjusting for Bias VI − Understanding Confounding in Effect Measures: Marginal vs Stratified
 
 ::: {.serif-block .text-right}
 Keywords: confounding & collapsibility, effect measure, observational study, R simulation
@@ -259,6 +259,6 @@ print(risk_ratio2)
 
 - Simpson EH. The interpretation of interaction in contingency tables. J Royal Stat Soc B 1951;13:238-41
 
-### This concludes the Adjusting for Bias series. If you’d like to keep reading over your next cup of coffee, the following episode is waiting:
+### これが層別・ロジスティック回帰を用いたバイアス調整に関するふたりの会話でした。ぜひ次のエピソードにお進みください。
 
 - [What Data Cannot Tell Us](truth-1.html)

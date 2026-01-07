@@ -367,3 +367,25 @@ ssizeCT.default(
 - [Risk Ratios and Odds Ratios: When Approximation Works](effects-4.html)
 - [From Risk and Rate to Survival and Hazard](effects-5.html)
 - [Distinguishing Time-Point, Time-Constant, and Time-Varying Effects: An R Example](effects-6.html)
+
+
+### これで頻度論シリーズは終わりです。次のエピソードはこちら。
+
+- [Silent Confusions Hidden in Percentages](effects-1.html)
+
+::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}
+
+**このシリーズのエピソード**
+
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
+
+**過去のシリーズ**
+
+- [Study Design I](study-design-1.html)
+- [Frequentist Thinking I](frequentist-1.html)
+
+**用語集**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::

@@ -210,11 +210,29 @@ summary(rr_at_20)
 
 - Mok TS, Wu YL, Thongprasert S, Yang CH, Chu DT, Saijo N, Sunpaweravong P, Han B, Margono B, Ichinose Y, Nishiwaki Y, Ohe Y, Yang JJ, Chewaskulyong B, Jiang H, Duffield EL, Watkins CL, Armour AA, Fukuoka M. Gefitinib or carboplatin-paclitaxel in pulmonary adenocarcinoma. N Engl J Med 2009;361(10):947-57
 
-### This concludes the Effects and Time series. If you’d like to keep reading over your next cup of coffee, the following episodes are waiting:
+
+### これで効果指標に潜む集団と時間に関するシリーズは終わりです。次のエピソードはこちら。
 
 - [Understanding Collapsibility of Effect Measures: Marginal vs Stratified](logistic-regression-1.html)
-- [From Risk to Logistic Regression](logistic-regression-2.html)
-- [Logit: How a Transformation Shapes an Effect](logistic-regression-3.html)
-- [Where My Logistic Regression Went Wrong](logistic-regression-4.html)
-- [Why Logistic Regression Fails in Small Samples](logistic-regression-5.html)
-- [Understanding Confounding in Effect Measures: Marginal vs Stratified](logistic-regression-6.html)
+
+::: {.callout-note appearance="simple" collapse="true" title="他のエピソードはこちら"}
+
+**このシリーズのエピソード**
+
+- [Silent Confusions Hidden in Percentages](effects-1.html)
+- [Who Is This Percentage About? Target Populations and Attributable Fractions](effects-2.html)
+- [When Odds Ratios Approximate Risk Ratios—and When They Fail](effects-3.html)
+- [From Risk and Rate to Survival and Hazard](effects-4.html)
+- [A First Note on Cox Regression](effects-5.html)
+- [After Cox Regression: A Case Study and R Demonstration](effects-6.html)
+
+**過去のシリーズ**
+
+- [Study Design I](study-design-1.html)
+- [Frequentist Thinking I](frequentist-1.html)
+- [Frequentist Experiments I](frequentist-4.html)
+
+**用語集**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::

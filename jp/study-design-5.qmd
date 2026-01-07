@@ -149,7 +149,7 @@ Keywords: bias, language & writing, observational study, study design
 :::
 ::::::::::::::::::::::::::::::::: 
 
-### 医学研究に関するふたりの会話はいかがでしたか？以降のエピソードでは、統計学・因果推論から論文公表までを描いていきます。
+### 医学研究に関するふたりの会話はいかがでしたか？これ以降のエピソードでは、統計学・因果推論から論文公表までを描いていきます。
 
 - [Reading a Paper over a Cup of Coffee](frequentist-1.html)
 
