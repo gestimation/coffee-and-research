@@ -176,7 +176,7 @@ Through conversations between a father and daughter, the *way researchers think*
 
 A companion series to A Conversation on Causality at Our Table. Through conversations and hands-on R, practical workflows unfold naturally—from data checks and Table 1 to curves, uncertainty, and study planning. Shared freely, like notes you’d want nearby when the coffee has gone cold.
 
-- [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses (in Japanese)](Comming soon)
+- [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses (in Japanese)] (Coming soon)
 
 - [R Demonstration of Bias in Kaplan-Meier Under Competing Risks (in Japanese)]
 
