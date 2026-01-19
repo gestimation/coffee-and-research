@@ -415,51 +415,52 @@ generate_data()のコードはこちら（データ生成に使用）
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>generate_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">200</span>, hr1, hr2) {</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>generate_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">200</span>, hr1, hr2, hr3) {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  stoma <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  sex <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  age <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> stoma, <span class="at">sd =</span> <span class="dv">8</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  hazard_relapse   <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(stoma <span class="sc">==</span> <span class="dv">1</span>, hr1<span class="sc">*</span><span class="fl">0.10</span>, <span class="fl">0.10</span>) <span class="co"># 再発のハザード（大きいほど早く起こる）</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  hazard_death     <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(stoma <span class="sc">==</span> <span class="dv">1</span>, hr2<span class="sc">*</span><span class="fl">0.10</span>, <span class="fl">0.10</span>) <span class="co"># 死亡のハザード（大きいほど早く起こる）</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  hazard_censoring <span class="ot">&lt;-</span> <span class="fl">0.05</span>                               <span class="co"># 打ち切りハザード（群に依存しない）</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  t_relapse   <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_relapse)   <span class="co"># 再発までの潜在時間</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  t_death     <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_death)     <span class="co"># 死亡までの潜在時間</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  t_censoring <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_censoring) <span class="co"># 打ち切りまでの潜在時間</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 全生存期間（OS） ----------------------------------------</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  time_os   <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_death, t_censoring)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  status_os <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(t_death <span class="sc">&lt;=</span> t_censoring)  <span class="co"># 1 = 死亡, 0 = 打ち切り</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 無再発生存期間（RFS） -----------------------------------</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  time_rfs <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  status_rfs <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># 再発</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span>   <span class="co"># 死亡</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 累積再発率（CIR） + 競合リスク --------------------------</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  time_cir <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  status_cir <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># イベント1: 再発</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">2</span>   <span class="co"># イベント2: 競合リスクとしての死亡</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- データフレームにまとめる --------------------------------</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">id         =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex        =</span> <span class="fu">factor</span>(sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WOMAN"</span>, <span class="st">"MAN"</span>)),</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">age        =</span> age,</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">stoma      =</span> <span class="fu">factor</span>(stoma, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WITHOUT STOMA"</span>, <span class="st">"WITH STOMA"</span>)),</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_os    =</span> time_os,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_os  =</span> status_os,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_rfs   =</span> time_rfs,</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_rfs =</span> status_rfs,</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_cir   =</span> time_cir,</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_cir =</span> status_cir</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  hazard_relapse   <span class="ot">&lt;-</span> <span class="fl">0.10</span><span class="sc">*</span><span class="fu">exp</span>(stoma<span class="sc">*</span><span class="fu">log</span>(hr1)<span class="sc">+</span>age<span class="sc">*</span><span class="fu">log</span>(hr2))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> <span class="co"># 再発のハザード（大きいほど早く起こる）</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  hazard_death     <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(stoma <span class="sc">==</span> <span class="dv">1</span>, hr3 <span class="sc">*</span> <span class="fl">0.10</span>, <span class="fl">0.10</span>) <span class="co"># 死亡のハザード（大きいほど早く起こる）</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  hazard_censoring <span class="ot">&lt;-</span> <span class="fl">0.05</span>                               <span class="co"># 打ち切りハザード（群に依存しない）</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  t_relapse   <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_relapse)   <span class="co"># 再発までの潜在時間</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  t_death     <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_death)     <span class="co"># 死亡までの潜在時間</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  t_censoring <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_censoring) <span class="co"># 打ち切りまでの潜在時間</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 全生存期間（OS） ----------------------------------------</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  time_os   <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_death, t_censoring)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  status_os <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(t_death <span class="sc">&lt;=</span> t_censoring)  <span class="co"># 1 = 死亡, 0 = 打ち切り</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 無再発生存期間（RFS） -----------------------------------</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  time_rfs <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  status_rfs <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># 再発</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span>   <span class="co"># 死亡</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- 累積再発率（CIR） + 競合リスク --------------------------</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  time_cir <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  status_cir <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># イベント1: 再発</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">2</span>   <span class="co"># イベント2: 競合リスクとしての死亡</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="do">## --- データフレームにまとめる --------------------------------</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">id         =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex        =</span> <span class="fu">factor</span>(sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WOMAN"</span>, <span class="st">"MAN"</span>)),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">age        =</span> age,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">stoma      =</span> <span class="fu">factor</span>(stoma, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WITHOUT STOMA"</span>, <span class="st">"WITH STOMA"</span>)),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_os    =</span> time_os,</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_os  =</span> status_os,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_rfs   =</span> time_rfs,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_rfs =</span> status_rfs,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_cir   =</span> time_cir,</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_cir =</span> status_cir</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -477,29 +478,30 @@ calculate_coverage()のコードはこちら（generate_data()とcoxph()を呼�
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>calculate_coverage <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">model=</span><span class="fu">c</span>(<span class="st">"coxph"</span>,<span class="st">"finegray"</span>), n, hr1, hr2, hr_true) {</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>calculate_coverage <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">model=</span><span class="fu">c</span>(<span class="st">"coxph"</span>,<span class="st">"finegray"</span>), n, hr1, hr2, hr3, hr_true) {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  replications<span class="ot">=</span><span class="dv">1000</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  covered <span class="ot">&lt;-</span> <span class="fu">numeric</span>(replications)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (r <span class="cf">in</span> <span class="fu">seq_len</span>(replications)) {</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dat <span class="ot">&lt;-</span> <span class="fu">generate_data</span>(n, hr1, hr2)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">identical</span>(model, <span class="st">"coxph"</span>)) {</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time_os, status_os) <span class="sc">~</span> stoma, <span class="at">data =</span> dat)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">identical</span>(model, <span class="st">"finegray"</span>)) {</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      dat<span class="sc">$</span>fstatus_cir <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat<span class="sc">$</span>status_cir,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"censor"</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"relapse"</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"death"</span>))</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      fgdat <span class="ot">&lt;-</span> <span class="fu">finegray</span>(<span class="fu">Surv</span>(time_cir, fstatus_cir) <span class="sc">~</span> ., <span class="at">data=</span>dat)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fgstart, fgstop, fgstatus) <span class="sc">~</span> stoma, <span class="at">weight=</span>fgwt, <span class="at">cluster=</span>id, <span class="at">data=</span>fgdat)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    confidence_interval <span class="ot">&lt;-</span> <span class="fu">confint</span>(fit)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    covered[r] <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(confidence_interval[<span class="dv">1</span>] <span class="sc">&lt;=</span> <span class="fu">log</span>(hr_true) <span class="sc">&amp;&amp;</span> <span class="fu">log</span>(hr_true) <span class="sc">&lt;=</span> confidence_interval[<span class="dv">2</span>])</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  coverage <span class="ot">&lt;-</span> <span class="fu">mean</span>(covered)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(coverage)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set.seed</span>(r)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    dat <span class="ot">&lt;-</span> <span class="fu">generate_data</span>(n, hr1, hr2, hr3)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">identical</span>(model, <span class="st">"coxph"</span>)) {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time_os, status_os) <span class="sc">~</span> stoma, <span class="at">data =</span> dat)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">identical</span>(model, <span class="st">"finegray"</span>)) {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      dat<span class="sc">$</span>fstatus_cir <span class="ot">&lt;-</span> <span class="fu">factor</span>(dat<span class="sc">$</span>status_cir,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"censor"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"relapse"</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"death"</span>))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      fgdat <span class="ot">&lt;-</span> <span class="fu">finegray</span>(<span class="fu">Surv</span>(time_cir, fstatus_cir) <span class="sc">~</span> ., <span class="at">data=</span>dat)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fgstart, fgstop, fgstatus) <span class="sc">~</span> stoma, <span class="at">weight=</span>fgwt, <span class="at">cluster=</span>id, <span class="at">data=</span>fgdat)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    confidence_interval <span class="ot">&lt;-</span> <span class="fu">confint</span>(fit)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    covered[r] <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(confidence_interval[<span class="dv">1</span>] <span class="sc">&lt;=</span> <span class="fu">log</span>(hr_true) <span class="sc">&amp;&amp;</span> <span class="fu">log</span>(hr_true) <span class="sc">&lt;=</span> confidence_interval[<span class="dv">2</span>])</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  coverage <span class="ot">&lt;-</span> <span class="fu">mean</span>(covered)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(coverage)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -519,10 +521,10 @@ calculate_coverage()を実行するRコードと結果はこちら
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("survival") #インストールが必要なら実行</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>coverage_200 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">200</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>coverage_200 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">200</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="dv">1</span>, <span class="at">hr3=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_200)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.941</code></pre>
+<pre><code>[1] 0.95</code></pre>
 </div>
 </div>
 </div>
@@ -561,24 +563,24 @@ calculate_coverage()を実行するRコードと結果はこちら
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>coverage_100 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">100</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>coverage_400 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">400</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>coverage_800 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">800</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>coverage_100 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">100</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="dv">1</span>, <span class="at">hr3=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>coverage_400 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">400</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="dv">1</span>, <span class="at">hr3=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>coverage_800 <span class="ot">&lt;-</span> <span class="fu">calculate_coverage</span>(<span class="at">model=</span><span class="st">"coxph"</span>, <span class="at">n=</span><span class="dv">800</span>, <span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="dv">1</span>, <span class="at">hr3=</span><span class="fl">1.5</span>, <span class="at">hr_true=</span><span class="fl">1.5</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_100)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.945</code></pre>
+<pre><code>[1] 0.948</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_200)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.941</code></pre>
+<pre><code>[1] 0.95</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_400)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.944</code></pre>
+<pre><code>[1] 0.956</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coverage_800)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.954</code></pre>
+<pre><code>[1] 0.956</code></pre>
 </div>
 </div>
 </div>

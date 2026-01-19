@@ -405,15 +405,16 @@ window.Quarto = {
 <p>私「“Open Folder”だな。調査結果を全部まとめたフォルダがあるから、それを開こう」</p>
 </div>
 <div class="voice-father">
-<p>お父さん「ん？調査結果ってさ、整理する前だと外部に見せられない情報が入ってたりするじゃない。最低限のデータ以外は、直接AIに見せるのはやめようよ。そうだね、最初に約束を3つ決めよう」</p>
+<p>お父さん「ん？調査結果ってさ、整理する前だと外部に見せられない情報が入ってたりするじゃない。最低限のデータ以外は、直接AIに見せるのはやめようよ。そうだね、最初にAIエージェントを使って解析するときの約束を4つ決めよう」</p>
 </div>
 <div class="voice-daughter">
 <p>私「約束？」</p>
 </div>
 <ul>
 <li>整理前のフォルダはAIに見せない。個人が特定できない解析用データセットを用意する。</li>
-<li>作業記録を残す。できれば”Clone Repository”を選んでレポジトリで管理する。</li>
-<li>エージェントが書いたコードは、自主的に品質管理する。たとえば目視チェック、ダブルプログラミング、読み合わせを組み合わせる。</li>
+<li>解析用データセットのデータソースやデータ定義の正確性については、自分が責任を持つ。</li>
+<li>作業記録を残す。たとえば”Clone Repository”を選んでレポジトリで履歴管理する。</li>
+<li>AIが出力したコードは、自主的に品質管理する。たとえば目視チェック、ダブルプログラミング、読み合わせを組み合わせて確認作業を行う。</li>
 </ul>
 <div class="voice-daughter">
 <p>私「わかった、どれも納得。準備ができてないから今日は練習でいいよね？」</p>
@@ -794,7 +795,7 @@ Table 1を改良したRコード
 <h3 class="anchored" data-anchor-id="統計解析の品質管理">統計解析の品質管理</h3>
 <div class="dialogue">
 <div class="voice-father">
-<p>お父さん「これはAIを利用した解析に限らないけど、データの扱いやプログラミングにエラーがないかどうか確認すべきだよね。この手の品質管理は、AIを使った方が効率的だと思う」</p>
+<p>お父さん「これはAIを利用した解析に限らないけど、データの扱いやプログラミングにエラーがないかどうか確認すべきだよね。この手の確認作業は、AIを使った方が効率的だと思う」</p>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>この結果が正しいかダブルプログラミングでチェックしたい。別の関数を使って表を作って</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

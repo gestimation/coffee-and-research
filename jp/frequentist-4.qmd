@@ -98,14 +98,15 @@ Keywords: probability model, simulation, study design, survival & competing risk
 
 ::: {.callout-note appearance="simple"  collapse="true" title="generate_data()のコードはこちら（データ生成に使用）"}
 ```{r warning=FALSE}
-generate_data <- function(n=200, hr1, hr2) {
+generate_data <- function(n = 200, hr1, hr2, hr3) {
   stoma <- rbinom(n, size = 1, prob = 0.4)
   sex <- rbinom(n, size = 1, prob = 0.5)
   age <- rnorm(n, mean = 65 + 3 * stoma, sd = 8)
-  hazard_relapse   <- ifelse(stoma == 1, hr1*0.10, 0.10) # 再発のハザード（大きいほど早く起こる）
-  hazard_death     <- ifelse(stoma == 1, hr2*0.10, 0.10) # 死亡のハザード（大きいほど早く起こる）
+  hazard_relapse   <- 0.10*exp(stoma*log(hr1)+age*log(hr2))
+ # 再発のハザード（大きいほど早く起こる）
+  hazard_death     <- ifelse(stoma == 1, hr3 * 0.10, 0.10) # 死亡のハザード（大きいほど早く起こる）
   hazard_censoring <- 0.05                               # 打ち切りハザード（群に依存しない）
-  
+
   t_relapse   <- rexp(n, rate = hazard_relapse)   # 再発までの潜在時間
   t_death     <- rexp(n, rate = hazard_death)     # 死亡までの潜在時間
   t_censoring <- rexp(n, rate = hazard_censoring) # 打ち切りまでの潜在時間
@@ -148,12 +149,13 @@ generate_data <- function(n=200, hr1, hr2) {
 
 ::: {.callout-note appearance="simple"  collapse="true" title="calculate_coverage()のコードはこちら（generate_data()とcoxph()を呼んでシミュレーションを実行）"}
 ```{r warning=FALSE}
-calculate_coverage <- function(model=c("coxph","finegray"), n, hr1, hr2, hr_true) {
+calculate_coverage <- function(model=c("coxph","finegray"), n, hr1, hr2, hr3, hr_true) {
   replications=1000
   covered <- numeric(replications)
 
   for (r in seq_len(replications)) {
-    dat <- generate_data(n, hr1, hr2)
+    set.seed(r)
+    dat <- generate_data(n, hr1, hr2, hr3)
     if (identical(model, "coxph")) {
       fit <- coxph(Surv(time_os, status_os) ~ stoma, data = dat)
     } else if (identical(model, "finegray")) {
@@ -178,7 +180,7 @@ calculate_coverage <- function(model=c("coxph","finegray"), n, hr1, hr2, hr_true
 ```{r warning=FALSE}
 # install.packages("survival") #インストールが必要なら実行
 library(survival)
-coverage_200 <- calculate_coverage(model="coxph", n=200, hr1=2, hr2=1.5, hr_true=1.5)
+coverage_200 <- calculate_coverage(model="coxph", n=200, hr1=2, hr2=1, hr3=1.5, hr_true=1.5)
 print(coverage_200)
 ```
 :::
@@ -211,9 +213,9 @@ print(coverage_200)
 
 ::: {.callout-note appearance="simple"  collapse="true" title="calculate_coverage()を実行するRコードと結果はこちら"}
 ```{r warning=FALSE}
-coverage_100 <- calculate_coverage(model="coxph", n=100, hr1=2, hr2=1.5, hr_true=1.5)
-coverage_400 <- calculate_coverage(model="coxph", n=400, hr1=2, hr2=1.5, hr_true=1.5)
-coverage_800 <- calculate_coverage(model="coxph", n=800, hr1=2, hr2=1.5, hr_true=1.5)
+coverage_100 <- calculate_coverage(model="coxph", n=100, hr1=2, hr2=1, hr3=1.5, hr_true=1.5)
+coverage_400 <- calculate_coverage(model="coxph", n=400, hr1=2, hr2=1, hr3=1.5, hr_true=1.5)
+coverage_800 <- calculate_coverage(model="coxph", n=800, hr1=2, hr2=1, hr3=1.5, hr_true=1.5)
 print(coverage_100)
 print(coverage_200)
 print(coverage_400)
