@@ -9,7 +9,7 @@
 <link>https://gestimation.github.io/coffee-and-research/en/</link>
 <atom:link href="https://gestimation.github.io/coffee-and-research/en/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.7.32</generator>
+<generator>quarto-1.8.25</generator>
 <lastBuildDate>Sat, 13 Dec 2025 15:00:00 GMT</lastBuildDate>
 <item>
   <title>Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</title>
@@ -29,12 +29,12 @@
 </div>
 <hr>
 <div class="callout callout-style-simple callout-note callout-titled" title="To those who started with this episode">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-To those who started with this episode
+<span class="screen-reader-only">Note</span>To those who started with this episode
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -190,7 +190,7 @@ To those who started with this episode
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Generating simulated data
+<span class="screen-reader-only">Note</span>Generating simulated data
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -203,19 +203,19 @@ Generating simulated data
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="R code and output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-R code and output
+<span class="screen-reader-only">Note</span>R code and output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -401,7 +401,7 @@ font-style: inherit;">status =</span> status</span>
 <span id="cb1-28"></span>
 <span id="cb1-29"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">head</span>(dat)</span></code></pre></div>
+font-style: inherit;">head</span>(dat)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       age   sex         stoma      time status
 1 59.19077 WOMAN WITHOUT STOMA 17.939751      1
@@ -421,7 +421,7 @@ font-style: inherit;">head</span>(dat)</span></code></pre></div>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Summarizing continuous and binary data
+<span class="screen-reader-only">Note</span>Summarizing continuous and binary data
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -429,19 +429,19 @@ Summarizing continuous and binary data
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="R code and output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-R code and output
+<span class="screen-reader-only">Note</span>R code and output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># install.packages("ggplot2") # if needed</span></span>
 <span id="cb3-2"><span class="fu" style="color: #4758AB;
@@ -495,7 +495,7 @@ background-color: null;
 font-style: inherit;">+</span></span>
 <span id="cb3-7"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">theme_minimal</span>()</span></code></pre></div>
+font-style: inherit;">theme_minimal</span>()</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -503,7 +503,7 @@ font-style: inherit;">theme_minimal</span>()</span></code></pre></div>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">table</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -513,7 +513,7 @@ font-style: inherit;">$</span>stoma, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">SEX =</span> dat<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>sex)</span></code></pre></div>
+font-style: inherit;">$</span>sex)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               SEX
 STOMA           WOMAN MAN
@@ -530,7 +530,7 @@ STOMA           WOMAN MAN
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Summarizing survival data with survival curves
+<span class="screen-reader-only">Note</span>Summarizing survival data with survival curves
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -538,19 +538,19 @@ Summarizing survival data with survival curves
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="R code and output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-R code and output
+<span class="screen-reader-only">Note</span>R code and output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># install.packages("cifmodeling") # if needed</span></span>
 <span id="cb6-2"><span class="fu" style="color: #4758AB;
@@ -571,7 +571,7 @@ background-color: null;
 font-style: inherit;">outcome.type =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"survival"</span></span>
-<span id="cb6-6">)</span></code></pre></div>
+<span id="cb6-6">)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -589,7 +589,7 @@ font-style: inherit;">"survival"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-A quiz related to this episode
+<span class="screen-reader-only">Note</span>A quiz related to this episode
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -603,12 +603,12 @@ A quiz related to this episode
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Answer">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Note</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -759,7 +759,7 @@ Answer
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Differences among statistical terms
+<span class="screen-reader-only">Note</span>Differences among statistical terms
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -780,7 +780,7 @@ Differences among statistical terms
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz related to this episode
+<span class="screen-reader-only">Note</span>Quiz related to this episode
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -794,12 +794,12 @@ Quiz related to this episode
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Answer">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Note</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1075,12 +1075,12 @@ Answer
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Entering survival data">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Entering survival data
+<span class="screen-reader-only">Note</span>Entering survival data
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1088,7 +1088,7 @@ Entering survival data
 <div class="callout-body-container callout-body">
 <p>Because survival data consist of a pair of variables, you also need to specify them as a pair when you pass them to R functions. The <strong>survival</strong> package provides a dedicated input function <code>Surv()</code> for this purpose, which is used by functions such as <code>survfit()</code> and <code>coxph()</code>. The exact input format depends on the package. For example, the <strong>mets</strong> package defines a separate <code>Event()</code> function. The <code>cifplot()</code> function in the <strong>cifmodeling</strong> package accepts both <code>Surv()</code> and <code>Event()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(survival)</span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -1147,7 +1147,7 @@ background-color: null;
 font-style: inherit;">label.y      =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Overall survival"</span></span>
-<span id="cb1-16">)</span></code></pre></div>
+<span id="cb1-16">)</span></code></pre></div></div>
 </div>
 </div>
 </div>
@@ -1186,7 +1186,7 @@ font-style: inherit;">"Overall survival"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Generating simulation data (with relapse)
+<span class="screen-reader-only">Note</span>Generating simulation data (with relapse)
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1200,19 +1200,19 @@ Generating simulation data (with relapse)
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="R code for generate_data()">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-R code for generate_data()
+<span class="screen-reader-only">Note</span>R code for generate_data()
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">generate_data <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">generate_data <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -1532,7 +1532,7 @@ font-style: inherit;">time_cir   =</span> time_cir,</span>
 background-color: null;
 font-style: inherit;">status_cir =</span> status_cir</span>
 <span id="cb2-55">  )</span>
-<span id="cb2-56">}</span></code></pre></div>
+<span id="cb2-56">}</span></code></pre></div></div>
 </div>
 </div>
 </div>
@@ -1543,7 +1543,7 @@ font-style: inherit;">status_cir =</span> status_cir</span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Kaplan-Meier curve for OS
+<span class="screen-reader-only">Note</span>Kaplan-Meier curve for OS
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1551,19 +1551,19 @@ Kaplan-Meier curve for OS
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="R code and output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-R code and output
+<span class="screen-reader-only">Note</span>R code and output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1609,7 +1609,7 @@ background-color: null;
 font-style: inherit;">label.y      =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Overall survival"</span></span>
-<span id="cb3-11">)</span></code></pre></div>
+<span id="cb3-11">)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1627,7 +1627,7 @@ font-style: inherit;">"Overall survival"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Kaplan-Meier curve for RFS
+<span class="screen-reader-only">Note</span>Kaplan-Meier curve for RFS
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1635,19 +1635,19 @@ Kaplan-Meier curve for RFS
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="R code and output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-R code and output
+<span class="screen-reader-only">Note</span>R code and output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cifplot</span>(</span>
 <span id="cb4-2">  <span class="fu" style="color: #4758AB;
@@ -1668,7 +1668,7 @@ background-color: null;
 font-style: inherit;">label.y      =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Relapse-free survival"</span></span>
-<span id="cb4-6">)</span></code></pre></div>
+<span id="cb4-6">)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1686,7 +1686,7 @@ font-style: inherit;">"Relapse-free survival"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Aalen-Johansen curve for CIR
+<span class="screen-reader-only">Note</span>Aalen-Johansen curve for CIR
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1700,19 +1700,19 @@ Aalen-Johansen curve for CIR
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="R code and output">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-R code and output
+<span class="screen-reader-only">Note</span>R code and output
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cifplot</span>(</span>
 <span id="cb5-2">  <span class="fu" style="color: #4758AB;
@@ -1733,7 +1733,7 @@ background-color: null;
 font-style: inherit;">label.y      =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Cumulative incidence of relapse"</span></span>
-<span id="cb5-6">)</span></code></pre></div>
+<span id="cb5-6">)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1769,7 +1769,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-A quiz related to this episode
+<span class="screen-reader-only">Note</span>A quiz related to this episode
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1781,12 +1781,12 @@ A quiz related to this episode
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Answer">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Note</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1895,7 +1895,7 @@ Answer
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Random error and bias
+<span class="screen-reader-only">Note</span>Random error and bias
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2125,12 +2125,12 @@ Random error and bias
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Clinical endpoints and surrogate endpoints">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Clinical endpoints and surrogate endpoints
+<span class="screen-reader-only">Note</span>Clinical endpoints and surrogate endpoints
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2148,7 +2148,7 @@ Clinical endpoints and surrogate endpoints
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-A quiz related to this episode
+<span class="screen-reader-only">Note</span>A quiz related to this episode
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2171,12 +2171,12 @@ A quiz related to this episode
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Answer">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Note</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2351,7 +2351,7 @@ try to express it using PICO or PECO before you design the study.</p>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Clinical questions and research hypotheses
+<span class="screen-reader-only">Note</span>Clinical questions and research hypotheses
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2368,12 +2368,12 @@ Clinical questions and research hypotheses
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Research hypothesis 1">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Research hypothesis 1
+<span class="screen-reader-only">Note</span>Research hypothesis 1
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2396,12 +2396,12 @@ Having a clear comparison group improves interpretability.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Research hypothesis 2">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Research hypothesis 2
+<span class="screen-reader-only">Note</span>Research hypothesis 2
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2422,12 +2422,12 @@ Research hypothesis 2
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Research hypothesis 3 (exploratory)">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Research hypothesis 3 (exploratory)
+<span class="screen-reader-only">Note</span>Research hypothesis 3 (exploratory)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2453,7 +2453,7 @@ Research hypothesis 3 (exploratory)
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quiz related to this episode
+<span class="screen-reader-only">Note</span>Quiz related to this episode
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2467,12 +2467,12 @@ Quiz related to this episode
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Answer">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Note</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>

@@ -9,7 +9,7 @@
 <link>https://gestimation.github.io/coffee-and-research/jp/</link>
 <atom:link href="https://gestimation.github.io/coffee-and-research/jp/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.7.32</generator>
+<generator>quarto-1.8.25</generator>
 <lastBuildDate>Sat, 13 Dec 2025 15:00:00 GMT</lastBuildDate>
 <item>
   <title>Statistical Terms in Plain Language</title>
@@ -124,7 +124,7 @@
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-統計用語の違い
+<span class="screen-reader-only">Note</span>統計用語の違い
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -149,7 +149,7 @@
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-このエピソードに関係するクイズです
+<span class="screen-reader-only">Note</span>このエピソードに関係するクイズです
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -163,12 +163,12 @@
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-答えはこちら
+<span class="screen-reader-only">Note</span>答えはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -313,12 +313,12 @@
 <p>お父さん「イベント変数は、いわゆる生存時間データの場合は、イベントが観察されたか、打ち切りになったかを表す2値データ。時間変数は、この場合は“退院日から復職日までの期間”か“退院日から調査日までの期間”のどちらかになる」</p>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="生存時間データの入力">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-生存時間データの入力
+<span class="screen-reader-only">Note</span>生存時間データの入力
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -326,7 +326,7 @@
 <div class="callout-body-container callout-body">
 <p>生存時間データは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。<strong>survival</strong>パッケージの<code>survfit()</code>や<code>coxph()</code>では、実は入力専用の関数<code>Surv()</code>を用意しています。入力の仕様はパッケージによってまちまちで、たとえば<strong>mets</strong>パッケージでは<code>Event()</code>を別に定義して用いています。<strong>cifmodeling</strong>パッケージの<code>cifplot()</code>は、<code>Surv()</code>と<code>Event()</code>の両方に対応しています。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(survival)</span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -385,7 +385,7 @@ background-color: null;
 font-style: inherit;">label.y      =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Overall survival"</span></span>
-<span id="cb1-16">)</span></code></pre></div>
+<span id="cb1-16">)</span></code></pre></div></div>
 </div>
 </div>
 </div>
@@ -429,7 +429,7 @@ font-style: inherit;">"Overall survival"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-シミュレーションデータ（再発あり）の生成
+<span class="screen-reader-only">Note</span>シミュレーションデータ（再発あり）の生成
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -443,19 +443,19 @@ font-style: inherit;">"Overall survival"</span></span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="generate_data()のコードはこちら（データ生成に使用）">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-generate_data()のコードはこちら（データ生成に使用）
+<span class="screen-reader-only">Note</span>generate_data()のコードはこちら（データ生成に使用）
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">generate_data <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">generate_data <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -765,7 +765,7 @@ font-style: inherit;">time_cir   =</span> time_cir,</span>
 background-color: null;
 font-style: inherit;">status_cir =</span> status_cir</span>
 <span id="cb2-45">  )</span>
-<span id="cb2-46">}</span></code></pre></div>
+<span id="cb2-46">}</span></code></pre></div></div>
 </div>
 </div>
 </div>
@@ -776,7 +776,7 @@ font-style: inherit;">status_cir =</span> status_cir</span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-全生存期間（OS）のKaplan-Meier曲線
+<span class="screen-reader-only">Note</span>全生存期間（OS）のKaplan-Meier曲線
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -784,19 +784,19 @@ font-style: inherit;">status_cir =</span> status_cir</span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Rコードと結果はこちら
+<span class="screen-reader-only">Note</span>Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># devtools::install_github("gestimation/cifmodeling") #インストールが必要なら実行 </span></span>
 <span id="cb3-2"><span class="fu" style="color: #4758AB;
@@ -847,7 +847,7 @@ background-color: null;
 font-style: inherit;">label.y      =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Overall survival"</span></span>
-<span id="cb3-10">)</span></code></pre></div>
+<span id="cb3-10">)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -865,7 +865,7 @@ font-style: inherit;">"Overall survival"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-無再発生存期間（RFS）のKaplan-Meier曲線
+<span class="screen-reader-only">Note</span>無再発生存期間（RFS）のKaplan-Meier曲線
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -873,19 +873,19 @@ font-style: inherit;">"Overall survival"</span></span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Rコードと結果はこちら
+<span class="screen-reader-only">Note</span>Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cifplot</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -905,7 +905,7 @@ background-color: null;
 font-style: inherit;">label.y      =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Relapse-free survival"</span></span>
-<span id="cb4-5">)</span></code></pre></div>
+<span id="cb4-5">)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -923,7 +923,7 @@ font-style: inherit;">"Relapse-free survival"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-累積再発率（CIR）のAalen-Johansen曲線
+<span class="screen-reader-only">Note</span>累積再発率（CIR）のAalen-Johansen曲線
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -937,19 +937,19 @@ font-style: inherit;">"Relapse-free survival"</span></span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Rコードと結果はこちら
+<span class="screen-reader-only">Note</span>Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cifplot</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -969,7 +969,7 @@ background-color: null;
 font-style: inherit;">label.y      =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Cumulative incidence of relapse"</span></span>
-<span id="cb5-5">)</span></code></pre></div>
+<span id="cb5-5">)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1005,7 +1005,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-このエピソードに関係するクイズです
+<span class="screen-reader-only">Note</span>このエピソードに関係するクイズです
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1017,12 +1017,12 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-答えはこちら
+<span class="screen-reader-only">Note</span>答えはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1043,12 +1043,12 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-他のエピソードはこちら
+<span class="screen-reader-only">Note</span>他のエピソードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1152,7 +1152,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-ランダム誤差とバイアス
+<span class="screen-reader-only">Note</span>ランダム誤差とバイアス
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1207,12 +1207,12 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <li><a href="frequentist-1.html">Reading a Paper over a Cup of Coffee</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-他のエピソードはこちら
+<span class="screen-reader-only">Note</span>他のエピソードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1412,12 +1412,12 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="臨床エンドポイントと代替エンドポイント">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-臨床エンドポイントと代替エンドポイント
+<span class="screen-reader-only">Note</span>臨床エンドポイントと代替エンドポイント
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1434,7 +1434,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-このエピソードに関係するクイズです
+<span class="screen-reader-only">Note</span>このエピソードに関係するクイズです
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1448,12 +1448,12 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-答えはこちら
+<span class="screen-reader-only">Note</span>答えはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1484,12 +1484,12 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-他のエピソードはこちら
+<span class="screen-reader-only">Note</span>他のエピソードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1648,7 +1648,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-臨床疑問と研究仮説
+<span class="screen-reader-only">Note</span>臨床疑問と研究仮説
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1664,12 +1664,12 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="研究仮説1">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-研究仮説1
+<span class="screen-reader-only">Note</span>研究仮説1
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1687,12 +1687,12 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="研究仮説2">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-研究仮説2
+<span class="screen-reader-only">Note</span>研究仮説2
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1710,12 +1710,12 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="研究仮説3">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-研究仮説3
+<span class="screen-reader-only">Note</span>研究仮説3
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1740,7 +1740,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-このエピソードに関係するクイズです
+<span class="screen-reader-only">Note</span>このエピソードに関係するクイズです
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1754,12 +1754,12 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-答えはこちら
+<span class="screen-reader-only">Note</span>答えはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1779,12 +1779,12 @@ O: 手術後1年以内の復職の有無</code></pre>
 <li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-他のエピソードはこちら
+<span class="screen-reader-only">Note</span>他のエピソードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1958,7 +1958,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-シミュレーションデータの生成
+<span class="screen-reader-only">Note</span>シミュレーションデータの生成
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1971,19 +1971,19 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Rコードと結果はこちら
+<span class="screen-reader-only">Note</span>Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -2164,7 +2164,7 @@ font-style: inherit;">status =</span> status</span>
 <span id="cb1-25">)</span>
 <span id="cb1-26"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">head</span>(dat)</span></code></pre></div>
+font-style: inherit;">head</span>(dat)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       age   sex         stoma      time status
 1 59.19077 WOMAN WITHOUT STOMA 17.939751      1
@@ -2184,7 +2184,7 @@ font-style: inherit;">head</span>(dat)</span></code></pre></div>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-連続データと2値データの要約
+<span class="screen-reader-only">Note</span>連続データと2値データの要約
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2192,19 +2192,19 @@ font-style: inherit;">head</span>(dat)</span></code></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Rコードと結果はこちら
+<span class="screen-reader-only">Note</span>Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># install.packages("ggplot2") #インストールが必要なら実行</span></span>
 <span id="cb3-2"><span class="fu" style="color: #4758AB;
@@ -2258,7 +2258,7 @@ background-color: null;
 font-style: inherit;">+</span></span>
 <span id="cb3-7"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">theme_minimal</span>()</span></code></pre></div>
+font-style: inherit;">theme_minimal</span>()</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2266,7 +2266,7 @@ font-style: inherit;">theme_minimal</span>()</span></code></pre></div>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">table</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -2276,7 +2276,7 @@ font-style: inherit;">$</span>stoma, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">SEX =</span> dat<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">$</span>sex)</span></code></pre></div>
+font-style: inherit;">$</span>sex)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               SEX
 STOMA           WOMAN MAN
@@ -2293,7 +2293,7 @@ STOMA           WOMAN MAN
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-生存曲線による生存時間データの要約
+<span class="screen-reader-only">Note</span>生存曲線による生存時間データの要約
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2301,19 +2301,19 @@ STOMA           WOMAN MAN
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rコードと結果はこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Rコードと結果はこちら
+<span class="screen-reader-only">Note</span>Rコードと結果はこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># install.packages("cifmodeling") #インストールが必要なら実行</span></span>
 <span id="cb6-2"><span class="fu" style="color: #4758AB;
@@ -2334,7 +2334,7 @@ background-color: null;
 font-style: inherit;">outcome.type =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"survival"</span></span>
-<span id="cb6-6">)</span></code></pre></div>
+<span id="cb6-6">)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2352,7 +2352,7 @@ font-style: inherit;">"survival"</span></span>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-このエピソードに関係するクイズです
+<span class="screen-reader-only">Note</span>このエピソードに関係するクイズです
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2366,12 +2366,12 @@ font-style: inherit;">"survival"</span></span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-答えはこちら
+<span class="screen-reader-only">Note</span>答えはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2398,12 +2398,12 @@ font-style: inherit;">"survival"</span></span>
 <li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-他のエピソードはこちら
+<span class="screen-reader-only">Note</span>他のエピソードはこちら
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>

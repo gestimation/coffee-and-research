@@ -174,12 +174,12 @@ listing:
 
 ### 8. Causal Inference — グラフと反事実と数式が映し出す因果の影
 
-- [Three-Variable DAGs: The Smallest Building Blocks of Causal Structure] (Scheduled for release in February)
-- [A Subtle Distinction between Common Causes and Confounders]
-- [DAGs and Conditional Distributions: Two Languages for the Same Structure]
-- [A Circle, an Equation, and a Cylinder]
-- [Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias]
-- [Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference]
+- [Three-Variable DAGs: The Smallest Building Blocks of Causal Structure](causal-inference-1.html)
+- [A Subtle Distinction between Common Causes and Confounders](causal-inference-2.html)
+- [DAGs and Conditional Distributions: Two Languages for the Same Structure](causal-inference-3.html)
+- [A Circle, an Equation, and a Cylinder](causal-inference-4.html)
+- [Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias](causal-inference-5.html)
+- [Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference](causal-inference-6.html)
 
 ::: {.callout-note appearance="simple" collapse="true" title="このシリーズで扱うこと"}
 - **Three-Variable DAGs: The Smallest Building Blocks of Causal Structure**
@@ -198,9 +198,9 @@ listing:
 
 ### 9. Publish a Paper — 研究結果を伝えるための研究者の営み
 
-- [A Subtle Distinction Between Editors and Reviewers]
-- [Three Tips for Writing a Paper]
-- [Communicating with Care]
-- [A Morning Just Before Submission]
+- [A Subtle Distinction Between Editors and Reviewers](publish-a-paper-1.html)
+- [Three Tips for Writing a Paper](publish-a-paper-2.html)
+- [Communicating with Care](publish-a-paper-3.html)
+- [A Morning Just Before Submission](publish-a-paper-4.html)
 
 ------------------------------------------------------------------------
