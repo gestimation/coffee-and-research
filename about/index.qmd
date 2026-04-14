@@ -12,7 +12,7 @@
 
 <img src="../image/portrait.jpg" width="130" style="border-radius: 12px; float:right; margin-left:1rem;"/>
 
-I’m a Professor of Clinical Biostatistics at Kyoto University Graduate School of Medicine. This site offers story-driven, reproducible notes on clinical research, statistics, and causal thinking—written for researchers and clinicians who want the ideas to feel usable in practice.
+I’m a Professor of Biostatistics at Center for Clinical and Translational Research, Kyushu University Hospital. This site offers story-driven, reproducible notes on clinical research, statistics, and causal thinking—written for researchers and clinicians who want the ideas to feel usable in practice.
 
 I have served as a trial statistician in nationwide clinical trial groups (JCOG, JCCG, and A-TOP) and as an advisory expert for the PMDA. I’ve been fortunate to learn through collaborations with researchers such as Marc A. Brookhart, Jason P. Fine, and Thomas H. Scheike. This site is my small way of giving back to the community that shaped my training—through books, open-source software, and freely shared resources.
 
