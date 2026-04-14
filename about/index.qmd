@@ -10,7 +10,7 @@
 
 ## About gestimation/Shiro Tanaka
 
-<img src="../image/portrait.jpg" width="130" style="border-radius: 12px; float:right; margin-left:1rem;"/>
+<img src="../image/portrait.png" width="130" style="border-radius: 12px; float:right; margin-left:1rem;"/>
 
 I’m a Professor of Biostatistics at Center for Clinical and Translational Research, Kyushu University Hospital. This site offers story-driven, reproducible notes on clinical research, statistics, and causal thinking—written for researchers and clinicians who want the ideas to feel usable in practice.
 
