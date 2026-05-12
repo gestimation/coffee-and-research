@@ -118,9 +118,13 @@ R packages: cifmodeling, dplyr, gtsummary, tableone
 - AIが出力したコードは、自主的に品質管理する。たとえば目視チェック、ダブルプログラミング、読み合わせを組み合わせて確認作業を行う。
 
 ::: voice-daughter
-私「わかった、どれも納得。準備ができてないから今日は練習でいいよね？」
+私「わかった、どれも納得。でも準備できてないから、今日やるのは練習ってことでいいよね？」
 :::
 :::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="R操作で迷ったときの参考資料"}
+このシリーズでは、AIを使った臨床研究解析のワークフローと品質管理に焦点を当てます。Rの基本操作、オブジェクト、関数、パッケージ、スクリプト、作業ディレクトリ、パイプ演算子、エラーや警告などで迷った場合は、「疫学のためのRハンドブック」の[Rの基礎](https://www.epirhandbook.com/jp/new_pages/basics.jp.html)が辞書的に使いやすいです。
+:::
 
 ### Table 1をつくるためのRワークフロー
 
@@ -306,6 +310,10 @@ print(table1)
 :::
 
 ![](ai-r-3.png)
+
+::: {.callout-note appearance="simple" collapse="true" title="R操作で迷ったときの参考資料"}
+詳しい使い方や、`janitor`, `dplyr`, `gtsummary`, `rstatix`, base Rを使った記述統計表の作成方法については、「疫学のためのRハンドブック」の[記述統計表の作り方](https://www.epirhandbook.com/jp/new_pages/tables_descriptive.jp.html)も参考になります。
+:::
 
 ::::::::::::::::::::::::::::::::: dialogue
 ::: voice-father

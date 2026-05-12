@@ -185,6 +185,7 @@ tapply(dat$t, dat$epsilon, summary)
 ```
 :::
 
+
 ### プロペンシティスコアに基づく重みの計算
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -413,9 +414,13 @@ cifplot(Event(t,epsilon)~fruitq1, data=dat, outcome.type="competing-risk",
 
 ## 競合リスクデータの入力
 
-生存時間・競合リスクデータは2つの変数の組であるため、Rの関数に入力するときもペアで指定する必要があります。**survival**パッケージの`survfit()`や`coxph()`では、実は入力専用の関数`Surv()`を用意しています。入力の仕様はパッケージによってまちまちで、たとえば**mets**パッケージでは`Event()`を別に定義して用いています。**cifmodeling**パッケージの`cifplot()`は、`Surv()`と`Event()`の両方に対応しています。
+生存時間・競合リスクデータは2つの変数の組なので、Rの関数に入力するときもペアで指定する必要があります。**survival**パッケージの`survfit()`や`coxph()`では、実は入力専用の関数`Surv()`を用意しています。入力の仕様はパッケージによってまちまちで、たとえば**mets**パッケージでは`Event()`を別に定義して用いています。**cifmodeling**パッケージの`cifplot()`は、`Surv()`と`Event()`の両方に対応しています。
 
 :::
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="R操作で迷ったときの参考資料"}
+（競合リスクのない）通常の生存時間解析における`Surv()`、`survfit()`、Kaplan-Meier曲線、Cox回帰の基本操作を確認したい方には、「疫学のためのRハンドブック」の[生存時間解析](https://www.epirhandbook.com/jp/new_pages/survival_analysis.jp.html)も参考になります。
 :::
 
 ### 因果効果の推定

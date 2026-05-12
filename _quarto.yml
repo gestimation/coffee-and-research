@@ -47,7 +47,7 @@ website:
             href: jp/publish-a-paper-1.qmd
       - text: AI & R (JP)
         menu:
-          - text: AI-Assisted Survival Analysis
+          - text: AI-Assisted R Analysis
             href: jp/ai-r-1.qmd
           - text: KM and CIF
             href: jp/ai-r-2.qmd

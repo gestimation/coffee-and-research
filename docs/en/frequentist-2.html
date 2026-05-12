@@ -226,6 +226,37 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
     <a class="dropdown-item" href="../jp/effects-1.html">
  <span class="dropdown-text">Effects and Time</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/logistic-regression-1.html">
+ <span class="dropdown-text">Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/causal-inference-1.html">
+ <span class="dropdown-text">Causal inference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/publish-a-paper-1.html">
+ <span class="dropdown-text">Publishing a paper</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ai--r-(jp" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">AI &amp; R (JP)</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ai--r-(jp">    
+        <li>
+    <a class="dropdown-item" href="../jp/ai-r-1.html">
+ <span class="dropdown-text">AI-Assisted R Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/ai-r-2.html">
+ <span class="dropdown-text">KM and CIF</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/ai-r-3.html">
+ <span class="dropdown-text">Adjsuted CIF</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -559,20 +590,20 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <pre><code>Call:
 coxph(formula = Surv(time_os, status_os) ~ stoma, data = dat)
 
-  n= 200, number of events= 155 
+  n= 200, number of events= 141 
 
-                  coef exp(coef) se(coef)     z Pr(&gt;|z|)  
-stomaWITH STOMA 0.3109    1.3647   0.1624 1.914   0.0556 .
+                  coef exp(coef) se(coef)     z Pr(&gt;|z|)   
+stomaWITH STOMA 0.5280    1.6956   0.1717 3.075   0.0021 **
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
                 exp(coef) exp(-coef) lower .95 upper .95
-stomaWITH STOMA     1.365     0.7328    0.9926     1.876
+stomaWITH STOMA     1.696     0.5898     1.211     2.374
 
-Concordance= 0.556  (se = 0.023 )
-Likelihood ratio test= 3.63  on 1 df,   p=0.06
-Wald test            = 3.66  on 1 df,   p=0.06
-Score (logrank) test = 3.69  on 1 df,   p=0.05</code></pre>
+Concordance= 0.556  (se = 0.024 )
+Likelihood ratio test= 9.26  on 1 df,   p=0.002
+Wald test            = 9.46  on 1 df,   p=0.002
+Score (logrank) test = 9.67  on 1 df,   p=0.002</code></pre>
 </div>
 </div>
 </div>
