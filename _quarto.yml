@@ -39,12 +39,20 @@ website:
             href: jp/frequentist-4.qmd
           - text: Effects and Time
             href: jp/effects-1.qmd
-#          - text: Regression
-#            href: jp/logistic-regression-1.qmd
-#          - text: Causal inference
-#            href: jp/causal-inference-1.qmd
-#          - text: Publishing a paper
-#            href: jp/publish-a-paper-1.qmd
+          - text: Regression
+            href: jp/logistic-regression-1.qmd
+          - text: Causal inference
+            href: jp/causal-inference-1.qmd
+          - text: Publishing a paper
+            href: jp/publish-a-paper-1.qmd
+      - text: AI & R (JP)
+        menu:
+          - text: AI-Assisted Survival Analysis
+            href: jp/ai-r-1.qmd
+          - text: KM and CIF
+            href: jp/ai-r-2.qmd
+          - text: Adjsuted CIF
+            href: jp/ai-r-3.qmd
       - text: 8 Elements (EN)
         href: kanji_en/index.qmd
       - text: 8 Elements (JP)
