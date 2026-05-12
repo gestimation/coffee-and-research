@@ -124,6 +124,10 @@ R packages: cifmodeling, dplyr, gtsummary, tableone
 
 ::: {.callout-note appearance="simple" collapse="true" title="R操作で迷ったときの参考資料"}
 このシリーズでは、AIを使った臨床研究解析のワークフローと品質管理に焦点を当てます。Rの基本操作、オブジェクト、関数、パッケージ、スクリプト、作業ディレクトリ、パイプ演算子、エラーや警告などで迷った場合は、「疫学のためのRハンドブック」の[Rの基礎](https://www.epirhandbook.com/jp/new_pages/basics.jp.html)が辞書的に使いやすいです。
+
+また、これ以降は「練習」、すなわち個人が特定できない解析用データセットがすでに用意されている、という前提で進めます。実際の臨床研究では、その前に、未加工データのインポート、列名の整理、データ型の変換、欠測値や異常値の確認、重複データの除外、カテゴリ変数の再定義などが必要になります。これらの一般的なデータハンドリングの操作については、[データクリーニングと主要関数](https://www.epirhandbook.com/jp/new_pages/cleaning.jp.html)が大変よくまとまっています。
+:::
+
 :::
 
 ### Table 1をつくるためのRワークフロー
@@ -312,7 +316,7 @@ print(table1)
 ![](ai-r-3.png)
 
 ::: {.callout-note appearance="simple" collapse="true" title="R操作で迷ったときの参考資料"}
-詳しい使い方や、`janitor`, `dplyr`, `gtsummary`, `rstatix`, base Rを使った記述統計表の作成方法については、「疫学のためのRハンドブック」の[記述統計表の作り方](https://www.epirhandbook.com/jp/new_pages/tables_descriptive.jp.html)も参考になります。
+詳しい使い方や、`dplyr`, `gtsummary`, base Rを使った記述統計表の作成方法については、「疫学のためのRハンドブック」の[記述統計表の作り方](https://www.epirhandbook.com/jp/new_pages/tables_descriptive.jp.html)も参考になります。
 :::
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -478,6 +482,12 @@ print(table2, showAllLevels = TRUE)
 "A Conversation on Causality at Our Table"のこのエピソードもご覧ください。
 
 - [Where My Logistic Regression Went Wrong](logistic-regression-4.html)
+
+Rの基本操作については以下の資料が参考になります。
+
+- [疫学のためのRハンドブック: Rの基礎](https://www.epirhandbook.com/jp/new_pages/basics.jp.html)
+- [疫学のためのRハンドブック: データクリーニングと主要関数](https://www.epirhandbook.com/jp/new_pages/cleaning.jp.html)
+- [疫学のためのRハンドブック: 記述統計表の作り方](https://www.epirhandbook.com/jp/new_pages/tables_descriptive.jp.html)
 
 ::: {.callout-note appearance="simple" collapse="true" title="関連エピソードはこちら"}
 
