@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,6 +11,9 @@
 
 <title>A Story of Coffee Chat and Research Hypothesis – Coffee and Research</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -34,15 +37,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -128,8 +130,6 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Coffee and Research</span>
     </a>
@@ -147,6 +147,10 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
   <li class="nav-item">
     <a class="nav-link" href="https://gestimation.github.io/cifmodeling/"> 
 <span class="menu-text">cifmodeling</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://gestimation.github.io/airsetup/"> 
+<span class="menu-text">airsetup</span></a>
   </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-a-conversation-(en" role="link" data-bs-toggle="dropdown" aria-expanded="false">
@@ -309,7 +313,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <p>Dad: “In Japan, yes—one of many.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “My boss keeps telling me it’s time I do ‘some research’ and present at a conference. He’s really into supporting cancer patients in return-to-work since the Basic Plan to Promote Cancer Control Programs was revised in 2016. Long story short, I think he wants me to run a survey. I’m not against it, but this feels more like your world than mine. Statistics and all that.”</p>
+<p>Me: “My boss keeps telling me it’s time I do ’some research’ and present at a conference. He’s really into supporting cancer patients in return-to-work since the Basic Plan to Promote Cancer Control Programs was revised in 2016. Long story short, I think he wants me to run a survey. I’m not against it, but this feels more like your world than mine. Statistics and all that.”</p>
 </div>
 <div class="voice-father">
 <p>Dad: “Half my domain, half yours. You see the patients, I only see the data. Do you have anything clinical you want to know? Any hypothesis?”</p>
@@ -357,7 +361,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <p>Dad: “There are statistical methods and R packages to improve comparability too, like <code>glm()</code> for regression adjustment, or <code>WeightIt()</code> for propensity score weighting. But on the other hand, a broader study population increases <strong>generalizability</strong>. If you want to estimate the return-to-work proportion among cancer survivors, you don’t necessarily need to limit the cancer type. Ideally, you’d collect data from multiple institutions.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “True…it feels strange to call it ‘a survey of cancer survivors’ if it’s only our hospital. Generalizability means the results should hold beyond our hospital, right?”</p>
+<p>Me: “True…it feels strange to call it ’a survey of cancer survivors’ if it’s only our hospital. Generalizability means the results should hold beyond our hospital, right?”</p>
 </div>
 <div class="voice-father">
 <p>Dad: “In class, I usually tell my students something like this:”</p>
@@ -367,7 +371,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 try to express it using PICO or PECO before you design the study.</p>
 </blockquote>
 <div class="voice-father">
-<p>Dad: “It sounds fancy, but we simply call that ‘structuring’ a study.”</p>
+<p>Dad: “It sounds fancy, but we simply call that ’structuring’ a study.”</p>
 </div>
 <div class="voice-daughter">
 <p>Me: “Structuring…? That sounds like something from a meeting. Okay, I’ve heard the word before.”</p>
@@ -453,7 +457,7 @@ try to express it using PICO or PECO before you design the study.</p>
 <li>O: Returned to work within 1 year after surgery (yes/no)</li>
 </ul>
 <p>Here you’d compare the return-to-work proportion between the stoma and non-stoma groups.</p>
-<p>What to choose for C (Comparison) is important. If you only know the return-to-work proportion in the stoma group, it’s hard to say whether that number is “high” or “low”.<br>
+<p>What to choose for C (Comparison) is important. If you only know the return-to-work proportion in the stoma group, it’s hard to say whether that number is “high” or”low”.<br>
 Having a clear comparison group improves interpretability.</p>
 </div>
 </div>

@@ -158,6 +158,19 @@ A toolkit for survival and competing risks analysis in R — a more technical si
 
 <div class="project-card">
 
+## R package airsetup
+
+A toolkit for AI-assisted R workflow with QC and clear boundaries
+
+- It creates a small, opinionated folder structure for R analysis projects where AI agents help write scripts, inspect visible dummy data, and review outputs, while hidden analysis data stays outside the AI-visible workspace. 
+- It does not provide statistical analysis functions. Instead, it prepares separated folders, a minimal AGENTS.md, and a QC_STATUS.md tracker.
+
+**[Visit the R package airsetup site](https://gestimation.github.io/airsetup/)**
+
+</div>
+
+<div class="project-card">
+
 ## A Conversation on Causality at Our Table — *How I Learned Research from My Father*
 
 A series of short, warm stories about learning research, written in both English and Japanese. 
@@ -168,20 +181,6 @@ Through conversations between a father and daughter, the *way researchers think*
 - From Study Design → Frequentist Thinking → Understanding Effects and Time → Adjusting for Bias → Causal Inference → Publication
 
 **[Read in English](./en/index.html)**  /  **[Read in Japanese](./jp/index.html)** 
-</div>
-
-<div class="project-card">
-
-## AI & R Workflows — *How I Learned R from My Father*
-
-A companion series to A Conversation on Causality at Our Table. Through conversations and hands-on R, practical workflows unfold naturally—from data checks and Table 1 to curves, uncertainty, and study planning. Shared freely, like notes you’d want nearby when the coffee has gone cold.
-
-- [Getting Started: AI-Assisted, Independently Validated Clinical Research Analyses (in Japanese)](./jp/ai-r-1.html)
-
-- [R Demonstration of Bias in Kaplan-Meier Under Competing Risks (in Japanese)](./jp/ai-r-2.html)
-
-- [Unadjusted vs Adjusted Cumulative Incidence Curves with AI & R (in Japanese)](./jp/ai-r-3.html)
-
 </div>
 
 <div class="project-card">
@@ -227,7 +226,7 @@ This is a short essay on Japanese language and kanji characters.
 
 ## About the author—gestimation
 
-<img src="image/portrait.png"
+<img src="image/portrait.jpg"
      width="130"
      style="border-radius: 12px;
             float: left;

@@ -9,7 +9,7 @@
 <link>https://gestimation.github.io/coffee-and-research/en/</link>
 <atom:link href="https://gestimation.github.io/coffee-and-research/en/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.8.25</generator>
+<generator>quarto-1.9.37</generator>
 <lastBuildDate>Sat, 13 Dec 2025 15:00:00 GMT</lastBuildDate>
 <item>
   <title>Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</title>
@@ -69,7 +69,7 @@
 </ul>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>Me: “<strong>Continuous data</strong> are things we measure, right? Like age or blood pressure. Binary data I get — like ‘with stoma’ vs ‘without stoma’ in my survey.”</p>
+<p>Me: “<strong>Continuous data</strong> are things we measure, right? Like age or blood pressure. Binary data I get — like ’with stoma’ vs ’without stoma’ in my survey.”</p>
 </div>
 <div class="voice-father">
 <p>Dad: “Perfect. <strong>Count data</strong> is when you literally count events, like the number of traffic accidents. <strong>Survival data</strong> is things like lifespan — time from some starting point until an event, such as death. In your case, that could be time from surgery to returning to work, or time to relapse.”</p>
@@ -2246,7 +2246,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <p>Dad: “In Japan, yes—one of many.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “My boss keeps telling me it’s time I do ‘some research’ and present at a conference. He’s really into supporting cancer patients in return-to-work since the Basic Plan to Promote Cancer Control Programs was revised in 2016. Long story short, I think he wants me to run a survey. I’m not against it, but this feels more like your world than mine. Statistics and all that.”</p>
+<p>Me: “My boss keeps telling me it’s time I do ’some research’ and present at a conference. He’s really into supporting cancer patients in return-to-work since the Basic Plan to Promote Cancer Control Programs was revised in 2016. Long story short, I think he wants me to run a survey. I’m not against it, but this feels more like your world than mine. Statistics and all that.”</p>
 </div>
 <div class="voice-father">
 <p>Dad: “Half my domain, half yours. You see the patients, I only see the data. Do you have anything clinical you want to know? Any hypothesis?”</p>
@@ -2294,7 +2294,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <p>Dad: “There are statistical methods and R packages to improve comparability too, like <code>glm()</code> for regression adjustment, or <code>WeightIt()</code> for propensity score weighting. But on the other hand, a broader study population increases <strong>generalizability</strong>. If you want to estimate the return-to-work proportion among cancer survivors, you don’t necessarily need to limit the cancer type. Ideally, you’d collect data from multiple institutions.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “True…it feels strange to call it ‘a survey of cancer survivors’ if it’s only our hospital. Generalizability means the results should hold beyond our hospital, right?”</p>
+<p>Me: “True…it feels strange to call it ’a survey of cancer survivors’ if it’s only our hospital. Generalizability means the results should hold beyond our hospital, right?”</p>
 </div>
 <div class="voice-father">
 <p>Dad: “In class, I usually tell my students something like this:”</p>
@@ -2304,7 +2304,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 try to express it using PICO or PECO before you design the study.</p>
 </blockquote>
 <div class="voice-father">
-<p>Dad: “It sounds fancy, but we simply call that ‘structuring’ a study.”</p>
+<p>Dad: “It sounds fancy, but we simply call that ’structuring’ a study.”</p>
 </div>
 <div class="voice-daughter">
 <p>Me: “Structuring…? That sounds like something from a meeting. Okay, I’ve heard the word before.”</p>
@@ -2390,7 +2390,7 @@ try to express it using PICO or PECO before you design the study.</p>
 <li>O: Returned to work within 1 year after surgery (yes/no)</li>
 </ul>
 <p>Here you’d compare the return-to-work proportion between the stoma and non-stoma groups.</p>
-<p>What to choose for C (Comparison) is important. If you only know the return-to-work proportion in the stoma group, it’s hard to say whether that number is “high” or “low”.<br>
+<p>What to choose for C (Comparison) is important. If you only know the return-to-work proportion in the stoma group, it’s hard to say whether that number is “high” or”low”.<br>
 Having a clear comparison group improves interpretability.</p>
 </div>
 </div>

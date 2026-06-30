@@ -19,6 +19,8 @@ website:
         text: Home
       - text: "cifmodeling"
         href: https://gestimation.github.io/cifmodeling/
+      - text: "airsetup"
+        href: https://gestimation.github.io/airsetup/
       - text: A Conversation (EN)
         menu:
           - text: Index
