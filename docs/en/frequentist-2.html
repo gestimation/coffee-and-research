@@ -596,16 +596,18 @@ coxph(formula = Surv(time_os, status_os) ~ stoma, data = dat)
 
   n= 200, number of events= 140 
 
-                  coef exp(coef) se(coef)     z Pr(&gt;|z|)
-stomaWITH STOMA 0.2803    1.3236   0.1727 1.623    0.105
+                  coef exp(coef) se(coef)    z Pr(&gt;|z|)  
+stomaWITH STOMA 0.3227    1.3809   0.1717 1.88   0.0601 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
                 exp(coef) exp(-coef) lower .95 upper .95
-stomaWITH STOMA     1.324     0.7555    0.9435     1.857
+stomaWITH STOMA     1.381     0.7242    0.9864     1.933
 
-Concordance= 0.519  (se = 0.024 )
-Likelihood ratio test= 2.6  on 1 df,   p=0.1
-Wald test            = 2.63  on 1 df,   p=0.1
-Score (logrank) test = 2.65  on 1 df,   p=0.1</code></pre>
+Concordance= 0.553  (se = 0.024 )
+Likelihood ratio test= 3.48  on 1 df,   p=0.06
+Wald test            = 3.53  on 1 df,   p=0.06
+Score (logrank) test = 3.57  on 1 df,   p=0.06</code></pre>
 </div>
 </div>
 </div>

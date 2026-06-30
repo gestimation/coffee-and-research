@@ -226,7 +226,7 @@ This is a short essay on Japanese language and kanji characters.
 
 ## About the author—gestimation
 
-<img src="image/portrait.jpg"
+<img src="image/portrait.png"
      width="130"
      style="border-radius: 12px;
             float: left;
