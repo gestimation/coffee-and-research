@@ -3399,7 +3399,7 @@ Having a clear comparison group improves interpretability.</p>
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/frequentist-1.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 <item>
   <title>P-Value Explanations That Seem Plausible at First Glance</title>
@@ -3991,20 +3991,20 @@ font-style: inherit;">summary</span>(fit)</span></code></pre></div></div>
 <pre><code>Call:
 coxph(formula = Surv(time_os, status_os) ~ stoma, data = dat)
 
-  n= 200, number of events= 131 
+  n= 200, number of events= 137 
 
                   coef exp(coef) se(coef)     z Pr(&gt;|z|)  
-stomaWITH STOMA 0.3981    1.4890   0.1850 2.152   0.0314 *
+stomaWITH STOMA 0.3401    1.4051   0.1732 1.963   0.0496 *
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
                 exp(coef) exp(-coef) lower .95 upper .95
-stomaWITH STOMA     1.489     0.6716     1.036      2.14
+stomaWITH STOMA     1.405     0.7117     1.001     1.973
 
-Concordance= 0.552  (se = 0.024 )
-Likelihood ratio test= 4.47  on 1 df,   p=0.03
-Wald test            = 4.63  on 1 df,   p=0.03
-Score (logrank) test = 4.69  on 1 df,   p=0.03</code></pre>
+Concordance= 0.55  (se = 0.024 )
+Likelihood ratio test= 3.79  on 1 df,   p=0.05
+Wald test            = 3.85  on 1 df,   p=0.05
+Score (logrank) test = 3.89  on 1 df,   p=0.05</code></pre>
 </div>
 </div>
 </div>
@@ -4060,7 +4060,7 @@ Score (logrank) test = 4.69  on 1 df,   p=0.03</code></pre>
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/frequentist-2.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 <item>
   <title>Beyond 0.05: Interpreting P-Values in a Clinical Trial</title>
@@ -4299,7 +4299,7 @@ A <strong>two-sided p-value</strong> corresponds to looking in both directions (
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/frequentist-3.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 <item>
   <title>Understanding Confidence Intervals via Hypothetical Replications in R</title>
@@ -5447,7 +5447,7 @@ font-style: inherit;">print</span>(coverage_800)</span></code></pre></div></div>
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/frequentist-4.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 <item>
   <title>Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</title>
@@ -6276,7 +6276,7 @@ font-style: inherit;">0.05</span></span>
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/frequentist-5.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 <item>
   <title>Silent Confusions Hidden in Percentages</title>
@@ -6596,7 +6596,7 @@ font-style: inherit;">0.05</span></span>
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/effects-1.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 <item>
   <title>Who Is This Percentage About? Target Populations and Attributable Fractions</title>
@@ -6961,7 +6961,7 @@ font-style: inherit;">0.05</span></span>
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/effects-2.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 <item>
   <title>When Odds Ratios Approximate Risk Ratios—and When They Fail</title>
@@ -7476,7 +7476,7 @@ font-style: inherit;">0.05</span></span>
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/effects-3.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 <item>
   <title>A First Note on Cox Regression</title>
@@ -7658,7 +7658,7 @@ font-style: inherit;">0.05</span></span>
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/effects-5.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 <item>
   <title>After Cox Regression: A Case Study and R Demonstration</title>
@@ -8308,7 +8308,7 @@ nleqslv.message       Function criterion near zero</code></pre>
 
  ]]></description>
   <guid>https://gestimation.github.io/coffee-and-research/en/effects-6.html</guid>
-  <pubDate>Wed, 01 Jul 2026 00:46:31 GMT</pubDate>
+  <pubDate>Wed, 01 Jul 2026 00:55:04 GMT</pubDate>
 </item>
 </channel>
 </rss>
