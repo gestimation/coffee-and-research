@@ -1,0 +1,243 @@
+---
+title: "Who Is This Percentage About? Target Populations and Attributable Fractions"
+description: "Numbers can take on a life of their own not only because formulas are misunderstood, but also because the target population is hidden. This coffee-chat guide introduces attributable fractions and asks who a percentage is really about."
+tags:
+  - Effect measure
+  - Language & writing
+  - Observational study
+  - Research hypothesis
+format:
+  html:
+    toc: true
+---
+
+::: {.hero-header}
+![](../image/father-daughter.png){.hero-header-img}
+:::
+
+# Effects and Time II − Who Is This Percentage About? Target Populations and Attributable Fractions
+
+::: {.serif-block .text-right}
+Keywords: effect measure, language & writing, observational study, research hypothesis
+:::
+
+------------------------------------------------------------------------
+
+### Disease risk and the target population
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Me: "Want another coffee, Dad?"
+:::
+
+::: voice-father
+Dad: "Thanks. Changing topics a little: do you think the number of cancer patients with a smoking history has gone down?"
+:::
+
+::: voice-daughter
+Me: "Compared with the past? Probably."
+:::
+
+::: voice-father
+Dad: "Even so, smoking is still one of the major public-health issues in Japanese cancer statistics. Infections, smoking, and alcohol are estimated to be among the largest contributors to cancer incidence."
+:::
+
+::: voice-daughter
+Me: "That is a little surprising, given how much smoking has declined. But every cancer registry asks about smoking, so I guess it makes sense."
+:::
+
+::: voice-father
+Dad: "The proportions of cancer incidence attributed to infections, smoking, and alcohol have been estimated at about 16%, 15%, and 6%. The measure is called the **population attributable fraction**. And this, too, is not just an ordinary percentage."
+:::
+
+::: voice-daughter
+Me: "I know it doesn't mean 15% of smokers get cancer. But I admit I don't immediately know what it does mean."
+:::
+
+::: voice-father
+Dad: "Notice how your first image was smokers with cancer. That's exactly where misunderstanding starts. The target population for a population attributable fraction is not just smokers."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Population attributable fraction"}
+In epidemiology, we often study risk factors such as environmental exposures or lifestyle habits in a general population. One family of effect measures used for that purpose is the **attributable fraction**. These measures describe how much disease occurrence in a particular target population is attributable to an exposure.
+
+The measure that describes how much disease in the whole population is attributable to a risk factor is the **population attributable fraction** (PAF). Here, $RR$ is the risk ratio and $p$ is the proportion of the whole population in the exposed group.
+
+$$
+PAF=\frac{p(RR-1)}{p(RR-1)+1}
+$$
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Me: "So PAF needs not only the risk ratio but also how common the risk factor is. It is another case where a percentage looks simple but isn't."
+:::
+
+::: voice-father
+Dad: "Right. And there are closely related measures that are often used without enough explanation. Some target the exposed group rather than the whole population. In English, you will see terms such as **excess fraction** and **preventable fraction**. Their formulas are almost the same as vaccine efficacy."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Three attributable fractions"}
+The key difference among these measures is the **target population**.
+
+| Measure | Target population | Interpretation |
+|---|---|---|
+| PAF: population attributable fraction | Whole population | Among all disease cases in the population, how much is attributable to the exposure? |
+| EF: excess fraction | Higher-risk or harmful-exposure group | In the group with the harmful exposure, how much disease would be avoided if the exposure were removed? |
+| PF: preventable fraction | Group whose risk is being reduced | In the group that would otherwise have higher risk, how much disease is prevented by the protective exposure? |
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Definitions of excess fraction and preventable fraction"}
+When the exposure is harmful, many epidemiology textbooks define the **excess fraction** as:
+
+$$
+EF = \frac{\pi_1 - \pi_2}{\pi_1} = 1 - \frac{1}{RR}
+$$
+
+Here group 1 is exposed to a harmful factor and group 2 is unexposed. The measure asks how much disease would be reduced among the exposed group if the exposure were removed.
+
+When the exposure is protective, the corresponding measure is the **preventable fraction**:
+
+$$
+PF=\frac{\pi_2-\pi_1}{\pi_2}=1-RR
+$$
+
+This has the same mathematical form as vaccine efficacy. In this notation, group 2 is the group whose risk would be reduced by the protective exposure, so the target population is tied to the denominator of the formula. The point is not only the formula. Environmental epidemiology, vaccine studies, screening, and prevention studies may care about different target populations, so the same-looking percentage can answer different questions.
+:::
+
+::: {.callout-note appearance="simple" title="A numerical example from a hypothetical cohort study"}
+Consider a hypothetical cohort study of smoking and pancreatic cancer.
+
+| | Smoking | No smoking | Effect measure |
+|---|---:|---:|---:|
+| Pancreatic cancer | 15 | 12 | |
+| No pancreatic cancer | 365 | 868 | |
+| Risk | 3.9% | 1.4% | |
+| Risk difference | | | 2.5% |
+| Risk ratio | | | 3-fold |
+| Odds ratio | | | 3-fold |
+| Excess fraction | | | 74% |
+
+The risk difference is 2.5 percentage points, while the excess fraction is 74%. Both are percentages, but they describe different things.
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Me: "A 2.5% risk difference and a 74% excess fraction feel completely different. The same percent sign is doing too much work."
+:::
+
+::: voice-father
+Dad: "Exactly. The gap between the number and what people hear from it is large. A hazard ratio in a clinical trial often feels like a number for deciding which treatment to choose. An attributable fraction often feels like a number for asking how much disease might be reduced by intervening in society. But the harder part is that effect measures are not just formulas. They also carry a statement about which population the number is speaking about."
+:::
+
+::: voice-daughter
+Me: "So the target population is hiding in the denominator?"
+:::
+
+::: voice-father
+Dad: "Sometimes visibly, sometimes quietly. Let me use a small screening example. Imagine four people who come for cancer screening at age 60. To keep the story simple, suppose their health status is otherwise identical. Two test positive, receive curative surgery, and live to ages 71 and 79. Their survival times after screening are 11 and 19 years."
+:::
+
+- Tested positive at age 60, received curative surgery, lived to age 71
+- Tested positive at age 60, received curative surgery, lived to age 79
+- False negative at age 60, did not receive surgery, lived to age 67
+- False negative at age 60, did not receive surgery, lived to age 73
+
+::: voice-father
+Dad: "The other two actually had cancer, but screening missed it. They died at ages 67 and 73, so their survival times after screening were 7 and 13 years."
+:::
+
+::: voice-father
+Dad: "If the two false-negative patients had been found and treated at age 60, by what percentage would their survival time have increased?"
+:::
+
+::: voice-daughter
+Me: "The treated two lived an average of 15 years after screening, and the missed two lived an average of 10 years. So $(15-10)/10=0.5$: a 50% increase."
+:::
+
+::: voice-father
+Dad: "Now ask the reverse question. If the two patients who were detected and treated had not received curative surgery at age 60, how much survival time would have been lost?"
+:::
+
+::: voice-daughter
+Me: "$(10-15)/15=-0.33$, so about a 33% loss."
+:::
+
+::: voice-father
+Dad: "Same four people, same two averages, but the percentage changes depending on which two people you put in the denominator. That is why target populations matter."
+:::
+
+::: voice-daughter
+Me: "So if I read 'reduced by 50%,' I should ask: reduced for whom?"
+:::
+
+::: voice-father
+Dad: "Yes. And also: reduced by what time point? Risk is always tied to time, even when the time point is not written loudly."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Target population"}
+When discussing causal effects of a treatment or exposure, we need to state the population to which the effect refers.
+
+For example, suppose we study whether stoma creation affects return to work among patients after curative resection for rectal cancer. A causal risk difference comparing stoma versus no stoma often targets the whole population of patients after curative resection. That may sound odd, because the observed comparison is between patients with and without a stoma. But causal inference asks a counterfactual question: what would happen if the whole target population had a stoma, compared with what would happen if the same population did not?
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+Dad: "One more point. Risk includes time. Think about the probability of death 10 years after screening. If you change the time point to 12 years or 20 years, the attributable fraction can change."
+:::
+
+::: voice-daughter
+Me: "So whenever I see a percentage such as 'how much disease is reduced,' I should ask which population and which time point it refers to."
+:::
+
+::: voice-father
+Dad: "That's the whole message."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="A quiz related to this episode"}
+Attributable fractions may target the whole population rather than only one exposed or treated group. Return to the four-person screening example. Suppose screening sensitivity improved to 100%, so the two false-negative cases could also be detected and treated at age 60. Compared with the original situation, by what percentage would the number of deaths by 15 years after screening be reduced among all four people?
+
+1. 0%  
+2. 33%  
+3. 50%  
+4. 100%
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Answer"}
+- The correct answer is **2**.
+
+In the original situation, the four survival times after screening were 11, 19, 7, and 13 years, so 3 of the 4 people had died by 15 years. If the two false-negative cases had been detected and treated, their expected 15-year mortality would be 50%, like the treated group. The expected number of deaths would then be $1 + 2 \times 0.5 = 2$.
+
+The reduction is therefore $(3-2)/3=33\%$. This is the logic of an attributable fraction targeting the whole population.
+:::
+
+### Next episodes and R script
+
+- [When Odds Ratios Approximate Risk Ratios—and When They Fail](effects-3.html)
+- [effects.R](../from-coffee-chat-to-r/effects.R)
+
+::: {.callout-note appearance="simple" collapse="true" title="Other episodes"}
+
+**Episodes in this series**
+
+- [Silent Confusions Hidden in Percentages](effects-1.html)
+- [Who Is This Percentage About? Target Populations and Attributable Fractions](effects-2.html)
+- [When Odds Ratios Approximate Risk Ratios—and When They Fail](effects-3.html)
+- [From Risk and Rate to Survival and Hazard](effects-4.html)
+- [A First Note on Cox Regression](effects-5.html)
+- [After Cox Regression: A Case Study and R Demonstration](effects-6.html)
+
+**Earlier series**
+
+- [Study Design I](study-design-1.html)
+- [Frequentist Thinking I](frequentist-1.html)
+- [Frequentist Experiments I](frequentist-4.html)
+
+**Glossary**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::

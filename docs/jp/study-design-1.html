@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,7 +41,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -168,6 +168,14 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
         <li>
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
   </li>  
     </ul>
   </li>
@@ -430,8 +438,22 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <p>がんサバイバー調査を題材にして、研究仮説の例を3つ考えてみました。</p>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note callout-titled" title="この記事でまず押さえること">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>この記事でまず押さえること
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>研究仮説を言葉にする目的は、立派な文章を作ることではありません。後で計算する割合、リスク、オッズ、ハザード比の<strong>主語</strong>、<strong>分母</strong>、<strong>比較相手</strong>を、データを集める前に決めることです。</p>
+<p>たとえば「復職率」と言ったとき、その数字の主語は「直腸がん術後の患者さん」なのか、「手術前に就労していた患者さん」なのか、「復職を希望した患者さん」なのかで変わります。さらに、分母を「手術を受けた全員」にするのか、「手術前に働いていた人」にするのか、「復職を希望した人」にするのかで、同じパーセントでも意味は変わります。数字はひとりで意味を持つのではなく、誰について、何を分母にして、何と比べた数字なのかによって解釈が決まります。PICO/PECOは、その違いを早い段階で見えるようにするための道具です。</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note callout-titled" title="研究仮説1">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -440,7 +462,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <pre><code>P: 根治切除後の直腸がん患者
 
@@ -454,7 +476,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="研究仮説2">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -463,7 +485,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <pre><code>P: 根治切除後のがん患者
 
@@ -477,7 +499,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="研究仮説3">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -486,7 +508,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>「性・年齢、ステージ、術後補助化学療法、パフォーマンスステータス、合併症、ストーマ、手術前の就労状況、家計収入額、がん保険、就労支援サービスの利用などの因子は、1年以内の復職率と関連するか」</p>
 <p>PECOになりにくい研究仮説もあります。たとえば、疾患発生と関連のあるリスク因子を探す、いわゆる探索的研究では、EとCははっきり決まっていません。構造化といっても、臨床疑問をかならずPECOの形式にしなければならないわけではありません。研究デザインに最低限必要な要素を特定することが大切です。</p>
@@ -521,7 +543,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -530,7 +552,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は3です</strong></li>
@@ -546,7 +568,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 <li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -555,7 +577,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><a href="study-design-1.html">A Story of Coffee Chat and Research Hypothesis</a></li>

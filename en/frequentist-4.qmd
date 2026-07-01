@@ -1,0 +1,351 @@
+---
+title: "Understanding Confidence Intervals via Hypothetical Replications in R"
+description: "What does the 95% in a 95% confidence interval mean? This coffee-chat guide uses R simulation to make hypothetical repeated studies visible."
+tags:
+  - Probability model
+  - R simulation
+  - Study design
+  - Survival & competing risks
+format:
+  html:
+    toc: true
+---
+
+::: {.hero-header}
+![](../image/father-daughter.png){.hero-header-img}
+:::
+
+# Frequentist Experiments I − Understanding Confidence Intervals via Hypothetical Replications in R
+
+::: {.serif-block .text-right}
+Keywords: probability model, simulation, study design, survival & competing risks
+:::
+
+------------------------------------------------------------------------
+
+::: {.callout-note appearance="simple" collapse="true" title="Previously"}
+A daughter is planning her first clinical study, and her dad is a statistician. While reading clinical trial papers together, he explained that p-values and 95% confidence intervals are rooted in frequentist probability. She understands the rule of use, but still wonders what the number "95%" is actually doing.
+:::
+
+### Dad, is that 95% confidence interval really 95%?
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Daughter: "Good morning. It's cold today. Can I ask you something while you're eating? You know **95% confidence intervals**? Also, can I have coffee?"
+:::
+
+::: voice-father
+Dad: "Help yourself. The coffee should still be hot. What about confidence intervals?"
+:::
+
+::: voice-daughter
+Daughter: "Everyone says 95% as if it is obvious. But are they really right 95% of the time?"
+:::
+
+::: voice-father
+Dad: "Yes, if the probability model is correct."
+:::
+
+::: voice-daughter
+Daughter: "Can we prove that with simulation?"
+:::
+
+::: voice-father
+Dad: "Good question. Let's estimate the **coverage** of a 95% confidence interval for a hazard ratio. In R."
+:::
+
+::: voice-daughter
+Daughter: "Coverage means how often the interval actually contains the true value, right?"
+:::
+
+::: voice-father
+Dad: "Exactly. We count how often the confidence interval covers the true value in simulated data. Suppose we compare overall survival between patients with and without a stoma. Let the true hazard ratio be 1.5. If we repeat the simulation 1000 times, the 95% confidence interval should include 1.5 about 950 times."
+:::
+
+::: voice-daughter
+Daughter: "But I'm only going to run my study once."
+:::
+
+::: voice-father
+Dad: "Right. The probability model that statisticians talk about is not the one actual study you will conduct. Think of it as a letter sent to another world: 'Generate data from this kind of population, using these rules.' R lets us connect to that other world. Someone there repeats the study 1000 times."
+:::
+
+::: voice-daughter
+Daughter: "And the proportion of intervals that hit the true value is coverage."
+:::
+
+::: voice-father
+Dad: "Yes. In this setting, survival times are generated from exponential distributions, and censoring is generated from another exponential distribution. The Cox model assumptions are correct by construction. So theoretically, the coverage should be about 95%."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Simulating 95% confidence intervals using coxph()"}
+There are several ways to estimate a hazard ratio, but the most familiar one is `coxph()` from the **survival** package. We generate survival data using `generate_data()`, fit a Cox model, and check whether the confidence interval for the stoma hazard ratio includes the true value.
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Code for generate_data()"}
+```{r warning=FALSE}
+generate_data <- function(n = 200, hr1, hr2, hr3) {
+  stoma <- rbinom(n, size = 1, prob = 0.4)
+  sex <- rbinom(n, size = 1, prob = 0.5)
+  age <- rnorm(n, mean = 65 + 3 * stoma, sd = 8)
+  hazard_relapse   <- 0.10*exp(stoma*log(hr1)+age*log(hr2))
+  hazard_death     <- ifelse(stoma == 1, hr3 * 0.10, 0.10)
+  hazard_censoring <- 0.05
+
+  t_relapse   <- rexp(n, rate = hazard_relapse)
+  t_death     <- rexp(n, rate = hazard_death)
+  t_censoring <- rexp(n, rate = hazard_censoring)
+  
+  time_os   <- pmin(t_death, t_censoring)
+  status_os <- as.integer(t_death <= t_censoring)
+  
+  time_rfs <- pmin(t_relapse, t_death, t_censoring)
+  status_rfs <- integer(n)
+  status_rfs[time_rfs == t_relapse & time_rfs < t_censoring] <- 1
+  status_rfs[time_rfs == t_death & time_rfs < t_censoring] <- 1
+  
+  time_cir <- pmin(t_relapse, t_death, t_censoring)
+  status_cir <- integer(n)
+  status_cir[time_cir == t_relapse & time_cir < t_censoring] <- 1
+  status_cir[time_cir == t_death & time_cir < t_censoring] <- 2
+  
+  dat <- data.frame(
+    id         = 1:n,
+    sex        = factor(sex, levels = c(0, 1), labels = c("WOMAN", "MAN")),
+    age        = age,
+    stoma      = factor(stoma, levels = c(0, 1),
+                        labels = c("WITHOUT STOMA", "WITH STOMA")),
+    time_os    = time_os,
+    status_os  = status_os,
+    time_rfs   = time_rfs,
+    status_rfs = status_rfs,
+    time_cir   = time_cir,
+    status_cir = status_cir
+  )
+}
+```
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Code for calculate_coverage()"}
+```{r warning=FALSE}
+calculate_coverage <- function(model=c("coxph","finegray"), n, hr1, hr2, hr3, hr_true) {
+  replications=1000
+  covered <- numeric(replications)
+
+  for (r in seq_len(replications)) {
+    set.seed(r)
+    dat <- generate_data(n, hr1, hr2, hr3)
+    if (identical(model, "coxph")) {
+      fit <- coxph(Surv(time_os, status_os) ~ stoma, data = dat)
+    } else if (identical(model, "finegray")) {
+      dat$fstatus_cir <- factor(dat$status_cir,
+                                levels = 0:2,
+                                labels = c("censor",
+                                           "relapse",
+                                           "death"))
+      fgdat <- finegray(Surv(time_cir, fstatus_cir) ~ ., data=dat)
+      fit <- coxph(Surv(fgstart, fgstop, fgstatus) ~ stoma, weight=fgwt, cluster=id, data=fgdat)
+    }
+    confidence_interval <- confint(fit)
+    covered[r] <- as.integer(confidence_interval[1] <= log(hr_true) && log(hr_true) <= confidence_interval[2])
+  }
+  coverage <- mean(covered)
+  return(coverage)
+}
+```
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="R code and result"}
+```{r warning=FALSE}
+# install.packages("survival") # if needed
+library(survival)
+coverage_200 <- calculate_coverage(model="coxph", n=200, hr1=2, hr2=1, hr3=1.5, hr_true=1.5)
+print(coverage_200)
+```
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Daughter: "Okay, I can see that the coverage is around 95%. But how should I understand a 95% confidence interval?"
+:::
+
+::: voice-father
+Dad: "Textbook version: if you repeatedly collect similar data and construct a 95% confidence interval each time, 95% of those intervals are designed to contain the true value. That is a long-run property."
+:::
+
+::: voice-daughter
+Daughter: "So it does not mean that the interval from my one study has a 95% probability of being correct."
+:::
+
+::: voice-father
+Dad: "Right."
+:::
+
+::: voice-daughter
+Daughter: "Then what happens if the sample size is only 100? Does the interval become less likely to hit?"
+:::
+
+::: voice-father
+Dad: "Not by design. The coverage should still be about 95%. What changes is the **width** of the interval. Smaller samples give wider intervals."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Coverage by sample size"}
+```{r warning=FALSE}
+coverage_100 <- calculate_coverage(model="coxph", n=100, hr1=2, hr2=1, hr3=1.5, hr_true=1.5)
+coverage_400 <- calculate_coverage(model="coxph", n=400, hr1=2, hr2=1, hr3=1.5, hr_true=1.5)
+coverage_800 <- calculate_coverage(model="coxph", n=800, hr1=2, hr2=1, hr3=1.5, hr_true=1.5)
+print(coverage_100)
+print(coverage_200)
+print(coverage_400)
+print(coverage_800)
+```
+:::
+
+### Designing sample size with a confidence-interval approach
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Daughter: "So the coverage is still about 95%. Then any sample size is fine?"
+:::
+
+::: voice-father
+Dad: "Not quite. Coverage may stay the same, but the confidence interval becomes wider when the sample size is smaller. The question becomes: how much uncertainty can you tolerate?"
+:::
+
+::: voice-daughter
+Daughter: "I was thinking that getting 100 questionnaire responses would be pretty good."
+:::
+
+::: voice-father
+Dad: "If your goal is to estimate a return-to-work proportion, 100 may be barely reasonable. But if your goal is to compare return to work between patients with and without a stoma, the calculation changes."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="How to read the sample size table"}
+In the table below, the columns show the desired **total width** of the 95% confidence interval. For example, if the return-to-work proportion is expected to be 50%, and you want to report something like 50% (95% CI 40% to 60%), the confidence-interval width is 0.20.
+
+The table then tells you how many people are needed to estimate one proportion with that degree of precision.
+:::
+
+::: panel-tabset
+### Proportion 0.01 to 0.15
+
+Sample size needed for a specified width of a 95% confidence interval for a proportion.
+
+| Proportion $\pi$ | 0.05 | 0.10 | 0.15 | 0.20 |
+|--------|-----:|-----:|-----:|-----:|
+| 0.01   |  108 |   43 |   25 |   17 |
+| 0.02   |  152 |   52 |   29 |   19 |
+| 0.03   |  201 |   61 |   33 |   21 |
+| 0.04   |  252 |   72 |   37 |   23 |
+| 0.05   |  304 |   83 |   41 |   25 |
+| 0.06   |  356 |   95 |   46 |   28 |
+| 0.07   |  407 |  107 |   50 |   30 |
+| 0.08   |  458 |  118 |   55 |   32 |
+| 0.09   |  508 |  130 |   60 |   35 |
+| 0.10   |  554 |  139 |   62 |   35 |
+| 0.11   |  604 |  153 |   69 |   40 |
+| 0.12   |  651 |  164 |   74 |   42 |
+| 0.13   |  696 |  175 |   78 |   44 |
+| 0.14   |  741 |  186 |   83 |   47 |
+| 0.15   |  784 |  196 |   87 |   49 |
+
+### Proportion 0.16 to 0.50
+
+Sample size needed for a specified width of a 95% confidence interval for a proportion.
+
+| Proportion $\pi$ | 0.05 | 0.10 | 0.15 | 0.20 |
+|--------|-----:|-----:|-----:|-----:|
+| 0.16   |  826 |  206 |   92 |   51 |
+| 0.17   |  867 |  216 |   96 |   54 |
+| 0.18   |  907 |  226 |  100 |   56 |
+| 0.19   |  945 |  236 |  104 |   58 |
+| 0.20   |  982 |  245 |  108 |   60 |
+| 0.25   | 1150 |  286 |  126 |   70 |
+| 0.30   | 1288 |  320 |  141 |   78 |
+| 0.35   | 1395 |  347 |  152 |   84 |
+| 0.40   | 1472 |  366 |  161 |   89 |
+| 0.45   | 1518 |  377 |  166 |   92 |
+| 0.50   | 1533 |  381 |  167 |   93 |
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+Dad: "Suppose the return-to-work proportion is 50%, and you want to estimate it with a 95% confidence interval of about 40% to 60%. The total width is 0.20. In the table, $\pi=0.50$ and width 0.20 gives 93."
+:::
+
+::: voice-daughter
+Daughter: "So about 100 responses would be enough for estimating a single proportion."
+:::
+
+::: voice-father
+Dad: "Yes, for that purpose. But a study designed to compare two groups uses a different logic. The confidence-interval approach is often used for descriptive or exploratory studies. If you want to test a hypothesis, you need the hypothesis-testing approach."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Two approaches to sample size planning"}
+Broadly, there are two ways to plan sample size:
+
+- **Confidence-interval approach**: useful for surveys and exploratory studies where the goal is precision of estimation.
+- **Hypothesis-testing approach**: useful for confirmatory studies where the goal is to detect a clinically meaningful difference.
+
+The confidence-interval approach requires:
+
+- The expected true proportion
+- The desired confidence-interval width
+
+The hypothesis-testing approach requires at least:
+
+- Significance level, often 5%
+- Power, often 80% or 90%
+- Effect size to detect, such as a difference in survival probability or a hazard ratio
+
+Sample size planning is therefore another way of designing error control. It is paired with p-values through the logic of frequentist testing.
+:::
+
+::: {.callout-note appearance="simple" title="A quiz related to this episode"}
+Which statement best describes the reference range of a clinical laboratory test?
+
+1. Mean ± 1.96 × standard deviation in a random sample from any population  
+2. The range containing 95% of test values in a healthy population  
+3. Mean ± 1.96 × standard error in a healthy population  
+4. The range containing 95% of test values in a random sample from any population
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Answer"}
+- The correct answer is **2**.
+
+The distinction between standard deviation (SD) and standard error (SE) matters. SD describes how much individual test values vary. SE describes how precisely a mean is estimated. "Mean ± 1.96 × SD" corresponds to a range containing about 95% of values under a normal distribution. "Mean ± 1.96 × SE" corresponds to a 95% confidence interval for the mean under repeated sampling.
+:::
+
+### Reference
+
+- Machin D, Campbell MJ, Tan SB, Tan SH. Sample Sizes for Clinical, Laboratory and Epidemiology Studies. 4th ed. Wiley-Blackwell; 2018
+
+- Sasako M, Sano T, Yamamoto S, Sairenji M, Arai K, Kinoshita T, Nashimoto A, Hiratsuka M, Japan Clinical Oncology Group (JCOG9502). Left thoracoabdominal approach versus abdominal-transhiatal approach for gastric cancer of the cardia or subcardia: a randomised controlled trial. Lancet Oncol 2006;7(8):644-51
+
+- Green J, Benedetti J, Smith A, Crowley J. Clinical Trials in Oncology. 3rd ed. Chapman and Hall/CRC; 2012
+
+### Next episodes and R script
+
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
+- [frequentist.R](../from-coffee-chat-to-r/frequentist.R)
+
+::: {.callout-note appearance="simple" collapse="true" title="Other episodes"}
+
+**Episodes in this series**
+
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
+
+**Earlier series**
+
+- [Study Design I](study-design-1.html)
+- [Frequentist Thinking I](frequentist-1.html)
+
+**Glossary**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::

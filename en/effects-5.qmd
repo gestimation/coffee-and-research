@@ -1,0 +1,169 @@
+---
+title: "A First Note on Cox Regression"
+description: "Cox regression is not merely a machine for producing hazard ratios. This coffee-chat guide explains proportional hazards as the key modeling assumption behind the familiar output."
+tags:
+  - Effect measure
+  - Probability model
+  - Survival & competing risks
+format:
+  html:
+    toc: true
+---
+
+::: {.hero-header}
+![](../image/father-daughter.png){.hero-header-img}
+:::
+
+# Effects and Time V − A First Note on Cox Regression
+
+::: {.serif-block .text-right}
+Keywords: effect measure, probability model, survival & competing risks
+:::
+
+------------------------------------------------------------------------
+
+### Cox regression is a model of proportional hazards
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Me: "Dad, I admit the survival-curve equations were hard. But one thing bothered me. This formula is a hazard ratio, right?"
+:::
+:::::::::::::::::::::::::::::::::
+
+$$
+HR=\frac{\lambda_1}{\lambda_2}
+$$
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Me: "Is this the same idea as **Cox regression**? Or is Cox regression doing something different?"
+:::
+
+::: voice-father
+Dad: "It is related, but this is not the Cox model yet. For a simple two-group Cox model, the proportional hazards assumption is often expressed like this:"
+:::
+:::::::::::::::::::::::::::::::::
+
+$$
+HR=\frac{\lambda_1(x)}{\lambda_2(x)}
+$$
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Me: "The $x$ is time, right? So $\lambda_1(x)$ and $\lambda_2(x)$ are the hazard functions for the two groups. I can see that the hazards are allowed to change over time. But it still looks like an ordinary division."
+:::
+
+::: voice-father
+Dad: "That is how it looks if you read the formula without the surrounding model. In the exponential example, each hazard was already constant before we wrote the ratio. In Cox regression, $\lambda_1(x)$ and $\lambda_2(x)$ may each be complicated functions of time. What the model imposes is that their ratio stays constant over time."
+:::
+
+::: voice-daughter
+Me: "So the moment we write the ratio as a constant, we have introduced the proportional hazards assumption."
+:::
+
+::: voice-father
+Dad: "Exactly. The formula is not just a calculation carried out inside `coxph()`. It is a compact way of saying what structure the model assumes."
+:::
+
+::: voice-daughter
+Me: "So the formula is not just a definition of the hazard ratio. It is the model."
+:::
+
+::: voice-father
+Dad: "Exactly. For a simple two-group comparison, that expression represents the Cox model itself."
+:::
+:::::::::::::::::::::::::::::::::
+
+The usual textbook form is:
+
+$$
+\lambda(x)=\lambda_0(x)\exp(Z \beta)
+$$
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+Dad: "One strength of Cox regression is that the baseline hazard, $\lambda_0(x)$, can have almost any shape. That flexibility is why it is so useful. But the proportional hazards assumption still matters. Before reporting Cox regression results, you need to check whether the assumption is plausible: for example, whether Kaplan-Meier curves cross or whether log-minus-log plots are roughly parallel."
+:::
+
+::: voice-daughter
+Me: "So Cox regression is convenient, but it is not magic."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Complementary log-log transformation: extracting a hazard ratio"}
+Cox regression is not the only way to connect binary outcomes over time with hazard ratios. In a discrete-time framework, a generalized linear model with the complementary log-log link (`binomial(link = "cloglog")`) can also estimate hazard ratios.
+
+To see the structure, suppose two survival functions under exponential hazards are:
+
+$$
+S_1(x)=\exp(-\lambda_1 x)
+$$
+
+$$
+S_2(x)=\exp(-\lambda_2 x)
+$$
+
+Taking logs and changing signs gives:
+
+$$
+-\log\{S_1(x)\}=\lambda_1 x
+$$
+
+$$
+-\log\{S_2(x)\}=\lambda_2 x
+$$
+
+Taking logs again and subtracting:
+
+$$
+\log[-\log\{S_1(x)\}]-\log[-\log\{S_2(x)\}]=\log(\lambda_1 x)-\log(\lambda_2 x)=\log(HR)=\beta
+$$
+
+Under proportional hazards, the time $x$ cancels out and the regression coefficient $\beta$ remains. This is the idea behind log-minus-log plots: if proportional hazards is plausible, transformed survival curves should look roughly parallel.
+:::
+
+::: {.callout-note appearance="simple" title="A quiz related to this episode"}
+![](frequentist-2.jpg)
+
+Who is this?
+
+1. Kaplan  
+2. Meier  
+3. Cox  
+4. Wilcoxon
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Answer"}
+- The correct answer is **3**.
+
+This is Sir David Cox.
+
+[David Cox (statistician)](https://en.wikipedia.org/wiki/David_Cox_(statistician))
+:::
+
+### Next episodes and R script
+
+- [After Cox Regression: A Case Study and R Demonstration](effects-6.html)
+- [effects.R](../from-coffee-chat-to-r/effects.R)
+
+::: {.callout-note appearance="simple" collapse="true" title="Other episodes"}
+
+**Episodes in this series**
+
+- [Silent Confusions Hidden in Percentages](effects-1.html)
+- [Who Is This Percentage About? Target Populations and Attributable Fractions](effects-2.html)
+- [When Odds Ratios Approximate Risk Ratios—and When They Fail](effects-3.html)
+- [From Risk and Rate to Survival and Hazard](effects-4.html)
+- [A First Note on Cox Regression](effects-5.html)
+- [After Cox Regression: A Case Study and R Demonstration](effects-6.html)
+
+**Earlier series**
+
+- [Study Design I](study-design-1.html)
+- [Frequentist Thinking I](frequentist-1.html)
+- [Frequentist Experiments I](frequentist-4.html)
+
+**Glossary**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::

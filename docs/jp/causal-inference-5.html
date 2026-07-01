@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -167,6 +167,14 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
         <li>
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
   </li>  
     </ul>
   </li>
@@ -381,6 +389,21 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <p>私「ふーん。どこが分かんないのかも分からない感じになっちゃった。ひとりで考えてみる」</p>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note callout-titled" title="調整変数は手持ちの変数一覧ではない">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>調整変数は手持ちの変数一覧ではない
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>交絡を調整するとき、測定できた変数をすべてモデルに入れればよいわけではありません。どの変数で調整すべきかは、曝露、アウトカム、共通原因、中間因子、合流点の関係から考えます。</p>
+<p>DAGは、その判断を図として見えるようにする道具です。有向分離で探しているのは、手元の変数の数ではなく、バイアスのあるパスを閉じ、開いてはいけないパスを開かないための調整変数の組み合わせです。</p>
+<p>したがって、調整後の数字は「たくさん調整したから正しい数字」ではありません。どの問いに答えるために、どのパスを閉じる必要があると考え、そのためにどの変数を選んだのか。その説明とセットになってはじめて、調整済みの数字は意味を持ちます。</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note callout-titled" title="有向分離と条件付独立性">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -413,7 +436,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -422,7 +445,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は2です。</strong></li>
@@ -452,7 +475,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -461,7 +484,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は4です。</strong></li>
@@ -484,7 +507,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <li><a href="causal-inference-6.html">Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -493,7 +516,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>

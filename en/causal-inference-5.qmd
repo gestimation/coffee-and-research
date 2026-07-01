@@ -1,5 +1,6 @@
 ---
 title: "Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias"
+draft: true
 description: ""
 tags:
   - Bias
@@ -117,6 +118,14 @@ Dad: "The main goal today was to explain blocking properly, and maybe it didn't 
 And one more thing: when we replace the nodes in a DAG with random variables, d-separation corresponds exactly to conditional independence. Using this result, we can identify which confounders are needed to identify causal effects. That's the real meaning of the backdoor criterion."
 :::
 ::::::::::::::::::::::::::::::::: 
+
+::: {.callout-note appearance="simple" title="Adjustment variables are not just all available variables"}
+When adjusting for confounding, you should not simply put every measured variable into the model. The choice of adjustment variables depends on the causal structure: exposure, outcome, common causes, mediators, and colliders.
+
+A DAG makes that judgment visible. With d-separation, we are not looking for the longest possible list of variables. We are looking for a set that blocks biased paths while avoiding paths that should remain closed.
+
+For that reason, an adjusted number is not "more correct" simply because many variables were included. It becomes meaningful only together with the question it answers, the paths the analysis is trying to block, and the variables chosen for that purpose.
+:::
 
 ::: {.callout-note appearance="simple"  title="d-Separation and Conditional Independence"}
 Suppose that, using a DAG, we confirm that C d-separates A and B.

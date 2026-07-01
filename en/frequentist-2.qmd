@@ -84,7 +84,7 @@ Dad: "No. The trial was stopped not because a significant difference was found, 
 
 ::: voice-father
 Dad: "In JCOG9502, the **null hypothesis** is that the overall survival curves of the LTA and TH groups are equal. Let me ask you about the first statement. Do you think the p-value in JCOG9502 represents the probability that ‘there is no difference between the survival curves of the LTA and TH groups'?"
-::: 
+:::
 
 ::: voice-daughter
 Daughter: "This is starting to feel like a blackboard lecture. Was mentioning statistics textbooks a mistake? But sure—statement one sounds fine to me. If the p-value is 0.05, then it's correct five times out of a hundred, right?"
@@ -151,6 +151,12 @@ Dad: "This distinction had to be built into the rules, and history shows why.
 About thirty years ago in Japan, non-inferiority trials were required for drug approval. Based on that experience, the relationship between research hypotheses and statistical decision rules has to be handled very carefully."
 ::: 
 :::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Common misreadings"}
+A p-value is not the probability that the null hypothesis is true. A small p-value does not automatically mean that the result is scientifically or clinically important. A large p-value does not mean "there is no difference," "the treatments are equivalent," or "the study has no value."
+
+When reading a p-value, check at least the null hypothesis, outcome, significance level, test, interim analyses, and multiplicity rules in the Methods. A p-value is not a standalone number; it gets its meaning from the study design and analysis rule.
+:::
 
 ### P-values as a standardized rule
 

@@ -10,6 +10,17 @@ listing:
     - study-design-3.qmd
     - study-design-4.qmd
     - study-design-5.qmd
+    - frequentist-1.qmd
+    - frequentist-2.qmd
+    - frequentist-3.qmd
+    - frequentist-4.qmd
+    - frequentist-5.qmd
+    - effects-1.qmd
+    - effects-2.qmd
+    - effects-3.qmd
+    - effects-4.qmd
+    - effects-5.qmd
+    - effects-6.qmd
     - glossary.qmd
   sort: "date desc"
   feed:
@@ -35,11 +46,11 @@ Told in words warm enough to hold on a winter morning, the narrative moves with 
 
 ## How to begin
 
-This story follows a single clinical study, moving in the order of research hypotheses → statistics → causality → language. If you are not sure where to start, these three episodes are good entry points:
+This story follows a single clinical study, moving from research hypotheses to statistics, effects, causality, and language. If you are not sure where to start, these three episodes are good entry points:
 
 - [**The first conversation and a research hypothesis (Study Design I)**](study-design-1.html)
 - [**Clinical trials and p-values (Frequentist Thinking I)**](frequentist-1.html),
-- [**causal inference in research (Adjusting for Bias I)**](logistic-regression-1.html)
+- [**percentages, populations, and effect measures (Effects and Time I)**](effects-1.html)
 
 Each episode can be read on its own—feel free to choose whichever layer interests you.
 
@@ -49,7 +60,6 @@ If you came here from an R post, you may want the code first. These scripts are 
 - Study Design: [study-design.R](../from-coffee-chat-to-r/study-design.R)
 - Frequentist Thinking / Experiments: [frequentist.R](../from-coffee-chat-to-r/frequentist.R)
 - Effects and Time: [effects.R](../from-coffee-chat-to-r/effects.R)
-- Adjusting for Bias: [logistic-regression.R](../from-coffee-chat-to-r/logistic-regression.R)
 :::
 
 ------------------------------------------------------------------------
@@ -86,7 +96,7 @@ Distortion rarely comes from formulas alone—this is where bias quietly enters.
 
 ### 3. Frequentist Thinking — Practicing statistics
 
-Using cancer clinical trials as an example, my father explains the **frequentist perspective** of “How do numbers behave under repeated sampling?”
+Using cancer clinical trials as examples, the father explains the **frequentist perspective**: “How do numbers behave under repeated sampling?”
 
 - [Reading a Paper over a Cup of Coffee](frequentist-1.html)
 - [P-Value Explanations That Seem Plausible at First Glance](frequentist-2.html)
@@ -101,109 +111,49 @@ What would happen if the same study were repeated again and again — touching t
 A p-value is less a number than a shadow of design — watching where interpretation drifts.
 :::
 
-### 4. Frequentist Experiments — Validation of statistics
+### 4. Frequentist Experiments — Checking statistical ideas by simulation
 
-The laws derived from the frequentist theory are not mere abstractions; they can be verified through simulation experiments. Even if you are unfamiliar with R, simply run the script to reproduce the results.
+The ideas behind frequentist statistics are not just abstractions; they can be checked through simulation. Even if you are unfamiliar with R, you can run the script and reproduce the results.
+
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
 
 ::: {.callout-note appearance="simple" collapse="true" title="A glimpse ahead"}
-- **R Demonstration of Bias in Kaplan-Meier Under Competing Risks**
-A curve that looks convincing may still describe another world — checked through simulation.
 - **Understanding Confidence Intervals via Hypothetical Replications in R**
 Where does "95%" come from, and where does it go — lingering over confidence intervals.
 - **Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size**
-Planning of sample size is also the planning of error of the study. Revisiting the foundations of frequentist design.
+Sample size planning is also error planning. This episode revisits the foundations of frequentist design.
 :::
 
 ### 5. Effects and Time — How effects evolve
 
 We unravel risk differences, risk ratios, hazard ratios, vaccine effectiveness, attributable fractions, and effects that change over time alongside survival curves and cumulative incidence curves. A multidimensional perspective on data quietly develops, paving the way for causal inference.
 
-- [Silent Confusions Hidden in Percentages]
-- [Who Is This Percentage About? Target Populations and Attributable Fractions]
-- [Understanding Collapsibility of Effect Measures: Marginal vs Stratified]
-- [When Odds Ratios Approximate Risk Ratios—and When They Fail]
-- [From Risk and Rate to Survival and Hazard]
-- [Distinguishing Time-Point, Time-Constant, and Time-Varying Effects: An R Example]
+- [Silent Confusions Hidden in Percentages](effects-1.html)
+- [Who Is This Percentage About? Target Populations and Attributable Fractions](effects-2.html)
+- [When Odds Ratios Approximate Risk Ratios—and When They Fail](effects-3.html)
+- [From Risk and Rate to Survival and Hazard](effects-4.html)
+- [A First Note on Cox Regression](effects-5.html)
+- [After Cox Regression: A Case Study and R Demonstration](effects-6.html)
 
 ::: {.callout-note appearance="simple" collapse="true" title="A glimpse ahead"}
 - **Silent Confusions Hidden in Percentages**
 Percentages feel intuitive, yet they often mislead. Rethinking how effects are communicated.
 - **Who Is This Percentage About—Target Populations and Attributable Fractions**
 Every number speaks about someone — reconsidering the assumed population.
-- **Understanding Collapsibility of Effect Measures: Marginal vs Stratified**
-When adjustment changes results, the reason is structural — revisiting stratification.
 - **When Odds Ratios Approximate Risk Ratios—and When They Fail**
 Measures that look similar may behave differently — pausing over the odds ratio.
 - **From Risk and Rate to Survival and Hazard**
 Once time enters the picture, effects change shape. An entry point to thinking about effects over time.
-- **Distinguishing Time-Point, Time-Constant, and Time-Varying Effects**
-Are effects ever constant — considering time-varying perspectives.
+- **A First Note on Cox Regression**
+A familiar hazard ratio rests on a modeling assumption — proportional hazards.
+- **After Cox Regression: A Case Study and R Demonstration**
+When hazards stop being proportional, the survival curve asks us to look at time again.
 :::
 
-### 6. Adjusting for Bias — The landscape of regression modeling
+### Coming next
 
-An episode where she learns from her father — from interpreting logistic regression results and creating tables to avoid pitfalls in its use. And then...
-
-- [From Risk to Logistic Regression]
-- [Logit: How a Transformation Shapes an Effect]
-- [Where My Logistic Regression Went Wrong]
-- [Why Logistic Regression Fails in Small Samples]
-- [Understanding Confounding in Effect Measures: Marginal vs Stratified]
-- [Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference]
-
-::: {.callout-note appearance="simple" collapse="true" title="A glimpse ahead"}
-- **From Risk to Logistic Regression**
-Translating risk into equations inevitably hides something — an entry into regression.
-- **Logit: How a Transformation Shapes an Effect**
-Why this transformation and not another? A secret behind the choice of logit.
-- **Where My Logistic Regression Went Wrong**
-When calculations are correct but conclusions feel wrong — pausing at interpretation.
-- **Why Logistic Regression Fails in Small Samples**
-A model that breaks may still be teaching something — about small samples.
-- **Understanding Confounding in Effect Measures: Marginal vs Stratified**
-When overall and subgroup results disagree — revealing a structure of confounding.
-- **Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference**
-What exactly is the purpose of the DAG tool? A daughter's response to her father's teachings. 
-:::
-
-### 7. Truth — What defines it?
-
-- [What Data Cannot Tell Us]
-- [What Could Have Happened]
-- [What Structures Structure]
-- [What Is It That You Want to Know?]
-
-### 8. Causal Inference — To find causality
-
-Directed acyclic graphs (DAGs), common causes, colliders, mediators, backdoor criteria. We try to talk about the **language of causality** needed to think about “what if?”, incorporating the minimal necessary mathematical expressions concerning probability.
-
-- [Three-Variable DAGs: The Smallest Building Blocks of Causal Structure]
-- [A Subtle Distinction between Common Causes and Confounders]
-- [DAGs and Conditional Distributions: Two Languages for the Same Structure]
-- [A Circle, an Equation, and a Cylinder]
-- [Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias]
-
-::: {.callout-note appearance="simple" collapse="true" title="A glimpse ahead"}
-- **Three-Variable DAGs: The Smallest Building Blocks of Causal Structure**
-The smallest diagrams that let us speak about causality.
-- **A Subtle Distinction between Common Causes and Confounders**
-Similar words, different roles—tracing the boundary between common causes and confounding.
-- **DAGs and Conditional Distributions: Two Languages for the Same Structure**
-Diagrams and equations tell the same story in different languages.
-- **A Circle, an Equation, and a Cylinder**
-Where causal frameworks overlap and where they diverge — placing causal models side by side.
-- **Backdoor Paths, Block, and d-Separation**
-What it really means to "adjust" — Understanding blocking as an operation.
-:::
-
-### 9. Publish a Paper — Beyond the research
-
-How to communicate research findings, creating charts and graphs, tips for revising, navigating peer review. A quiet lecture for researchers, exploring what lies beyond statistics.
-
-- [A Subtle Distinction Between Editors and Reviewers]
-- [Three Tips for Writing a Paper]
-- [Communicating with Care]
-- [A Morning Just Before Submission]
+Later English releases will continue into regression modeling, causal inference, and writing a paper. For now, the English conversation is published through Study Design, Frequentist Thinking, Frequentist Experiments, and Effects and Time.
 
 ------------------------------------------------------------------------
 This site shares selected R-related posts via <a href="https://www.r-bloggers.com">R-bloggers</a>

@@ -1,0 +1,148 @@
+第9章　数字を社会に手渡す
+キーワード：言語、論文
+
+私「がんサバイバー調査についてなんだけどね。調査票の回答が集まって集計結果が出たから、論文を書き始めたんだ。抄録を書いてみたから読んでくれない？」
+祖母「ああ、あの話ね。結果の図表を見せてごらん」
+私「図表ねえ。きれいにしたのはまだ2個しかできてないよ。背景因子と復職割合の表しか。Rの出力じゃだめかな」
+祖母「それだと、きっとうまくいかないわね。読者になにを伝えたいかを整理しておかないと、文章は書けないでしょう？だから、論文に載せるための文章を書く前に、まず図表一式をそろえるの。図表を並べてみると、このデータからどこまで言えるかが見えてくる。投稿規定にいくつ図表を載せられるか書いてあるから、確認しておきなさい」
+
+それから数日、私は診療の合間にどの結果を報告すべきか考え、夜に図表を作った。背景因子の表、復職割合の表、ロジスティック回帰の結果。画面の上では、それぞれの数字が別々に存在しているように見えた。週末、私はもう一度、祖母の家に寄った。クリアファイルに、印刷した図表と書き直した抄録を入れていた。
+
+（イラスト）
+
+私「去年の冬に相談したとき、論文が採択される基準は、価値と方法論だっておばあちゃんは言ってたよね。結果の図表を並べて、この調査の価値はなにか考えてきた。がんサバイバーの就労問題は、当事者にとっては深刻なのに研究結果が少ない。そのなかで、どんな患者が苦労していて、就労支援を求めているのかを調べて、ストーマ造設が関連することがわかった。それが研究をやった意義だと思うんだけど」
+祖母「やるじゃない。そこまで考えられたなら、もう論文の形は見えてきているわ。今夜はこの抄録を見てほしいのね。あなたの文章を土台にするなら、たとえばこんな感じかしら。細かい英語は、最後に専門の人にも見てもらいなさい」
+
+Importance: Although prognosis of early rectal cancer has been improved, little is known about employment problems after surgery.
+Objective: To compare employment status between patients with and without stoma
+Design, setting and participants: A mail survey was conducted at 3 hospitals in Japan. Participants were 20-to-80-year-old patients with clinical stage I–III rectal cancer who were employed at diagnosis and received curative surgery from 2010 to 2020. Return-to-work status 12 months after surgery was assessed using self-administered questionnaires.
+Exposures: Stoma creation
+Main outcomes and measures: Return-to-work at 12 months after surgery
+Results: Responses were obtained from AAA patients and the response rate was BB%. The median time to return-to-work was CC months and the proportion of working patients at 12 months after surgery was DD%. The odds ratio for delayed return-to-work was EEE (95% confidence interval FFF to GGG, p = HHH) after adjustment for age, sex and income.
+Conclusions and relevance: Stoma creation was associated with a lower probability of return-to-work. Further employment support may be necessary.
+
+祖母「この文章で工夫した点は4つよ。まず、今回みたいに日本で調査を行う場合、海外の研究者は日本の事情を知らない。だからどんな方法で参加者が選ばれたかきちんと書いたの。単に直腸がん患者って書くんじゃなくて”patients with clinical stage I–III rectal cancer who were employed at the time of diagnosis and received curative surgery from 20XX to 20YY”とかね」
+私「ふんふん」
+祖母「2つ目の工夫は、調査票の回答率を示すこと。回答率が低いと、選択バイアスがあるかもしれないからね」
+私「その次はなに？」
+祖母「3つ目はさっき話した交絡調整ね。観察研究の査読では必ず確認されるポイントよ。まあ、本文に書いてあればじゅうぶんだけど、抄録でも、オッズ比を示すときに”after adjustment for age, sex and income”のような説明があると、ちゃんとしてるなって思ってもらえるかもしれない」
+私「なるほどね。2つ目と3つ目は、バイアスがどれくらいあるかについて書いたんだね。最後のひとつは？」
+祖母「つまらないテクニックなんだけど。“Return-to-work”や “20-to-80-year-old patients”のように、単語をハイフンでつなぐと、文字数を節約できる。普通に”patients aged 20 to 80 years”って書くと6文字も使っちゃうでしょう？抄録には文字数の制限があるからね」
+私「いやそういうの助かるわ。つまらなくはないよ」
+祖母「凝った英語を使う必要はないわ。論文は、“concise”つまり簡潔な表現が好ましいとされている。こういう小さな節約も、結局は、必要な情報を落とさずに読者へ渡すためなの」
+
+（コラム記事）統計用語の違い
+生存曲線は英語ではsurvival curveですが、同じまたは似た意味で用いられる用語は、survival function、survival rate、overall survival curve、Kaplan-Meier curveなど無数にあります。ただし、論文を書くときには、どの意味で使っているのかを意識した方がよい表現があります。
+
+・生存曲線（survival curve）とほぼ同義
+Survival function
+・ほぼ同義だが、曲線というよりある時点の値を意図した用語
+Survival rate, survival probability, survival proportion
+・生存曲線をどの統計手法で推定したのかを特定する用語
+Kaplan-Meier curve, Kaplan-Meier estimator, Kaplan-Meier estimate, Kaplan-Meier method
+・エンドポイントの種類を特定する用語
+Overall survival curve, disease-free survival curve, 5-year OS, 3-year DFS
+
+統計学では、推定方法を推定量（estimator）、推定した結果を推定値（estimate）、推定しようとしている対象や意味を推定目標（estimand）といいます。ここは論文を書くとき注意が必要なところで、MethodsではKaplan-Meier estimatorと書くのが自然ですし、ResultsではKaplan-Meier estimateを用いることが多いでしょう。「人名+estimator」の代わりに「人名+method」という表記もできて、Kaplan-Meier methodの方がより広い意味で用いることができます。統計家の名前に由来する手法名は、他にもCox回帰、Fine-Grayモデル、Fisher正確検定などがあります。
+最後に注意してほしいのが、累積発生曲線（cumulative incidence curve）や累積発生関数（cumulative incidence function）です。論文の図の縦軸のラベルに用いられることが多い表現ですが、生存曲線と本質的に違いはないと思いがちですよね。しかしこれらは、競合リスクがあるときにだけ用いられる、統計家が意識して区別している用語です。専門的には、統計家の名前を用いてAalen-Johansen曲線とも呼びます。生存曲線の上下を反転したグラフを”cumulative”と呼ぶことがありますが、これは統計用語ではなく慣習的な表現です。累積発生曲線と区別しないと誤解が生じます。
+
+4月の慌ただしさが落ち着いた頃、帰宅してから祖母の家に寄る日が増えた。私は食卓の端でパソコンを開き、祖母は向かい側で新聞を読んでいた。それはコーヒーを淹れた後、静かにふたりで過ごす時間だった。
+珍しく祖母の方から話しかけてきた。色あせた黒い統計書を手にしていた。
+
+祖母「この本の「科学的推論と受け入れ手続き」という節に、p値についての見識が載っているの。読んでごらん」
+
+・自然に関する知識の進歩の中では、有意水準を用いて、仮説が矛盾するという注釈をつけるのが便利であるとしても、その証拠が実際に到達している正確な強度を見おとしたり、その後の試行によって、それがさらに強くも弱くもなりうることを無視してよいということにはならない
+・受け入れ手続きの分野では状況は全く異なっていて、どの決定が下されるにしてもその証拠の強弱は全く問題にされない
+
+祖母「古い教えでごめんなさい。でも最初の文章は、多くの医学研究にも当てはまるわ。p値が5%より小さかったとしても、その研究だけで話は終わらない。次の研究で反証が出ることもよくある」
+私「だから、p値が有意だったかどうかだけで結論を書かない方がいいってこと？」
+祖母「そう。少なくとも、研究の限界や不確実性まで含めて書く必要がある。もう一方の受け入れ手続きは、少し別の話ね」
+私「そっちの方が、私にはむしろわかりやすいわ。医薬品の承認審査や診療ガイドラインの推奨決定みたいに、採用するかどうか決めないといけない場面を指しているんでしょ」
+祖母「そうね。p値を使うときはこの2つの文脈を見分けた方がいいってことが言いたいのよ。あなたの研究は、受け入れ手続きではないでしょう？」
+私「たしかにそうね。「p値は結果の重要性を意味しない」なんて言われてずっと腑に落ちなかったんだけど、「証拠がさらに強くも弱くもなり得る」ならその通りだと思う。言い過ぎに気をつけて論文を書くようにするわ」
+
+講義のくせなのか祖母の性格なのかわからないけれど、最初に定義と計算を確かめたのは、本題に入る前の準備だったらしい。紅茶の実験以来、祖母はたまに、p値を扱うときの心構えのような話をしてくれた。時間が経つと冷静になる。私は診療が落ち着くたびに原稿を読み返し、Xにつぶやくときのスピード感を、上司にメールを書くときの距離感に置き換えていった。論文らしく表現を整えていくつもりだったが、それは意味を選ぶ作業でもあった。
+その夜、私は書きかけの論文を印刷し、ペンを持った。
+最初に気になったのは、この一文だった。
+
+Overall survival curves and disease-free survival curves were estimated by the Kaplan-Meier method and tested with p-value less than 0.05 as significant.
+
+Kaplan-Meier法とp値が、同じ文の中で窮屈そうに見えた。Kaplan-Meier法は曲線を推定する方法で、p値は結果を判定するための数字だ。私は文を分けた。
+
+Overall survival and disease-free survival were estimated using the Kaplan-Meier method and compared using the log-rank test. The significance level was set at 0.05.
+
+私「これでどうかな」
+
+私が英語を読み上げると、祖母は新聞から目を上げて答えた。
+
+祖母「いいと思う。p値は指標、ログランク検定は方法だから。役割がそろったわね」
+
+私は次の文に進んだ。
+
+The return-to-work rate was calculated as the number of patients who returned to work divided by the total number of patients.
+
+ペンを手に取りtotal number of patientsという部分に線を引いた。調査に答えた全員なのか、手術を受けた全員なのか、診断時に就労していた人なのか。読み返すとあいまいだったことに気づく。
+
+The return-to-work proportion was calculated as the number of patients employed 12 months after surgery divided by the number of patients who were employed at diagnosis.
+
+私「rateじゃなくてproportionにした。分母も、診断時に働いていた患者にした」
+祖母「その方が正確ね」
+
+次の文は、短かった。
+
+Return-to-work was assessed after surgery.
+
+手術後、だけでは時点がない。私は12ヶ月後と書き足した。
+
+Return-to-work was assessed 12 months after surgery.
+
+私「ここは時点を入れた」
+祖母「いいわね」
+
+ペンの跡が少しずつ増えていった。文章を直しているというより、数字の置き場所を確かめている感じがした。次の文で、手が止まった。
+
+There was no difference in return-to-work between patients with and without stoma because the p-value was not significant.
+
+有意でないことと、差がないことは同じではない。私は、差の方向と信頼区間のことが残るように書き換えた。
+
+The return-to-work proportion was lower among patients with stoma than among those without stoma, although the confidence interval was wide and the result was not statistically significant.
+
+私「有意じゃないから差がない、とは書かない方がいいよね」
+祖母「そうね。読者に判断の余地を残した方がいい」
+
+次は、Conclusionの一文だった。
+
+Stoma creation reduced the probability of return-to-work.
+
+今はreducedという単語が強く見えた。私の調査は、ランダム化臨床試験ではないし、因果関係まではいえない。私はその語を消して、associated withに変えた。
+
+Stoma creation was associated with a lower probability of return-to-work.
+
+私「reducedは強すぎるかなと思って」
+祖母「いい判断ね」
+
+いつの間にか推敲はDiscussionの研究の限界まで進んだ。
+
+This study has several limitations, including its small sample size and possible selection bias.
+
+間違ってはいない。でも、サンプルサイズが小さいことでどんな影響があるのか、選択バイアスがどの結果に関係するのかは、この文だけではわからない。
+
+This study has several limitations. First, the modest sample size limited the precision of the effect estimates. Second, because patients who responded to the survey may have differed from those who did not, selection bias may have affected the estimated return-to-work proportion.
+
+私「限界は、ただ並べるより、どの結果に関係するかを書いた方がいいんだよね」
+祖母「そう。読者はあなたと同じところを見ているとは限らないから」
+私「ありがとう。でもね、私は論文を書いているうちに、限界があるからって、慎重になりすぎるのも違うかなって思ったの」
+祖母「あら、どうして？」
+私「調査の計画を立てたのは自分でしょ」
+祖母「そうね」
+私「だったら、どこかで責任を引き受けなきゃいけないかなって思うの。だから結論ははっきり述べたい。傲慢かもしれないけど」
+祖母「…そうね、慎重になりすぎるのも考えものね」
+
+ペンの入った原稿を見返した。大きなことをしたわけではなかった。単語を変え、時点を足し、分母を書き、言いすぎた表現を少し弱めただけだ。それでも、文章の見え方は変わっていた。
+Methodsには、なにをどう数えたのかを書く。Resultsには、差の大きさと不確実性を書く。Discussionには、どこまで言えて、どこからは言えないのかを書く。そう考えると、論文の各セクションは、同じ数字を違う角度から読者に渡すための場所のように見えた。
+
+私「英語を直しているというより、調査を計画から振り返って、もう一度点検しているみたい」
+祖母「それでいい。一度に全部整えようとしなくていいの。推敲は、すればするほどいい文章になる」
+
+祖母はそれだけ言って、また新聞に目を落とした。
+私は原稿をプリントアウトし、読み返した。どんな研究仮説を立てたか。なにとなにを比べたのか。どこまでが結果で、どこからが解釈なのか。私はもう一度ペンをとった。

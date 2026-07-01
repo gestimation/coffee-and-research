@@ -1,0 +1,290 @@
+---
+title: "Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size"
+description: "Sample size planning is not just counting how many people are needed. It is a way of designing alpha error, beta error, power, and the effect size a study is meant to detect."
+tags:
+  - Probability model
+  - P-value 
+  - R simulation
+  - Study design
+format:
+  html:
+    toc: true
+---
+
+::: {.hero-header}
+![](../image/father-daughter.png){.hero-header-img}
+:::
+
+# Frequentist Experiments II − Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size
+
+::: {.serif-block .text-right}
+Keywords: probability model, p-value, R simulation, study design
+:::
+
+------------------------------------------------------------------------
+
+### Wait, how many patients do I actually need?
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+Dad: "Can I ask you something?"
+:::
+
+::: voice-daughter
+Daughter: "What is it? You look unusually serious."
+:::
+
+::: voice-father
+Dad: "Did you calculate the sample size?"
+:::
+
+::: voice-daughter
+Daughter: "Sample size for what?"
+:::
+
+::: voice-father
+Dad: "For the cancer survivor survey."
+:::
+
+::: voice-daughter
+Daughter: "Oh. I was thinking of surveying about 100 people."
+:::
+
+::: voice-father
+Dad: "Last time we talked about precision. Today is about detecting a difference. If you want to compare return-to-work between patients with and without a stoma, you need sample size planning based on hypothesis testing."
+:::
+
+::: voice-daughter
+Daughter: "Hypothesis testing means p-values?"
+:::
+
+::: voice-father
+Dad: "Yes. And once we talk about p-values in study design, we have to talk about **alpha error**, **beta error**, and **power**."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Two ways a clinical trial can make the wrong decision"}
+| Study result | Truly no effect (null hypothesis) | Truly effective (alternative hypothesis) |
+|---|---|---|
+| Not statistically significant | Correct decision | Beta error |
+| Statistically significant | Alpha error | Power = 1 - beta |
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Alpha error and beta error"}
+In the JCOG9502 trial, one possible truth was that LTA improved overall survival compared with TH. Another possible truth was that it did not. The study result can also go in two directions: statistically significant or not statistically significant.
+
+That gives two possible mistakes:
+
+- **Alpha error**: concluding that there is an effect when there is truly no effect.
+- **Beta error**: failing to detect an effect when there truly is an effect.
+
+Power is $1-\beta$, the probability of detecting the effect under the alternative hypothesis.
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Daughter: "Those two errors make sense. If a treatment doesn't help but we conclude that it works, that is a mistake. If it really works but the trial fails to detect it, that is also a mistake."
+:::
+
+::: voice-father
+Dad: "Exactly. But the key point is this: **p < 0.05 controls only alpha error**. It does not, by itself, guarantee that the study had enough power to find a meaningful effect."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Alpha error, beta error, and p-values"}
+As sample size increases, random error decreases. In principle, both alpha and beta error can be reduced by increasing the sample size. But for a fixed sample size, the two errors are in tension.
+
+In usual hypothesis testing, we prioritize alpha error and set a significance level in advance. Saying "use p < 0.05" is equivalent to setting the significance level at 5%.
+
+In JCOG9502, slow accrual led to an amendment: the sample size and analysis plan used a one-sided alpha error of 0.1 and beta error of 0.2. A higher alpha level makes it easier to declare significance, reducing the required sample size, but it also increases the chance of a false positive.
+:::
+
+::: {.callout-note appearance="simple" title="Sample size planning is error design"}
+Sample size planning is not merely calculating how many participants are needed. It is the process of deciding alpha error, beta error, power, and the clinically meaningful effect size, then asking how many participants are required under those assumptions.
+
+Smaller studies are easier to conduct, but they carry greater risk of missed effects or unstable decisions. A sample size justification should therefore be read as a compromise between feasibility and the reliability of the decision the study is designed to support.
+:::
+
+### Controlling beta error through sample size planning
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Daughter: "The table on the napkin makes sense, but alpha and beta still feel abstract."
+:::
+
+::: voice-father
+Dad: "Think of them as risks attached to decisions. Alpha error can lead to adopting a treatment that is no better than standard care. Beta error can lead to abandoning a treatment that truly works."
+:::
+
+::: voice-daughter
+Daughter: "What values are usually used?"
+:::
+
+::: voice-father
+Dad: "Beta error is often 0.2 or 0.1, corresponding to 80% or 90% power. In the amended JCOG9502 design, the one-sided alpha error was 0.1 and beta error was 0.2."
+:::
+
+::: voice-daughter
+Daughter: "Can I just use 250 people like JCOG9502?"
+:::
+
+::: voice-father
+Dad: "Not quite. But your intuition may not be far off. Let's look at sample sizes for comparing two survival curves. These examples assume equal group sizes."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: panel-tabset
+### 80% power
+
+Sample size for comparing two survival curves. Two-sided $\alpha=0.05$, $1-\beta=0.8$. Values are total sample sizes for two groups combined, assuming 1:1 allocation.
+
+|$\pi_2$|$\pi_1=0.1$|  0.2 |  0.3 |  0.4 |  0.5 |  0.6 |  0.7 |  0.8 |
+|------|-------:|-----:|-----:|-----:|-----:|-----:|-----:|-----:|
+| 0.15 |    964 |    — |    — |    — |    — |    — |    — |    — |
+| 0.20 |    296 |    — |    — |    — |    — |    — |    — |    — |
+| 0.25 |    156 | 1826 |    — |    — |    — |    — |    — |    — |
+| 0.30 |    102 |  506 |    — |    — |    — |    — |    — |    — |
+| 0.35 |     74 |  246 | 2486 |    — |    — |    — |    — |    — |
+| 0.40 |     58 |  152 |  658 |    — |    — |    — |    — |    — |
+| 0.45 |     48 |  104 |  308 | 2894 |    — |    — |    — |    — |
+| 0.50 |     42 |   78 |  182 |  744 |    — |    — |    — |    — |
+| 0.55 |     36 |   62 |  122 |  340 | 3034 |    — |    — |    — |
+| 0.60 |     32 |   52 |   90 |  198 |  764 |    — |    — |    — |
+| 0.65 |     28 |   42 |   70 |  130 |  342 | 2900 |    — |    — |
+| 0.70 |     26 |   38 |   54 |   92 |  194 |  712 |    — |    — |
+| 0.75 |     24 |   34 |   38 |   70 |  124 |  312 | 2492 |    — |
+| 0.80 |     22 |   30 |   38 |   56 |   86 |  174 |  592 |    — |
+| 0.85 |     22 |   26 |   34 |   46 |   66 |  110 |  254 | 1818 |
+| 0.90 |     20 |   26 |   30 |   38 |   50 |  136 |  136 |  414 |
+
+### 90% power
+
+Sample size for comparing two survival curves. Two-sided $\alpha=0.05$, $1-\beta=0.9$. Values are total sample sizes for two groups combined, assuming 1:1 allocation.
+
+|$\pi_2$|$\pi_1=0.1$|  0.2 |  0.3 |  0.4 |  0.5 |  0.6 |  0.7 |  0.8 |
+|------|-------:|-----:|-----:|-----:|-----:|-----:|-----:|-----:|
+| 0.15 |   1290 |    — |    — |    — |    — |    — |    — |    — |
+| 0.20 |    396 |    — |    — |    — |    — |    — |    — |    — |
+| 0.25 |    208 | 2444 |    — |    — |    — |    — |    — |    — |
+| 0.30 |    136 |  676 |    — |    — |    — |    — |    — |    — |
+| 0.35 |    100 |  330 | 3330 |    — |    — |    — |    — |    — |
+| 0.40 |     78 |  202 |  880 |    — |    — |    — |    — |    — |
+| 0.45 |     64 |  138 |  412 | 3876 |    — |    — |    — |    — |
+| 0.50 |     54 |  104 |  242 |  996 |    — |    — |    — |    — |
+| 0.55 |     46 |   82 |  162 |  454 | 4060 |    — |    — |    — |
+| 0.60 |     42 |   68 |  120 |  264 | 1022 |    — |    — |    — |
+| 0.65 |     38 |   56 |   90 |  172 |  456 | 3880 |    — |    — |
+| 0.70 |     34 |   48 |   72 |  124 |  258 |  952 |    — |    — |
+| 0.75 |     32 |   42 |   60 |   92 |  166 |  416 | 3336 |    — |
+| 0.80 |     30 |   40 |   52 |   74 |  116 |  232 |  796 |    — |
+| 0.85 |     28 |   34 |   46 |   60 |   88 |  146 |  338 | 2436 |
+| 0.90 |     26 |   32 |   38 |   50 |   68 |  100 |  180 |  548 |
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+Dad: "Suppose return-to-work is treated like a survival-time outcome: returning to work is the event, and patients who do not return during follow-up are censored. If the return-to-work proportions are 80% and 60% at one year, the corresponding non-return probabilities are $\pi_1=0.2$ and $\pi_2=0.4$. With 90% power, the table gives 202 people total."
+:::
+
+::: voice-daughter
+Daughter: "So I need to survey 202 people?"
+:::
+
+::: voice-father
+Dad: "Under those assumptions, yes. And those assumptions include complete one-year follow-up and equal group sizes. Real observational studies are messier."
+:::
+
+::: voice-daughter
+Daughter: "Right. Patients with stomas are probably fewer than patients without stomas."
+:::
+
+::: voice-father
+Dad: "Exactly. When the group sizes are unequal, we usually use software or R. The **powerSurvEpi** package can reproduce calculations like these and let us change the allocation ratio."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Sample size calculation using an R package"}
+```{r warning=FALSE}
+# install.packages("powerSurvEpi") # if needed
+library(powerSurvEpi)
+
+ssizeCT.default(
+  power = 0.9,
+  k     = 1,
+  pE    = 0.6,
+  pC    = 0.8,
+  RR    = log(1-0.8)/log(1-0.6),
+  alpha = 0.05
+)
+ssizeCT.default(
+  power = 0.9,
+  k     = 0.5,
+  pE    = 0.6,
+  pC    = 0.8,
+  RR    = log(1-0.8)/log(1-0.6),
+  alpha = 0.05
+)
+ssizeCT.default(
+  power = 0.9,
+  k     = 0.25,
+  pE    = 0.6,
+  pC    = 0.8,
+  RR    = log(1-0.8)/log(1-0.6),
+  alpha = 0.05
+)
+```
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-father
+Dad: "Here, $k$ changes the allocation balance between the stoma and non-stoma groups. So $k=1$ means equal group sizes, while smaller values represent a smaller stoma group. The exact split is returned by the function, but the main point is that unequal group sizes can change the total sample size substantially."
+:::
+
+::: voice-daughter
+Daughter: "So if the stoma group is small, I may need more people than I expected. I might need to think about adding more hospitals."
+:::
+
+::: voice-father
+Dad: "That is often what happens when you design a study carefully. The first reaction is usually: 'We cannot collect that many.'"
+:::
+
+::: voice-daughter
+Daughter: "But now I understand what the number means. If my one study is the unlucky one among the repeated worlds, that would hurt."
+:::
+
+::: voice-father
+Dad: "Doing the calculation makes it feel real."
+:::
+:::::::::::::::::::::::::::::::::
+
+### Reference
+
+- Machin D, Campbell MJ, Tan SB, Tan SH. Sample Sizes for Clinical, Laboratory and Epidemiology Studies. 4th ed. Wiley-Blackwell; 2018
+
+- Sasako M, Sano T, Yamamoto S, Sairenji M, Arai K, Kinoshita T, Nashimoto A, Hiratsuka M, Japan Clinical Oncology Group (JCOG9502). Left thoracoabdominal approach versus abdominal-transhiatal approach for gastric cancer of the cardia or subcardia: a randomised controlled trial. Lancet Oncol 2006;7(8):644-51
+
+### This concludes the Frequentist Experiments series. If you would like to keep reading over your next cup of coffee, the following episodes are waiting:
+
+- [Silent Confusions Hidden in Percentages](effects-1.html)
+- [Who Is This Percentage About? Target Populations and Attributable Fractions](effects-2.html)
+- [When Odds Ratios Approximate Risk Ratios—and When They Fail](effects-3.html)
+- [From Risk and Rate to Survival and Hazard](effects-4.html)
+- [A First Note on Cox Regression](effects-5.html)
+- [After Cox Regression: A Case Study and R Demonstration](effects-6.html)
+
+::: {.callout-note appearance="simple" collapse="true" title="Other episodes"}
+
+**Episodes in this series**
+
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
+
+**Earlier series**
+
+- [Study Design I](study-design-1.html)
+- [Frequentist Thinking I](frequentist-1.html)
+
+**Glossary**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::

@@ -1,5 +1,6 @@
 ---
 title: "A Circle, an Equation, and a Cylinder"
+draft: true
 description: ""
 tags:
   - Causal model
@@ -101,14 +102,25 @@ Dad: "Exactly. You see a cylinder. That cylinder is like the potential outcomes 
 :::
 
 ::: voice-daughter
-Me:"That's...surprisingly poetic."
+Me: "That's...surprisingly poetic."
 :::
 
 ::: voice-father
 Dad: "In a single coffee mug, you can find three structures: a probability model, a DAG, and the Rubin causal model. We extract information from data by choosing an abstract structure. And this isn't just about processing or compressing information—it's about producing knowledge for patients. Statistics is for people. That's why the way we choose to view the world abstractly really matters."
 :::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Why switch between models?"}
+DAGs, probability models, and the Rubin causal model do not describe the same phenomenon in exactly the same language. A DAG helps us reason about connections among variables and candidate adjustment sets. A probability model describes the distribution of observed data and the estimation procedure. The Rubin causal model defines counterfactual questions such as what would have happened under another treatment.
+
+In practice, we first state what we want to know: the estimand. Then we can ask which model supports which part of the argument. Separating those roles makes the purpose of the analysis and its assumptions easier to see.
+
+If we reverse that order and start by putting available variables into a model, the adjusted number can begin to look more authoritative than it really is. An adjusted estimate is not automatically the truth hiding in the data. It is an answer produced by a model for a particular question, target population, and set of assumptions.
+:::
 
 ### How do we choose variables?
+
+::::::::::::::::::::::::::::::::: dialogue
 
 ::: voice-daughter
 Me: "But for me, choosing variables feels more urgent than choosing models. In the DAG for H. pylori eradication, we included not just treatment status, but gastric cancer, personality, age, and constitution. How do you actually decide what to include in a real study?"

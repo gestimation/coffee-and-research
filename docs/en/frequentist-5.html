@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Sample size planning is not just counting how many people are needed. It is a way of designing alpha error, beta error, power, and the effect size a study is meant to detect.">
+
+<title>Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size – Coffee and Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-FCK3LX51C6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
+</script>
+<!-- Site name signals (helps Google/OG pick the right site name) -->
+
+<meta property="og:site_name" content="Coffee and Research">
+
+<meta property="og:url" content="https://gestimation.github.io/coffee-and-research/">
+
+<meta property="og:type" content="website">
+
+<meta name="application-name" content="Coffee and Research">
+
+
+
+<!-- Optional: make Twitter/X previews less generic -->
+
+<meta name="twitter:card" content="summary">
+
+
+
+<!-- Structured data: WebSite -->
+
+<script type="application/ld+json">
+
+{
+
+  "@context": "https://schema.org",
+
+  "@type": "WebSite",
+
+  "name": "Coffee and Research",
+
+  "url": "https://gestimation.github.io/coffee-and-research/"
+
+}
+
+</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/en/frequentist-5.html">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Coffee and Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://gestimation.github.io/cifmodeling/"> 
+<span class="menu-text">cifmodeling</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://gestimation.github.io/airsetup/"> 
+<span class="menu-text">airsetup</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-a-conversation-(en" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">A Conversation (EN)</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-a-conversation-(en">    
+        <li>
+    <a class="dropdown-item" href="../en/index.html">
+ <span class="dropdown-text">Index</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/study-design-1.html">
+ <span class="dropdown-text">Study design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-1.html">
+ <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-a-conversation-(jp" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">A Conversation (JP)</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-a-conversation-(jp">    
+        <li>
+    <a class="dropdown-item" href="../jp/index.html">
+ <span class="dropdown-text">Index</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/study-design-1.html">
+ <span class="dropdown-text">Study Design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/frequentist-1.html">
+ <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/logistic-regression-1.html">
+ <span class="dropdown-text">Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/causal-inference-1.html">
+ <span class="dropdown-text">Causal inference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/publish-a-paper-1.html">
+ <span class="dropdown-text">Publishing a paper</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ai--r-(jp" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">AI &amp; R (JP)</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ai--r-(jp">    
+        <li>
+    <a class="dropdown-item" href="../jp/ai-r-1.html">
+ <span class="dropdown-text">AI-Assisted R Analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/ai-r-2.html">
+ <span class="dropdown-text">KM and CIF</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../jp/ai-r-3.html">
+ <span class="dropdown-text">Adjsuted CIF</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../kanji_en/index.html"> 
+<span class="menu-text">8 Elements (EN)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../kanji_jp/index.html"> 
+<span class="menu-text">8 Elements (JP)</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#frequentist-experiments-ii-alpha-beta-and-power-the-fundamental-probabilities-behind-sample-size" id="toc-frequentist-experiments-ii-alpha-beta-and-power-the-fundamental-probabilities-behind-sample-size" class="nav-link active" data-scroll-target="#frequentist-experiments-ii-alpha-beta-and-power-the-fundamental-probabilities-behind-sample-size">Frequentist Experiments II − Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</a>
+  <ul class="collapse">
+  <li><a href="#wait-how-many-patients-do-i-actually-need" id="toc-wait-how-many-patients-do-i-actually-need" class="nav-link" data-scroll-target="#wait-how-many-patients-do-i-actually-need">Wait, how many patients do I actually need?</a></li>
+  <li><a href="#controlling-beta-error-through-sample-size-planning" id="toc-controlling-beta-error-through-sample-size-planning" class="nav-link" data-scroll-target="#controlling-beta-error-through-sample-size-planning">Controlling beta error through sample size planning</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  <li><a href="#this-concludes-the-frequentist-experiments-series.-if-you-would-like-to-keep-reading-over-your-next-cup-of-coffee-the-following-episodes-are-waiting" id="toc-this-concludes-the-frequentist-experiments-series.-if-you-would-like-to-keep-reading-over-your-next-cup-of-coffee-the-following-episodes-are-waiting" class="nav-link" data-scroll-target="#this-concludes-the-frequentist-experiments-series.-if-you-would-like-to-keep-reading-over-your-next-cup-of-coffee-the-following-episodes-are-waiting">This concludes the Frequentist Experiments series. If you would like to keep reading over your next cup of coffee, the following episodes are waiting:</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</h1>
+</div>
+
+<div>
+  <div class="description">
+    Sample size planning is not just counting how many people are needed. It is a way of designing alpha error, beta error, power, and the effect size a study is meant to detect.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-header">
+<p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
+</div>
+<section id="frequentist-experiments-ii-alpha-beta-and-power-the-fundamental-probabilities-behind-sample-size" class="level1">
+<h1>Frequentist Experiments II − Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</h1>
+<div class="serif-block text-right">
+<p>Keywords: probability model, p-value, R simulation, study design</p>
+</div>
+<hr>
+<section id="wait-how-many-patients-do-i-actually-need" class="level3">
+<h3 class="anchored" data-anchor-id="wait-how-many-patients-do-i-actually-need">Wait, how many patients do I actually need?</h3>
+<div class="dialogue">
+<div class="voice-father">
+<p>Dad: “Can I ask you something?”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “What is it? You look unusually serious.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Did you calculate the sample size?”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “Sample size for what?”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “For the cancer survivor survey.”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “Oh. I was thinking of surveying about 100 people.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Last time we talked about precision. Today is about detecting a difference. If you want to compare return-to-work between patients with and without a stoma, you need sample size planning based on hypothesis testing.”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “Hypothesis testing means p-values?”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Yes. And once we talk about p-values in study design, we have to talk about <strong>alpha error</strong>, <strong>beta error</strong>, and <strong>power</strong>.”</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Two ways a clinical trial can make the wrong decision">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Two ways a clinical trial can make the wrong decision
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Study result</th>
+<th>Truly no effect (null hypothesis)</th>
+<th>Truly effective (alternative hypothesis)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Not statistically significant</td>
+<td>Correct decision</td>
+<td>Beta error</td>
+</tr>
+<tr class="even">
+<td>Statistically significant</td>
+<td>Alpha error</td>
+<td>Power = 1 - beta</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Alpha error and beta error">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Alpha error and beta error
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In the JCOG9502 trial, one possible truth was that LTA improved overall survival compared with TH. Another possible truth was that it did not. The study result can also go in two directions: statistically significant or not statistically significant.</p>
+<p>That gives two possible mistakes:</p>
+<ul>
+<li><strong>Alpha error</strong>: concluding that there is an effect when there is truly no effect.</li>
+<li><strong>Beta error</strong>: failing to detect an effect when there truly is an effect.</li>
+</ul>
+<p>Power is <span class="math inline">\(1-\beta\)</span>, the probability of detecting the effect under the alternative hypothesis.</p>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>Daughter: “Those two errors make sense. If a treatment doesn’t help but we conclude that it works, that is a mistake. If it really works but the trial fails to detect it, that is also a mistake.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Exactly. But the key point is this: <strong>p &lt; 0.05 controls only alpha error</strong>. It does not, by itself, guarantee that the study had enough power to find a meaningful effect.”</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Alpha error, beta error, and p-values">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Alpha error, beta error, and p-values
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As sample size increases, random error decreases. In principle, both alpha and beta error can be reduced by increasing the sample size. But for a fixed sample size, the two errors are in tension.</p>
+<p>In usual hypothesis testing, we prioritize alpha error and set a significance level in advance. Saying “use p &lt; 0.05” is equivalent to setting the significance level at 5%.</p>
+<p>In JCOG9502, slow accrual led to an amendment: the sample size and analysis plan used a one-sided alpha error of 0.1 and beta error of 0.2. A higher alpha level makes it easier to declare significance, reducing the required sample size, but it also increases the chance of a false positive.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Sample size planning is error design">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Sample size planning is error design
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sample size planning is not merely calculating how many participants are needed. It is the process of deciding alpha error, beta error, power, and the clinically meaningful effect size, then asking how many participants are required under those assumptions.</p>
+<p>Smaller studies are easier to conduct, but they carry greater risk of missed effects or unstable decisions. A sample size justification should therefore be read as a compromise between feasibility and the reliability of the decision the study is designed to support.</p>
+</div>
+</div>
+</section>
+<section id="controlling-beta-error-through-sample-size-planning" class="level3">
+<h3 class="anchored" data-anchor-id="controlling-beta-error-through-sample-size-planning">Controlling beta error through sample size planning</h3>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>Daughter: “The table on the napkin makes sense, but alpha and beta still feel abstract.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Think of them as risks attached to decisions. Alpha error can lead to adopting a treatment that is no better than standard care. Beta error can lead to abandoning a treatment that truly works.”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “What values are usually used?”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Beta error is often 0.2 or 0.1, corresponding to 80% or 90% power. In the amended JCOG9502 design, the one-sided alpha error was 0.1 and beta error was 0.2.”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “Can I just use 250 people like JCOG9502?”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Not quite. But your intuition may not be far off. Let’s look at sample sizes for comparing two survival curves. These examples assume equal group sizes.”</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">80% power</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">90% power</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Sample size for comparing two survival curves. Two-sided <span class="math inline">\(\alpha=0.05\)</span>, <span class="math inline">\(1-\beta=0.8\)</span>. Values are total sample sizes for two groups combined, assuming 1:1 allocation.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\pi_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\pi_1=0.1\)</span></th>
+<th style="text-align: right;">0.2</th>
+<th style="text-align: right;">0.3</th>
+<th style="text-align: right;">0.4</th>
+<th style="text-align: right;">0.5</th>
+<th style="text-align: right;">0.6</th>
+<th style="text-align: right;">0.7</th>
+<th style="text-align: right;">0.8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.15</td>
+<td style="text-align: right;">964</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.20</td>
+<td style="text-align: right;">296</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.25</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">1826</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.30</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">506</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.35</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">246</td>
+<td style="text-align: right;">2486</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.40</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">658</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.45</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">308</td>
+<td style="text-align: right;">2894</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.50</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">744</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.55</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;">340</td>
+<td style="text-align: right;">3034</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.60</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">764</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.65</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">342</td>
+<td style="text-align: right;">2900</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.70</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">194</td>
+<td style="text-align: right;">712</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.75</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">312</td>
+<td style="text-align: right;">2492</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.80</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: right;">592</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.85</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">254</td>
+<td style="text-align: right;">1818</td>
+</tr>
+<tr class="even">
+<td>0.90</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">414</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Sample size for comparing two survival curves. Two-sided <span class="math inline">\(\alpha=0.05\)</span>, <span class="math inline">\(1-\beta=0.9\)</span>. Values are total sample sizes for two groups combined, assuming 1:1 allocation.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\pi_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\pi_1=0.1\)</span></th>
+<th style="text-align: right;">0.2</th>
+<th style="text-align: right;">0.3</th>
+<th style="text-align: right;">0.4</th>
+<th style="text-align: right;">0.5</th>
+<th style="text-align: right;">0.6</th>
+<th style="text-align: right;">0.7</th>
+<th style="text-align: right;">0.8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.15</td>
+<td style="text-align: right;">1290</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.20</td>
+<td style="text-align: right;">396</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.25</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">2444</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.30</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">676</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.35</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">330</td>
+<td style="text-align: right;">3330</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.40</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">202</td>
+<td style="text-align: right;">880</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.45</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">138</td>
+<td style="text-align: right;">412</td>
+<td style="text-align: right;">3876</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.50</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">242</td>
+<td style="text-align: right;">996</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.55</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">454</td>
+<td style="text-align: right;">4060</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.60</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">264</td>
+<td style="text-align: right;">1022</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.65</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">172</td>
+<td style="text-align: right;">456</td>
+<td style="text-align: right;">3880</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.70</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">258</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.75</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">416</td>
+<td style="text-align: right;">3336</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>0.80</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">232</td>
+<td style="text-align: right;">796</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>0.85</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: right;">338</td>
+<td style="text-align: right;">2436</td>
+</tr>
+<tr class="even">
+<td>0.90</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">548</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-father">
+<p>Dad: “Suppose return-to-work is treated like a survival-time outcome: returning to work is the event, and patients who do not return during follow-up are censored. If the return-to-work proportions are 80% and 60% at one year, the corresponding non-return probabilities are <span class="math inline">\(\pi_1=0.2\)</span> and <span class="math inline">\(\pi_2=0.4\)</span>. With 90% power, the table gives 202 people total.”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “So I need to survey 202 people?”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Under those assumptions, yes. And those assumptions include complete one-year follow-up and equal group sizes. Real observational studies are messier.”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “Right. Patients with stomas are probably fewer than patients without stomas.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Exactly. When the group sizes are unequal, we usually use software or R. The <strong>powerSurvEpi</strong> package can reproduce calculations like these and let us change the allocation ratio.”</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Sample size calculation using an R package">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Sample size calculation using an R package
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("powerSurvEpi") # if needed</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(powerSurvEpi)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ssizeCT.default</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">power =</span> <span class="fl">0.9</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">k     =</span> <span class="dv">1</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pE    =</span> <span class="fl">0.6</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pC    =</span> <span class="fl">0.8</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">RR    =</span> <span class="fu">log</span>(<span class="dv">1</span><span class="fl">-0.8</span>)<span class="sc">/</span><span class="fu">log</span>(<span class="dv">1</span><span class="fl">-0.6</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.05</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> nE  nC 
+100 100 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssizeCT.default</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">power =</span> <span class="fl">0.9</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">k     =</span> <span class="fl">0.5</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pE    =</span> <span class="fl">0.6</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">pC    =</span> <span class="fl">0.8</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">RR    =</span> <span class="fu">log</span>(<span class="dv">1</span><span class="fl">-0.8</span>)<span class="sc">/</span><span class="fu">log</span>(<span class="dv">1</span><span class="fl">-0.6</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.05</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> nE  nC 
+ 59 118 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssizeCT.default</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">power =</span> <span class="fl">0.9</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">k     =</span> <span class="fl">0.25</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pE    =</span> <span class="fl">0.6</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">pC    =</span> <span class="fl">0.8</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">RR    =</span> <span class="fu">log</span>(<span class="dv">1</span><span class="fl">-0.8</span>)<span class="sc">/</span><span class="fu">log</span>(<span class="dv">1</span><span class="fl">-0.6</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.05</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> nE  nC 
+ 41 161 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-father">
+<p>Dad: “Here, <span class="math inline">\(k\)</span> changes the allocation balance between the stoma and non-stoma groups. So <span class="math inline">\(k=1\)</span> means equal group sizes, while smaller values represent a smaller stoma group. The exact split is returned by the function, but the main point is that unequal group sizes can change the total sample size substantially.”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “So if the stoma group is small, I may need more people than I expected. I might need to think about adding more hospitals.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “That is often what happens when you design a study carefully. The first reaction is usually: ‘We cannot collect that many.’”</p>
+</div>
+<div class="voice-daughter">
+<p>Daughter: “But now I understand what the number means. If my one study is the unlucky one among the repeated worlds, that would hurt.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Doing the calculation makes it feel real.”</p>
+</div>
+</div>
+</section>
+<section id="reference" class="level3">
+<h3 class="anchored" data-anchor-id="reference">Reference</h3>
+<ul>
+<li><p>Machin D, Campbell MJ, Tan SB, Tan SH. Sample Sizes for Clinical, Laboratory and Epidemiology Studies. 4th ed.&nbsp;Wiley-Blackwell; 2018</p></li>
+<li><p>Sasako M, Sano T, Yamamoto S, Sairenji M, Arai K, Kinoshita T, Nashimoto A, Hiratsuka M, Japan Clinical Oncology Group (JCOG9502). Left thoracoabdominal approach versus abdominal-transhiatal approach for gastric cancer of the cardia or subcardia: a randomised controlled trial. Lancet Oncol 2006;7(8):644-51</p></li>
+</ul>
+</section>
+<section id="this-concludes-the-frequentist-experiments-series.-if-you-would-like-to-keep-reading-over-your-next-cup-of-coffee-the-following-episodes-are-waiting" class="level3">
+<h3 class="anchored" data-anchor-id="this-concludes-the-frequentist-experiments-series.-if-you-would-like-to-keep-reading-over-your-next-cup-of-coffee-the-following-episodes-are-waiting">This concludes the Frequentist Experiments series. If you would like to keep reading over your next cup of coffee, the following episodes are waiting:</h3>
+<ul>
+<li><a href="effects-1.html">Silent Confusions Hidden in Percentages</a></li>
+<li><a href="effects-2.html">Who Is This Percentage About? Target Populations and Attributable Fractions</a></li>
+<li><a href="effects-3.html">When Odds Ratios Approximate Risk Ratios—and When They Fail</a></li>
+<li><a href="effects-4.html">From Risk and Rate to Survival and Hazard</a></li>
+<li><a href="effects-5.html">A First Note on Cox Regression</a></li>
+<li><a href="effects-6.html">After Cox Regression: A Case Study and R Demonstration</a></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Other episodes">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Other episodes
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Episodes in this series</strong></p>
+<ul>
+<li><a href="frequentist-4.html">Understanding Confidence Intervals via Hypothetical Replications in R</a></li>
+<li><a href="frequentist-5.html">Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</a></li>
+</ul>
+<p><strong>Earlier series</strong></p>
+<ul>
+<li><a href="study-design-1.html">Study Design I</a></li>
+<li><a href="frequentist-1.html">Frequentist Thinking I</a></li>
+</ul>
+<p><strong>Glossary</strong></p>
+<ul>
+<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/gestimation\.github\.io\/coffee-and-research\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

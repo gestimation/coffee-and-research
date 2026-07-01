@@ -101,6 +101,12 @@ An analogy: random error is like scatter when you aim at the center of a target;
 ![](study-design-5e.png)
 :::
 
+::: {.callout-note appearance="simple" title="Bias enters before the analysis"}
+Bias is not something that statistical methods can always repair after data collection is complete. If the way participants are selected, responses are obtained, or outcomes are measured is systematically distorted, that distortion has already entered the analytic dataset.
+
+Reducing bias therefore begins before the analysis plan. Questionnaire design, follow-up procedures, efforts to improve response rates, and standardized measurement rules can matter as much as the statistical model for the credibility of the study.
+:::
+
 ### Major categories of bias
 
 ::::::::::::::::::::::::::::::::: dialogue
@@ -153,11 +159,11 @@ Me: "Selection bias, information bias... Clinical research really does have its 
 
 ### Up to this point, we have been talking about the essence of research — how we frame research questions and plan to obtain unbiased answers. The following episodes step away from study design and begin to reflect on observed effects and their uncertainty, how we reason about causes, and what ultimately becomes publishable.
 
-- [Reading a Paper over a Cup of Coffee] (comming soon)
-- [P-Value Explanations That Seem Plausible at First Glance]
-- [Beyond 0.05: Interpreting P-Values in a Clinical Trial]
-- [Understanding Confidence Intervals via Hypothetical Replications in R]
-- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size]
+- [Reading a Paper over a Cup of Coffee](frequentist-1.html)
+- [P-Value Explanations That Seem Plausible at First Glance](frequentist-2.html)
+- [Beyond 0.05: Interpreting P-Values in a Clinical Trial](frequentist-3.html)
+- [Understanding Confidence Intervals via Hypothetical Replications in R](frequentist-4.html)
+- [Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size](frequentist-5.html)
 
 ### Past episodes
 

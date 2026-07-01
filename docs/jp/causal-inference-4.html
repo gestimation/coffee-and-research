@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -197,6 +197,14 @@ window.Quarto = {
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -284,6 +292,7 @@ window.Quarto = {
   <li><a href="#causal-inference-iv-a-circle-an-equation-and-a-cylinder" id="toc-causal-inference-iv-a-circle-an-equation-and-a-cylinder" class="nav-link active" data-scroll-target="#causal-inference-iv-a-circle-an-equation-and-a-cylinder">Causal Inference IV − A Circle, an Equation, and a Cylinder</a>
   <ul class="collapse">
   <li><a href="#問いの答えはどの抽象表現で世界を見るかで変わる" id="toc-問いの答えはどの抽象表現で世界を見るかで変わる" class="nav-link" data-scroll-target="#問いの答えはどの抽象表現で世界を見るかで変わる">問いの答えは、どの抽象表現で世界を見るかで変わる</a></li>
+  <li><a href="#変数をどう選ぶ" id="toc-変数をどう選ぶ" class="nav-link" data-scroll-target="#変数をどう選ぶ">変数をどう選ぶ</a></li>
   <li><a href="#次のエピソード" id="toc-次のエピソード" class="nav-link" data-scroll-target="#次のエピソード">次のエピソード</a></li>
   </ul></li>
   </ul>
@@ -390,8 +399,26 @@ window.Quarto = {
 <div class="voice-father">
 <p>お父さん「1つのマグカップの中に、確率モデル、DAG、Rubin因果モデルという3つの構造が隠れている。Rubin因果モデルまでは説明しきれないから、<a href="Causal Inference for Medical Research Ch 2-3 RCM.pdf">“参考資料”</a>をみてほしい。抽象的な構造を使い分けてデータから情報を引き出す。それも、単なる情報処理や圧縮じゃなく、患者さんのための知識を得るためにね。統計解析は人間のためのもの。だからこそ、どの抽象表現で世界を見るかが大事になる」</p>
 </div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="モデルを使い分ける目的">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>モデルを使い分ける目的
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>DAG、確率モデル、Rubin因果モデルは、同じ現象を同じ言葉で説明する道具ではありません。DAGは変数のつながりと調整の候補を考える道具、確率モデルは観測データの分布や推定方法を記述する道具、Rubin因果モデルは「もし別の治療を選んでいたら」という反事実を定義する道具です。</p>
+<p>実際の研究では、まず何を知りたいのか、つまり推定目標（estimand）を言葉にします。そのうえで、どのモデルがどの部分を支えているのかを分けて考えると、解析の目的と仮定が見えやすくなります。</p>
+<p>この順番を逆にして、先に手元の変数をモデルに入れてから「調整済みの答え」を探すと、数字だけが独り歩きします。調整済み推定値は、どこかに眠っている真実そのものではありません。問いに対して、どの抽象表現と仮定を選んだかに対応する、ひとつのモデル上の答えです。</p>
+</div>
+</div>
+</section>
 <section id="変数をどう選ぶ" class="level3">
 <h3 class="anchored" data-anchor-id="変数をどう選ぶ">変数をどう選ぶ</h3>
+<div class="dialogue">
 <div class="voice-daughter">
 <p>私「でもね、私にとっては、モデルよりも変数の選び方の方が切実な問題なんだ。ピロリ菌除菌のDAGでいえば、ピロリ菌除菌の有無の他に、胃がん発生、性格、年齢、体質という変数をDAGに入れたでしょ。実際の研究でどうやって選ぶの？」</p>
 </div>
@@ -416,7 +443,6 @@ window.Quarto = {
 <div class="voice-father">
 <p>お父さん「うん。どの枠組みが正しいかっていう話じゃないよ。臨床研究の場合は、DAGに入れる変数は研究仮説や目的に関わると思われるものにフォーカスしてもいいんじゃないかって言いたいわけ。使用目的は、たとえば交絡因子を特定して、推測の妥当性を吟味することだからね」</p>
 </div>
-</section>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="このエピソードに関係するクイズです">
 <div class="callout-header d-flex align-content-center">
@@ -438,7 +464,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -447,7 +473,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は4です。</strong></li>
@@ -463,7 +489,7 @@ window.Quarto = {
 <li><a href="causal-inference-5.html">Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -472,7 +498,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>

@@ -2,13 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2025-12-13">
+<meta name="description" content="A coffee-chat guide to the basics of survival analysis. We connect risk, survival curves, rates, hazards, and hazard ratios, and use simple simulation code to make the time dimension visible.">
 
-<title>A Circle, an Equation, and a Cylinder – Coffee and Research</title>
+<title>From Risk and Rate to Survival and Hazard – Coffee and Research</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +24,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -40,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -148,7 +184,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../styles.css">
-<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/en/causal-inference-4.html">
+<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/en/effects-4.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -196,6 +232,14 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
   </li>  
     </ul>
   </li>
@@ -281,10 +325,10 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#causal-inference-iv-a-circle-an-equation-and-a-cylinder" id="toc-causal-inference-iv-a-circle-an-equation-and-a-cylinder" class="nav-link active" data-scroll-target="#causal-inference-iv-a-circle-an-equation-and-a-cylinder">Causal Inference IV − A Circle, an Equation, and a Cylinder</a>
+  <li><a href="#effects-and-time-iv-from-risk-and-rate-to-survival-and-hazard" id="toc-effects-and-time-iv-from-risk-and-rate-to-survival-and-hazard" class="nav-link active" data-scroll-target="#effects-and-time-iv-from-risk-and-rate-to-survival-and-hazard">Effects and Time IV − From Risk and Rate to Survival and Hazard</a>
   <ul class="collapse">
-  <li><a href="#the-answer-to-a-question-depends-on-how-we-choose-to-view-the-world-abstractly" id="toc-the-answer-to-a-question-depends-on-how-we-choose-to-view-the-world-abstractly" class="nav-link" data-scroll-target="#the-answer-to-a-question-depends-on-how-we-choose-to-view-the-world-abstractly">The answer to a question depends on how we choose to view the world abstractly</a></li>
-  <li><a href="#next-episodes" id="toc-next-episodes" class="nav-link" data-scroll-target="#next-episodes">Next episodes</a></li>
+  <li><a href="#risk-and-time" id="toc-risk-and-time" class="nav-link" data-scroll-target="#risk-and-time">Risk and time</a></li>
+  <li><a href="#next-episodes-and-r-script" id="toc-next-episodes-and-r-script" class="nav-link" data-scroll-target="#next-episodes-and-r-script">Next episodes and R script</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -294,9 +338,14 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A Circle, an Equation, and a Cylinder</h1>
+<h1 class="title">From Risk and Rate to Survival and Hazard</h1>
 </div>
 
+<div>
+  <div class="description">
+    A coffee-chat guide to the basics of survival analysis. We connect risk, survival curves, rates, hazards, and hazard ratios, and use simple simulation code to make the time dimension visible.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta column-page-left">
@@ -320,112 +369,303 @@ window.Quarto = {
 <div class="hero-header">
 <p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
 </div>
-<section id="causal-inference-iv-a-circle-an-equation-and-a-cylinder" class="level1">
-<h1>Causal Inference IV − A Circle, an Equation, and a Cylinder</h1>
+<section id="effects-and-time-iv-from-risk-and-rate-to-survival-and-hazard" class="level1">
+<h1>Effects and Time IV − From Risk and Rate to Survival and Hazard</h1>
 <div class="serif-block text-right">
-<p>Keywords: causal model, language &amp; writing, probability model</p>
+<p>Keywords: effect measure, probability model, R simulation, survival &amp; competing risks</p>
 </div>
 <hr>
-<section id="the-answer-to-a-question-depends-on-how-we-choose-to-view-the-world-abstractly" class="level3">
-<h3 class="anchored" data-anchor-id="the-answer-to-a-question-depends-on-how-we-choose-to-view-the-world-abstractly">The answer to a question depends on how we choose to view the world abstractly</h3>
+<section id="risk-and-time" class="level3">
+<h3 class="anchored" data-anchor-id="risk-and-time">Risk and time</h3>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>Me: “Dad, I appreciate how careful you are, but isn’t there a simpler way to explain collider bias? That conditional probability formula is pretty brutal.”</p>
+<p>Me: “Dad, I was thinking back to the attributable fraction discussion. Something still doesn’t quite sit right.”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “I get that. But I thought it wouldn’t be precise enough without writing down the equation.”</p>
+<p>Dad: “That sounds like a good reason for coffee.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “I do appreciate the precision. Still, a metaphor might have worked just as well.”</p>
+<p>Me: “You said the attributable fraction can change when we look 10, 12, or 20 years after screening. That means risk has time hidden inside it. Isn’t that no longer binary data? Isn’t it survival-time data?”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “Do you remember your original question? You said that explanations of confounding felt incomplete, whether in probability models or in the Rubin causal model. That was our starting point. Simply replacing colliders with another metaphor wouldn’t really solve that.”</p>
+<p>Dad: “Exactly. Risk and survival curves are two sides of the same coin.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “Fair enough.”</p>
+<p>Me: “So if I read a survival probability from a survival curve at a certain time point, one minus that is the risk by that time. And the epidemiologic idea of a rate connects to the survival-analysis idea of a hazard. What still bothers me is the hazard ratio. Risk ratios can change over time, but is a hazard ratio supposed to stay constant?”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “There was a reason I wrote the equations on a napkin. I wanted you to see that the same thing can be expressed in two ways: as a DAG and as a set of equations. We often use multiple abstract representations side by side. Look—there’s a coffee mug right here.”</p>
+<p>Dad: “In Cox regression, we often assume it is constant over time. More precisely, even if the survival curves themselves are changing, the model forces the ratio of the hazards to be constant.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “The one you’re always drinking from.”</p>
+<p>Me: “The risk ratio changes but the hazard ratio doesn’t? That sounds contradictory.”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “Try looking at it from directly above.”</p>
+<p>Dad: “It feels that way because risk is accumulated over time from the hazard. Let’s start with risk and hazard.”</p>
 </div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Survival curves and hazards">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Survival curves and hazards
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In earlier episodes, we discussed risk by a fixed time point. Now we move to Kaplan-Meier curves, which estimate risk as it changes over time.</p>
+<p>A Kaplan-Meier curve is an estimate from survival-time data plotted against time. In mathematical notation, we can write the survival curve as a function of time, <span class="math inline">\(S(x)\)</span>.</p>
+<p>To see the relationship between survival and hazard, consider a very simple case where the hazard is constant over time. That corresponds to an exponential distribution. If the hazard is denoted by <span class="math inline">\(\lambda\)</span>, the survival function is:</p>
+<p><span class="math display">\[
+S(x)=\mathrm{exp}(-\lambda x)
+\]</span></p>
+<p>The disease risk by time <span class="math inline">\(x\)</span>, denoted by <span class="math inline">\(\pi\)</span>, is:</p>
+<p><span class="math display">\[
+\pi=1-S(x)=1-\mathrm{exp}(-\lambda x)
+\]</span></p>
+<p>So risk and hazard are connected through time. A risk is not just a static number; it is a probability accumulated up to a particular time point.</p>
+</div>
+</div>
+<div class="dialogue">
 <div class="voice-daughter">
-<p>Me: “Like this?”</p>
+<p>Me: “I am not fluent in equations.”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “Exactly. You see a circle, right?”</p>
+<p>Dad: “Fair. The important point is what the equation connects. With an exponential distribution, the hazard is treated as a constant, while the survival function changes over time. A simulation can make that easier to see.”</p>
 </div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Code for generate_data()">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code for generate_data()
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>generate_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">200</span>, hr1, hr2, hr3) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  stoma <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  sex <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  age <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> stoma, <span class="at">sd =</span> <span class="dv">8</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  hazard_relapse   <span class="ot">&lt;-</span> <span class="fl">0.10</span><span class="sc">*</span><span class="fu">exp</span>(stoma<span class="sc">*</span><span class="fu">log</span>(hr1)<span class="sc">+</span>age<span class="sc">*</span><span class="fu">log</span>(hr2))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  hazard_death     <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(stoma <span class="sc">==</span> <span class="dv">1</span>, hr3 <span class="sc">*</span> <span class="fl">0.10</span>, <span class="fl">0.10</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  hazard_censoring <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  t_relapse   <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_relapse)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  t_death     <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_death)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  t_censoring <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_censoring)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  time_os   <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_death, t_censoring)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  status_os <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(t_death <span class="sc">&lt;=</span> t_censoring)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  time_rfs <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  status_rfs <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  time_cir <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  status_cir <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">id         =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex        =</span> <span class="fu">factor</span>(sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WOMAN"</span>, <span class="st">"MAN"</span>)),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">age        =</span> age,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">stoma      =</span> <span class="fu">factor</span>(stoma, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WITHOUT STOMA"</span>, <span class="st">"WITH STOMA"</span>)),</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_os    =</span> time_os,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_os  =</span> status_os,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_rfs   =</span> time_rfs,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_rfs =</span> status_rfs,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_cir   =</span> time_cir,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_cir =</span> status_cir</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Kaplan-Meier curves with cifplot()">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Kaplan-Meier curves with cifplot()
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To make the simulated data easier to see, here is a Kaplan-Meier curve drawn with <code>cifplot()</code>, together with a Cox regression fit.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="R code for cifplot()">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>R code for cifplot()
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github("gestimation/cifmodeling") # if needed</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cifmodeling)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">46</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">generate_data</span>(<span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="dv">1</span>, <span class="at">hr3=</span><span class="fl">1.5</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(time_os, status_os) <span class="sc">~</span> stoma,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> dat,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome.type =</span> <span class="st">"survival"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.y      =</span> <span class="st">"Overall survival"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="effects-4_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="R code for coxph()">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>R code for coxph()
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("survival") # if needed</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time_os, status_os) <span class="sc">~</span> stoma, <span class="at">data =</span> dat)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(time_os, status_os) ~ stoma, data = dat)
+
+  n= 200, number of events= 144 
+
+                  coef exp(coef) se(coef)     z Pr(&gt;|z|)  
+stomaWITH STOMA 0.3199    1.3769   0.1693 1.889   0.0589 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                exp(coef) exp(-coef) lower .95 upper .95
+stomaWITH STOMA     1.377     0.7262    0.9881     1.919
+
+Concordance= 0.544  (se = 0.024 )
+Likelihood ratio test= 3.51  on 1 df,   p=0.06
+Wald test            = 3.57  on 1 df,   p=0.06
+Score (logrank) test = 3.6  on 1 df,   p=0.06</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
 <div class="voice-daughter">
-<p>Me: “Yes. And?”</p>
+<p>Me: “So specifying a hazard under an exponential distribution determines the survival curve.”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “In math class, you learned that a circle can be described by an equation once you set an x-axis and a y-axis. The relationship between DAGs and conditional probability formulas is similar.”</p>
+<p>Dad: “Right. The hazard itself is hard to picture, so it often helps to connect it with median survival. The median is the time when the survival curve reaches 50%.”</p>
 </div>
-<p><span class="math display">\[x^2+y^2=r^2\]</span></p>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Hazard and median survival time">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Hazard and median survival time
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The hazard controls how quickly the survival curve falls. If median survival time is denoted by <span class="math inline">\(M\)</span>, then under an exponential distribution:</p>
+<p><span class="math display">\[
+0.5=\mathrm{exp}(-\lambda M)
+\]</span></p>
+<p>Therefore:</p>
+<p><span class="math display">\[
+M = \frac{\log 2}{\lambda} \approx \frac{0.7}{\lambda}
+\]</span></p>
+<p>Under this simple model, median survival time and the hazard move in opposite directions. If the median survival time doubles, the hazard is cut roughly in half.</p>
+</div>
+</div>
+<div class="dialogue">
 <div class="voice-daughter">
-<p>Me: “So the circle is the picture, and the equation is the mathematical expression?”</p>
+<p>Me: “That part I can feel. Hazard is inversely related to lifespan, at least in this simple setting.”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “Right. It’s the same object, expressed differently. If you’re just talking about circles, it’s faster to draw one than to write down the equation. DAGs work the same way. They project only the pattern of connections from a set of conditional probability formulas. They deliberately set aside distributional forms and data types, and temporarily bracket complicated equations, so that we can focus on structure alone. A DAG is a topological tool for looking only at how things are connected.”</p>
+<p>Dad: “Exactly. A hazard ratio compares hazards between two groups:”</p>
 </div>
-<div class="voice-daughter">
-<p>Me: “That makes sense. Arrows are easier to grasp at first glance.”</p>
 </div>
-<div class="voice-father">
-<p>Dad: “Now try looking at the mug from an angle.”</p>
+<p><span class="math display">\[
+HR=\frac{\lambda_1}{\lambda_2}
+\]</span></p>
+<div class="callout callout-style-simple callout-note callout-titled" title="A quiz related to this episode">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="voice-daughter">
-<p>Me: “So now the circle becomes three-dimensional?”</p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A quiz related to this episode
 </div>
-<div class="voice-father">
-<p>Dad: “Exactly. You see a cylinder. That cylinder is like the potential outcomes in the Rubin causal model. From the data we can observe—from the top, so to speak—we can’t see the whole object. The unseen part corresponds to the unobserved potential outcomes.”</p>
 </div>
-<div class="voice-daughter">
-<p>Me:“That’s…surprisingly poetic.”</p>
+<div class="callout-body-container callout-body">
+<p>When is it appropriate to report median survival time?</p>
+<ol type="1">
+<li>When the sample size is at least 100<br>
+</li>
+<li>When all participants complete planned follow-up<br>
+</li>
+<li>When at least half of participants have experienced the event<br>
+</li>
+<li>All of the above are wrong</li>
+</ol>
 </div>
-<div class="voice-father">
-<p>Dad: “In a single coffee mug, you can find three structures: a probability model, a DAG, and the Rubin causal model. We extract information from data by choosing an abstract structure. And this isn’t just about processing or compressing information—it’s about producing knowledge for patients. Statistics is for people. That’s why the way we choose to view the world abstractly really matters.”</p>
 </div>
-<section id="how-do-we-choose-variables" class="level3">
-<h3 class="anchored" data-anchor-id="how-do-we-choose-variables">How do we choose variables?</h3>
-<div class="voice-daughter">
-<p>Me: “But for me, choosing variables feels more urgent than choosing models. In the DAG for H. pylori eradication, we included not just treatment status, but gastric cancer, personality, age, and constitution. How do you actually decide what to include in a real study?”</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="voice-father">
-<p>Dad: “That’s the hard part. In practice, you have to rely on <strong>medical knowledge</strong> and <strong>study design</strong> to draw a plausible DAG. Known risk factors for gastric cancer, for example. Or the assumption that, in a randomized clinical trial, treatment assignment should be independent of baseline covariates.”</p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer
 </div>
-<div class="voice-daughter">
-<p>Me: “But if you think that way, the number of variables could grow without bound. For gastric cancer to occur, you first need a digestive tract. Before that, at the micro level there are cells, and at the macro level there’s a living organism. Even receiving H. pylori treatment might depend on social factors.”</p>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div class="voice-father">
-<p>Dad: “That’s a reasonable way to think about it. Some views of causation aren’t limited to linking one cause to one result. At a very fundamental level, everything follows physical laws, like Newtonian mechanics.”</p>
-</div>
-<div class="voice-daughter">
-<p>Me: “That’s physics, not what we’re talking about right now.”</p>
-</div>
-<div class="voice-father">
-<p>Dad: “Right. Let’s widen the frame just a little. In Japanese, alongside the word <em>in-ga</em> — which means cause and result—we also use the word <em>en-gi</em>. We often use <em>en-gi</em> to express the idea that outcomes arise from many overlapping conditions and events. But the objects of analysis in randomized trials or observational studies are much more limited than that, don’t you think?”</p>
-</div>
-<div class="voice-daughter">
-<p>Me: “Yes. What we really want to know is the effectiveness of a drug, or the effect of H. pylori eradication.”</p>
-</div>
-<div class="voice-father">
-<p>Dad: “Exactly. This isn’t about which framework is ‘correct.’ In clinical research, it’s reasonable to focus on variables that are relevant to the research question and the study’s purpose. One role of DAGs, for example, is <strong>to help identify potential confounders and assess the validity of our inferences</strong>.”</p>
-</div>
-</section>
-</div>
-</section>
-<section id="next-episodes" class="level3">
-<h3 class="anchored" data-anchor-id="next-episodes">Next episodes</h3>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ul>
-<li><a href="causal-inference-5.html">Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias</a></li>
+<li>The correct answer is <strong>3</strong>.</li>
+</ul>
+<p>Median survival time is the time at which survival probability reaches 50%. If fewer than half of participants have experienced the event, the survival curve has not reached 50%, so the median survival time is not yet estimable.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="next-episodes-and-r-script" class="level3">
+<h3 class="anchored" data-anchor-id="next-episodes-and-r-script">Next episodes and R script</h3>
+<ul>
+<li><a href="effects-5.html">A First Note on Cox Regression</a></li>
+<li><a href="../from-coffee-chat-to-r/effects.R">effects.R</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="Other episodes">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -434,24 +674,22 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Episodes in this series</strong></p>
 <ul>
-<li><a href="causal-inference-1.html">Three-Variable DAGs: The Smallest Building Blocks of Causal Structure</a></li>
-<li><a href="causal-inference-2.html">A Subtle Distinction between Common Causes and Confounders</a></li>
-<li><a href="causal-inference-3.html">DAGs and Conditional Distributions: Two Languages for the Same Structure</a></li>
-<li><a href="causal-inference-4.html">A Circle, an Equation, and a Cylinder</a></li>
-<li><a href="causal-inference-5.html">Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias</a></li>
-<li><a href="causal-inference-6.html">Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference</a></li>
+<li><a href="effects-1.html">Silent Confusions Hidden in Percentages</a></li>
+<li><a href="effects-2.html">Who Is This Percentage About? Target Populations and Attributable Fractions</a></li>
+<li><a href="effects-3.html">When Odds Ratios Approximate Risk Ratios—and When They Fail</a></li>
+<li><a href="effects-4.html">From Risk and Rate to Survival and Hazard</a></li>
+<li><a href="effects-5.html">A First Note on Cox Regression</a></li>
+<li><a href="effects-6.html">After Cox Regression: A Case Study and R Demonstration</a></li>
 </ul>
 <p><strong>Earlier series</strong></p>
 <ul>
 <li><a href="study-design-1.html">Study Design I</a></li>
 <li><a href="frequentist-1.html">Frequentist Thinking I</a></li>
 <li><a href="frequentist-4.html">Frequentist Experiments I</a></li>
-<li><a href="effects-1.html">Effects and Time I</a></li>
-<li><a href="logistic-regression-1.html">Adjusting for Bias I</a></li>
 </ul>
 <p><strong>Glossary</strong></p>
 <ul>

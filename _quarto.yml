@@ -1,6 +1,17 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "index.qmd"
+    - "about/*.qmd"
+    - "en/index.qmd"
+    - "en/glossary.qmd"
+    - "en/study-design-*.qmd"
+    - "en/frequentist-*.qmd"
+    - "en/effects-*.qmd"
+    - "jp/*.qmd"
+    - "kanji_en/*.qmd"
+    - "kanji_jp/*.qmd"
   resources:
     - from-coffee-chat-to-r/study-design.R
     - from-coffee-chat-to-r/frequentist.R
@@ -29,6 +40,10 @@ website:
             href: en/study-design-1.qmd
           - text: Frequentist Thinking
             href: en/frequentist-1.qmd
+          - text: Frequentist Experiments
+            href: en/frequentist-4.qmd
+          - text: Effects and Time
+            href: en/effects-1.qmd
       - text: A Conversation (JP)
         menu:
           - text: Index

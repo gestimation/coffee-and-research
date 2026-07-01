@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-12-13">
+<meta name="description" content="When proportional hazards does not hold, a single hazard ratio can become hard to interpret. This coffee-chat guide uses a lung cancer trial and an R simulation to compare hazards, risks, and time-point effects.">
 
-<title>Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias – Coffee and Research</title>
+<title>After Cox Regression: A Case Study and R Demonstration – Coffee and Research</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -40,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -119,7 +154,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../styles.css">
-<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/en/causal-inference-5.html">
+<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/en/effects-6.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -167,6 +202,14 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
         <li>
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
   </li>  
     </ul>
   </li>
@@ -252,11 +295,11 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#causal-inference-v-backdoor-paths-block-and-d-separation-a-clue-for-adjusting-for-bias" id="toc-causal-inference-v-backdoor-paths-block-and-d-separation-a-clue-for-adjusting-for-bias" class="nav-link active" data-scroll-target="#causal-inference-v-backdoor-paths-block-and-d-separation-a-clue-for-adjusting-for-bias">Causal Inference V − Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias</a>
+  <li><a href="#effects-and-time-vi-after-cox-regression-a-case-study-and-r-demonstration" id="toc-effects-and-time-vi-after-cox-regression-a-case-study-and-r-demonstration" class="nav-link active" data-scroll-target="#effects-and-time-vi-after-cox-regression-a-case-study-and-r-demonstration">Effects and Time VI − After Cox Regression: A Case Study and R Demonstration</a>
   <ul class="collapse">
-  <li><a href="#the-meaning-of-blocking" id="toc-the-meaning-of-blocking" class="nav-link" data-scroll-target="#the-meaning-of-blocking">The meaning of blocking</a></li>
+  <li><a href="#when-a-hazard-ratio-has-meaning-and-when-it-does-not" id="toc-when-a-hazard-ratio-has-meaning-and-when-it-does-not" class="nav-link" data-scroll-target="#when-a-hazard-ratio-has-meaning-and-when-it-does-not">When a hazard ratio has meaning, and when it does not</a></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
-  <li><a href="#next-episodes" id="toc-next-episodes" class="nav-link" data-scroll-target="#next-episodes">Next episodes</a></li>
+  <li><a href="#this-concludes-the-effects-and-time-series." id="toc-this-concludes-the-effects-and-time-series." class="nav-link" data-scroll-target="#this-concludes-the-effects-and-time-series.">This concludes the Effects and Time series.</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -266,20 +309,19 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias</h1>
+<h1 class="title">After Cox Regression: A Case Study and R Demonstration</h1>
 </div>
 
+<div>
+  <div class="description">
+    When proportional hazards does not hold, a single hazard ratio can become hard to interpret. This coffee-chat guide uses a lung cancer trial and an R simulation to compare hazards, risks, and time-point effects.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta column-page-left">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 13, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -292,194 +334,251 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <div class="hero-header">
 <p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
 </div>
-<section id="causal-inference-v-backdoor-paths-block-and-d-separation-a-clue-for-adjusting-for-bias" class="level1">
-<h1>Causal Inference V − Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias</h1>
+<section id="effects-and-time-vi-after-cox-regression-a-case-study-and-r-demonstration" class="level1">
+<h1>Effects and Time VI − After Cox Regression: A Case Study and R Demonstration</h1>
 <div class="serif-block text-right">
-<p>Keywords: bias, causal model, confounding &amp; collapsibility, probability model</p>
+<p>Keywords: bias, effect measure, R simulation, survival &amp; competing risks</p>
 </div>
 <hr>
-<section id="the-meaning-of-blocking" class="level3">
-<h3 class="anchored" data-anchor-id="the-meaning-of-blocking">The meaning of blocking</h3>
+<section id="when-a-hazard-ratio-has-meaning-and-when-it-does-not" class="level3">
+<h3 class="anchored" data-anchor-id="when-a-hazard-ratio-has-meaning-and-when-it-does-not">When a hazard ratio has meaning, and when it does not</h3>
 <div class="dialogue">
-<div class="voice-daughter">
-<p>Me: “Let’s pick up where we left off, Dad. When you explained DAGs last time, you used the term <strong>blocking</strong>. You said things like ‘a <strong>collider</strong> blocks a path.’”</p>
-</div>
 <div class="voice-father">
-<p>“I did.”</p>
+<p>Dad: “Can I have another cup of coffee?”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “So blocking means that the causal flow is stopped, right?”</p>
+<p>Me: “Me too.”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “Hm. That phrasing isn’t quite precise. Blocking is a property of paths in a DAG. It doesn’t directly refer to causality itself. A path is said to be blocked if it contains a collider, or if a non-collider on the path is conditioned on as a confounder.”</p>
+<p>Dad: “Let’s take this slowly. Proportional hazards is the central feature of Cox regression. When it is plausible, Cox regression is useful across many survival data settings. But in oncology, you sometimes see data where proportional hazards clearly breaks down. Look at this Kaplan-Meier curve from a famous trial comparing gefitinib with chemotherapy (Mok et al.&nbsp;2009). The curves cross.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “So if there’s a collider, the path is blocked automatically. And for a non-collider, the path becomes blocked when we adjust for it.”</p>
-</div>
-<div class="voice-father">
-<p>Dad: “Exactly. More formally, blocking means that two nodes can be d-separated. It might be worth touching on the definition of d-separation to avoid confusion.”</p>
+<p>Me: “Good. I was starting to fall asleep from all the equations.”</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="d-Separation">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>d-Separation
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Consider a DAG with three disjoint sets of nodes, denoted by A, B, and C. If the following two conditions hold, then C is said to <strong>d-separate</strong> A and B (Greenland, 1999).</p>
-<p>Every path between A and B that does not contain a collider includes at least one element of C.</p>
-<p>Suppose C contains a collider that lies on a path between A and B. Even if conditioning on that collider opens the path, the path can still be blocked by conditioning on another element of C.</p>
-</div>
-</div>
+<p><img src="effects-6.png" class="img-fluid"></p>
 <div class="dialogue">
-<div class="voice-daughter">
-<p>Me: “This is getting complicated.”</p>
-</div>
 <div class="voice-father">
-<p>Dad: “It is. As the number of nodes increases, we have to think in terms of sets of nodes, and the definition becomes harder to parse. That’s why it helps to check the meaning in simple cases. Let’s look at these three DAGs. Do you think C d-separates E and D in each of them?”</p>
-</div>
-<p><img src="causal-inference-4-1.png" class="img-fluid"></p>
-<div class="voice-daughter">
-<p>Me: “Well, in all three DAGs there’s only one path connecting E and D. In the top two, there’s no collider, and C lies on the path—so C should d-separate them. What about the bottom one? C is a collider there, and the path E–C–D can’t be blocked by any other variable. So it doesn’t satisfy the conditions for d-separation.”</p>
-</div>
-<div class="voice-father">
-<p>Dad: “Exactly. Statements like <strong>adjusting for a common cause or a mediator blocks a path</strong>, or <strong>adjusting for a collider opens a path</strong>, can all be expressed precisely by that definition. Once DAGs become more complex, you start to see why the definition is useful. Now, in this DAG, which sets of nodes d-separate E and D?”</p>
+<p>Dad: “This was a trial among patients with stage IIIB or IV pulmonary adenocarcinoma. In panel A, progression-free survival is lower in the gefitinib group until about six months, then higher afterward. In that situation, proportional hazards does not hold, and a single hazard ratio is hard to interpret.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “There’s no collider here. So would it be A and C?”</p>
+<p>Me: “Why did the curves cross?”</p>
 </div>
-<p><img src="causal-inference-4-2.png" class="img-fluid"></p>
 <div class="voice-father">
-<p>Dad: “Not just that. Either A alone or C alone also satisfies the conditions for d-separation.”</p>
+<p>Dad: “Gefitinib was especially effective among patients with EGFR-mutant tumors. Panel B shows the subgroup with EGFR mutation. In that subgroup, the curves do not cross; gefitinib is better throughout.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “So that means that if we observe either A or C, we can adjust for confounding?”</p>
+<p>Me: “Even without the equations, I can see that the treatment comparison depends on time.”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “That’s right. Now let’s look at one more DAG.”</p>
-</div>
-<p><img src="causal-inference-4-3.png" class="img-fluid"></p>
-<div class="voice-daughter">
-<p>Me: “Still going? I know I asked for this, but let’s make this the last one. Okay—looking at this diagram, A and B each d-separate, right? C is a collider, so it doesn’t.”</p>
-</div>
-<div class="voice-father">
-<p>Dad: “That’s correct as far as it goes. But those aren’t the only possibilities. What about A and C, or B and C? Even though C is a collider, conditioning on A or B blocks the path E ← A → C ← B → D, doesn’t it?”</p>
+<p>Dad: “Exactly. Very few people find hazards intuitive, so don’t worry too much. I sometimes think of a hazard as an invisible clock that each patient carries.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “I see—you’re using the second condition. I think I understand when d-separation holds now. But what does this actually mean?”</p>
+<p>Me: “An invisible clock?”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “The main goal today was to explain blocking properly, and maybe it didn’t quite click. In the DAG we just discussed, by searching for sets of variables that d-separate E and D, we identified combinations of confounders that prevent bias. And one more thing: when we replace the nodes in a DAG with random variables, d-separation corresponds exactly to conditional independence. Using this result, we can identify which confounders are needed to identify causal effects. That’s the real meaning of the backdoor criterion.”</p>
+<p>Dad: “Patients receiving treatment A may carry a clock that runs faster; patients receiving treatment B may carry a clock that runs more slowly. The hazard ratio compares the speed of those clocks.”</p>
+</div>
+<div class="voice-daughter">
+<p>Me: “That image helps.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “But the speed of the clock does not have to stay constant. One treatment can look worse early and better later. When that happens, the interpretation of a single hazard ratio becomes fragile.”</p>
+</div>
+<div class="voice-daughter">
+<p>Me: “Still, most papers report hazard ratios.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “That is why the next step matters. You can also compare risks or survival probabilities at clinically meaningful time points. If the curves cross, decide whether you care about 5-year survival, 10-year mortality, restricted mean survival time, or another time-based summary. Hazard ratios remain useful, but they should not be the only lens.”</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="d-Separation and Conditional Independence">
+<div class="callout callout-style-simple callout-note callout-titled" title="Estimating time-point risk ratios in simulated data">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>d-Separation and Conditional Independence
+<span class="screen-reader-only">Note</span>Estimating time-point risk ratios in simulated data
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Suppose that, using a DAG, we confirm that C d-separates A and B. Then it also follows that the random variables A and B are conditionally independent given C (Pearl, 1995).</p>
+<p>Let’s look at the invisible-clock idea in simulated data. As before, we simulate survival-time data in which the mortality hazard differs by stoma status, then estimate <strong>risk ratios at specific time points</strong>.</p>
+<p>A hazard ratio compares the speed of the invisible clocks. But a risk ratio such as “how many times higher is the 10-year mortality risk in the stoma group?” may be easier to interpret. Cox regression assumes one hazard ratio across time. In contrast, the <code>polyreg()</code> function in the <strong>cifmodeling</strong> package can estimate risk ratios either as time-constant summaries or at specific time points.</p>
+<p>Using the simulated data, we fit <code>polyreg()</code> at 5, 10, and 20 years. The outcome is <code>Event(time_os,status_os)</code>, and the exposure is specified as <code>exposure="stoma"</code>.</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="A quiz related to this episode">
-<div class="callout-header d-flex align-content-center">
+<div class="callout callout-style-simple callout-note callout-titled" title="Code for generate_data()">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>A quiz related to this episode
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Which interpretation of this DAG is correct?</p>
-<ol type="1">
-<li><p>E and D are conditionally independent given C</p></li>
-<li><p>E and D remain associated even after conditioning on C</p></li>
-</ol>
-<p><img src="causal-inference-4-4.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled" title="Answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Answer
+<span class="screen-reader-only">Note</span>Code for generate_data()
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ul>
-<li>The correct answer is <strong>2</strong>.</li>
-</ul>
-<p>The path E ← C → D is blocked by conditioning on C, but the path E → D is not. Therefore, C does not d-separate E and D. Note that in this case, the reason d-separation fails is that a direct causal path between E and D remains. When estimating the effect of E on D, C should still be adjusted for—regardless of whether the direct path E → D exists.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>generate_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">200</span>, hr1, hr2, hr3) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  stoma <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  sex <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  age <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">65</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> stoma, <span class="at">sd =</span> <span class="dv">8</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  hazard_relapse   <span class="ot">&lt;-</span> <span class="fl">0.10</span><span class="sc">*</span><span class="fu">exp</span>(stoma<span class="sc">*</span><span class="fu">log</span>(hr1)<span class="sc">+</span>age<span class="sc">*</span><span class="fu">log</span>(hr2))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  hazard_death     <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(stoma <span class="sc">==</span> <span class="dv">1</span>, hr3 <span class="sc">*</span> <span class="fl">0.10</span>, <span class="fl">0.10</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  hazard_censoring <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  t_relapse   <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_relapse)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  t_death     <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_death)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  t_censoring <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> hazard_censoring)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  time_os   <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_death, t_censoring)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  status_os <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(t_death <span class="sc">&lt;=</span> t_censoring)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  time_rfs <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  status_rfs <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  status_rfs[time_rfs <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_rfs <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  time_cir <span class="ot">&lt;-</span> <span class="fu">pmin</span>(t_relapse, t_death, t_censoring)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  status_cir <span class="ot">&lt;-</span> <span class="fu">integer</span>(n)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_relapse <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  status_cir[time_cir <span class="sc">==</span> t_death <span class="sc">&amp;</span> time_cir <span class="sc">&lt;</span> t_censoring] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">id         =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex        =</span> <span class="fu">factor</span>(sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WOMAN"</span>, <span class="st">"MAN"</span>)),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">age        =</span> age,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">stoma      =</span> <span class="fu">factor</span>(stoma, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"WITHOUT STOMA"</span>, <span class="st">"WITH STOMA"</span>)),</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_os    =</span> time_os,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_os  =</span> status_os,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_rfs   =</span> time_rfs,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_rfs =</span> status_rfs,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_cir   =</span> time_cir,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">status_cir =</span> status_cir</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled" title="One more quiz related to this episode">
-<div class="callout-header d-flex align-content-center">
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="R code and results">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>One more quiz related to this episode
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Which interpretation of this DAG is correct?</p>
-<ol type="1">
-<li><p>E and D are independent without conditioning on C, and also conditionally independent given C</p></li>
-<li><p>E and D are associated without conditioning on C, but conditionally independent given C</p></li>
-<li><p>E and D are independent without conditioning on C, but become associated after conditioning on C</p></li>
-<li><p>E and D are associated without conditioning on C, and remain associated even after conditioning on C</p></li>
-</ol>
-<p><img src="causal-inference-4-5.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled" title="Answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Answer
+<span class="screen-reader-only">Note</span>R code and results
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<ul>
-<li>The correct answer is <strong>4</strong>.</li>
-</ul>
-<p>In this case, unlike the first quiz, there is no direct path between E and D. However, C is a collider. Conditioning on C opens the path E ← A → C ← B → D, so C does not d-separate E and D.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cifmodeling)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">46</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">generate_data</span>(<span class="at">hr1=</span><span class="dv">2</span>, <span class="at">hr2=</span><span class="dv">1</span>, <span class="at">hr3=</span><span class="fl">1.5</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>rr_at_5 <span class="ot">&lt;-</span> <span class="fu">polyreg</span>(<span class="at">nuisance.model=</span><span class="fu">Event</span>(time_os,status_os)<span class="sc">~</span><span class="dv">1</span>, <span class="at">exposure=</span><span class="st">"stoma"</span>, <span class="at">data=</span>dat, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">effect.measure1=</span><span class="st">"RR"</span>, <span class="at">time.point=</span><span class="dv">5</span>, <span class="at">outcome.type=</span><span class="st">"survival"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rr_at_5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+                      event 1 (no competing risk)
+---------------------------------- 
+stoma, WITH STOMA vs WITHOUT STOMA 
+                      1.367       
+                      [1.006, 1.856]
+                      (p=0.045)   
+
+---------------------------------- 
+
+effect.measure        RR at 5     
+n.events              89 in N = 200
+median.follow.up      3.54        
+range.follow.up       [0.03, 28.20]
+n.parameters          2           
+converged.by          Converged in objective function
+nleqslv.message       Function criterion near zero</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rr_at_10 <span class="ot">&lt;-</span> <span class="fu">polyreg</span>(<span class="at">nuisance.model=</span><span class="fu">Event</span>(time_os,status_os)<span class="sc">~</span><span class="dv">1</span>, <span class="at">exposure=</span><span class="st">"stoma"</span>, <span class="at">data=</span>dat, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">effect.measure1=</span><span class="st">"RR"</span>, <span class="at">time.point=</span><span class="dv">10</span>, <span class="at">outcome.type=</span><span class="st">"survival"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rr_at_10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+                      event 1 (no competing risk)
+---------------------------------- 
+stoma, WITH STOMA vs WITHOUT STOMA 
+                      1.126       
+                      [0.744, 1.704]
+                      (p=0.576)   
+
+---------------------------------- 
+
+effect.measure        RR at 10    
+n.events              117 in N = 200
+median.follow.up      3.54        
+range.follow.up       [0.03, 28.20]
+n.parameters          2           
+converged.by          Converged in objective function
+nleqslv.message       Function criterion near zero</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rr_at_20 <span class="ot">&lt;-</span> <span class="fu">polyreg</span>(<span class="at">nuisance.model=</span><span class="fu">Event</span>(time_os,status_os)<span class="sc">~</span><span class="dv">1</span>, <span class="at">exposure=</span><span class="st">"stoma"</span>, <span class="at">data=</span>dat, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">effect.measure1=</span><span class="st">"RR"</span>, <span class="at">time.point=</span><span class="dv">20</span>, <span class="at">outcome.type=</span><span class="st">"survival"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rr_at_20)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+                      event 1 (no competing risk)
+---------------------------------- 
+stoma, WITH STOMA vs WITHOUT STOMA 
+                      1.078       
+                      [0.720, 1.613]
+                      (p=0.714)   
+
+---------------------------------- 
+
+effect.measure        RR at 20    
+n.events              137 in N = 200
+median.follow.up      3.54        
+range.follow.up       [0.03, 28.20]
+n.parameters          2           
+converged.by          Converged in objective function
+nleqslv.message       Function criterion near zero</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>Me: “Even though the data were generated with a constant hazard ratio, the risk ratios are estimated as 1.367, 1.126, and 1.078. They get smaller over time. The early part of the Kaplan-Meier curve is where the difference is most visible.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Exactly. Effects occur over time. If the size of the effect changes with time, relying only on a hazard ratio can be misleading. You often need to compare risks at meaningful time points.”</p>
+</div>
+</div>
+<ul>
+<li><strong>Time-constant effect</strong>: one hazard ratio summarizes the whole follow-up period, as in Cox regression</li>
+<li><strong>Time-varying effect</strong>: the size of the effect changes over time, visible in survival curves</li>
+<li><strong>Time-point effect</strong>: risks or survival probabilities are compared at a specified time point, as with <code>polyreg()</code></li>
+</ul>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>Me: “I liked the simplicity of using only the hazard ratio, but I see the problem now. Looking at the survival curve means bringing time back into the causal effect.”</p>
 </div>
 </div>
 </section>
 <section id="reference" class="level3">
 <h3 class="anchored" data-anchor-id="reference">Reference</h3>
 <ul>
-<li><p>Greenland S, Pearl J, Robins JM. Causal diagrams for epidemiologic research. Epidemiology 1999;10(1):37-48</p></li>
-<li><p>Pearl J. Causal diagrams for empirical research. Biometrika 1995; 82(4): 669-88</p></li>
+<li>Mok TS, Wu YL, Thongprasert S, Yang CH, Chu DT, Saijo N, Sunpaweravong P, Han B, Margono B, Ichinose Y, Nishiwaki Y, Ohe Y, Yang JJ, Chewaskulyong B, Jiang H, Duffield EL, Watkins CL, Armour AA, Fukuoka M. Gefitinib or carboplatin-paclitaxel in pulmonary adenocarcinoma. N Engl J Med 2009;361(10):947-57</li>
 </ul>
 </section>
-<section id="next-episodes" class="level3">
-<h3 class="anchored" data-anchor-id="next-episodes">Next episodes</h3>
-<ul>
-<li><a href="causal-inference-6.html">Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference</a></li>
-</ul>
+<section id="this-concludes-the-effects-and-time-series." class="level3">
+<h3 class="anchored" data-anchor-id="this-concludes-the-effects-and-time-series.">This concludes the Effects and Time series.</h3>
+<p>Later English releases will continue into regression modeling and causal inference.</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="Other episodes">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -488,24 +587,22 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Episodes in this series</strong></p>
 <ul>
-<li><a href="causal-inference-1.html">Three-Variable DAGs: The Smallest Building Blocks of Causal Structure</a></li>
-<li><a href="causal-inference-2.html">A Subtle Distinction between Common Causes and Confounders</a></li>
-<li><a href="causal-inference-3.html">DAGs and Conditional Distributions: Two Languages for the Same Structure</a></li>
-<li><a href="causal-inference-4.html">A Circle, an Equation, and a Cylinder</a></li>
-<li><a href="causal-inference-5.html">Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias</a></li>
-<li><a href="causal-inference-6.html">Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference</a></li>
+<li><a href="effects-1.html">Silent Confusions Hidden in Percentages</a></li>
+<li><a href="effects-2.html">Who Is This Percentage About? Target Populations and Attributable Fractions</a></li>
+<li><a href="effects-3.html">When Odds Ratios Approximate Risk Ratios—and When They Fail</a></li>
+<li><a href="effects-4.html">From Risk and Rate to Survival and Hazard</a></li>
+<li><a href="effects-5.html">A First Note on Cox Regression</a></li>
+<li><a href="effects-6.html">After Cox Regression: A Case Study and R Demonstration</a></li>
 </ul>
 <p><strong>Earlier series</strong></p>
 <ul>
 <li><a href="study-design-1.html">Study Design I</a></li>
 <li><a href="frequentist-1.html">Frequentist Thinking I</a></li>
 <li><a href="frequentist-4.html">Frequentist Experiments I</a></li>
-<li><a href="effects-1.html">Effects and Time I</a></li>
-<li><a href="logistic-regression-1.html">Adjusting for Bias I</a></li>
 </ul>
 <p><strong>Glossary</strong></p>
 <ul>

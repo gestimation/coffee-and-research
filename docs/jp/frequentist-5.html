@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -231,6 +231,14 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
   </li>  
     </ul>
   </li>
@@ -487,6 +495,20 @@ window.Quarto = {
 <div class="callout-body-container callout-body">
 <p>αエラーとβエラーが生じる確率を考えてみましょう。理論的に考えると、サンプルサイズが大きくなるほど、ランダム誤差は小さくなります。αエラーとβエラーも同じで、サンプルサイズが大きいほど小さくなる（判断を誤りにくくなる）性質があります。しかし、2つのエラーはトレードオフの関係にあります。サンプルサイズが一定だと、両方同時に小さくすることはできません。そこで通常は、αエラーを優先して、事前に決めた水準よりも小さく保たれるような判定方式を用います。これが仮説検定であり、事前に決めた水準のことを有意水準と呼びます。実は、p&lt;0.05で判定することと有意水準を5%と設定することは、同じ意味です。</p>
 <p>ややこしいのですが、JCOG9502では症例登録に予定より時間がかかったため、有意水準10%、つまり全生存期間の片側p値を0.1と比べる方式が採用されました。この方式では、LTAに延命効果がなくても、100回に10回はαエラーが生じてしまい、LTAが有効と判定してしまうことになります。つまり、有意水準が5%から10%に高くなると、判断を誤る確率が増える代わりに、サンプルサイズが小さくて済むわけです。</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="サンプルサイズ設計はエラー設計">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>サンプルサイズ設計はエラー設計
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>サンプルサイズ設計は、単に「何人集めればよいか」を計算する作業ではありません。αエラー、βエラー、検出力、臨床的に意味のある差をどう置くかを決め、その条件でどのくらいの人数が必要になるかを確認する作業です。</p>
+<p>人数を小さくすれば研究は実施しやすくなりますが、見逃しや誤った判定のリスクが大きくなります。だからこそ、サンプルサイズの根拠は、研究の現実性と判断の確からしさの折り合いとして読む必要があります。</p>
 </div>
 </div>
 </section>
@@ -982,7 +1004,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="Rパッケージを用いたサンプルサイズ設計のコードはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -991,7 +1013,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("powerSurvEpi") #インストールが必要なら実行</span></span>
@@ -1082,7 +1104,7 @@ window.Quarto = {
 <li><a href="effects-1.html">Silent Confusions Hidden in Percentages</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1091,7 +1113,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>

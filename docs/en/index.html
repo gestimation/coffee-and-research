@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -41,7 +41,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -227,6 +227,14 @@ window.Quarto = {
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -319,12 +327,9 @@ window.Quarto = {
   <li><a href="#study-design-where-research-begins" id="toc-study-design-where-research-begins" class="nav-link" data-scroll-target="#study-design-where-research-begins">1. Study Design — Where research begins</a></li>
   <li><a href="#glossary-the-words-of-statistics" id="toc-glossary-the-words-of-statistics" class="nav-link" data-scroll-target="#glossary-the-words-of-statistics">2. Glossary — The words of statistics</a></li>
   <li><a href="#frequentist-thinking-practicing-statistics" id="toc-frequentist-thinking-practicing-statistics" class="nav-link" data-scroll-target="#frequentist-thinking-practicing-statistics">3. Frequentist Thinking — Practicing statistics</a></li>
-  <li><a href="#frequentist-experiments-validation-of-statistics" id="toc-frequentist-experiments-validation-of-statistics" class="nav-link" data-scroll-target="#frequentist-experiments-validation-of-statistics">4. Frequentist Experiments — Validation of statistics</a></li>
+  <li><a href="#frequentist-experiments-checking-statistical-ideas-by-simulation" id="toc-frequentist-experiments-checking-statistical-ideas-by-simulation" class="nav-link" data-scroll-target="#frequentist-experiments-checking-statistical-ideas-by-simulation">4. Frequentist Experiments — Checking statistical ideas by simulation</a></li>
   <li><a href="#effects-and-time-how-effects-evolve" id="toc-effects-and-time-how-effects-evolve" class="nav-link" data-scroll-target="#effects-and-time-how-effects-evolve">5. Effects and Time — How effects evolve</a></li>
-  <li><a href="#adjusting-for-bias-the-landscape-of-regression-modeling" id="toc-adjusting-for-bias-the-landscape-of-regression-modeling" class="nav-link" data-scroll-target="#adjusting-for-bias-the-landscape-of-regression-modeling">6. Adjusting for Bias — The landscape of regression modeling</a></li>
-  <li><a href="#truth-what-defines-it" id="toc-truth-what-defines-it" class="nav-link" data-scroll-target="#truth-what-defines-it">7. Truth — What defines it?</a></li>
-  <li><a href="#causal-inference-to-find-causality" id="toc-causal-inference-to-find-causality" class="nav-link" data-scroll-target="#causal-inference-to-find-causality">8. Causal Inference — To find causality</a></li>
-  <li><a href="#publish-a-paper-beyond-the-research" id="toc-publish-a-paper-beyond-the-research" class="nav-link" data-scroll-target="#publish-a-paper-beyond-the-research">9. Publish a Paper — Beyond the research</a></li>
+  <li><a href="#coming-next" id="toc-coming-next" class="nav-link" data-scroll-target="#coming-next">Coming next</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -363,11 +368,11 @@ window.Quarto = {
 <hr>
 <section id="how-to-begin" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-begin">How to begin</h2>
-<p>This story follows a single clinical study, moving in the order of research hypotheses → statistics → causality → language. If you are not sure where to start, these three episodes are good entry points:</p>
+<p>This story follows a single clinical study, moving from research hypotheses to statistics, effects, causality, and language. If you are not sure where to start, these three episodes are good entry points:</p>
 <ul>
 <li><a href="study-design-1.html"><strong>The first conversation and a research hypothesis (Study Design I)</strong></a></li>
 <li><a href="frequentist-1.html"><strong>Clinical trials and p-values (Frequentist Thinking I)</strong></a>,</li>
-<li><a href="logistic-regression-1.html"><strong>causal inference in research (Adjusting for Bias I)</strong></a></li>
+<li><a href="effects-1.html"><strong>percentages, populations, and effect measures (Effects and Time I)</strong></a></li>
 </ul>
 <p>Each episode can be read on its own—feel free to choose whichever layer interests you.</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="R scripts for reproducing the episodes">
@@ -387,7 +392,6 @@ window.Quarto = {
 <li>Study Design: <a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 <li>Frequentist Thinking / Experiments: <a href="../from-coffee-chat-to-r/frequentist.R">frequentist.R</a></li>
 <li>Effects and Time: <a href="../from-coffee-chat-to-r/effects.R">effects.R</a></li>
-<li>Adjusting for Bias: <a href="../from-coffee-chat-to-r/logistic-regression.R">logistic-regression.R</a></li>
 </ul>
 </div>
 </div>
@@ -437,7 +441,7 @@ window.Quarto = {
 </section>
 <section id="frequentist-thinking-practicing-statistics" class="level3">
 <h3 class="anchored" data-anchor-id="frequentist-thinking-practicing-statistics">3. Frequentist Thinking — Practicing statistics</h3>
-<p>Using cancer clinical trials as an example, my father explains the <strong>frequentist perspective</strong> of “How do numbers behave under repeated sampling?”</p>
+<p>Using cancer clinical trials as examples, the father explains the <strong>frequentist perspective</strong>: “How do numbers behave under repeated sampling?”</p>
 <ul>
 <li><a href="frequentist-1.html">Reading a Paper over a Cup of Coffee</a></li>
 <li><a href="frequentist-2.html">P-Value Explanations That Seem Plausible at First Glance</a></li>
@@ -464,9 +468,13 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="frequentist-experiments-validation-of-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="frequentist-experiments-validation-of-statistics">4. Frequentist Experiments — Validation of statistics</h3>
-<p>The laws derived from the frequentist theory are not mere abstractions; they can be verified through simulation experiments. Even if you are unfamiliar with R, simply run the script to reproduce the results.</p>
+<section id="frequentist-experiments-checking-statistical-ideas-by-simulation" class="level3">
+<h3 class="anchored" data-anchor-id="frequentist-experiments-checking-statistical-ideas-by-simulation">4. Frequentist Experiments — Checking statistical ideas by simulation</h3>
+<p>The ideas behind frequentist statistics are not just abstractions; they can be checked through simulation. Even if you are unfamiliar with R, you can run the script and reproduce the results.</p>
+<ul>
+<li><a href="frequentist-4.html">Understanding Confidence Intervals via Hypothetical Replications in R</a></li>
+<li><a href="frequentist-5.html">Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</a></li>
+</ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="A glimpse ahead">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -480,9 +488,8 @@ window.Quarto = {
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>R Demonstration of Bias in Kaplan-Meier Under Competing Risks</strong> A curve that looks convincing may still describe another world — checked through simulation.</li>
 <li><strong>Understanding Confidence Intervals via Hypothetical Replications in R</strong> Where does “95%” come from, and where does it go — lingering over confidence intervals.</li>
-<li><strong>Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</strong> Planning of sample size is also the planning of error of the study. Revisiting the foundations of frequentist design.</li>
+<li><strong>Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</strong> Sample size planning is also error planning. This episode revisits the foundations of frequentist design.</li>
 </ul>
 </div>
 </div>
@@ -492,12 +499,12 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="effects-and-time-how-effects-evolve">5. Effects and Time — How effects evolve</h3>
 <p>We unravel risk differences, risk ratios, hazard ratios, vaccine effectiveness, attributable fractions, and effects that change over time alongside survival curves and cumulative incidence curves. A multidimensional perspective on data quietly develops, paving the way for causal inference.</p>
 <ul>
-<li>[Silent Confusions Hidden in Percentages]</li>
-<li>[Who Is This Percentage About? Target Populations and Attributable Fractions]</li>
-<li>[Understanding Collapsibility of Effect Measures: Marginal vs Stratified]</li>
-<li>[When Odds Ratios Approximate Risk Ratios—and When They Fail]</li>
-<li>[From Risk and Rate to Survival and Hazard]</li>
-<li>[Distinguishing Time-Point, Time-Constant, and Time-Varying Effects: An R Example]</li>
+<li><a href="effects-1.html">Silent Confusions Hidden in Percentages</a></li>
+<li><a href="effects-2.html">Who Is This Percentage About? Target Populations and Attributable Fractions</a></li>
+<li><a href="effects-3.html">When Odds Ratios Approximate Risk Ratios—and When They Fail</a></li>
+<li><a href="effects-4.html">From Risk and Rate to Survival and Hazard</a></li>
+<li><a href="effects-5.html">A First Note on Cox Regression</a></li>
+<li><a href="effects-6.html">After Cox Regression: A Case Study and R Demonstration</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="A glimpse ahead">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
@@ -514,101 +521,18 @@ window.Quarto = {
 <ul>
 <li><strong>Silent Confusions Hidden in Percentages</strong> Percentages feel intuitive, yet they often mislead. Rethinking how effects are communicated.</li>
 <li><strong>Who Is This Percentage About—Target Populations and Attributable Fractions</strong> Every number speaks about someone — reconsidering the assumed population.</li>
-<li><strong>Understanding Collapsibility of Effect Measures: Marginal vs Stratified</strong> When adjustment changes results, the reason is structural — revisiting stratification.</li>
 <li><strong>When Odds Ratios Approximate Risk Ratios—and When They Fail</strong> Measures that look similar may behave differently — pausing over the odds ratio.</li>
 <li><strong>From Risk and Rate to Survival and Hazard</strong> Once time enters the picture, effects change shape. An entry point to thinking about effects over time.</li>
-<li><strong>Distinguishing Time-Point, Time-Constant, and Time-Varying Effects</strong> Are effects ever constant — considering time-varying perspectives.</li>
+<li><strong>A First Note on Cox Regression</strong> A familiar hazard ratio rests on a modeling assumption — proportional hazards.</li>
+<li><strong>After Cox Regression: A Case Study and R Demonstration</strong> When hazards stop being proportional, the survival curve asks us to look at time again.</li>
 </ul>
 </div>
 </div>
 </div>
 </section>
-<section id="adjusting-for-bias-the-landscape-of-regression-modeling" class="level3">
-<h3 class="anchored" data-anchor-id="adjusting-for-bias-the-landscape-of-regression-modeling">6. Adjusting for Bias — The landscape of regression modeling</h3>
-<p>An episode where she learns from her father — from interpreting logistic regression results and creating tables to avoid pitfalls in its use. And then…</p>
-<ul>
-<li>[From Risk to Logistic Regression]</li>
-<li>[Logit: How a Transformation Shapes an Effect]</li>
-<li>[Where My Logistic Regression Went Wrong]</li>
-<li>[Why Logistic Regression Fails in Small Samples]</li>
-<li>[Understanding Confounding in Effect Measures: Marginal vs Stratified]</li>
-<li>[Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference]</li>
-</ul>
-<div class="callout callout-style-simple callout-note callout-titled" title="A glimpse ahead">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>A glimpse ahead
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>From Risk to Logistic Regression</strong> Translating risk into equations inevitably hides something — an entry into regression.</li>
-<li><strong>Logit: How a Transformation Shapes an Effect</strong> Why this transformation and not another? A secret behind the choice of logit.</li>
-<li><strong>Where My Logistic Regression Went Wrong</strong> When calculations are correct but conclusions feel wrong — pausing at interpretation.</li>
-<li><strong>Why Logistic Regression Fails in Small Samples</strong> A model that breaks may still be teaching something — about small samples.</li>
-<li><strong>Understanding Confounding in Effect Measures: Marginal vs Stratified</strong> When overall and subgroup results disagree — revealing a structure of confounding.</li>
-<li><strong>Volatility, Uncertainty, Complexity, and Ambiguity in Causal Inference</strong> What exactly is the purpose of the DAG tool? A daughter’s response to her father’s teachings.</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="truth-what-defines-it" class="level3">
-<h3 class="anchored" data-anchor-id="truth-what-defines-it">7. Truth — What defines it?</h3>
-<ul>
-<li>[What Data Cannot Tell Us]</li>
-<li>[What Could Have Happened]</li>
-<li>[What Structures Structure]</li>
-<li>[What Is It That You Want to Know?]</li>
-</ul>
-</section>
-<section id="causal-inference-to-find-causality" class="level3">
-<h3 class="anchored" data-anchor-id="causal-inference-to-find-causality">8. Causal Inference — To find causality</h3>
-<p>Directed acyclic graphs (DAGs), common causes, colliders, mediators, backdoor criteria. We try to talk about the <strong>language of causality</strong> needed to think about “what if?”, incorporating the minimal necessary mathematical expressions concerning probability.</p>
-<ul>
-<li>[Three-Variable DAGs: The Smallest Building Blocks of Causal Structure]</li>
-<li>[A Subtle Distinction between Common Causes and Confounders]</li>
-<li>[DAGs and Conditional Distributions: Two Languages for the Same Structure]</li>
-<li>[A Circle, an Equation, and a Cylinder]</li>
-<li>[Backdoor Paths, Block, and d-Separation: A Clue for Adjusting for Bias]</li>
-</ul>
-<div class="callout callout-style-simple callout-note callout-titled" title="A glimpse ahead">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>A glimpse ahead
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>Three-Variable DAGs: The Smallest Building Blocks of Causal Structure</strong> The smallest diagrams that let us speak about causality.</li>
-<li><strong>A Subtle Distinction between Common Causes and Confounders</strong> Similar words, different roles—tracing the boundary between common causes and confounding.</li>
-<li><strong>DAGs and Conditional Distributions: Two Languages for the Same Structure</strong> Diagrams and equations tell the same story in different languages.</li>
-<li><strong>A Circle, an Equation, and a Cylinder</strong> Where causal frameworks overlap and where they diverge — placing causal models side by side.</li>
-<li><strong>Backdoor Paths, Block, and d-Separation</strong> What it really means to “adjust” — Understanding blocking as an operation.</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section id="publish-a-paper-beyond-the-research" class="level3">
-<h3 class="anchored" data-anchor-id="publish-a-paper-beyond-the-research">9. Publish a Paper — Beyond the research</h3>
-<p>How to communicate research findings, creating charts and graphs, tips for revising, navigating peer review. A quiet lecture for researchers, exploring what lies beyond statistics.</p>
-<ul>
-<li>[A Subtle Distinction Between Editors and Reviewers]</li>
-<li>[Three Tips for Writing a Paper]</li>
-<li>[Communicating with Care]</li>
-<li>[A Morning Just Before Submission]</li>
-</ul>
+<section id="coming-next" class="level3">
+<h3 class="anchored" data-anchor-id="coming-next">Coming next</h3>
+<p>Later English releases will continue into regression modeling, causal inference, and writing a paper. For now, the English conversation is published through Study Design, Frequentist Thinking, Frequentist Experiments, and Effects and Time.</p>
 <hr>
 <p>This site shares selected R-related posts via <a href="https://www.r-bloggers.com">R-bloggers</a></p>
 
@@ -620,7 +544,197 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1765638000000" data-listing-file-modified-sort="1766485087495" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1781">
+<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1766485087494" data-listing-reading-time-sort="7" data-listing-word-count-sort="1276">
+<div class="thumbnail"><a href="../en/frequentist-1.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/frequentist-1.html" class="no-external">Reading a Paper over a Cup of Coffee</a>
+</h3>
+<div class="delink listing-description"><a href="../en/frequentist-1.html" class="no-external">
+<p>Have you ever felt lost in statistical terms the first time you read a paper? This episode begins with the daughter’s questions in front of a clinical trial article. Over coffee, her Dad quietly unpacks how to read a paper properly—starting with survival curves.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/frequentist-1.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1782802721610" data-listing-reading-time-sort="13" data-listing-word-count-sort="2409">
+<div class="thumbnail"><a href="../en/frequentist-2.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/frequentist-2.html" class="no-external">P-Value Explanations That Seem Plausible at First Glance</a>
+</h3>
+<div class="delink listing-description"><a href="../en/frequentist-2.html" class="no-external">
+<p>What is the true meaning of p-values in clinical trials? A coffee-chat guide to confirm the concept of hypothetical repetitions—the frequentist approach—through conversation. This piece cultivates an intuitive understanding of p-values.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/frequentist-2.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1782865475924" data-listing-reading-time-sort="11" data-listing-word-count-sort="2083">
+<div class="thumbnail"><a href="../en/frequentist-3.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/frequentist-3.html" class="no-external">Beyond 0.05: Interpreting P-Values in a Clinical Trial</a>
+</h3>
+<div class="delink listing-description"><a href="../en/frequentist-3.html" class="no-external">
+<p>To interpret p-values responsibly, you have to read the Methods—not just the Results. Using the American Statistical Association’s statement as a guide, this coffee-chat guide revisits what a p-value does (and does not) mean, and looks one step beyond 0.05.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/frequentist-3.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-listing-file-modified-sort="1782864650678" data-listing-reading-time-sort="12" data-listing-word-count-sort="2335">
+<div class="thumbnail"><a href="../en/frequentist-4.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/frequentist-4.html" class="no-external">Understanding Confidence Intervals via Hypothetical Replications in R</a>
+</h3>
+<div class="delink listing-description"><a href="../en/frequentist-4.html" class="no-external">
+<p>What does the 95% in a 95% confidence interval mean? This coffee-chat guide uses R simulation to make hypothetical repeated studies visible.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/frequentist-4.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-listing-file-modified-sort="1782865400675" data-listing-reading-time-sort="13" data-listing-word-count-sort="2480">
+<div class="thumbnail"><a href="../en/frequentist-5.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/frequentist-5.html" class="no-external">Alpha, Beta, and Power: The Fundamental Probabilities Behind Sample Size</a>
+</h3>
+<div class="delink listing-description"><a href="../en/frequentist-5.html" class="no-external">
+<p>Sample size planning is not just counting how many people are needed. It is a way of designing alpha error, beta error, power, and the effect size a study is meant to detect.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/frequentist-5.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-listing-file-modified-sort="1766485087494" data-listing-reading-time-sort="7" data-listing-word-count-sort="1352">
+<div class="thumbnail"><a href="../en/effects-1.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/effects-1.html" class="no-external">Silent Confusions Hidden in Percentages</a>
+</h3>
+<div class="delink listing-description"><a href="../en/effects-1.html" class="no-external">
+<p>Percentage displays are easy to understand, yet they can also lead to misunderstandings. Using vaccine effectiveness as an example, this coffee-chat guide explores why numbers can take on a life of their own. We’ll rethink how we communicate effectiveness.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/effects-1.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-listing-file-modified-sort="1782805100557" data-listing-reading-time-sort="8" data-listing-word-count-sort="1533">
+<div class="thumbnail"><a href="../en/effects-2.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/effects-2.html" class="no-external">Who Is This Percentage About? Target Populations and Attributable Fractions</a>
+</h3>
+<div class="delink listing-description"><a href="../en/effects-2.html" class="no-external">
+<p>Numbers can take on a life of their own not only because formulas are misunderstood, but also because the target population is hidden. This coffee-chat guide introduces attributable fractions and asks who a percentage is really about.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/effects-2.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-listing-file-modified-sort="1782804667109" data-listing-reading-time-sort="7" data-listing-word-count-sort="1382">
+<div class="thumbnail"><a href="../en/effects-3.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/effects-3.html" class="no-external">When Odds Ratios Approximate Risk Ratios—and When They Fail</a>
+</h3>
+<div class="delink listing-description"><a href="../en/effects-3.html" class="no-external">
+<p>Odds ratios are often taught as approximations to risk ratios, but that shortcut depends on the risk being small. This coffee-chat guide compares risk ratios, odds ratios, and the square root of the odds ratio.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/effects-3.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-listing-file-modified-sort="1782805127132" data-listing-reading-time-sort="3" data-listing-word-count-sort="553">
+<div class="thumbnail"><a href="../en/effects-5.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/effects-5.html" class="no-external">A First Note on Cox Regression</a>
+</h3>
+<div class="delink listing-description"><a href="../en/effects-5.html" class="no-external">
+<p>Cox regression is not merely a machine for producing hazard ratios. This coffee-chat guide explains proportional hazards as the key modeling assumption behind the familiar output.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/effects-5.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-listing-file-modified-sort="1782865455502" data-listing-reading-time-sort="7" data-listing-word-count-sort="1202">
+<div class="thumbnail"><a href="../en/effects-6.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/effects-6.html" class="no-external">After Cox Regression: A Case Study and R Demonstration</a>
+</h3>
+<div class="delink listing-description"><a href="../en/effects-6.html" class="no-external">
+<p>When proportional hazards does not hold, a single hazard ratio can become hard to interpret. This coffee-chat guide uses a lung cancer trial and an R simulation to compare hazards, risks, and time-point effects.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/effects-6.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-listing-date-sort="1765638000000" data-listing-file-modified-sort="1766485087495" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1781">
 <div class="thumbnail"><a href="../en/study-design-2.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
@@ -642,7 +756,7 @@ Dec 14, 2025
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1765638000000" data-listing-file-modified-sort="1766327066609" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1725">
+<div class="quarto-post image-right" data-index="11" data-listing-date-sort="1765638000000" data-listing-file-modified-sort="1782802727259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1812">
 <div class="thumbnail"><a href="../en/glossary.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
@@ -664,7 +778,7 @@ Dec 14, 2025
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1765551600000" data-listing-file-modified-sort="1766328825597" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3010">
+<div class="quarto-post image-right" data-index="12" data-listing-date-sort="1765551600000" data-listing-file-modified-sort="1766328825597" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3010">
 <div class="thumbnail"><a href="../en/study-design-4.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
@@ -686,7 +800,7 @@ Dec 13, 2025
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1765551600000" data-listing-file-modified-sort="1766191910595" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1035">
+<div class="quarto-post image-right" data-index="13" data-listing-date-sort="1765551600000" data-listing-file-modified-sort="1782865454615" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1112">
 <div class="thumbnail"><a href="../en/study-design-5.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
@@ -708,7 +822,29 @@ Dec 13, 2025
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1765119600000" data-listing-file-modified-sort="1766129981618" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2145">
+<div class="quarto-post image-right" data-index="14" data-listing-date-sort="1765551600000" data-listing-file-modified-sort="1782804745608" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1124">
+<div class="thumbnail"><a href="../en/effects-4.html" class="no-external">
+
+<p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../en/effects-4.html" class="no-external">From Risk and Rate to Survival and Hazard</a>
+</h3>
+<div class="delink listing-description"><a href="../en/effects-4.html" class="no-external">
+<p>A coffee-chat guide to the basics of survival analysis. We connect risk, survival curves, rates, hazards, and hazard ratios, and use simple simulation code to make the time dimension visible.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../en/effects-4.html" class="no-external">
+<div class="listing-date">
+Dec 13, 2025
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="15" data-listing-date-sort="1765119600000" data-listing-file-modified-sort="1782802759752" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2239">
 <div class="thumbnail"><a href="../en/study-design-3.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>
@@ -730,7 +866,7 @@ Dec 8, 2025
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1764514800000" data-listing-file-modified-sort="1767446401377" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1396">
+<div class="quarto-post image-right" data-index="16" data-listing-date-sort="1764514800000" data-listing-file-modified-sort="1782804223401" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1546">
 <div class="thumbnail"><a href="../en/study-design-1.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="..\image\father-daughter.png"  class="thumbnail-image card-img"/></p>

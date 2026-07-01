@@ -181,6 +181,12 @@ The I (Intervention) or E (Exposure) differs depending on whether your study is 
 Here are three examples of research hypotheses using the cancer survivor survey as a theme.
 ::: 
 
+::: {.callout-note appearance="simple" title="What to settle first"}
+Writing a research hypothesis is not mainly about making a polished sentence. It is about deciding, before collecting data, what subject, denominator, and comparison will give meaning to the proportions, risks, odds, or hazard ratios you later calculate.
+
+For example, the subject of a "return-to-work proportion" may be all patients after rectal cancer surgery, only those who were working before surgery, or only those who wished to return to work. The denominator may also be all patients who underwent surgery, only those who were working before surgery, or only those who wished to return to work. The same percentage changes meaning when the subject or denominator changes. A number does not speak by itself; it becomes interpretable only when we know who it is about, what denominator it uses, and what it is being compared with. PICO/PECO is a tool for making those distinctions visible early.
+:::
+
 ::: {.callout-note appearance="simple" collapse="true" title="Research hypothesis 1"}
 
 Among rectal cancer patients after curative resection in Japan, is there a difference in **return-to-work within 1 year** between those with and without a stoma?

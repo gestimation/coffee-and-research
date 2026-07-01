@@ -2,10 +2,21 @@
   {
     "listing": "/en/index.html",
     "items": [
+      "/en/frequentist-1.html",
+      "/en/frequentist-2.html",
+      "/en/frequentist-3.html",
+      "/en/frequentist-4.html",
+      "/en/frequentist-5.html",
+      "/en/effects-1.html",
+      "/en/effects-2.html",
+      "/en/effects-3.html",
+      "/en/effects-5.html",
+      "/en/effects-6.html",
       "/en/study-design-2.html",
       "/en/glossary.html",
       "/en/study-design-4.html",
       "/en/study-design-5.html",
+      "/en/effects-4.html",
       "/en/study-design-3.html",
       "/en/study-design-1.html"
     ]

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -202,6 +202,14 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
         <li>
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
   </li>  
     </ul>
   </li>
@@ -433,6 +441,20 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <p>Dad: “This distinction had to be built into the rules, and history shows why. About thirty years ago in Japan, non-inferiority trials were required for drug approval. Based on that experience, the relationship between research hypotheses and statistical decision rules has to be handled very carefully.”</p>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Common misreadings">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Common misreadings
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A p-value is not the probability that the null hypothesis is true. A small p-value does not automatically mean that the result is scientifically or clinically important. A large p-value does not mean “there is no difference,” “the treatments are equivalent,” or “the study has no value.”</p>
+<p>When reading a p-value, check at least the null hypothesis, outcome, significance level, test, interim analyses, and multiplicity rules in the Methods. A p-value is not a standalone number; it gets its meaning from the study design and analysis rule.</p>
+</div>
+</div>
 </section>
 <section id="p-values-as-a-standardized-rule" class="level3">
 <h3 class="anchored" data-anchor-id="p-values-as-a-standardized-rule">P-values as a standardized rule</h3>
@@ -466,7 +488,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="A cautionary tale: Hopate">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -475,7 +497,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This story is a Japan-specific regulatory episode, but the lesson is general. It’s a cautionary tale about treating ‘no statistically significant difference’ as evidence of equivalence.</p>
 <p>Have you heard of the older drug called cerebral circulation and metabolism enhancing agents? This medication was once used for cerebrovascular disorders and dementia, and reportedly generated cumulative sales of around 800 billion yen in Japan. Several similar drugs existed, but most were approved based on “non-inferiority trials” comparing them to the first-approved drug, calcium hopantenate (brand name Hopate). However, the studies conducted at the time did not perform formal non-inferiority analyses setting a non-inferiority margin; instead, non-inferiority was determined based on the finding that there was “no significant difference compared to calcium hopantenate.” Calcium hopantenate was withdrawn from the market in 1989 due to side effects. Around the same time, the Ministry of Health and Welfare (as it was then) requested pharmaceutical companies to conduct reevaluations using placebo-controlled trials. The results showed that none of the cerebral circulation-improving drugs outperformed placebo (Ministry of Health and Welfare, Pharmaceutical Safety Bureau, 1998). This tragedy clearly demonstrates that concluding equivalence or non-inferiority when no significant difference is found is a mistake.</p>
@@ -496,7 +518,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="R code for generate_data()">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -505,7 +527,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>generate_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">200</span>, hr1, hr2) {</span>
@@ -569,7 +591,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="R code for coxph() and outout">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -578,7 +600,7 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#- Generation of data frame "dat" --------------------------</span></span>
@@ -594,18 +616,20 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <pre><code>Call:
 coxph(formula = Surv(time_os, status_os) ~ stoma, data = dat)
 
-  n= 200, number of events= 140 
+  n= 200, number of events= 131 
 
-                  coef exp(coef) se(coef)     z Pr(&gt;|z|)
-stomaWITH STOMA 0.2803    1.3236   0.1727 1.623    0.105
+                  coef exp(coef) se(coef)     z Pr(&gt;|z|)  
+stomaWITH STOMA 0.3981    1.4890   0.1850 2.152   0.0314 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
                 exp(coef) exp(-coef) lower .95 upper .95
-stomaWITH STOMA     1.324     0.7555    0.9435     1.857
+stomaWITH STOMA     1.489     0.6716     1.036      2.14
 
-Concordance= 0.519  (se = 0.024 )
-Likelihood ratio test= 2.6  on 1 df,   p=0.1
-Wald test            = 2.63  on 1 df,   p=0.1
-Score (logrank) test = 2.65  on 1 df,   p=0.1</code></pre>
+Concordance= 0.552  (se = 0.024 )
+Likelihood ratio test= 4.47  on 1 df,   p=0.03
+Wald test            = 4.63  on 1 df,   p=0.03
+Score (logrank) test = 4.69  on 1 df,   p=0.03</code></pre>
 </div>
 </div>
 </div>
@@ -626,7 +650,7 @@ Score (logrank) test = 2.65  on 1 df,   p=0.1</code></pre>
 <li><a href="../from-coffee-chat-to-r/frequentist.R">frequentist.R</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="Other episodes">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -635,7 +659,7 @@ Score (logrank) test = 2.65  on 1 df,   p=0.1</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Episodes in this series</strong></p>
 <ul>

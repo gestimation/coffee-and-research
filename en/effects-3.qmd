@@ -1,0 +1,174 @@
+---
+title: "When Odds Ratios Approximate Risk Ratios—and When They Fail"
+description: "Odds ratios are often taught as approximations to risk ratios, but that shortcut depends on the risk being small. This coffee-chat guide compares risk ratios, odds ratios, and the square root of the odds ratio."
+tags:
+  - Bias
+  - Effect measure
+  - Observational study
+format:
+  html:
+    toc: true
+---
+
+::: {.hero-header}
+![](../image/father-daughter.png){.hero-header-img}
+:::
+
+# Effects and Time III − When Odds Ratios Approximate Risk Ratios—and When They Fail
+
+::: {.serif-block .text-right}
+Keywords: bias, effect measure, observational study
+:::
+
+------------------------------------------------------------------------
+
+### Are risk ratios and odds ratios basically the same?
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Me: "Listening to you talk about risk measures reminded me of studying for the national exam. I remember solving odds-ratio problems in epidemiology. Are risk ratios and odds ratios basically used the same way?"
+:::
+
+::: voice-father
+Dad: "In the pancreatic-cancer example, the risk ratio and odds ratio were both about 3. But that was a coincidence. More precisely, when the disease risk is low, the risk ratio and odds ratio are close. Compare the formulas. The odds ratio has $1-\pi_1$ and $1-\pi_2$ in the denominator; when both risks are small, those terms are close to 1."
+:::
+
+::: voice-daughter
+Me: "I don't think I distinguish them very carefully when I read papers."
+:::
+
+::: voice-father
+Dad: "That can be risky. Outcomes are not always rare. Some authors have even argued that when odds ratios are used as approximations to risk ratios, the **square root of the odds ratio** may sometimes be a better approximation than the odds ratio itself (VanderWeele 2017)."
+:::
+
+::: voice-daughter
+Me: "Another rule to remember?"
+:::
+
+::: voice-father
+Dad: "Not exactly a rule. The better point is that if the estimand is a risk ratio, it is usually cleaner to estimate a risk ratio directly. But a small table helps show why the shortcut can fail."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Is the odds ratio an approximation to the risk ratio?"}
+For two disease risks $\pi_1$ and $\pi_2$:
+
+$$
+RR=\frac{\pi_1}{\pi_2}
+$$
+
+$$
+OR=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}
+$$
+
+$$
+SOR=\sqrt{\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}}
+$$
+
+When either risk exceeds about 0.2, the risk ratio and odds ratio can become quite different. When both the risk ratio and odds ratio are below 1, the odds ratio is always farther from 1 than the risk ratio. In some middle ranges, the square root of the odds ratio is closer to the risk ratio than the odds ratio itself.
+:::
+
+::: panel-tabset
+### Disease risks 0.1 to 0.4
+
+|     | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 |
+|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+| 0.1 |RR=1 | 0.50| 0.33| 0.25| 0.20| 0.17| 0.14| 0.13| 0.11|
+|     |OR=1 | 0.44| 0.25| 0.17| 0.11| 0.07| 0.05| 0.03| 0.01|
+|     |SOR=1| 0.67| 0.51| 0.41| 0.33| 0.27| 0.22| 0.17| 0.11|
+| 0.2 |     |RR=1 | 0.67| 0.50| 0.40| 0.33| 0.29| 0.25| 0.22|
+|     |     |OR=1 | 0.58| 0.38| 0.25| 0.17| 0.11| 0.06| 0.03|
+|     |     |SOR=1| 0.76| 0.61| 0.50| 0.41| 0.33| 0.25| 0.17|
+| 0.3 |     |     |RR=1 | 0.75| 0.60| 0.50| 0.43| 0.38| 0.33|
+|     |     |     |OR=1 | 0.64| 0.43| 0.29| 0.18| 0.11| 0.05|
+|     |     |     |SOR=1| 0.80| 0.65| 0.53| 0.43| 0.33| 0.22|
+| 0.4 |     |     |     |RR=1 | 0.80| 0.67| 0.57| 0.50| 0.44|
+|     |     |     |     |OR=1 | 0.67| 0.44| 0.29| 0.17| 0.07|
+|     |     |     |     |SOR=1| 0.82| 0.67| 0.53| 0.41| 0.27|
+
+### Disease risks 0.5 to 0.8
+
+|     | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 |
+|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+| 0.5 |     |     |     |     |RR=1 | 0.83| 0.71| 0.63| 0.56|
+|     |     |     |     |     |OR=1 | 0.67| 0.43| 0.25| 0.11|
+|     |     |     |     |     |SOR=1| 0.82| 0.65| 0.50| 0.33|
+| 0.6 |     |     |     |     |     |RR=1 | 0.86| 0.75| 0.67|
+|     |     |     |     |     |     |OR=1 | 0.64| 0.38| 0.17|
+|     |     |     |     |     |     |SOR=1| 0.80| 0.61| 0.41|
+| 0.7 |     |     |     |     |     |     |RR=1 | 0.88| 0.78|
+|     |     |     |     |     |     |     |OR=1 | 0.58| 0.26|
+|     |     |     |     |     |     |     |SOR=1| 0.76| 0.51|
+| 0.8 |     |     |     |     |     |     |     |RR=1 | 0.89|
+|     |     |     |     |     |     |     |     |OR=1 | 0.44|
+|     |     |     |     |     |     |     |     |SOR=1| 0.67|
+:::
+
+::::::::::::::::::::::::::::::::: dialogue
+::: voice-daughter
+Me: "There are too many numbers. The diagonal is 1 because the two risks are the same, right?"
+:::
+
+::: voice-father
+Dad: "Right. The point is to compare RR, OR, and SOR away from the diagonal. Old textbooks often say odds ratios approximate risk ratios, but the approximation breaks down when the outcome is common."
+:::
+
+::: voice-daughter
+Me: "Can you just report the square root of an odds ratio in a paper?"
+:::
+
+::: voice-father
+Dad: "Only if you explain the estimand and method in the Methods. In most situations, if you want a risk ratio, estimating a risk ratio directly is the more transparent choice."
+:::
+:::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" collapse="true" title="Case-control studies and odds ratios"}
+In a classical case-control study, investigators identify cases with disease and controls without disease, then compare past exposure histories. Because only part of the underlying cohort is sampled, the denominators for exposed and unexposed disease risks are not directly available. That is why epidemiology textbooks often introduce the exposure odds ratio.
+
+Modern data sources and study designs sometimes allow risk ratios even in settings described as case-control studies, so the old shortcut should not be treated as automatic.
+:::
+
+::: {.callout-note appearance="simple" title="A quiz related to this episode"}
+When the risk ratio and odds ratio are both below 1, the odds ratio is always smaller than the risk ratio. Does that mean an odds-ratio analysis will have a smaller p-value, and therefore higher power, than a risk-ratio analysis?
+
+1. The expected p-value is smaller with the odds ratio.  
+2. The expected p-value is larger with the odds ratio.  
+3. The expected p-value is the same.
+:::
+
+::: {.callout-note appearance="simple" collapse="true" title="Answer"}
+- The correct answer is **3**.
+
+With likelihood-based estimation, the information comes from the same data. Re-expressing the effect on a different scale does not, by itself, create more statistical power.
+:::
+
+### Reference
+
+- VanderWeele T. On a square-root transformation of the odds ratio for a common outcome. Epidemiology 2017;28(6):e58-e60
+
+### Next episodes and R script
+
+- [From Risk and Rate to Survival and Hazard](effects-4.html)
+- [effects.R](../from-coffee-chat-to-r/effects.R)
+
+::: {.callout-note appearance="simple" collapse="true" title="Other episodes"}
+
+**Episodes in this series**
+
+- [Silent Confusions Hidden in Percentages](effects-1.html)
+- [Who Is This Percentage About? Target Populations and Attributable Fractions](effects-2.html)
+- [When Odds Ratios Approximate Risk Ratios—and When They Fail](effects-3.html)
+- [From Risk and Rate to Survival and Hazard](effects-4.html)
+- [A First Note on Cox Regression](effects-5.html)
+- [After Cox Regression: A Case Study and R Demonstration](effects-6.html)
+
+**Earlier series**
+
+- [Study Design I](study-design-1.html)
+- [Frequentist Thinking I](frequentist-1.html)
+- [Frequentist Experiments I](frequentist-4.html)
+
+**Glossary**
+
+- [Statistical Terms in Plain Language](glossary.html)
+:::

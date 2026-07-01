@@ -2,12 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Numbers can take on a life of their own not only because formulas are misunderstood, but also because the target population is hidden. This coffee-chat guide introduces attributable fractions and asks who a percentage is really about.">
 
-<title>A Morning Just Before Submission – Coffee and Research</title>
+<title>Who Is This Percentage About? Target Populations and Attributable Fractions – Coffee and Research</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -39,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -116,9 +117,38 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
-<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/en/publish-a-paper-4.html">
+<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/en/effects-2.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -166,6 +196,14 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
         <li>
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
   </li>  
     </ul>
   </li>
@@ -251,9 +289,10 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#publish-a-paper-a-morning-just-before-submission" id="toc-publish-a-paper-a-morning-just-before-submission" class="nav-link active" data-scroll-target="#publish-a-paper-a-morning-just-before-submission">Publish a Paper − A Morning Just Before Submission</a>
+  <li><a href="#effects-and-time-ii-who-is-this-percentage-about-target-populations-and-attributable-fractions" id="toc-effects-and-time-ii-who-is-this-percentage-about-target-populations-and-attributable-fractions" class="nav-link active" data-scroll-target="#effects-and-time-ii-who-is-this-percentage-about-target-populations-and-attributable-fractions">Effects and Time II − Who Is This Percentage About? Target Populations and Attributable Fractions</a>
   <ul class="collapse">
-  <li><a href="#that-was-the-morning-before-submission." id="toc-that-was-the-morning-before-submission." class="nav-link" data-scroll-target="#that-was-the-morning-before-submission.">That was the morning before submission.</a></li>
+  <li><a href="#disease-risk-and-the-target-population" id="toc-disease-risk-and-the-target-population" class="nav-link" data-scroll-target="#disease-risk-and-the-target-population">Disease risk and the target population</a></li>
+  <li><a href="#next-episodes-and-r-script" id="toc-next-episodes-and-r-script" class="nav-link" data-scroll-target="#next-episodes-and-r-script">Next episodes and R script</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -263,9 +302,14 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A Morning Just Before Submission</h1>
+<h1 class="title">Who Is This Percentage About? Target Populations and Attributable Fractions</h1>
 </div>
 
+<div>
+  <div class="description">
+    Numbers can take on a life of their own not only because formulas are misunderstood, but also because the target population is hidden. This coffee-chat guide introduces attributable fractions and asks who a percentage is really about.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta column-page-left">
@@ -283,44 +327,357 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <div class="hero-header">
 <p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
 </div>
-<section id="publish-a-paper-a-morning-just-before-submission" class="level1">
-<h1>Publish a Paper − A Morning Just Before Submission</h1>
+<section id="effects-and-time-ii-who-is-this-percentage-about-target-populations-and-attributable-fractions" class="level1">
+<h1>Effects and Time II − Who Is This Percentage About? Target Populations and Attributable Fractions</h1>
+<div class="serif-block text-right">
+<p>Keywords: effect measure, language &amp; writing, observational study, research hypothesis</p>
+</div>
 <hr>
+<section id="disease-risk-and-the-target-population" class="level3">
+<h3 class="anchored" data-anchor-id="disease-risk-and-the-target-population">Disease risk and the target population</h3>
 <div class="dialogue">
 <div class="voice-daughter">
-<p>Early-summer rain softened the stillness of the night. After clinic hours, we often spent time at our computers. Tonight again, I sat quietly, looking at the manuscript on the monitor.</p>
-<p>On the desk, papers and survey forms lay scattered. Beside a note scribbled on a paper napkin, a Rubik’s Cube rested. I reached for the coffee, now lukewarm.</p>
-<p>I write, then stop. I stop, then return.</p>
+<p>Me: “Want another coffee, Dad?”</p>
 </div>
-<p>“Background”</p>
+<div class="voice-father">
+<p>Dad: “Thanks. Changing topics a little: do you think the number of cancer patients with a smoking history has gone down?”</p>
+</div>
 <div class="voice-daughter">
-<p>In this opening section, many papers are cited, their authors’ names listed one after another. They were written in rooms much like this one.</p>
+<p>Me: “Compared with the past? Probably.”</p>
 </div>
-<p>“The aim of this study was…”</p>
+<div class="voice-father">
+<p>Dad: “Even so, smoking is still one of the major public-health issues in Japanese cancer statistics. Infections, smoking, and alcohol are estimated to be among the largest contributors to cancer incidence.”</p>
+</div>
 <div class="voice-daughter">
-<p>Such a short sentence, and yet now I know how much it must carry. An aim is never a private intention. It must be opened to others, shaped into the form of a research hypothesis.</p>
-<p>It quietly conveys where I stand in the world, and the direction in which I intend to walk.</p>
-<p>My eyes move downward.</p>
+<p>Me: “That is a little surprising, given how much smoking has declined. But every cancer registry asks about smoking, so I guess it makes sense.”</p>
 </div>
-<p>“Methods”</p>
+<div class="voice-father">
+<p>Dad: “The proportions of cancer incidence attributed to infections, smoking, and alcohol have been estimated at about 16%, 15%, and 6%. The measure is called the <strong>population attributable fraction</strong>. And this, too, is not just an ordinary percentage.”</p>
+</div>
 <div class="voice-daughter">
-<p>This was the section that took the longest to write. All I had to do was put into words what I had already done—yet explaining it clearly, from the beginning, to someone I do not know is not easy.</p>
-<p>I had to fill in what I had taken for granted, and choose words that could be shared and understood in only one way. I write, revise, and read again. I do not dislike this time.</p>
+<p>Me: “I know it doesn’t mean 15% of smokers get cancer. But I admit I don’t immediately know what it does mean.”</p>
 </div>
-<p>“The main results of the study were…”</p>
+<div class="voice-father">
+<p>Dad: “Notice how your first image was smokers with cancer. That’s exactly where misunderstanding starts. The target population for a population attributable fraction is not just smokers.”</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Population attributable fraction">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Population attributable fraction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In epidemiology, we often study risk factors such as environmental exposures or lifestyle habits in a general population. One family of effect measures used for that purpose is the <strong>attributable fraction</strong>. These measures describe how much disease occurrence in a particular target population is attributable to an exposure.</p>
+<p>The measure that describes how much disease in the whole population is attributable to a risk factor is the <strong>population attributable fraction</strong> (PAF). Here, <span class="math inline">\(RR\)</span> is the risk ratio and <span class="math inline">\(p\)</span> is the proportion of the whole population in the exposed group.</p>
+<p><span class="math display">\[
+PAF=\frac{p(RR-1)}{p(RR-1)+1}
+\]</span></p>
+</div>
+</div>
+<div class="dialogue">
 <div class="voice-daughter">
-<p>The numbers placed there looked different to me than before. They record what happened to patients. At the same time, they are answers returned from the world to the questions we asked.</p>
-<p>Did we provide good care? Change the question, and the numbers respond differently. They may appear simply arranged on the page, but they speak more than I once realized.</p>
-<p>Because this study involves patients, its hypothesis inevitably reflects clinical values. It is less about knowing what is “correct,” and more about gaining knowledge that brings us closer to better practice.</p>
-<p>Many things pass unnoticed while we are working, or talking with others over coffee. When I am alone, I understand them more clearly.</p>
-<p>The surface of the coffee rippled faintly, as if in sync with the rain outside the window. On the monitor, the freshly written Conclusion was displayed.</p>
-<p>I checked each line, making sure it answered the questions we held when we designed the study</p>
-<p>I nodded slightly, and began typing again—slowly.</p>
+<p>Me: “So PAF needs not only the risk ratio but also how common the risk factor is. It is another case where a percentage looks simple but isn’t.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Right. And there are closely related measures that are often used without enough explanation. Some target the exposed group rather than the whole population. In English, you will see terms such as <strong>excess fraction</strong> and <strong>preventable fraction</strong>. Their formulas are almost the same as vaccine efficacy.”</p>
 </div>
 </div>
-<p>Acknowledgements ― We are grateful to an anonymous statistician for thoughtful advice.</p>
-<section id="that-was-the-morning-before-submission." class="level3">
-<h3 class="anchored" data-anchor-id="that-was-the-morning-before-submission.">That was the morning before submission.</h3>
+<div class="callout callout-style-simple callout-note callout-titled" title="Three attributable fractions">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Three attributable fractions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The key difference among these measures is the <strong>target population</strong>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Measure</th>
+<th>Target population</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PAF: population attributable fraction</td>
+<td>Whole population</td>
+<td>Among all disease cases in the population, how much is attributable to the exposure?</td>
+</tr>
+<tr class="even">
+<td>EF: excess fraction</td>
+<td>Higher-risk or harmful-exposure group</td>
+<td>In the group with the harmful exposure, how much disease would be avoided if the exposure were removed?</td>
+</tr>
+<tr class="odd">
+<td>PF: preventable fraction</td>
+<td>Group whose risk is being reduced</td>
+<td>In the group that would otherwise have higher risk, how much disease is prevented by the protective exposure?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Definitions of excess fraction and preventable fraction">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definitions of excess fraction and preventable fraction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When the exposure is harmful, many epidemiology textbooks define the <strong>excess fraction</strong> as:</p>
+<p><span class="math display">\[
+EF = \frac{\pi_1 - \pi_2}{\pi_1} = 1 - \frac{1}{RR}
+\]</span></p>
+<p>Here group 1 is exposed to a harmful factor and group 2 is unexposed. The measure asks how much disease would be reduced among the exposed group if the exposure were removed.</p>
+<p>When the exposure is protective, the corresponding measure is the <strong>preventable fraction</strong>:</p>
+<p><span class="math display">\[
+PF=\frac{\pi_2-\pi_1}{\pi_2}=1-RR
+\]</span></p>
+<p>This has the same mathematical form as vaccine efficacy. In this notation, group 2 is the group whose risk would be reduced by the protective exposure, so the target population is tied to the denominator of the formula. The point is not only the formula. Environmental epidemiology, vaccine studies, screening, and prevention studies may care about different target populations, so the same-looking percentage can answer different questions.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="A numerical example from a hypothetical cohort study">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A numerical example from a hypothetical cohort study
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider a hypothetical cohort study of smoking and pancreatic cancer.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">Smoking</th>
+<th style="text-align: right;">No smoking</th>
+<th style="text-align: right;">Effect measure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pancreatic cancer</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>No pancreatic cancer</td>
+<td style="text-align: right;">365</td>
+<td style="text-align: right;">868</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Risk</td>
+<td style="text-align: right;">3.9%</td>
+<td style="text-align: right;">1.4%</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Risk difference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">2.5%</td>
+</tr>
+<tr class="odd">
+<td>Risk ratio</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">3-fold</td>
+</tr>
+<tr class="even">
+<td>Odds ratio</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">3-fold</td>
+</tr>
+<tr class="odd">
+<td>Excess fraction</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">74%</td>
+</tr>
+</tbody>
+</table>
+<p>The risk difference is 2.5 percentage points, while the excess fraction is 74%. Both are percentages, but they describe different things.</p>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>Me: “A 2.5% risk difference and a 74% excess fraction feel completely different. The same percent sign is doing too much work.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Exactly. The gap between the number and what people hear from it is large. A hazard ratio in a clinical trial often feels like a number for deciding which treatment to choose. An attributable fraction often feels like a number for asking how much disease might be reduced by intervening in society. But the harder part is that effect measures are not just formulas. They also carry a statement about which population the number is speaking about.”</p>
+</div>
+<div class="voice-daughter">
+<p>Me: “So the target population is hiding in the denominator?”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Sometimes visibly, sometimes quietly. Let me use a small screening example. Imagine four people who come for cancer screening at age 60. To keep the story simple, suppose their health status is otherwise identical. Two test positive, receive curative surgery, and live to ages 71 and 79. Their survival times after screening are 11 and 19 years.”</p>
+</div>
+<ul>
+<li>Tested positive at age 60, received curative surgery, lived to age 71</li>
+<li>Tested positive at age 60, received curative surgery, lived to age 79</li>
+<li>False negative at age 60, did not receive surgery, lived to age 67</li>
+<li>False negative at age 60, did not receive surgery, lived to age 73</li>
+</ul>
+<div class="voice-father">
+<p>Dad: “The other two actually had cancer, but screening missed it. They died at ages 67 and 73, so their survival times after screening were 7 and 13 years.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “If the two false-negative patients had been found and treated at age 60, by what percentage would their survival time have increased?”</p>
+</div>
+<div class="voice-daughter">
+<p>Me: “The treated two lived an average of 15 years after screening, and the missed two lived an average of 10 years. So <span class="math inline">\((15-10)/10=0.5\)</span>: a 50% increase.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Now ask the reverse question. If the two patients who were detected and treated had not received curative surgery at age 60, how much survival time would have been lost?”</p>
+</div>
+<div class="voice-daughter">
+<p>Me: “<span class="math inline">\((10-15)/15=-0.33\)</span>, so about a 33% loss.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Same four people, same two averages, but the percentage changes depending on which two people you put in the denominator. That is why target populations matter.”</p>
+</div>
+<div class="voice-daughter">
+<p>Me: “So if I read ‘reduced by 50%,’ I should ask: reduced for whom?”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Yes. And also: reduced by what time point? Risk is always tied to time, even when the time point is not written loudly.”</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Target population">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Target population
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When discussing causal effects of a treatment or exposure, we need to state the population to which the effect refers.</p>
+<p>For example, suppose we study whether stoma creation affects return to work among patients after curative resection for rectal cancer. A causal risk difference comparing stoma versus no stoma often targets the whole population of patients after curative resection. That may sound odd, because the observed comparison is between patients with and without a stoma. But causal inference asks a counterfactual question: what would happen if the whole target population had a stoma, compared with what would happen if the same population did not?</p>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-father">
+<p>Dad: “One more point. Risk includes time. Think about the probability of death 10 years after screening. If you change the time point to 12 years or 20 years, the attributable fraction can change.”</p>
+</div>
+<div class="voice-daughter">
+<p>Me: “So whenever I see a percentage such as ‘how much disease is reduced,’ I should ask which population and which time point it refers to.”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “That’s the whole message.”</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="A quiz related to this episode">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A quiz related to this episode
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Attributable fractions may target the whole population rather than only one exposed or treated group. Return to the four-person screening example. Suppose screening sensitivity improved to 100%, so the two false-negative cases could also be detected and treated at age 60. Compared with the original situation, by what percentage would the number of deaths by 15 years after screening be reduced among all four people?</p>
+<ol type="1">
+<li>0%<br>
+</li>
+<li>33%<br>
+</li>
+<li>50%<br>
+</li>
+<li>100%</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>The correct answer is <strong>2</strong>.</li>
+</ul>
+<p>In the original situation, the four survival times after screening were 11, 19, 7, and 13 years, so 3 of the 4 people had died by 15 years. If the two false-negative cases had been detected and treated, their expected 15-year mortality would be 50%, like the treated group. The expected number of deaths would then be <span class="math inline">\(1 + 2 \times 0.5 = 2\)</span>.</p>
+<p>The reduction is therefore <span class="math inline">\((3-2)/3=33\%\)</span>. This is the logic of an attributable fraction targeting the whole population.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="next-episodes-and-r-script" class="level3">
+<h3 class="anchored" data-anchor-id="next-episodes-and-r-script">Next episodes and R script</h3>
+<ul>
+<li><a href="effects-3.html">When Odds Ratios Approximate Risk Ratios—and When They Fail</a></li>
+<li><a href="../from-coffee-chat-to-r/effects.R">effects.R</a></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Other episodes">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Other episodes
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Episodes in this series</strong></p>
+<ul>
+<li><a href="effects-1.html">Silent Confusions Hidden in Percentages</a></li>
+<li><a href="effects-2.html">Who Is This Percentage About? Target Populations and Attributable Fractions</a></li>
+<li><a href="effects-3.html">When Odds Ratios Approximate Risk Ratios—and When They Fail</a></li>
+<li><a href="effects-4.html">From Risk and Rate to Survival and Hazard</a></li>
+<li><a href="effects-5.html">A First Note on Cox Regression</a></li>
+<li><a href="effects-6.html">After Cox Regression: A Case Study and R Demonstration</a></li>
+</ul>
+<p><strong>Earlier series</strong></p>
+<ul>
+<li><a href="study-design-1.html">Study Design I</a></li>
+<li><a href="frequentist-1.html">Frequentist Thinking I</a></li>
+<li><a href="frequentist-4.html">Frequentist Experiments I</a></li>
+</ul>
+<p><strong>Glossary</strong></p>
+<ul>
+<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
+</ul>
+</div>
+</div>
+</div>
 
 
 </section>

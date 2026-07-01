@@ -36,6 +36,12 @@ Keywords: causal model, language & writing, probability model, survival & compet
 :::
 :::::::::::::::::::::::::::::::::
 
+::: {.callout-note appearance="simple" title="用語は記事に戻るための入口"}
+この用語集は、定義を暗記するためのページというより、本文で出てきた言葉に戻るための入口です。ひとつの用語だけで意味が閉じているのではなく、研究デザイン、解析方法、論文の読み方の中で役割が決まります。
+
+気になる言葉に出会ったら、英語表記もあわせて確認してみてください。論文のMethodsやResultsで同じ語が出てきたとき、どの文脈で使われているのかを追いやすくなります。
+:::
+
 **Aalen-Johansen法　Aalen-Johansen method**
 
 競合リスク解析において、累積発生曲線を推定する方法

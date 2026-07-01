@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-12-13">
+<meta name="description" content="Odds ratios are often taught as approximations to risk ratios, but that shortcut depends on the risk being small. This coffee-chat guide compares risk ratios, odds ratios, and the square root of the odds ratio.">
 
-<title>What Could Have Happened – Coffee and Research</title>
+<title>When Odds Ratios Approximate Risk Ratios—and When They Fail – Coffee and Research</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -117,9 +117,38 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 </script>
 
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
-<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/en/truth-2.html">
+<link rel="canonical" href="https://gestimation.github.io/coffee-and-research/en/effects-3.html">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -167,6 +196,14 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
         <li>
     <a class="dropdown-item" href="../en/frequentist-1.html">
  <span class="dropdown-text">Frequentist Thinking</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/frequentist-4.html">
+ <span class="dropdown-text">Frequentist Experiments</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../en/effects-1.html">
+ <span class="dropdown-text">Effects and Time</span></a>
   </li>  
     </ul>
   </li>
@@ -252,10 +289,11 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#truth-ii-what-could-have-happened" id="toc-truth-ii-what-could-have-happened" class="nav-link active" data-scroll-target="#truth-ii-what-could-have-happened">Truth II − What Could Have Happened</a>
+  <li><a href="#effects-and-time-iii-when-odds-ratios-approximate-risk-ratiosand-when-they-fail" id="toc-effects-and-time-iii-when-odds-ratios-approximate-risk-ratiosand-when-they-fail" class="nav-link active" data-scroll-target="#effects-and-time-iii-when-odds-ratios-approximate-risk-ratiosand-when-they-fail">Effects and Time III − When Odds Ratios Approximate Risk Ratios—and When They Fail</a>
   <ul class="collapse">
-  <li><a href="#what-would-have-happened-if-we-had-chosen-differently" id="toc-what-would-have-happened-if-we-had-chosen-differently" class="nav-link" data-scroll-target="#what-would-have-happened-if-we-had-chosen-differently">What would have happened if we had chosen differently?</a></li>
-  <li><a href="#next-episodes" id="toc-next-episodes" class="nav-link" data-scroll-target="#next-episodes">Next episodes</a></li>
+  <li><a href="#are-risk-ratios-and-odds-ratios-basically-the-same" id="toc-are-risk-ratios-and-odds-ratios-basically-the-same" class="nav-link" data-scroll-target="#are-risk-ratios-and-odds-ratios-basically-the-same">Are risk ratios and odds ratios basically the same?</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  <li><a href="#next-episodes-and-r-script" id="toc-next-episodes-and-r-script" class="nav-link" data-scroll-target="#next-episodes-and-r-script">Next episodes and R script</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -265,20 +303,19 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">What Could Have Happened</h1>
+<h1 class="title">When Odds Ratios Approximate Risk Ratios—and When They Fail</h1>
 </div>
 
+<div>
+  <div class="description">
+    Odds ratios are often taught as approximations to risk ratios, but that shortcut depends on the risk being small. This coffee-chat guide compares risk ratios, odds ratios, and the square root of the odds ratio.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta column-page-left">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 13, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -291,112 +328,507 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
 <div class="hero-header">
 <p><img src="../image/father-daughter.png" class="hero-header-img img-fluid"></p>
 </div>
-<section id="truth-ii-what-could-have-happened" class="level1">
-<h1>Truth II − What Could Have Happened</h1>
+<section id="effects-and-time-iii-when-odds-ratios-approximate-risk-ratiosand-when-they-fail" class="level1">
+<h1>Effects and Time III − When Odds Ratios Approximate Risk Ratios—and When They Fail</h1>
 <div class="serif-block text-right">
-<p>Keywords: causal model, language &amp; writing, probability model, research hypothesis</p>
+<p>Keywords: bias, effect measure, observational study</p>
 </div>
 <hr>
-<section id="what-would-have-happened-if-we-had-chosen-differently" class="level3">
-<h3 class="anchored" data-anchor-id="what-would-have-happened-if-we-had-chosen-differently">What would have happened if we had chosen differently?</h3>
+<section id="are-risk-ratios-and-odds-ratios-basically-the-same" class="level3">
+<h3 class="anchored" data-anchor-id="are-risk-ratios-and-odds-ratios-basically-the-same">Are risk ratios and odds ratios basically the same?</h3>
 <div class="dialogue">
+<div class="voice-daughter">
+<p>Me: “Listening to you talk about risk measures reminded me of studying for the national exam. I remember solving odds-ratio problems in epidemiology. Are risk ratios and odds ratios basically used the same way?”</p>
+</div>
 <div class="voice-father">
-<p>Dad: “Let me talk about a concept you need in order to understand what adjusting for confounding really means. Think back to the examples we’ve used so far—surgical procedures for gastric cancer, whether or not to create a stoma, even coffee consumption. What we actually want to know in all of these cases is the same, right? What would have happened if we had made a different choice? For example, would the patient have survived if a different surgical procedure had been chosen?”</p>
+<p>Dad: “In the pancreatic-cancer example, the risk ratio and odds ratio were both about 3. But that was a coincidence. More precisely, when the disease risk is low, the risk ratio and odds ratio are close. Compare the formulas. The odds ratio has <span class="math inline">\(1-\pi_1\)</span> and <span class="math inline">\(1-\pi_2\)</span> in the denominator; when both risks are small, those terms are close to 1.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me:“Yes, that’s true.”</p>
+<p>Me: “I don’t think I distinguish them very carefully when I read papers.”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “Unfortunately, you can’t get to that truth by staying on the rails of regression analysis alone. You have to start not from a probability model, but from the question: <strong>What would have happened if we had changed the cause</strong>? Causal inference is a framework designed to answer exactly that question.”</p>
+<p>Dad: “That can be risky. Outcomes are not always rare. Some authors have even argued that when odds ratios are used as approximations to risk ratios, the <strong>square root of the odds ratio</strong> may sometimes be a better approximation than the odds ratio itself (VanderWeele 2017).”</p>
 </div>
 <div class="voice-daughter">
-<p>Me:“Huh? Are you saying I need to redo the analysis using a completely different method?”</p>
+<p>Me: “Another rule to remember?”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “No, no. I’m talking at an abstract level for now. Think about a randomized clinical trial comparing an active treatment with a placebo. What you want to know is the difference between the outcome if everyone received the active treatment and the outcome if everyone received the placebo, right? If the endpoint is overall survival, that difference shows up as a difference between survival curves. That difference is the <strong>causal effect</strong>.”</p>
+<p>Dad: “Not exactly a rule. The better point is that if the estimand is a risk ratio, it is usually cleaner to estimate a risk ratio directly. But a small table helps show why the shortcut can fail.”</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Is the odds ratio an approximation to the risk ratio?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Is the odds ratio an approximation to the risk ratio?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For two disease risks <span class="math inline">\(\pi_1\)</span> and <span class="math inline">\(\pi_2\)</span>:</p>
+<p><span class="math display">\[
+RR=\frac{\pi_1}{\pi_2}
+\]</span></p>
+<p><span class="math display">\[
+OR=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}
+\]</span></p>
+<p><span class="math display">\[
+SOR=\sqrt{\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}}
+\]</span></p>
+<p>When either risk exceeds about 0.2, the risk ratio and odds ratio can become quite different. When both the risk ratio and odds ratio are below 1, the odds ratio is always farther from 1 than the risk ratio. In some middle ranges, the square root of the odds ratio is closer to the risk ratio than the odds ratio itself.</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Disease risks 0.1 to 0.4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Disease risks 0.5 to 0.8</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>0.1</th>
+<th>0.2</th>
+<th>0.3</th>
+<th>0.4</th>
+<th>0.5</th>
+<th>0.6</th>
+<th>0.7</th>
+<th>0.8</th>
+<th>0.9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.1</td>
+<td>RR=1</td>
+<td>0.50</td>
+<td>0.33</td>
+<td>0.25</td>
+<td>0.20</td>
+<td>0.17</td>
+<td>0.14</td>
+<td>0.13</td>
+<td>0.11</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>OR=1</td>
+<td>0.44</td>
+<td>0.25</td>
+<td>0.17</td>
+<td>0.11</td>
+<td>0.07</td>
+<td>0.05</td>
+<td>0.03</td>
+<td>0.01</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>SOR=1</td>
+<td>0.67</td>
+<td>0.51</td>
+<td>0.41</td>
+<td>0.33</td>
+<td>0.27</td>
+<td>0.22</td>
+<td>0.17</td>
+<td>0.11</td>
+</tr>
+<tr class="even">
+<td>0.2</td>
+<td></td>
+<td>RR=1</td>
+<td>0.67</td>
+<td>0.50</td>
+<td>0.40</td>
+<td>0.33</td>
+<td>0.29</td>
+<td>0.25</td>
+<td>0.22</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>OR=1</td>
+<td>0.58</td>
+<td>0.38</td>
+<td>0.25</td>
+<td>0.17</td>
+<td>0.11</td>
+<td>0.06</td>
+<td>0.03</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>SOR=1</td>
+<td>0.76</td>
+<td>0.61</td>
+<td>0.50</td>
+<td>0.41</td>
+<td>0.33</td>
+<td>0.25</td>
+<td>0.17</td>
+</tr>
+<tr class="odd">
+<td>0.3</td>
+<td></td>
+<td></td>
+<td>RR=1</td>
+<td>0.75</td>
+<td>0.60</td>
+<td>0.50</td>
+<td>0.43</td>
+<td>0.38</td>
+<td>0.33</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td>OR=1</td>
+<td>0.64</td>
+<td>0.43</td>
+<td>0.29</td>
+<td>0.18</td>
+<td>0.11</td>
+<td>0.05</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td>SOR=1</td>
+<td>0.80</td>
+<td>0.65</td>
+<td>0.53</td>
+<td>0.43</td>
+<td>0.33</td>
+<td>0.22</td>
+</tr>
+<tr class="even">
+<td>0.4</td>
+<td></td>
+<td></td>
+<td></td>
+<td>RR=1</td>
+<td>0.80</td>
+<td>0.67</td>
+<td>0.57</td>
+<td>0.50</td>
+<td>0.44</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OR=1</td>
+<td>0.67</td>
+<td>0.44</td>
+<td>0.29</td>
+<td>0.17</td>
+<td>0.07</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>SOR=1</td>
+<td>0.82</td>
+<td>0.67</td>
+<td>0.53</td>
+<td>0.41</td>
+<td>0.27</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>0.1</th>
+<th>0.2</th>
+<th>0.3</th>
+<th>0.4</th>
+<th>0.5</th>
+<th>0.6</th>
+<th>0.7</th>
+<th>0.8</th>
+<th>0.9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>RR=1</td>
+<td>0.83</td>
+<td>0.71</td>
+<td>0.63</td>
+<td>0.56</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OR=1</td>
+<td>0.67</td>
+<td>0.43</td>
+<td>0.25</td>
+<td>0.11</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>SOR=1</td>
+<td>0.82</td>
+<td>0.65</td>
+<td>0.50</td>
+<td>0.33</td>
+</tr>
+<tr class="even">
+<td>0.6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>RR=1</td>
+<td>0.86</td>
+<td>0.75</td>
+<td>0.67</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OR=1</td>
+<td>0.64</td>
+<td>0.38</td>
+<td>0.17</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>SOR=1</td>
+<td>0.80</td>
+<td>0.61</td>
+<td>0.41</td>
+</tr>
+<tr class="odd">
+<td>0.7</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>RR=1</td>
+<td>0.88</td>
+<td>0.78</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OR=1</td>
+<td>0.58</td>
+<td>0.26</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>SOR=1</td>
+<td>0.76</td>
+<td>0.51</td>
+</tr>
+<tr class="even">
+<td>0.8</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>RR=1</td>
+<td>0.89</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>OR=1</td>
+<td>0.44</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>SOR=1</td>
+<td>0.67</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="dialogue">
+<div class="voice-daughter">
+<p>Me: “There are too many numbers. The diagonal is 1 because the two risks are the same, right?”</p>
+</div>
+<div class="voice-father">
+<p>Dad: “Right. The point is to compare RR, OR, and SOR away from the diagonal. Old textbooks often say odds ratios approximate risk ratios, but the approximation breaks down when the outcome is common.”</p>
 </div>
 <div class="voice-daughter">
-<p>Me: “Hmm…I see. In JCOG9502, for example, the question was whether to choose procedure TH or LTA for gastric cancer surgery. Once the standard treatment is decided, everyone would receive that procedure. So the difference between the survival curves shown in the paper corresponds to the causal effect. And now that you mention it, there’s no probability distribution or regression model explicitly appearing there.”</p>
+<p>Me: “Can you just report the square root of an odds ratio in a paper?”</p>
 </div>
 <div class="voice-father">
-<p>Dad: “Exactly. But your cancer survivor survey is an observational study—it’s not randomized. Even if you want to think about it the same way as JCOG9502, the outcome ‘what would have happened if a stoma had not been created’ doesn’t actually exist. It’s a hypothetical scenario. That’s why, in observational studies, the only option is to predict these unobserved outcomes using covariates and regression models. We distinguish these from observed outcomes and call them <strong>potential outcomes</strong>. They can’t be observed, but they can be defined medically and logically—as ‘another possible outcome.’”</p>
+<p>Dad: “Only if you explain the estimand and method in the Methods. In most situations, if you want a risk ratio, estimating a risk ratio directly is the more transparent choice.”</p>
 </div>
-<div class="voice-daughter">
-<p>Me: “But what’s the point of defining something that doesn’t even exist?”</p>
 </div>
-<div class="voice-father">
-<p>Dad: “That’s not the right way to think about it. First you define what causal effect you want to know, and then you collect data to estimate it. What you can see is just one face of a six-sided Rubik’s Cube. Even if a potential outcome is drawn on another face, you can’t observe it. But imagine preparing many Rubik’s Cubes with the same structure and placing them on a table in random orientations. You only see one face of each cube, but you can still infer what pictures might be on the other faces. That’s essentially what a randomized clinical trial does.”</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="Case-control studies and odds ratios">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="voice-daughter">
-<p>Me: “This is getting complicated. What exactly is different between JCOG9502 and my survey?”</p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Case-control studies and odds ratios
 </div>
-<div class="voice-father">
-<p>Dad: “The biggest difference is obvious: randomization. Randomized clinical trials are designed from the start to answer the question, ‘What happens if we intervene?’ The target population is clearly defined, interventions are randomly assigned, and bias is minimized. In observational studies like your cancer survivor survey, no matter how carefully you think through the research hypothesis or the PECO, some ambiguity remains—especially about who exactly counts as Patients and Controls. You also can’t be sure whether you’ve measured enough confounders to adequately adjust for bias and ensure comparability.”</p>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div class="voice-daughter">
-<p>Me: “I see.”</p>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In a classical case-control study, investigators identify cases with disease and controls without disease, then compare past exposure histories. Because only part of the underlying cohort is sampled, the denominators for exposed and unexposed disease risks are not directly available. That is why epidemiology textbooks often introduce the exposure odds ratio.</p>
+<p>Modern data sources and study designs sometimes allow risk ratios even in settings described as case-control studies, so the old shortcut should not be treated as automatic.</p>
 </div>
-<div class="voice-father">
-<p>Dad: “Let’s get back to the main point. In the Rubin causal model, before thinking about analytic models or confounding adjustment, you first define the potential outcomes and then reason about the differences between them.”</p>
 </div>
-<section id="the-complementary-roles-of-probability-models-and-causal-models" class="level3">
-<h3 class="anchored" data-anchor-id="the-complementary-roles-of-probability-models-and-causal-models">The complementary roles of probability models and causal models</h3>
-<div class="voice-daughter">
-<p>Me: “I still don’t quite get it. What are we actually looking at when we interpret results from generalized linear models or Cox regression? Aren’t regression coefficients different from causal effects?”</p>
 </div>
-<div class="voice-father">
-<p>Dad: “You could say that a single number carries two or even three layers of meaning. At the root of it, probability models and causal models form a kind of two-story structure.”</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="A quiz related to this episode">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A quiz related to this episode
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When the risk ratio and odds ratio are both below 1, the odds ratio is always smaller than the risk ratio. Does that mean an odds-ratio analysis will have a smaller p-value, and therefore higher power, than a risk-ratio analysis?</p>
+<ol type="1">
+<li>The expected p-value is smaller with the odds ratio.<br>
+</li>
+<li>The expected p-value is larger with the odds ratio.<br>
+</li>
+<li>The expected p-value is the same.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ul>
-<li><p>Probability model: a structure that describes how the observed data are generated</p></li>
-<li><p>Causal model: a structure that represents what would have happened if the cause had been changed, both in the observed world and in unobserved worlds</p></li>
+<li>The correct answer is <strong>3</strong>.</li>
 </ul>
-<div class="voice-father">
-<p>Dad: “This is a creative hierarchical relationship: behind the generation of data lies a causal model. You could even say that data are measurements of phenomena that arise according to a causal structure. And as we said earlier, potential outcomes themselves can’t be observed.”</p>
+<p>With likelihood-based estimation, the information comes from the same data. Re-expressing the effect on a different scale does not, by itself, create more statistical power.</p>
 </div>
-<div class="voice-daughter">
-<p>Me: “Right.”</p>
 </div>
-<div class="voice-father">
-<p>Dad: “So data are like shadows. What you really want to see is just a little beyond them.”</p>
-</div>
-<div class="voice-daughter">
-<p>Me: “When you put it that way, it does feel like the truth of causal relationships exists before the data are generated. I don’t quite feel it, but I think I understand. Still, if that’s the case, why didn’t you teach causal models from the beginning instead of logistic regression?”</p>
-</div>
-<div class="voice-father">
-<p>Dad: “Hm. That needs a bit more explanation. It’s not that logistic regression or stratified analysis should never be used. They’re methods—like ways of solving a Rubik’s Cube. They’re not the same thing as the structure of the cube itself. What I wanted you to understand here is that, to interpret regression coefficients or odds ratios correctly as evidence about causal relationships, you need a causal model.”</p>
-</div>
-<div class="voice-daughter">
-<p>Me: “You’re a specialist, so you don’t notice this, but for me, both logistic regression and the Rubin causal model are completely new ideas. The Rubin causal model sounds like analyzing what would have happened to a given patient if we had treated them differently, right? That seems like something you could do by combining anatomy, pathophysiology, pharmacology, and clinical experience.”</p>
-</div>
-<div class="voice-father">
-<p>Dad: “Essentially, yes. But that approach focuses on cause and effect for individual patients. Causation at the level of individual events is called token causation, and there’s still a gap between that and causation as a general law.”</p>
-</div>
-<div class="voice-daughter">
-<p>Me: “Token? That word doesn’t really click for me.”</p>
-</div>
-<div class="voice-father">
-<p>Dad: “For example, asking ‘Did this drug save that particular patient?’ is close to token causation.”</p>
-</div>
-<div class="voice-daughter">
-<p>Me: “Ah, I see. I get that both individual events and general laws matter.”</p>
-</div>
-<div class="voice-father">
-<p>Dad: “Clinical trials and surveys deal with populations, not individuals. By analyzing populations statistically, we try to uncover general regularities. Probability distributions and regression models provide the tools to do that—that’s what we talked about before. Probability models and causal models serve different roles.”</p>
-</div>
-<div class="voice-daughter">
-<p>Me: “And we’re back to the hard stuff again. Could I get another cup of coffee?”</p>
 </div>
 </section>
-</div>
-</section>
-<section id="next-episodes" class="level3">
-<h3 class="anchored" data-anchor-id="next-episodes">Next episodes</h3>
+<section id="reference" class="level3">
+<h3 class="anchored" data-anchor-id="reference">Reference</h3>
 <ul>
-<li><a href="truth-1.html">What Data Cannot Tell Us</a></li>
-<li><a href="truth-2.html">What Could Have Happened</a></li>
-<li><a href="truth-3.html">What Is It That You Want to Know?</a></li>
+<li>VanderWeele T. On a square-root transformation of the odds ratio for a common outcome. Epidemiology 2017;28(6):e58-e60</li>
 </ul>
+</section>
+<section id="next-episodes-and-r-script" class="level3">
+<h3 class="anchored" data-anchor-id="next-episodes-and-r-script">Next episodes and R script</h3>
+<ul>
+<li><a href="effects-4.html">From Risk and Rate to Survival and Hazard</a></li>
+<li><a href="../from-coffee-chat-to-r/effects.R">effects.R</a></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled" title="Other episodes">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Other episodes
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Episodes in this series</strong></p>
+<ul>
+<li><a href="effects-1.html">Silent Confusions Hidden in Percentages</a></li>
+<li><a href="effects-2.html">Who Is This Percentage About? Target Populations and Attributable Fractions</a></li>
+<li><a href="effects-3.html">When Odds Ratios Approximate Risk Ratios—and When They Fail</a></li>
+<li><a href="effects-4.html">From Risk and Rate to Survival and Hazard</a></li>
+<li><a href="effects-5.html">A First Note on Cox Regression</a></li>
+<li><a href="effects-6.html">After Cox Regression: A Case Study and R Demonstration</a></li>
+</ul>
+<p><strong>Earlier series</strong></p>
+<ul>
+<li><a href="study-design-1.html">Study Design I</a></li>
+<li><a href="frequentist-1.html">Frequentist Thinking I</a></li>
+<li><a href="frequentist-4.html">Frequentist Experiments I</a></li>
+</ul>
+<p><strong>Glossary</strong></p>
+<ul>
+<li><a href="glossary.html">Statistical Terms in Plain Language</a></li>
+</ul>
+</div>
+</div>
+</div>
 
 
 </section>

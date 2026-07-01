@@ -37,6 +37,12 @@ Dad: "I’ve got some time today, so sure. Let’s try a few. I’ll go through 
 :::
 :::::::::::::::::::::::::::::::::
 
+::: {.callout-note appearance="simple" title="A glossary is a doorway back to the articles"}
+This glossary is not mainly a page for memorizing definitions. It is a doorway back to the terms as they are used in the articles. A term rarely stands alone; its role depends on the study design, analysis method, and the way a paper is read.
+
+When a term catches your attention, also check its English wording. That makes it easier to follow the same word when it appears in the Methods or Results section of a paper.
+:::
+
 **Aalen-Johansen method**
 
 A method to estimate a cumulative incidence curve in competing risks analysis

@@ -154,6 +154,12 @@ Textbooks often explain p-values mainly through the relationship between the p-v
 Focus on Principle 4. In its discussion, the ASA warns that if multiple analyses are performed and only selected p-values are reported, then the reported p-values become fundamentally uninterpretable. Put plainly: when there are many p-values available, it becomes tempting—consciously or not—to choose the convenient ones. This kind of "best-picking" has become widespread in science and is suspected to contribute to an excess of false positives in the literature. In statistics, this cluster of concerns is discussed under terms such as multiplicity or selective inference.
 :::
 
+::: {.callout-note appearance="simple" title="Read p-values with the Methods"}
+When you read a p-value, do not isolate the number from the rest of the paper. Return to the Methods and check the null hypothesis, primary outcome, significance level, one-sided or two-sided testing, interim analyses, and how multiplicity was handled. If those choices change, the same numerical p-value can mean something different.
+
+That is why it is risky to judge a study simply because p = 0.04. A p-value has meaning within the Methods section and the analysis plan. It becomes interpretable only after you check whether it came from a question, primary outcome, comparison, significance level, and analysis procedure specified in advance.
+:::
+
 ::: {.callout-note appearance="simple" collapse="true" title="One-sided and two-sided p-values"}
 
 P-values and hypothesis tests are statistical procedures designed to make a yes/no judgment about a hypothesis. That may sound intimidating, so let's use an analogy.
@@ -196,7 +202,7 @@ This is largely historical. When the ICH E9 guideline was established, regulator
 
 - Sasako M, Sano T, Yamamoto S, Sairenji M, Arai K, Kinoshita T, Nashimoto A, Hiratsuka M, Japan Clinical Oncology Group (JCOG9502). Left thoracoabdominal approach versus abdominal-transhiatal approach for gastric cancer of the cardia or subcardia: a randomised controlled trial. Lancet Oncol 2006;7(8):644-51
 
-- [Wasserstein R and Lazar NI. The ASA’s statement on p-values: Context, process, and purpose. Am Statistician 2016; 70: 129-33]
+- Wasserstein R and Lazar NI. The ASA’s statement on p-values: Context, process, and purpose. Am Statistician 2016; 70: 129-33
 
 - Yoshimura I. Significance levels and number of trials in confirmatory clinical trials － In relation to “Statistical Principles for Clinical Trials”－. Jpn J Biometrics 2003; 24: S3-9
 

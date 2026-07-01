@@ -9,7 +9,7 @@
 <link>https://gestimation.github.io/coffee-and-research/jp/</link>
 <atom:link href="https://gestimation.github.io/coffee-and-research/jp/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.9.37</generator>
+<generator>quarto-1.9.38</generator>
 <lastBuildDate>Sat, 13 Dec 2025 15:00:00 GMT</lastBuildDate>
 <item>
   <title>Statistical Terms in Plain Language</title>
@@ -36,6 +36,20 @@
 </div>
 <div class="voice-father">
 <p>お父さん「今日は時間があるからいいよ、いくつかやってみようか。五十音順に並べるね」</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled" title="用語は記事に戻るための入口">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>用語は記事に戻るための入口
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>この用語集は、定義を暗記するためのページというより、本文で出てきた言葉に戻るための入口です。ひとつの用語だけで意味が閉じているのではなく、研究デザイン、解析方法、論文の読み方の中で役割が決まります。</p>
+<p>気になる言葉に出会ったら、英語表記もあわせて確認してみてください。論文のMethodsやResultsで同じ語が出てきたとき、どの文脈で使われているのかを追いやすくなります。</p>
 </div>
 </div>
 <p><strong>Aalen-Johansen法　Aalen-Johansen method</strong></p>
@@ -163,7 +177,7 @@
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -172,7 +186,7 @@
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は3です。</strong></li>
@@ -1161,6 +1175,20 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <p><img src="https://gestimation.github.io/coffee-and-research/jp/study-design-5j.png" class="img-fluid"></p>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note callout-titled" title="バイアスは解析前に入り込む">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>バイアスは解析前に入り込む
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>バイアスは、データを集め終わってから統計手法で完全に直せるものではありません。対象者の選ばれ方、回答の得られ方、アウトカムの測られ方が偏ると、その偏りは解析対象のデータそのものに入り込みます。</p>
+<p>そのため、バイアスを減らす作業は解析計画より前から始まります。調査票の設計、追跡方法、回答率を上げる工夫、測定手順の標準化は、統計解析と同じくらい研究結果の信頼性を左右します。</p>
+</div>
+</div>
 <section id="バイアスの分類" class="level3">
 <h3 class="anchored" data-anchor-id="バイアスの分類">バイアスの分類</h3>
 <div class="voice-daughter">
@@ -1207,7 +1235,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <li><a href="frequentist-1.html">Reading a Paper over a Cup of Coffee</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1216,7 +1244,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>過去のエピソード</strong></p>
 <ul>
@@ -1411,8 +1439,22 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <p>私「なるほどね、研究によって微妙に定義が違うもんね。実は今、調査票作っててね。お父さんがアウトカムにうるさいって周りに話したら、みんな意外とちゃんと区別してて。DFSとかOSを正確に知りたかったんだ。聞いてよかった、また相談するね」</p>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note callout-titled" title="アウトカムは解析計画への橋">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>アウトカムは解析計画への橋
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>アウトカムを定義するとは、名前を決めるだけではありません。どの出来事をイベントに含めるか、いつから時間を数えるか、どの時点で評価するかを決めることです。</p>
+<p>この定義が決まると、調査票や診療録から集めるべき情報、欠測時の扱い、解析方法、結果の解釈がつながります。OS、DFS、RFSの違いは、解析の前に研究の問いそのものを形にしていると考えると理解しやすくなります。</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note callout-titled" title="臨床エンドポイントと代替エンドポイント">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1421,7 +1463,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>OS、DFS、RFSは、特に術後補助化学療法の有効性を評価するときに用いられるアウトカム（エンドポイントともいいます）です。それでは両者は、どのような考え方で使い分けられているのでしょうか。指針の1つになっているのが、医薬品の承認審査の考え方です。たとえば抗悪性腫瘍薬の臨床評価方法に関するガイドライン（厚生労働省2021）では、抗がん剤を承認するためには、生存期間の延長などにもとづき、確実な有効性を示す必要があると述べています。そのため、具体的な指標として、OSが<strong>臨床エンドポイント（clinical endpoint）</strong>とみなされ、こちらが重視されています（Biomarkers Definitions Working Group 2001）。</p>
 <p>その一方で、術後補助化学療法としての抗がん剤の有効性を評価する臨床試験では、<strong>代替エンドポイント（surrogate endpoint）</strong>として採用することがあります。代替エンドポイントとは、臨床エンドポイントの代わりになることが意図されたもので、臨床上の便益・害の有無を予測することが期待されるものと定義されます。DFSのような代替エンドポイントを用いる最大のメリットは、試験期間が短くなることです。ただし、過去の承認審査では、代替エンドポイントの利用が誤った医薬品評価につながったケースが数多く報告されています（Fleming and DeMets 1996）。たとえば、進行大腸がんにおける5FU+ロイコボリン併用療法は、臨床試験で腫瘍縮小がみられたにもかかわらず、臨床エンドポイントであるOSを評価すると、ほとんど延命効果がないことが明らかになりました（Fleming and DeMets 1996）。</p>
@@ -1448,7 +1490,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1457,7 +1499,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は2です</strong></li>
@@ -1484,7 +1526,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <li><a href="../from-coffee-chat-to-r/study-design.R">study-design.R</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1493,7 +1535,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>このシリーズのエピソード</strong></p>
 <ul>
@@ -1663,8 +1705,22 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 <p>がんサバイバー調査を題材にして、研究仮説の例を3つ考えてみました。</p>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note callout-titled" title="この記事でまず押さえること">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>この記事でまず押さえること
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>研究仮説を言葉にする目的は、立派な文章を作ることではありません。後で計算する割合、リスク、オッズ、ハザード比の<strong>主語</strong>、<strong>分母</strong>、<strong>比較相手</strong>を、データを集める前に決めることです。</p>
+<p>たとえば「復職率」と言ったとき、その数字の主語は「直腸がん術後の患者さん」なのか、「手術前に就労していた患者さん」なのか、「復職を希望した患者さん」なのかで変わります。さらに、分母を「手術を受けた全員」にするのか、「手術前に働いていた人」にするのか、「復職を希望した人」にするのかで、同じパーセントでも意味は変わります。数字はひとりで意味を持つのではなく、誰について、何を分母にして、何と比べた数字なのかによって解釈が決まります。PICO/PECOは、その違いを早い段階で見えるようにするための道具です。</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-note callout-titled" title="研究仮説1">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1673,7 +1729,7 @@ font-style: inherit;">"Cumulative incidence of relapse"</span></span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <pre><code>P: 根治切除後の直腸がん患者
 
@@ -1687,7 +1743,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="研究仮説2">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1696,7 +1752,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <pre><code>P: 根治切除後のがん患者
 
@@ -1710,7 +1766,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="研究仮説3">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1719,7 +1775,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>「性・年齢、ステージ、術後補助化学療法、パフォーマンスステータス、合併症、ストーマ、手術前の就労状況、家計収入額、がん保険、就労支援サービスの利用などの因子は、1年以内の復職率と関連するか」</p>
 <p>PECOになりにくい研究仮説もあります。たとえば、疾患発生と関連のあるリスク因子を探す、いわゆる探索的研究では、EとCははっきり決まっていません。構造化といっても、臨床疑問をかならずPECOの形式にしなければならないわけではありません。研究デザインに最低限必要な要素を特定することが大切です。</p>
@@ -1754,7 +1810,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled" title="答えはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1763,7 +1819,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>正解は3です</strong></li>
@@ -1779,7 +1835,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 <li><a href="study-design-2.html">Data Have Types: A Coffee-Chat Guide to R Functions for Common Outcomes</a></li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled" title="他のエピソードはこちら">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1788,7 +1844,7 @@ O: 手術後1年以内の復職の有無</code></pre>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><a href="study-design-1.html">A Story of Coffee Chat and Research Hypothesis</a></li>

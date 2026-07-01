@@ -133,9 +133,15 @@ Dad: "Exactly. On the other hand, if you used the date of discharge as the time 
 :::
 
 ::: voice-daughter
-Me: "That makes sense. The exact definitions really do differ a bit from study to study. Actually, I'm in the middle of designing a questionnaire right now. When I told people that you're ‘picky about outcomes', it turned out everyone around me was paying more attention to these distinctions than I'd expected. I wanted to properly understand DFS and OS. I'm glad I asked ? I'll come back for more advice."
+Me: "That makes sense. The exact definitions really do differ a bit from study to study. Actually, I'm in the middle of designing a questionnaire right now. When I told people that you're ‘picky about outcomes', it turned out everyone around me was paying more attention to these distinctions than I'd expected. I wanted to properly understand DFS and OS. I'm glad I asked. I'll come back for more advice."
 :::
 :::::::::::::::::::::::::::::::::
+
+::: {.callout-note appearance="simple" title="Outcomes connect the question to the analysis"}
+Defining an outcome means more than choosing a name. It means deciding which events count, when time begins, and at what point the outcome will be evaluated.
+
+Once that definition is fixed, it shapes what information must be collected from questionnaires or medical records, how missing data will be handled, which analysis method is appropriate, and how the results can be interpreted. The differences among OS, DFS, and RFS are easier to understand when you see them as ways of turning a research question into an analysis plan.
+:::
 
 ::: {.callout-note appearance="simple" collapse="true" title="Clinical endpoints and surrogate endpoints"}
 
