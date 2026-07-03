@@ -250,12 +250,6 @@ Keywords: language/writing
 :::
 :::::::::::::::::::::::::::::::::
 
-::: {.callout-note appearance="simple" title="Results、Discussion、Limitationsの役割"}
-Resultsでは、研究計画に沿って観察されたことを、できるだけ余計な解釈を加えずに示します。Discussionでは、その結果が研究目的に照らして何を意味するのか、先行研究や臨床的文脈と比べながら説明します。Limitationsでは、データ、測定、交絡、欠測、精度、一般化可能性などによって、結果の意味がどこまで制限されるかを読者に手渡します。
-
-つまり、論文を書く作業は、データから出た数字を、もう一度研究の言葉に戻す作業でもあります。
-:::
-
 ::: {.callout-note appearance="simple" collapse="true" title="STROBEチェックリスト"}
 | セクション | 項目 | 内容 |
 |-----------|------|------|
