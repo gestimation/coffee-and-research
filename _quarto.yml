@@ -32,6 +32,8 @@ website:
         href: https://gestimation.github.io/cifmodeling/
       - text: "airsetup"
         href: https://gestimation.github.io/airsetup/
+      - text: "Giant Salamander Skillbox"
+        href: https://github.com/gestimation/giant-salamander-skillbox
       - text: A Conversation (EN)
         menu:
           - text: Index
@@ -62,14 +64,6 @@ website:
             href: jp/causal-inference-1.qmd
           - text: Publishing a paper
             href: jp/publish-a-paper-1.qmd
-      - text: AI & R (JP)
-        menu:
-          - text: AI-Assisted R Analysis
-            href: jp/ai-r-1.qmd
-          - text: KM and CIF
-            href: jp/ai-r-2.qmd
-          - text: Adjsuted CIF
-            href: jp/ai-r-3.qmd
       - text: 8 Elements (EN)
         href: kanji_en/index.qmd
       - text: 8 Elements (JP)

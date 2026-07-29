@@ -186,6 +186,10 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
     <a class="nav-link" href="https://gestimation.github.io/airsetup/"> 
 <span class="menu-text">airsetup</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/gestimation/giant-salamander-skillbox"> 
+<span class="menu-text">Giant Salamander Skillbox</span></a>
+  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-a-conversation-(en" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">A Conversation (EN)</span>
@@ -249,25 +253,6 @@ gtag('config', 'G-FCK3LX51C6', { 'anonymize_ip': true});
         <li>
     <a class="dropdown-item" href="../jp/publish-a-paper-1.html">
  <span class="dropdown-text">Publishing a paper</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ai--r-(jp" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">AI &amp; R (JP)</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-ai--r-(jp">    
-        <li>
-    <a class="dropdown-item" href="../jp/ai-r-1.html">
- <span class="dropdown-text">AI-Assisted R Analysis</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../jp/ai-r-2.html">
- <span class="dropdown-text">KM and CIF</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../jp/ai-r-3.html">
- <span class="dropdown-text">Adjsuted CIF</span></a>
   </li>  
     </ul>
   </li>
@@ -652,7 +637,7 @@ $`2`
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(dat<span class="sc">$</span>ip.weight, <span class="at">probs =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">01</span>, .<span class="dv">05</span>, .<span class="dv">5</span>, .<span class="dv">95</span>, .<span class="dv">99</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       0%        1%        5%       50%       95%       99%      100% 
- 1.032747  1.086331  1.131854  1.358677  5.278868  7.887032 10.732232 </code></pre>
+ 1.032746  1.086331  1.131855  1.358677  5.278924  7.887023 10.732112 </code></pre>
 </div>
 </div>
 </div>
@@ -699,14 +684,10 @@ $`2`
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("cobalt") # if needed</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cobalt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code> cobalt (Version 4.6.1, Build Date: 2025-08-20)</code></pre>
+<pre><code> cobalt (Version 4.6.3, Build Date: 2026-05-29)</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>out2<span class="sc">$</span>covs<span class="sc">$</span>ps <span class="ot">&lt;-</span> out2<span class="sc">$</span>ps</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bal.plot</span>(out2, <span class="at">var.name =</span> <span class="st">"ps"</span>, <span class="at">which =</span> <span class="st">"adjusted"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Ignoring unknown labels:
-• colour : "Treatment"</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -746,31 +727,31 @@ $`2`
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p>オーバーラップとは違い、未測定の交絡因子が残っているかどうかは、データから確認することはできません。そこで、DAGで宣言した因果構造が正しいという前提にして、測定された患者背景因子のバランスがとれているかを確認します。プロペンシティスコアを用いた論文の多くで、調整前後の共変量の集計表（<code>bal.tab()</code>）と標準平均差のプロット（<code>love.plot()</code>）が報告されています。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">bal.tab</span>(</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  exposure.model,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> dat,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> dat<span class="sc">$</span>ip.weight,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">un      =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">threshold =</span> <span class="fl">0.2</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">bal.tab</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  exposure.model,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> dat,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> dat<span class="sc">$</span>ip.weight,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">un      =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">threshold =</span> <span class="fl">0.2</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Note: `s.d.denom` not specified; assuming "pooled".</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>out3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>out3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Balance Measures
                      Type Diff.Un Diff.Adj    M.Threshold
 age               Contin. -0.2540       -0 Balanced, &lt;0.2
-bmi               Contin.  0.0798        0 Balanced, &lt;0.2
+bmi               Contin.  0.0798       -0 Balanced, &lt;0.2
 hba1c             Contin. -0.0528       -0 Balanced, &lt;0.2
 diabetes_duration Contin. -0.1110       -0 Balanced, &lt;0.2
-sbp               Contin.  0.1106        0 Balanced, &lt;0.2
-ldl               Contin. -0.0187        0 Balanced, &lt;0.2
+sbp               Contin.  0.1106       -0 Balanced, &lt;0.2
+ldl               Contin. -0.0187       -0 Balanced, &lt;0.2
 hdl               Contin. -0.0400       -0 Balanced, &lt;0.2
-tg                Contin. -0.0418       -0 Balanced, &lt;0.2
+tg                Contin. -0.0418        0 Balanced, &lt;0.2
 ltpa              Contin. -0.1001       -0 Balanced, &lt;0.2
-sex                Binary -0.1980        0 Balanced, &lt;0.2
-drug_oha           Binary  0.0206        0 Balanced, &lt;0.2
+sex                Binary -0.1980       -0 Balanced, &lt;0.2
+drug_oha           Binary  0.0206       -0 Balanced, &lt;0.2
 drug_insulin       Binary -0.0210       -0 Balanced, &lt;0.2
 current_smoker     Binary  0.2188       -0 Balanced, &lt;0.2
 alcohol_drinker    Binary  0.0726       -0 Balanced, &lt;0.2
@@ -782,21 +763,21 @@ Not Balanced, &gt;0.2     0
 
 Variable with the greatest mean difference
  Variable Diff.Adj    M.Threshold
-       tg       -0 Balanced, &lt;0.2
+      age       -0 Balanced, &lt;0.2
 
 Effective sample sizes
            Control Treated
 Unadjusted  720.    258.  
 Adjusted    690.37  208.59</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">love.plot</span>(</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  out3,</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">stats      =</span> <span class="st">"mean.diffs"</span>,</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars      =</span> <span class="st">"raw"</span>, </span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">abs        =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">thresholds =</span> <span class="fu">c</span>(<span class="at">m =</span> <span class="fl">0.1</span>),</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.order  =</span> <span class="st">"unadjusted"</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">love.plot</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  out3,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">stats      =</span> <span class="st">"mean.diffs"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars      =</span> <span class="st">"raw"</span>, </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">abs        =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">thresholds =</span> <span class="fu">c</span>(<span class="at">m =</span> <span class="fl">0.1</span>),</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.order  =</span> <span class="st">"unadjusted"</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -837,7 +818,7 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">cifplot()</span><span class="st">`</span>を使って、累積発生曲線を描いて。<span class="st">`</span><span class="at">epsilon=1</span><span class="st">`</span>がイベント、<span class="st">`</span><span class="at">epsilon=2</span><span class="st">`</span>が競合リスク。<span class="st">`</span><span class="at">fruitq1</span><span class="st">`</span>で層別して<span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">cifplot()</span><span class="st">`</span>を使って、累積発生曲線を描いて。<span class="st">`</span><span class="at">epsilon=1</span><span class="st">`</span>がイベント、<span class="st">`</span><span class="at">epsilon=2</span><span class="st">`</span>が競合リスク。<span class="st">`</span><span class="at">fruitq1</span><span class="st">`</span>で層別して<span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="dialogue">
 <div class="voice-daughter">
@@ -872,7 +853,7 @@ Adjusted    690.37  208.59</code></pre>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, <span class="at">code.event1 =</span> <span class="dv">1</span>, <span class="at">code.event2 =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, <span class="at">code.event1 =</span> <span class="dv">1</span>, <span class="at">code.event2 =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -884,10 +865,10 @@ Adjusted    690.37  208.59</code></pre>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">add.risktable=</span><span class="cn">TRUE</span>, <span class="at">add.censor.mark=</span><span class="cn">FALSE</span>, <span class="at">add.competing.risk.mark=</span><span class="cn">TRUE</span>,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.y=</span><span class="st">"CIF of diabetic retinopathy"</span>, <span class="at">label.x=</span><span class="st">"Years from registration"</span>,</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.strata=</span><span class="fu">c</span>(<span class="st">"High intake"</span>,<span class="st">"Low intake"</span>), <span class="at">level.strata=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">order.strata=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">add.risktable=</span><span class="cn">TRUE</span>, <span class="at">add.censor.mark=</span><span class="cn">FALSE</span>, <span class="at">add.competing.risk.mark=</span><span class="cn">TRUE</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.y=</span><span class="st">"CIF of diabetic retinopathy"</span>, <span class="at">label.x=</span><span class="st">"Years from registration"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.strata=</span><span class="fu">c</span>(<span class="st">"High intake"</span>,<span class="st">"Low intake"</span>), <span class="at">level.strata=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">order.strata=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -973,10 +954,10 @@ Adjusted    690.37  208.59</code></pre>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">weights =</span> <span class="st">"ip.weight"</span>, <span class="at">add.censor.mark=</span><span class="cn">FALSE</span>,</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.y=</span><span class="st">"CIF of diabetic retinopathy"</span>, <span class="at">label.x=</span><span class="st">"Years from registration"</span>,</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.strata=</span><span class="fu">c</span>(<span class="st">"High intake"</span>, <span class="st">"Low intake"</span>), <span class="at">level.strata=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">order.strata=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">n.risk.type =</span> <span class="st">"ess"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cifplot</span>(<span class="fu">Event</span>(t,epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>dat, <span class="at">outcome.type=</span><span class="st">"competing-risk"</span>, </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">weights =</span> <span class="st">"ip.weight"</span>, <span class="at">add.censor.mark=</span><span class="cn">FALSE</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.y=</span><span class="st">"CIF of diabetic retinopathy"</span>, <span class="at">label.x=</span><span class="st">"Years from registration"</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">label.strata=</span><span class="fu">c</span>(<span class="st">"High intake"</span>, <span class="st">"Low intake"</span>), <span class="at">level.strata=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="at">order.strata=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">n.risk.type =</span> <span class="st">"ess"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1020,16 +1001,16 @@ Adjusted    690.37  208.59</code></pre>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("survival") # if needed</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>compare <span class="ot">&lt;-</span> <span class="cf">function</span>(data, weights, limit.x) {</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  out1 <span class="ot">&lt;-</span> <span class="fu">cifcurve</span>(<span class="fu">Event</span>(t, epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>data, <span class="at">weights=</span>weights, <span class="at">outcome.type=</span><span class="st">"c"</span>, <span class="at">error=</span><span class="st">"if"</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  out2 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, <span class="fu">factor</span>(epsilon))<span class="sc">~</span>fruitq1, <span class="at">data=</span>data, <span class="at">weights=</span>data[[weights]])</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>((<span class="dv">1</span><span class="sc">-</span>out1<span class="sc">$</span>surv[<span class="dv">1</span><span class="sc">:</span>limit.x]),out2<span class="sc">$</span>pstate[<span class="dv">1</span><span class="sc">:</span>limit.x,<span class="dv">2</span>],out1<span class="sc">$</span>std.err[<span class="dv">1</span><span class="sc">:</span>limit.x],out2<span class="sc">$</span>std.err[<span class="dv">1</span><span class="sc">:</span>limit.x])</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>compare_unweighted <span class="ot">&lt;-</span> <span class="fu">compare</span>(<span class="at">data=</span>dat, <span class="at">weights=</span><span class="st">"one"</span>, <span class="at">limit.x=</span><span class="dv">20</span>)</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(compare_unweighted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("survival") # if needed</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>compare <span class="ot">&lt;-</span> <span class="cf">function</span>(data, weights, limit.x) {</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  out1 <span class="ot">&lt;-</span> <span class="fu">cifcurve</span>(<span class="fu">Event</span>(t, epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>data, <span class="at">weights=</span>weights, <span class="at">outcome.type=</span><span class="st">"c"</span>, <span class="at">error=</span><span class="st">"if"</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  out2 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, <span class="fu">factor</span>(epsilon))<span class="sc">~</span>fruitq1, <span class="at">data=</span>data, <span class="at">weights=</span>data[[weights]])</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>((<span class="dv">1</span><span class="sc">-</span>out1<span class="sc">$</span>surv[<span class="dv">1</span><span class="sc">:</span>limit.x]),out2<span class="sc">$</span>pstate[<span class="dv">1</span><span class="sc">:</span>limit.x,<span class="dv">2</span>],out1<span class="sc">$</span>std.err[<span class="dv">1</span><span class="sc">:</span>limit.x],out2<span class="sc">$</span>std.err[<span class="dv">1</span><span class="sc">:</span>limit.x])</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>compare_unweighted <span class="ot">&lt;-</span> <span class="fu">compare</span>(<span class="at">data=</span>dat, <span class="at">weights=</span><span class="st">"one"</span>, <span class="at">limit.x=</span><span class="dv">20</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(compare_unweighted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             [,1]        [,2]        [,3]        [,4]
  [1,] 0.001388889 0.001388889 0.001387924 0.001387924
@@ -1078,30 +1059,30 @@ Adjusted    690.37  208.59</code></pre>
 <div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>compare_weighted <span class="ot">&lt;-</span> <span class="fu">compare</span>(<span class="at">data=</span>dat, <span class="at">weights=</span><span class="st">"ip.weight"</span>, <span class="at">limit.x=</span><span class="dv">20</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(compare_weighted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>compare_weighted <span class="ot">&lt;-</span> <span class="fu">compare</span>(<span class="at">data=</span>dat, <span class="at">weights=</span><span class="st">"ip.weight"</span>, <span class="at">limit.x=</span><span class="dv">20</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(compare_weighted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             [,1]        [,2]        [,3]        [,4]
- [1,] 0.001244355 0.001244355 0.001243708 0.001243708
- [2,] 0.001244355 0.001244355 0.001243708 0.001770377
+ [1,] 0.001244355 0.001244355 0.001243707 0.001243707
+ [2,] 0.001244355 0.001244355 0.001243707 0.001770377
  [3,] 0.002604439 0.002604439 0.001841298 0.002230195
- [4,] 0.002604439 0.002604439 0.001841298 0.002628632
- [5,] 0.003830307 0.003830307 0.002210141 0.002897724
- [6,] 0.005524750 0.005524750 0.002780379 0.003350872
- [7,] 0.005524750 0.005524750 0.002780379 0.003560957
- [8,] 0.006829491 0.006829491 0.003068012 0.003788262
- [9,] 0.006829491 0.006829491 0.003068012 0.004031245
-[10,] 0.006829491 0.006829491 0.003068012 0.004256241
-[11,] 0.008078630 0.008078630 0.003309256 0.004431160
-[12,] 0.008078630 0.008078630 0.003309256 0.004603570
-[13,] 0.009865716 0.009865716 0.003753519 0.004927830
-[14,] 0.011185112 0.011185112 0.003974105 0.005095401
-[15,] 0.012409242 0.012409242 0.004154227 0.005235060
-[16,] 0.013705181 0.013705181 0.004346820 0.005386929
-[17,] 0.014939788 0.014939788 0.004514152 0.005520867
-[18,] 0.016506915 0.016506915 0.004770646 0.005729363
-[19,] 0.017748000 0.017748000 0.004924321 0.005856062
-[20,] 0.019053295 0.019053295 0.005088524 0.005992756</code></pre>
+ [4,] 0.002604439 0.002604439 0.001841298 0.002628634
+ [5,] 0.003830305 0.003830305 0.002210140 0.002897724
+ [6,] 0.005524751 0.005524751 0.002780380 0.003350873
+ [7,] 0.005524751 0.005524751 0.002780380 0.003560958
+ [8,] 0.006829490 0.006829490 0.003068013 0.003788263
+ [9,] 0.006829490 0.006829490 0.003068013 0.004031245
+[10,] 0.006829490 0.006829490 0.003068013 0.004256241
+[11,] 0.008078631 0.008078631 0.003309257 0.004431161
+[12,] 0.008078631 0.008078631 0.003309257 0.004603571
+[13,] 0.009865719 0.009865719 0.003753520 0.004927831
+[14,] 0.011185119 0.011185119 0.003974107 0.005095403
+[15,] 0.012409248 0.012409248 0.004154230 0.005235062
+[16,] 0.013705189 0.013705189 0.004346823 0.005386931
+[17,] 0.014939794 0.014939794 0.004514154 0.005520869
+[18,] 0.016506920 0.016506920 0.004770648 0.005729365
+[19,] 0.017748008 0.017748008 0.004924323 0.005856065
+[20,] 0.019053303 0.019053303 0.005088527 0.005992759</code></pre>
 </div>
 </div>
 </div>
@@ -1284,13 +1265,13 @@ Adjusted    690.37  208.59</code></pre>
 <p>また、<code>type="mstate"</code>というオプションは、<strong>survival</strong>パッケージversion 3.8-3では使用されていません。</p>
 <p>競合リスクを無視した場合、<code>survfit()</code>の出力には生存確率（<code>surv</code>）が含まれます 。一方で、競合リスクを含む複数イベントを扱う場合は、生存確率の代わりに推移確率（<code>pstate</code>）が出力されます。以下のRスクリプトを実行して、factor型とnumeric型の出力の違いを確認してみてください。</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cifmodeling)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(diabetes.complications)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, <span class="fu">factor</span>(epsilon))<span class="sc">~</span>fruitq1, <span class="at">data=</span>diabetes.complications)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out3)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>diabetes.complications)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cifmodeling)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(diabetes.complications)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, <span class="fu">factor</span>(epsilon))<span class="sc">~</span>fruitq1, <span class="at">data=</span>diabetes.complications)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out3)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(t, epsilon)<span class="sc">~</span>fruitq1, <span class="at">data=</span>diabetes.complications)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(out4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>

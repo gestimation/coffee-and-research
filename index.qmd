@@ -158,14 +158,32 @@ A toolkit for survival and competing risks analysis in R — a more technical si
 
 <div class="project-card">
 
-## R package airsetup
+## Tools for AI-assisted R analysis
 
-A toolkit for AI-assisted R workflow with QC and clear boundaries
+Giant Salamander Skillbox is a set of AI skills. 
+
+- **READATABLE** improves the readability and presentation of tables.
+- **REVIEWCITATION** reviews citation placement and reference consistency.
+- **SAMPLESIZE200** organizes study plans through conversation, selects a registered method, and calculates the required study size. It contains 188 calculators and 105 research examples. 
+
+READATABLE and REVIEWCITATION are instruction-only skills. SAMPLESIZE200 requires Python 3.10 or later and SciPy 1.11 or later in the execution environment. Its remaining runtime files, including its vendored YAML dependency, are included in the skill directory. Start with the quick guide; the Python API and solution catalog provide further detail.
+
+**[Visit GitHub repository and download Giant Salamander Skillbox](https://github.com/gestimation/giant-salamander-skillbox)**
+
+R package airsetup is a toolkit for AI-assisted R workflow with QC and clear boundaries. 
 
 - It creates a small, opinionated folder structure for R analysis projects where AI agents help write scripts, inspect visible dummy data, and review outputs, while hidden analysis data stays outside the AI-visible workspace. 
 - It does not provide statistical analysis functions. Instead, it prepares separated folders, a minimal AGENTS.md, and a QC_STATUS.md tracker.
 
 **[Visit the R package airsetup site](https://gestimation.github.io/airsetup/)**
+
+A series of short stories about AI-assisted R workflow written in Japanese. 
+
+**[Read in Japanese](./jp/ai-r-1.html)** 
+
+A series of short stories about development and validation of AI skills written in Japanese. 
+
+**[Read in Japanese](https://righteous-manager-7af.notion.site/AI-3ab8a203c79680178758de8ce8bc276c)** 
 
 </div>
 
