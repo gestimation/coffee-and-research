@@ -168,6 +168,8 @@ Giant Salamander Skillbox is a set of AI skills for statistical tables, scientif
 
 - **samplesize200** plans study size through a guided statistical conversation, with 188 validated calculators and 105 study examples.
 
+**[Download PDF cheatsheet](skillbox-cheatsheet-en.pdf)**
+
 **[Visit GitHub repository and download Giant Salamander Skillbox](https://github.com/gestimation/giant-salamander-skillbox)**
 
 **[More information available in Japanese](https://gestimation.notion.site/4c86ec1cfa15833f9501814511fe2946)** 
